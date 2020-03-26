@@ -5,13 +5,19 @@ const initialState = {
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_BLE':
-      const newBLE = [
-        ...state.BLEList,
-        action.device
-      ];
-      return {
-        BLEList: newBLE,
-      };
+      if (
+        state.BLEList.some(device => device.id === action.device.id) ||
+        !action.device.isConnectable ||
+        action.device.name === null
+      ) {
+        return state;
+      } else {
+        const newBLE = [...state.BLEList, action.device];
+        console.log(newBLE);
+        return {
+          BLEList: newBLE,
+        };
+      }
     default:
       return state;
   }
