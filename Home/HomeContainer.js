@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import {Button} from 'react-native';
+import {Button, Alert} from 'react-native';
+import {connect} from 'react-redux';
+import {startScan} from './actions.js';
+import {bindActionCreators} from 'redux';
 
-class Home extends Component {
+class HomeContainer extends Component {
   trackBle = () => {
-    console.log('==called==');
+    this.props.startScan();
   };
 
   render() {
@@ -18,4 +21,18 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    bleData: state.homeReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  startScan,
+}, dispatch);
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeContainer);
