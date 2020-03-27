@@ -13,6 +13,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F6FCB242B9AE6005BE5B9 /* ble.swift */; };
+		14431C2E242D842600DEFBBE /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C2D242D842600DEFBBE /* Device.m */; };
+		14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -56,6 +58,10 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tracedefense1/main.m; sourceTree = "<group>"; };
 		140F6FCA242B9AE6005BE5B9 /* tracedefense1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracedefense1-Bridging-Header.h"; sourceTree = "<group>"; };
 		140F6FCB242B9AE6005BE5B9 /* ble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ble.swift; sourceTree = "<group>"; };
+		14431C2B242D82AA00DEFBBE /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		14431C2D242D842600DEFBBE /* Device.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconBroadcast.m; sourceTree = "<group>"; };
+		14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconBroadcast.h; sourceTree = "<group>"; };
 		2225D21D9EE6E3AB35960F48 /* Pods-tracedefense1Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1Tests.release.xcconfig"; path = "Target Support Files/Pods-tracedefense1Tests/Pods-tracedefense1Tests.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* tracedefense1-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tracedefense1-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* tracedefense1-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tracedefense1-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +134,8 @@
 		13B07FAE1A68108700A75B9A /* tracedefense1 */ = {
 			isa = PBXGroup;
 			children = (
+				14431C2F242D8B4300DEFBBE /* BLE */,
+				14431C2C242D83DF00DEFBBE /* Device */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -137,6 +145,24 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = tracedefense1;
+			sourceTree = "<group>";
+		};
+		14431C2C242D83DF00DEFBBE /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				14431C2B242D82AA00DEFBBE /* Device.h */,
+				14431C2D242D842600DEFBBE /* Device.m */,
+			);
+			name = Device;
+			sourceTree = "<group>";
+		};
+		14431C2F242D8B4300DEFBBE /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */,
+				14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */,
+			);
+			name = BLE;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -538,8 +564,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */,
+				14431C2E242D842600DEFBBE /* Device.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
