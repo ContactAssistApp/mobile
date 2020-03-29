@@ -4,18 +4,18 @@ import {connect} from 'react-redux';
 import {startScan} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {NativeModules, NativeEventEmitter} from 'react-native';
+import LocationServices from './LocationServices';
 
 class HomeContainer extends Component {
-
   //FIXME only register this once when the app starts
   commonBleInit = () => {
-    if(this.logInitted != true) {
+    if (this.logInitted !== true) {
       const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
       const subscription = bleEmitter.addListener(
         'onLifecycleEvent',
         (data) => console.log("log:" +data)
       );
-      this.logInitted = true; 
+      this.logInitted = true;
     }
 
     NativeModules.BLE.init_module(
@@ -24,60 +24,52 @@ class HomeContainer extends Component {
     );
   }
 
-  trackBle = () => {
+  scanBle = () => {
     // this.props.startScan();
-
     this.commonBleInit();
     NativeModules.BLE.startScanning();
-
-  }
-
-  callNative = () => {
-    console.log("=====");
-    NativeModules.Device.getDeviceName((err, name) => {
-      console.log(name);
-    });
-  }
+  };
 
   bleBroadcast = () => {
-    console.log("=====");
-
-    // NativeModules.BeaconBroadcast.startSharedAdvertisingBeaconWithString('94eee192-6929-41a1-8da0-04066b00a3b0', 100, 1, '94eee192-6929-41a1-8da0-04066b00a3b0');
-
+    console.log("BLE start broadcasting...");
     this.commonBleInit();
-
     NativeModules.BLE.startAdvertising();
     //TODO use native module for scanning
     //NativeModules.BLE.startScanning()
-  }
+  };
 
   stopBroadcast = () => {
-    // NativeModules.BeaconBroadcast.stopSharedAdvertisingBeacon();
     NativeModules.BLE.stopAdvertising();
-  }
+  };
+
+  trackGPS = () => {
+    LocationServices.start();
+  };
+
+  stopTrackGPS = () => {
+    LocationServices.stop();
+  };
 
   render() {
     return (
       <>
-        <Button
-          title={'Track BLE'}
-          onPress={this.trackBle}
-        />
-        <Button title={'calling native'} onPress={this.callNative} />
-        <Button title={'Broadcast'} onPress={this.bleBroadcast} />
-        <Button title={'Stop Broadcast'} onPress={this.stopBroadcast} />
+        <Button title={'Scan BLE'} onPress={this.scanBle} />
+        <Button title={'Broadcast BLE'} onPress={this.bleBroadcast} />
+        <Button title={'Stop Broadcast BLE'} onPress={this.stopBroadcast} />
+        <Button title={'Track GPS'} onPress={this.trackGPS} />
+        <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />
       </>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     bleData: state.homeReducer,
   };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({
   startScan,
 }, dispatch);
 

@@ -29,6 +29,7 @@ export function scan() {
     });
   };
 }
+
 // export function runExperiments(payload) {
 //   return (dispatch) => {
 //     const tasksUrl = `${BASE_URL}/tasks`;
