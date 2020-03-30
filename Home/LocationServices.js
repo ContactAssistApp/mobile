@@ -1,4 +1,4 @@
-import { GetStoreData, SetStoreData } from './General';
+import {GetStoreData, SetStoreData} from './General';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
 import {PERMISSIONS, check, RESULTS, request} from 'react-native-permissions';
@@ -9,8 +9,7 @@ let instanceCount = 0;
 
 export class LocationData {
   constructor() {
-    this.locationInterval = 5000;
-    // this.locationInterval = 60000 * 5; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
+    this.locationInterval = 60000 * 5; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
     // DEBUG: Reduce Time intervall for faster debugging
     // this.locationInterval = 5000;
   }
@@ -55,12 +54,12 @@ export class LocationData {
       // Always work in UTC, not the local time in the locationData
       let nowUTC = new Date().toISOString();
       let unixtimeUTC = Date.parse(nowUTC);
-      let unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28;
+      let unixtimeUTC_14daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 14;
 
-      // Curate the list of points, only keep the last 28 days
+      // Curate the list of points, only keep the last 14 days
       let curated = [];
       for (let i = 0; i < locationArray.length; i++) {
-        if (locationArray[i]['time'] > unixtimeUTC_28daysAgo) {
+        if (locationArray[i]['time'] > unixtimeUTC_14daysAgo) {
           curated.push(locationArray[i]);
         }
       }
@@ -90,7 +89,7 @@ export class LocationData {
       };
       curated.push(lat_lon_time);
       console.log(curated);
-      // SetStoreData('LOCATION_DATA', curated);
+      SetStoreData('LOCATION_DATA', curated);
     });
   }
 }
@@ -172,6 +171,7 @@ export default class LocationServices {
     }
 
     BackgroundGeolocation.on('stationary', stationaryLocation => {
+      console.log("stationary");
       // handle stationary locations here
       // Actions.sendLocation(stationaryLocation);
       BackgroundGeolocation.startTask(taskKey => {

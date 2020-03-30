@@ -5,6 +5,7 @@ import {startScan} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {NativeModules, NativeEventEmitter} from 'react-native';
 import LocationServices from './LocationServices';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class HomeContainer extends Component {
   //FIXME only register this once when the app starts
@@ -50,6 +51,20 @@ class HomeContainer extends Component {
     LocationServices.stop();
   };
 
+  exportGPS = () => {
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (error, stores) => {
+        stores.map((result, i, store) => {
+          console.log(JSON.parse(result[1]).length);
+        });
+      });
+    });
+  };
+
+  clearAsyncStorage = async() => {
+    AsyncStorage.clear();
+  };
+
   render() {
     return (
       <>
@@ -58,6 +73,8 @@ class HomeContainer extends Component {
         <Button title={'Stop Broadcast BLE'} onPress={this.stopBroadcast} />
         <Button title={'Track GPS'} onPress={this.trackGPS} />
         <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />
+        <Button title={'Export gps'} onPress={this.exportGPS} />
+        <Button title={'clear storage'} onPress={this.clearAsyncStorage} />
       </>
     );
   }
