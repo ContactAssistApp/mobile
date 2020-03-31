@@ -21,7 +21,6 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
         <SafeAreaView>
           <ScrollView contentInsetAdjustmentBehavior="automatic">
             <OnBoarding />
