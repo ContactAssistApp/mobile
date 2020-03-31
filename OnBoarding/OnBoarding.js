@@ -1,55 +1,64 @@
 import React, {Component} from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import colors from '../assets/colors';
 
 class OnBoarding extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.hero}>
-          <View style={styles.placeholder}>
-          </View>
-          <Text style={styles.header}>
-            CovidSafe
-          </Text>
-          <Text style={styles.description}>
-            Slowing the spread of COVID-19, together
-          </Text>
-        </View>
-
-        <View style={styles.start_container}>
-          <Text style={styles.intro}>
-            Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue suspendisse.
-          </Text>
-          <TouchableOpacity style={styles.start_button}>
-            <Text style={styles.start_button_text}>Let's get started</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.professional_button}>
-            <Text style={styles.professional_button_text}>
-              I'm a medical professional
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <View style={styles.hero}>
+            <View style={styles.placeholder}>
+            </View>
+            <Text style={styles.header}>
+              CovidSafe
             </Text>
-          </TouchableOpacity>
-        </View>
+            <Text style={styles.description}>
+              Slowing the spread of COVID-19, together
+            </Text>
+          </View>
 
-        <View style={styles.footer}>
-          <Text style={styles.footer_text}>Brought to you by</Text>
-          <View style={styles.logos}>
-            <View style={styles.logo}>
-              <Text>UW Logo</Text>
+          <View style={styles.start_container}>
+            <Text style={styles.intro}>
+              Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue suspendisse.
+            </Text>
+            <TouchableOpacity style={styles.start_button}>
+              <Text style={styles.start_button_text}>Let's get started</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.professional_button}>
+              <Text style={styles.professional_button_text}>
+                I'm a medical professional
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.footer}>
+            <Text style={styles.footer_text}>Brought to you by</Text>
+            <View style={styles.logos}>
+              <View style={styles.logo}>
+                <Text>UW Logo</Text>
+              </View>
+              <View style={styles.logo}>
+                <Text>Msft Logo</Text>
+              </View>
             </View>
-            <View style={styles.logo}>
-              <Text>Msft Logo</Text>
+            <View style={styles.footer_links}>
+              <View style={styles.privacy_link}>
+                <Text style={styles.privacy_text}>Privacy</Text>
+              </View>
+              <View style={styles.terms_link}>
+                <Text style={styles.term_text}>Terms and Conditions</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.footer_links}>
-            <View style={styles.privacy_link}>
-              <Text style={styles.privacy_text}>Privacy</Text>
-            </View>
-            <View style={styles.terms_link}>
-              <Text style={styles.term_text}>Terms and Conditions</Text>
-            </View>
-          </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
