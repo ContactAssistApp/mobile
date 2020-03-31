@@ -11,15 +11,13 @@ import colors from '../assets/colors';
 
 class OnBoarding extends Component {
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <View style={styles.hero}>
-            <View style={styles.placeholder}>
-            </View>
-            <Text style={styles.header}>
-              CovidSafe
-            </Text>
+            <View style={styles.placeholder} />
+            <Text style={styles.header}>CovidSafe</Text>
             <Text style={styles.description}>
               Slowing the spread of COVID-19, together
             </Text>
@@ -27,9 +25,13 @@ class OnBoarding extends Component {
 
           <View style={styles.start_container}>
             <Text style={styles.intro}>
-              Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue suspendisse.
+              Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue
+              suspendisse.
             </Text>
-            <TouchableOpacity style={styles.start_button}>
+            <TouchableOpacity
+              style={styles.start_button}
+              onPress={() => navigate('Preferences', {screen: 'Preferences'})}
+            >
               <Text style={styles.start_button_text}>Let's get started</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.professional_button}>
