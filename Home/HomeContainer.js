@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Alert} from 'react-native';
+import {Button, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {startScan} from './actions.js';
 import {bindActionCreators} from 'redux';
@@ -8,6 +8,12 @@ import LocationServices from './LocationServices';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class HomeContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      record: 0,
+    };
+  }
   //FIXME only register this once when the app starts
   commonBleInit = () => {
     if (this.logInitted !== true) {
@@ -56,6 +62,9 @@ class HomeContainer extends Component {
       AsyncStorage.multiGet(keys, (error, stores) => {
         stores.map((result, i, store) => {
           console.log(JSON.parse(result[1]).length);
+          this.setState({
+            record: JSON.parse(result[1]).length,
+          });
         });
       });
     });
@@ -75,6 +84,7 @@ class HomeContainer extends Component {
         <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />
         <Button title={'Export gps'} onPress={this.exportGPS} />
         <Button title={'clear storage'} onPress={this.clearAsyncStorage} />
+        <Text>{this.state.record}</Text>
       </>
     );
   }
