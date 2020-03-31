@@ -5,7 +5,8 @@ import {
   StatusBar,
   Platform
 } from 'react-native';
-import Home from './Home/HomeContainer';
+// import Home from './Home/HomeContainer';
+import OnBoarding from './OnBoarding/OnBoarding';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -23,7 +24,7 @@ function App() {
         {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
         <SafeAreaView>
           <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <Home />
+            <OnBoarding />
           </ScrollView>
         </SafeAreaView>
       </Provider>
