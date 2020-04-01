@@ -5,7 +5,7 @@ import {
   StatusBar,
   Platform
 } from 'react-native';
-// import Home from './Home/HomeContainer';
+import HomeContainer from './Home/HomeContainer';
 import OnBoarding from './OnBoarding/OnBoarding';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
@@ -25,6 +25,7 @@ function App() {
         <SafeAreaView>
           <ScrollView contentInsetAdjustmentBehavior="automatic">
             <OnBoarding />
+            <HomeContainer/>
           </ScrollView>
         </SafeAreaView>
       </Provider>

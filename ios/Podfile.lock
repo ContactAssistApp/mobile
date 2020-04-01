@@ -346,7 +346,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  "@mauron85_react-native-background-geolocation": fa34ab82e94212be16ef6e75c32bcb707b0a1524
+  "@mauron85_react-native-background-geolocation": 70177f5ccd8844497a2f5f0a23c77ee4c4608d42
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
@@ -375,9 +375,9 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCAsyncStorage: e0dd7c8a36543b4ef84969acd9f8aceba3a92dc2
-  RNCPushNotificationIOS: ec3e8c17cda6a92a0bb97a53ec5ecf5771d94d21
-  RNPermissions: 1008d3511fee0e25739cf81c4af0d1b2248f1053
+  RNCAsyncStorage: 00bdf63f7f1e0f11d3323533dba4f222e58bf092
+  RNCPushNotificationIOS: de54f074e577e684c0619d4271a5b451e8a37ee1
+  RNPermissions: 8afd37dbc1be65748363c6a90caffd1806567651
   RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 

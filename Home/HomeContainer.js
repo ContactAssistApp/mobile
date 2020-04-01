@@ -62,8 +62,8 @@ class HomeContainer extends Component {
           kind: data[3]
         };
 
-        if(this.state.logNative)
-          console.log(contact);
+        // if(this.state.logNative)
+        //   console.log(contact);
 
         this.setState({
           contactLogs: [contact].concat(this.state.contactLogs)
@@ -106,14 +106,15 @@ class HomeContainer extends Component {
     this.subscriptions.forEach(e => e.remove());
   }
 
-  startScanning = () => {
+  startBle = () => {
     NativeModules.BLE.startScanning();
-    this.setState({ isScanning: true });
+    NativeModules.BLE.startAdvertising();
+    this.setState({ isScanning: true, isAdvertising: true });
   }
-
-  stopScanning = () => {
+  stopBle = () => {
+    NativeModules.BLE.stopAdvertising();
     NativeModules.BLE.stopScanning();
-    this.setState({ isScanning: false });
+    this.setState({ isAdvertising: false, isScanning: false });
   }
 
   callNative = () => {
@@ -121,20 +122,6 @@ class HomeContainer extends Component {
     NativeModules.Device.getDeviceName((err, name) => {
       console.log(name);
     });
-  }
-
-  disableLogging = () => {
-    this.setState({ logNative: false });
-  }
-
-  startBroadcast = () => {
-    NativeModules.BLE.startAdvertising();
-    this.setState({ isAdvertising: true });
-  }
-
-  stopBroadcast = () => {
-    NativeModules.BLE.stopAdvertising();
-    this.setState({ isAdvertising: false });
   }
 
   countLogs = (kind) => {
@@ -149,11 +136,8 @@ class HomeContainer extends Component {
   render() {
     return (
       <>
-        <Button title={'Start scanning'} onPress={this.startScanning} />
-        <Button title={'Stop scanning'} onPress={this.stopScanning} />
-        <Button title={'Start Broadcast'} onPress={this.startBroadcast} />
-        <Button title={'Stop Broadcast'} onPress={this.stopBroadcast} />
-        <Button title={'Disable Log'} onPress={this.disableLogging} />
+        <Button title={'Start BLE'} onPress={this.startBle} />
+        <Button title={'Stop BLE'} onPress={this.stopBle} />
 
         <Button title={'Track GPS'} onPress={this.trackGPS} />
         <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />

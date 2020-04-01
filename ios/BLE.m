@@ -1,4 +1,18 @@
 #import "BLE.h"
+#include <stdio.h>
+#include <sys/time.h>
+
+@import Foundation;
+
+/*
+ BIG TODO LIST:
+ 
+ Implement:
+  new ID generation protocol
+  token and contact logging
+  conneciton timeout using a timer
+  add delay to write from read
+ */
 @import CoreBluetooth;
 
 //restrict scanning tracedefence only devices
@@ -8,20 +22,25 @@
 
 //global config options
 
-//time between each log entry or device ping
-static time_t observation_interval_in_secs = 5; //write internal & scan log interval
-//time between us refreshing the remote token of a device
+//how frequently to log interactions - this drives BLE io frequency
+static int64_t observation_interval_in_secs = 10; //write internal & scan log interval
+
+//how frequently fetch remote IDs, this reduces the window
 //should be >= observation_interval_in_secs and <= token_cache_ttl_in_secs
 //should be <= token_renew_time_in_seconds
-static time_t remote_token_refresh_timeout_in_secs = 10; //token read interval
-//time we keep a device-id in our cache
-static time_t token_cache_ttl_in_secs = 60;
+static int64_t remote_token_refresh_timeout_in_secs = 10; //token read interval
+
+//time we keep a device-id in our cache, this just means more memory and reduces the need to scan for ids
+static int64_t token_cache_ttl_in_secs = 15 * 60;
+
 //time between each token renewal (in theory remote_token_refresh_timeout_in_secs should be the same)
 //should be >= observation_interval_in_secs (or some tokens won't be observable)
-static time_t token_renew_time_in_seconds = 30;
+static int64_t token_renew_time_in_secs = 15 * 60;
 
 static NSString *_serviceUUID;
 static NSString *_characteristicUUID;
+
+static FILE* _contactsLogFile;
 
 //active contact means we reached out and read the ID of device
 #define CONTACT_ACTIVE 1
@@ -30,10 +49,31 @@ static NSString *_characteristicUUID;
 
 #define conn_start_timeout_in_seconds 5
 
-static time_t get_now(void)
+static int64_t get_now_secs(void)
 {
-  return (time_t)[NSDate date].timeIntervalSince1970;
+  struct timeval tv = {0};
+  if(gettimeofday(&tv, NULL))
+    NSLog(@"gettimeofday failed with %d", errno);
+
+  return ((int64_t)tv.tv_sec);
 }
+
+static dispatch_source_t create_recurring_timer(int64_t interval_sec, void (^block)(void))
+{
+  dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+  if(timer)
+  {
+    dispatch_source_set_timer(timer,
+                              dispatch_walltime(NULL, 0),
+                              interval_sec * NSEC_PER_SEC,
+                              interval_sec * NSEC_PER_SEC * TIMER_LEEWAY);
+
+    dispatch_source_set_event_handler(timer, block);
+    dispatch_resume(timer);
+  }
+  return timer;
+}
+
 
 @protocol BleLogger
 -(void) logLifecycle: (id)payload;
@@ -56,10 +96,10 @@ static time_t get_now(void)
 @implementation PeripheralTokenData {
   id<BleLogger> _logger;
 
-  time_t _creationTime;
-  time_t _lastTokenRefresh;
-  time_t _lastTokenSend;
-  time_t _lastConnStart;
+  int64_t _creationTime;
+  int64_t _lastTokenRefresh;
+  int64_t _lastTokenSend;
+  int64_t _lastConnStart;
 
   //per connection state
   bool _refreshInProgress;
@@ -74,7 +114,7 @@ static time_t get_now(void)
   self.peripheral = peripheral;
 
   _logger = logger;
-  _creationTime = get_now();
+  _creationTime = get_now_secs();
   _lastTokenRefresh = 0;
   _lastTokenSend = 0;
   _lastConnStart = 0;
@@ -87,7 +127,11 @@ static time_t get_now(void)
 
 -(bool)isExpired
 {
-  return (get_now() - _creationTime) > token_cache_ttl_in_secs;
+  int64_t now = get_now_secs();
+  int64_t diff = now - _creationTime;
+  bool is_expired = diff > token_cache_ttl_in_secs;
+//  [_logger logLifecycle:[NSString stringWithFormat:@"IS EXPIRED CHECK now:%lld ct:%lld ttl:%lld check:%d diff: %lld", now, _creationTime, token_cache_ttl_in_secs, is_expired, diff]];
+  return is_expired;
 }
 
 -(void)resetConnState
@@ -120,7 +164,7 @@ static time_t get_now(void)
   if([self isExpired])
     return;
 
-  time_t now = get_now();
+  time_t now = get_now_secs();
   //do we need to connect?
   bool needsToRefreshToken = (now - _lastTokenRefresh) > remote_token_refresh_timeout_in_secs;
   bool needsToSendToken = (now - _lastTokenSend) > observation_interval_in_secs;
@@ -224,16 +268,16 @@ static time_t get_now(void)
 {
   if(error)
   {
-    [_logger logLifecycle:[NSString stringWithFormat: @"[%ld] read %@ failed: %@", get_now(), peripheral.identifier, error]];
+    [_logger logLifecycle:[NSString stringWithFormat: @"[%lld] read %@ failed: %@", get_now_secs(), peripheral.identifier, error]];
     //XXX don't break connection on read failure as writes could be happening
   }
   else
   {
     NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:characteristic.value.bytes] UUIDString];
-    [_logger logLifecycle:[NSString stringWithFormat: @"[%ld] read %@ => %@", get_now(), peripheral.identifier, uuid]];
+    [_logger logLifecycle:[NSString stringWithFormat: @"[%lld] read %@ => %@", get_now_secs(), peripheral.identifier, uuid]];
 
     self.token = uuid;
-    _lastTokenRefresh = get_now();
+    _lastTokenRefresh = get_now_secs();
   }
 
   _readCompleted = true;
@@ -246,7 +290,7 @@ static time_t get_now(void)
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
   [_logger logLifecycle:
-   [NSString stringWithFormat: @"[%ld] write %@ (%@)", get_now(), peripheral.identifier, error?@"ok":@"fail"]];
+   [NSString stringWithFormat: @"[%lld] write %@ (%@)", get_now_secs(), peripheral.identifier, error?@"ok":@"fail"]];
 
   if(error) {
     [_logger logLifecycle:[NSString stringWithFormat: @"write characteristic failed with %@", error]];
@@ -310,7 +354,7 @@ static time_t get_now(void)
 
 - (bool)isExpired
 {
-  return (get_now() - self.firstSeenTimestamp) > observation_interval_in_secs;
+  return (get_now_secs() - self.firstSeenTimestamp) > observation_interval_in_secs;
 }
 
 
@@ -362,7 +406,12 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   _serviceUUID = serviceUUID;
   _characteristicUUID = characteristicUUID;
 
-  [self logLifecycle : @"BLE backend inited" ];
+  NSURL *url = [[NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+  url = [url URLByAppendingPathComponent:@"contacts.txt"];
+
+  unlink(url.path.UTF8String); //HACK KILL ME AT END OF TESTING
+  _contactsLogFile = fopen(url.path.UTF8String, "a");
+  [self logLifecycle : [NSString stringWithFormat:@"BLE backend inited contact file is %@ did open %d", url.path, _contactsLogFile != NULL ]];
 }
 
 RCT_EXPORT_METHOD(startScanning)
@@ -458,6 +507,17 @@ cbPeripheralManager = [[CBPeripheralManager alloc]
 
 -(void) logContact: (NSString *)token at:(time_t)at rssi:(int)rssi kind:(int)kind {
   [self sendEventWithName:@"onContact" body:@[token, [NSNumber numberWithLong:at], [NSNumber numberWithInt:rssi], [NSNumber numberWithInt:kind]]];
+
+  if(_contactsLogFile) {
+    NSString *str = [NSString stringWithFormat:@"{\"uuid\":\"%s\" , \"timestamp\":%lld, \"rssi\":%d , \"kind\":%d }\n",
+             (char*)token.UTF8String,
+             (int64_t)at,
+             rssi,
+             kind];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    fwrite(data.bytes, data.length, 1, _contactsLogFile);
+    fflush(_contactsLogFile);
+  }
 }
 
 -(void) logLifecycle: (id)payload {
@@ -530,7 +590,7 @@ static NSString *nsdata_to_hex(NSData *data)
   BleRecord *rec = [ble_table objectForKey: peripheralId];
 
   if(rec != nil && rec.isExpired) {
-    [self flush_record: rec];
+    [self flush_record: rec why:@"scan"];
     rec = nil;
   }
    
@@ -540,8 +600,7 @@ static NSString *nsdata_to_hex(NSData *data)
    [self add_record_to_monitor: rec];
   }
 
-  time_t ts = (time_t)[NSDate date].timeIntervalSince1970;
-  [rec update: ts rssi: [rssi intValue]];
+  [rec update: get_now_secs() rssi: [rssi intValue]];
 
   //token cache maintenance
   PeripheralTokenData *token = self->token_cache[peripheralId];
@@ -593,8 +652,8 @@ time_t lastTokenUpdate;
 
 -(NSData*)currentTokenData
 {
-  time_t now = get_now();
-  if((now - lastTokenUpdate) > token_renew_time_in_seconds) {
+  time_t now = get_now_secs();
+  if((now - lastTokenUpdate) > token_renew_time_in_secs) {
     NSUUID *newToken = [NSUUID UUID];
     [self logLifecycle:[NSString stringWithFormat:@"Updating token from %@ to %@", currentToken, newToken]];
     currentToken = newToken;
@@ -680,6 +739,7 @@ time_t lastTokenUpdate;
 {
   for(CBATTRequest *req in requests)
   {
+//    req.central.identifier;
     if(req.value == nil) {
       [peripheral respondToRequest:req withResult:CBATTErrorUnlikelyError];
       [self logLifecycle:@"Bad write request with no data"];
@@ -694,7 +754,8 @@ time_t lastTokenUpdate;
 
     NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:req.value.bytes] UUIDString];
     [self logLifecycle:[NSString stringWithFormat:@">>>A friend sent us uuid: %@", uuid]];
-    [ self logContact:uuid at:get_now() rssi:INT_MIN kind:CONTACT_PASSIVE];
+    [self logContact:uuid at:get_now_secs() rssi:INT_MIN kind:CONTACT_PASSIVE];
+    [peripheral respondToRequest:req withResult:CBATTErrorSuccess];
   }
 }
 
@@ -703,26 +764,26 @@ time_t lastTokenUpdate;
  * Blackground queueing and flusshing
  */
 
--(void) flush_record: (BleRecord*)rec
+-(void) flush_record: (BleRecord*)rec why:(NSString*)why
 {
 //  [self logLifecycle:[NSString stringWithFormat:@"flushing %@", rec.uuid]];
 
   PeripheralTokenData *pd = token_cache[rec.uuid];
   if(pd == nil || pd.token == nil) {
-    [self logLifecycle:[NSString stringWithFormat:
-                        @"Can't flush record because there's no token in cache for %@ pd %d", rec.uuid, (pd == nil)] ];
+//    [self logLifecycle:[NSString stringWithFormat: @"Can't flush, no token %@ pd %d (%@)", rec.uuid, (pd == nil), why] ];
   }
   else
   {
     [self logContact:pd.token at:rec.firstSeenTimestamp rssi:rec.rssi kind:CONTACT_ACTIVE];
   }
 
+  
   [ble_table removeObjectForKey:rec.uuid];
 }
 
 -(void) processTokensAndRecords
 {
-//  [self logLifecycle:@"Processing timer called"];
+  [self logLifecycle:[NSString stringWithFormat:@"[%@] Processing timer called", [NSDate date]]];
   
   for(PeripheralTokenData *pd in token_cache.allValues)
   {
@@ -740,8 +801,10 @@ time_t lastTokenUpdate;
       [arr addObject: rec];
   }
   
+  [self logLifecycle:[NSString stringWithFormat:@"Flushing %ld records", arr.count]];
+
   for(BleRecord *rec in arr) {
-    [self flush_record: rec];
+    [self flush_record: rec why:@"timer"];
   }
 
   if(ble_table.count == 0 && token_cache.count == 0) {
@@ -756,25 +819,10 @@ time_t lastTokenUpdate;
 
   if(queue_timer == nil)
   {
-    queue_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-    if(queue_timer)
-    {
-      dispatch_source_set_timer(queue_timer,
-                                dispatch_walltime(NULL, 0),
-                                observation_interval_in_secs * NSEC_PER_SEC,
-                                observation_interval_in_secs * NSEC_PER_SEC * TIMER_LEEWAY);
-
-      __weak BLE* w_self = self;
-      dispatch_source_set_event_handler(queue_timer, ^{
-        [w_self processTokensAndRecords];
-      });
-
-      dispatch_resume(queue_timer);
-    }
-    else
-    {
-      [self logLifecycle:@"Could not create queue timer"];
-    }
+    __weak BLE* w_self = self;
+    queue_timer = create_recurring_timer(observation_interval_in_secs, ^{
+      [w_self processTokensAndRecords];
+    });
   }
 }
 
