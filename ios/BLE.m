@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 
+@import CoreBluetooth;
 @import Foundation;
 
 /*
@@ -16,29 +17,32 @@
   handle restore events
   properly understand how to handle RSSI
  */
-@import CoreBluetooth;
 
-#define DBG_LOG 1
+//set this to enable high volume logging disable for release!
+#define DBG_LOG
+//set this to make the protocol to act in non-conforming, but extremely fast. good for developing.
+#define USE_FAST_DEV_VALUES
 
 //we let up to this many times of leeway for the timer subsystem to delay execution
 #define TIMER_LEEWAY 5
 
 //global config options
 
-//how frequently to log interactions - this drives BLE io frequency
-static int64_t observation_interval_in_secs = 10; //write internal & scan log interval
+#ifdef USE_FAST_DEV_VALUES
+static int64_t contact_log_interval_in_secs = 5; //active contact logging
+static int64_t local_id_write_interval_in_secs = 10; //send my id to remote devices / passive logging
+static int64_t remote_id_read_interval_in_secs = 20; //read remote id
+static int64_t device_cache_ttl_in_secs = 1 * 60; //drop local cache on remote device
+static int64_t crypto_id_update_schedule_in_secs = 15 * 60;
+#else
+static int64_t contact_log_interval_in_secs = 5 * 60; //active contact logging
+static int64_t local_id_write_interval_in_secs = 10 * 60;
+static int64_t remote_id_read_interval_in_secs = 15 * 60;
+static int64_t device_cache_ttl_in_secs = 30 * 60;
+static int64_t crypto_id_update_schedule_in_secs = 15 * 60;
 
-//how frequently fetch remote IDs, this reduces the window
-//should be >= observation_interval_in_secs and <= token_cache_ttl_in_secs
-//should be <= token_renew_time_in_seconds
-static int64_t remote_token_refresh_timeout_in_secs = 10; //token read interval
+#endif
 
-//time we keep a device-id in our cache, this just means more memory and reduces the need to scan for ids
-static int64_t token_cache_ttl_in_secs = 15 * 60;
-
-//time between each token renewal (in theory remote_token_refresh_timeout_in_secs should be the same)
-//should be >= observation_interval_in_secs (or some tokens won't be observable)
-static int64_t token_renew_time_in_secs = 15 * 60;
 
 static int64_t conn_start_timeout_in_seconds = 5;
 
@@ -169,15 +173,15 @@ typedef enum {
   //fresh new device, let's schedule IO
   __weak PeripheralContactHelper *w_self = self;
 
-  _read_timer = create_recurring_timer(observation_interval_in_secs, ^ {
+  _read_timer = create_recurring_timer(remote_id_read_interval_in_secs, ^ {
     [w_self queueRead];
   });
 
-  _write_timer = create_recurring_timer(remote_token_refresh_timeout_in_secs, ^ {
+  _write_timer = create_recurring_timer(local_id_write_interval_in_secs, ^ {
     [w_self queueWrite];
   });
 
-  _cache_flush_timer = create_one_shot_timer(token_cache_ttl_in_secs, ^{
+  _cache_flush_timer = create_one_shot_timer(device_cache_ttl_in_secs, ^{
     [w_self cache_timeout];
   });
   
@@ -298,7 +302,7 @@ typedef enum {
 -(void)tryFlushContact
 {
   int64_t now = get_now_secs();
-  if((now - _lastContactFlush) > observation_interval_in_secs && _token != nil) {
+  if((now - _lastContactFlush) > contact_log_interval_in_secs && _token != nil) {
     [_logger logContact: _token at:_lastContactFlush rssi:_rssi kind:CONTACT_ACTIVE];
     _lastContactFlush = now;
     _rssi = INT_MIN;
@@ -601,7 +605,7 @@ time_t lastTokenUpdate;
 -(NSData*)currentTokenData
 {
   time_t now = get_now_secs();
-  if((now - lastTokenUpdate) > token_renew_time_in_secs) {
+  if((now - lastTokenUpdate) > crypto_id_update_schedule_in_secs) {
     NSUUID *newToken = [NSUUID UUID];
     [self logDebug:[NSString stringWithFormat:@"Updating token from %@ to %@", currentToken, newToken]];
     currentToken = newToken;
