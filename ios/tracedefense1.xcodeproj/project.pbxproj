@@ -22,6 +22,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* tracedefense1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tracedefense1Tests.m */; };
 		470782298F0AADE084713FC8 /* libPods-tracedefense1-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DABAFFEF95CE17F66935E29A /* libPods-tracedefense1-tvOS.a */; };
 		791E1AF94187585E38239987 /* libPods-tracedefense1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B46D41B29B9E3AA7D01F105 /* libPods-tracedefense1Tests.a */; };
+		A50FDFF724368B87000CF390 /* proto.c in Sources */ = {isa = PBXBuildFile; fileRef = A50FDFF524368B87000CF390 /* proto.c */; };
 		A5E323C4242E6FE00066AB83 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.m */; };
 		E4D1A697C1DC7C8B0FE3BA33 /* libPods-tracedefense1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D2A8DC3AD0DD2180678852 /* libPods-tracedefense1.a */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,8 @@
 		5F975F1C2D7AE24E6ABB2506 /* Pods-tracedefense1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1/Pods-tracedefense1.debug.xcconfig"; sourceTree = "<group>"; };
 		6B46D41B29B9E3AA7D01F105 /* libPods-tracedefense1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tracedefense1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E97F14203377B5D449621B2 /* Pods-tracedefense1-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1-tvOSTests/Pods-tracedefense1-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A50FDFF524368B87000CF390 /* proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = proto.c; sourceTree = "<group>"; };
+		A50FDFF624368B87000CF390 /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
 		A5E323C2242E6FE00066AB83 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
 		A5E323C3242E6FE00066AB83 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		AE7D88DEA95B58674E65095F /* Pods-tracedefense1-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-tracedefense1-tvOSTests/Pods-tracedefense1-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 		13B07FAE1A68108700A75B9A /* tracedefense1 */ = {
 			isa = PBXGroup;
 			children = (
+				A50FDFF524368B87000CF390 /* proto.c */,
+				A50FDFF624368B87000CF390 /* proto.h */,
 				14431C2F242D8B4300DEFBBE /* BLE */,
 				14431C2C242D83DF00DEFBBE /* Device */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -603,6 +608,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
+				A50FDFF724368B87000CF390 /* proto.c in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.m in Sources */,
 				140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */,
