@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React, {Component, useEffect} from 'react';
 import OnBoarding from './OnBoarding/OnBoarding';
 import Preferences from './Preferences/Preferences';
+import Home from './Home/Home';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -35,6 +36,15 @@ function App() {
               component={Preferences}
               options={{
                 title: 'Select your preferences',
+                headerStyle: {
+                },
+              }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                title: 'HOME',
                 headerStyle: {
                 },
               }}

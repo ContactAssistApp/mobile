@@ -34,7 +34,10 @@ class OnBoarding extends Component {
             >
               <Text style={styles.start_button_text}>Let's get started</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.professional_button}>
+            <TouchableOpacity
+              style={styles.professional_button}
+              onPress={() => navigate('Home', {screen: 'Home'})}
+            >
               <Text style={styles.professional_button_text}>
                 I'm a medical professional
               </Text>

@@ -5,6 +5,7 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity
 } from 'react-native';
 import colors from '../assets/colors';
 import Toggle from '../views/Toggle';
@@ -37,6 +38,8 @@ class Preferences extends Component {
   };
 
   render() {
+    const {navigate} = this.props.navigation;
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.intro_container}>
@@ -84,6 +87,16 @@ class Preferences extends Component {
             }}
           />
         </View>
+        <View>
+          <TouchableOpacity
+            style={styles.next_button}
+            onPress={() => navigate('Home', {screen: 'Home'})}
+          >
+            <Text style={styles.next_button_text}>
+              Next
+            </Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -123,6 +136,17 @@ const styles = StyleSheet.create({
   switch_container: {
     flex: 0.15,
   },
+  next_button: {
+    marginHorizontal: 20,
+    marginVertical: 30,
+    borderRadius: 2,
+    backgroundColor: colors.PURPLE_50,
+    paddingVertical: 15,
+    alignItems: 'center',
+  },
+  next_button_text: {
+    color: 'white',
+  }
 });
 
 export default Preferences;
