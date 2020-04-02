@@ -62,9 +62,6 @@ class HomeContainer extends Component {
           kind: data[3]
         };
 
-        // if(this.state.logNative)
-        //   console.log(contact);
-
         this.setState({
           contactLogs: [contact].concat(this.state.contactLogs)
         });
@@ -107,21 +104,13 @@ class HomeContainer extends Component {
   }
 
   startBle = () => {
-    NativeModules.BLE.startScanning();
-    NativeModules.BLE.startAdvertising();
+    NativeModules.BLE.start_ble();
     this.setState({ isScanning: true, isAdvertising: true });
   }
-  stopBle = () => {
-    NativeModules.BLE.stopAdvertising();
-    NativeModules.BLE.stopScanning();
-    this.setState({ isAdvertising: false, isScanning: false });
-  }
 
-  callNative = () => {
-    console.log("=====");
-    NativeModules.Device.getDeviceName((err, name) => {
-      console.log(name);
-    });
+  stopBle = () => {
+    NativeModules.BLE.stop_ble();
+    this.setState({ isAdvertising: false, isScanning: false });
   }
 
   countLogs = (kind) => {

@@ -10,13 +10,16 @@
  Implement:
   new ID generation protocol
   token and contact logging
-  conneciton timeout using a timer
+  conneciton timeout using a timer (done-ish)
   add delay to write from read
+  add define based heavy debugging
+  handle restore events
+  properly understand how to handle RSSI
  */
 @import CoreBluetooth;
 
-//restrict scanning tracedefence only devices
-#define SCAN_SRV_ONLY 1
+#define DBG_LOG 1
+
 //we let up to this many times of leeway for the timer subsystem to delay execution
 #define TIMER_LEEWAY 5
 
@@ -37,6 +40,9 @@ static int64_t token_cache_ttl_in_secs = 15 * 60;
 //should be >= observation_interval_in_secs (or some tokens won't be observable)
 static int64_t token_renew_time_in_secs = 15 * 60;
 
+static int64_t conn_start_timeout_in_seconds = 5;
+
+
 static NSString *_serviceUUID;
 static NSString *_characteristicUUID;
 
@@ -47,7 +53,6 @@ static FILE* _contactsLogFile;
 //active contact means a device reached out to us and send their ID
 #define CONTACT_PASSIVE 2
 
-#define conn_start_timeout_in_seconds 5
 
 static int64_t get_now_secs(void)
 {
@@ -74,174 +79,254 @@ static dispatch_source_t create_recurring_timer(int64_t interval_sec, void (^blo
   return timer;
 }
 
+static dispatch_source_t create_one_shot_timer(int64_t delay_in_secs, void (^block)(void))
+{
+  dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+  if(timer)
+  {
+    dispatch_source_set_timer(timer,
+                              dispatch_walltime(NULL, delay_in_secs * NSEC_PER_SEC),
+                              1 * NSEC_PER_SEC,
+                              1 * NSEC_PER_SEC * TIMER_LEEWAY);
 
-@protocol BleLogger
--(void) logLifecycle: (id)payload;
--(NSData*)currentTokenData;
--(CBCentralManager *) cbc;
-@end
-
-@interface PeripheralTokenData : NSObject<CBPeripheralDelegate>
--(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleLogger>)logger;
--(bool)isExpired;
-
--(void)didConnect;
--(void)didFailToConnect: (NSError*)error;
--(void)beginRefresh;
-
-@property CBPeripheral *peripheral;
-@property NSString *token;
-@end
-
-@implementation PeripheralTokenData {
-  id<BleLogger> _logger;
-
-  int64_t _creationTime;
-  int64_t _lastTokenRefresh;
-  int64_t _lastTokenSend;
-  int64_t _lastConnStart;
-
-  //per connection state
-  bool _refreshInProgress;
-  bool _readRequest, _writeRequest;
-  bool _readDone, _writeDone;
-  bool _readCompleted, _writeCompleted;
-  CBCharacteristic *_contact_characteristic;
+    __weak dispatch_source_t w_timer = timer;
+      dispatch_source_set_event_handler(timer, ^{
+      block();
+      dispatch_source_t tmp = w_timer;
+      if(tmp)
+        dispatch_source_cancel(w_timer);
+    });
+    dispatch_resume(timer);
+  }
+  return timer;
 }
 
--(instancetype)initWithPeripheral:(CBPeripheral*)peripheral logger:(id<BleLogger>)logger
+@protocol BleLogger
+-(void) logDebug: (id)payload;
+-(void) logCritical: (id)payload;
+-(NSData*)currentTokenData;
+-(CBCentralManager *) cbc;
+-(void) flushCache: (CBPeripheral*)peripheral;
+-(void)logContact: (NSString *)token at:(time_t)at rssi:(int)rssi kind:(int)kind;
+@end
+
+
+typedef enum {
+  OpIgnore,
+  OpRequested,
+  OpInProgress,
+  OpDone
+} OpStage;
+
+@interface PeripheralContactHelper: NSObject<CBPeripheralDelegate>
+
+-(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleLogger>)logger;
+
+@property NSString *token;
+
+//methods called by CBCentralManagerDelegate
+-(void)didConnect;
+-(void)didFailToConnect: (NSError*)error;
+-(void)didScan:(NSDictionary<NSString *,id> *)data rssi:(int)rssi;
+
+@end
+
+#define OPS_COUNT 2
+#define OP_READ 0
+#define OP_WRITE 1
+
+
+@implementation PeripheralContactHelper {
+  CBPeripheral *_peripheral;
+  __weak id<BleLogger> _logger;
+  
+  int64_t _creation_time;
+
+  dispatch_source_t _read_timer;
+  dispatch_source_t _write_timer;
+  dispatch_source_t _cache_flush_timer;
+  dispatch_source_t _timeout_timer;
+
+  OpStage _ops[OPS_COUNT];
+  bool _connectionInProgress;
+  CBCharacteristic *_contact_characteristic;
+
+  int64_t _lastContactFlush;
+  int _rssi;
+}
+
+-(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleLogger>)logger
 {
-  self.peripheral = peripheral;
-
+  _peripheral = peripheral;
   _logger = logger;
-  _creationTime = get_now_secs();
-  _lastTokenRefresh = 0;
-  _lastTokenSend = 0;
-  _lastConnStart = 0;
-  [self resetConnState];
+  //we set _lastContactFlush to force at least one tick before logging
+  _creation_time = _lastContactFlush = get_now_secs();
+  _rssi = INT_MIN;
 
-  peripheral.delegate = self;
+  _peripheral.delegate = self;
+  [self cancelConnection];
 
+  //fresh new device, let's schedule IO
+  __weak PeripheralContactHelper *w_self = self;
+
+  _read_timer = create_recurring_timer(observation_interval_in_secs, ^ {
+    [w_self queueRead];
+  });
+
+  _write_timer = create_recurring_timer(remote_token_refresh_timeout_in_secs, ^ {
+    [w_self queueWrite];
+  });
+
+  _cache_flush_timer = create_one_shot_timer(token_cache_ttl_in_secs, ^{
+    [w_self cache_timeout];
+  });
+  
+  [_logger logDebug:[NSString stringWithFormat:@"new PCH for device %@", peripheral.identifier]];
   return self;
 }
 
--(bool)isExpired
-{
-  int64_t now = get_now_secs();
-  int64_t diff = now - _creationTime;
-  bool is_expired = diff > token_cache_ttl_in_secs;
-//  [_logger logLifecycle:[NSString stringWithFormat:@"IS EXPIRED CHECK now:%lld ct:%lld ttl:%lld check:%d diff: %lld", now, _creationTime, token_cache_ttl_in_secs, is_expired, diff]];
-  return is_expired;
+-(void)queueRead {
+  [_logger logDebug:[NSString stringWithFormat:@"queue read for %@", _peripheral.identifier]];
+  //only start if there isn't one in progress
+  if(_ops[OP_READ] == OpIgnore)
+    _ops[OP_READ] = OpRequested;
+  [self beingConnectIfNeeded];
 }
 
--(void)resetConnState
-{
-  _refreshInProgress = false;
-  _readRequest = _writeRequest = false;
-  _readDone = _writeDone = false;
-  _readCompleted = _writeCompleted = false;
-  _contact_characteristic = nil;
-  [[_logger cbc] cancelPeripheralConnection:_peripheral];
+-(void)queueWrite {
+  [_logger logDebug:[NSString stringWithFormat:@"queue write for %@", _peripheral.identifier]];
+  if(_ops[OP_WRITE] == OpIgnore)
+    _ops[OP_WRITE] = OpRequested;
+  [self beingConnectIfNeeded];
 }
 
--(void)performAllIO
-{
-  if(!_contact_characteristic)
-    return;
-  if(_readRequest && !_readDone) {
-    [_peripheral readValueForCharacteristic:_contact_characteristic];
-    _readDone = true;
-  }
-
-  if(_writeRequest && !_writeDone) {
-    [_peripheral writeValue:[_logger currentTokenData] forCharacteristic:_contact_characteristic type:CBCharacteristicWriteWithResponse];
-    _writeDone = true;
-  }
+-(void)cache_timeout {
+  [_logger logDebug:[NSString stringWithFormat:@"cache timeout for %@", _peripheral.identifier]];
+  dispatch_source_cancel(_read_timer);
+  dispatch_source_cancel(_write_timer);
+  [self cancelConnection];
+  [_logger flushCache: _peripheral];
 }
 
--(void)beginRefresh
-{
-  if([self isExpired])
+-(void)beingConnectIfNeeded {
+  if(_connectionInProgress)
     return;
-
-  time_t now = get_now_secs();
-  //do we need to connect?
-  bool needsToRefreshToken = (now - _lastTokenRefresh) > remote_token_refresh_timeout_in_secs;
-  bool needsToSendToken = (now - _lastTokenSend) > observation_interval_in_secs;
-
-  //Nothing to do, we can kill the connection
-  if(!needsToRefreshToken && !needsToSendToken)
-  {
-    switch(_peripheral.state)
-    {
-      case CBPeripheralStateConnected:
-        if(!_refreshInProgress) {
-          [self resetConnState];
-          [_logger logLifecycle:[NSString stringWithFormat:@"disconnecting device %@", self.peripheral.identifier]];
-        }
-        break;
-      case CBPeripheralStateConnecting:
-        if ((now - _lastConnStart) > conn_start_timeout_in_seconds) {
-          [self resetConnState];
-          [_logger logLifecycle:[NSString stringWithFormat:@"device connection timeout %@", self.peripheral.identifier]];
-        }
-        break;
-      default: //nothing to do if we're not connected
-        break;
-    }
-    return;
-  }
-  
-  _readRequest = needsToRefreshToken;
-  _writeRequest = needsToSendToken;
-
   switch(_peripheral.state)
   {
     case CBPeripheralStateConnected:
-      [self performAllIO];
-      break;
     case CBPeripheralStateConnecting:
       break;
-    default:
-      [[_logger cbc] connectPeripheral:self.peripheral options:nil];
-      _lastConnStart = now;
-//      [_logger logLifecycle:[NSString stringWithFormat:@"connecting to device %@", self.peripheral.identifier]];
-      break;
-  }
+    default: {
+      [_logger.cbc connectPeripheral:_peripheral options:nil];
 
-  _refreshInProgress = true;
+      __weak PeripheralContactHelper *w_self = self;
+      _timeout_timer = create_one_shot_timer(conn_start_timeout_in_seconds, ^{
+        [w_self checkForTimeout];
+      });
+      _connectionInProgress = true;
+
+      break;
+    }
+  }
+}
+
+-(void) checkForTimeout {
+  [_logger logDebug:[NSString stringWithFormat:@"connection timeout for %@", _peripheral.identifier]];
+  [self cancelConnection];
+}
+
+-(void) cancelConnection {
+  [_logger.cbc cancelPeripheralConnection:_peripheral];
+  for(int i = 0; i < OPS_COUNT; ++i) {
+    _ops[i] = OpIgnore;
+  }
+  if(_timeout_timer) {
+    dispatch_source_cancel(_timeout_timer);
+    _timeout_timer = nil;
+  }
+  _contact_characteristic = nil;
+  _connectionInProgress = false;
+}
+
+-(void)updateIo
+{
+  int done_or_ignore = 0;
+  
+  for(int i = 0; i < OPS_COUNT; ++i) {
+    switch(_ops[i]) {
+    case OpIgnore: //nothing to do
+        ++done_or_ignore;
+        break;
+    case OpRequested:
+        if(_contact_characteristic) {
+          if(i == OP_READ) {
+             [_peripheral readValueForCharacteristic:_contact_characteristic];
+          } else {
+            [_peripheral writeValue:[_logger currentTokenData] forCharacteristic:_contact_characteristic type:CBCharacteristicWriteWithResponse];
+          }
+          _ops[i] = OpInProgress;
+        } else {
+          [self beingConnectIfNeeded];
+        }
+        break;
+      case OpInProgress: //this is done by the completion cbs
+        break;
+      case OpDone:
+        ++done_or_ignore;
+        break;
+    }
+  }
+  if(done_or_ignore == OPS_COUNT)
+    [self cancelConnection];
 }
 
 -(void)didConnect
 {
-//  [_logger logLifecycle:[NSString stringWithFormat:@"discovering services of %@", self.peripheral.identifier]];
-  [self.peripheral discoverServices:@[ [CBUUID UUIDWithString: _serviceUUID]]];
+  [_logger logDebug:[NSString stringWithFormat:@"connect ok. discovering services of %@", _peripheral.identifier]];
+  [_peripheral discoverServices:@[ [CBUUID UUIDWithString: _serviceUUID]]];
 }
 
--(void)didFailToConnect:(NSError *)error
+-(void)didFailToConnect: (NSError*)error
 {
-  [_logger logLifecycle:[NSString stringWithFormat:@"failed to connect to %@ due to %@", self.peripheral.identifier, error]];
-  [self resetConnState];
+  [_logger logDebug:[NSString stringWithFormat:@"failed to connect to %@ due to %@", _peripheral.identifier, error]];
+  [self cancelConnection];
 }
 
-/**
- * CBPeripheralDelegate
- */
+
+//BLE callbacks
+
+-(void)tryFlushContact
+{
+  int64_t now = get_now_secs();
+  if((now - _lastContactFlush) > observation_interval_in_secs && _token != nil) {
+    [_logger logContact: _token at:_lastContactFlush rssi:_rssi kind:CONTACT_ACTIVE];
+    _lastContactFlush = now;
+    _rssi = INT_MIN;
+  }
+}
+     
+-(void)didScan:(NSDictionary<NSString *,id> *)data rssi:(int)rssi
+{
+  _rssi = MAX(_rssi, rssi);
+  [self tryFlushContact];
+}
+
+//Delegate callbacks
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
   if(error)
   {
-    [self resetConnState];
-    [_logger logLifecycle:[NSString stringWithFormat: @"discover services failed with %@", error]];
+    [self cancelConnection];
+    [_logger logDebug:[NSString stringWithFormat: @"discover services failed with %@", error]];
     return;
   }
   CBUUID *chr_id = [CBUUID UUIDWithString:_characteristicUUID];
   //TODO check service id
   for(CBService *s in peripheral.services) {
     if([s.UUID isEqual: [CBUUID UUIDWithString:_serviceUUID]]) {
-//      [_logger logLifecycle:@"Found our service :D"];
       [peripheral discoverCharacteristics:@[chr_id] forService:s];
+      break;
     }
   }
 }
@@ -249,8 +334,8 @@ static dispatch_source_t create_recurring_timer(int64_t interval_sec, void (^blo
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
   if(error) {
-    [self resetConnState];
-    [_logger logLifecycle:[NSString stringWithFormat: @"discovered characteristics failed with %@", error]];
+    [self cancelConnection];
+    [_logger logDebug:[NSString stringWithFormat: @"discovered characteristics failed with %@", error]];
     return;
   }
 
@@ -259,104 +344,43 @@ static dispatch_source_t create_recurring_timer(int64_t interval_sec, void (^blo
   {
     if([chr.UUID isEqual:chr_id]) {
       _contact_characteristic = chr;
-      [self performAllIO];
+      break;
     }
   }
+  [self updateIo];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
   if(error)
   {
-    [_logger logLifecycle:[NSString stringWithFormat: @"[%lld] read %@ failed: %@", get_now_secs(), peripheral.identifier, error]];
+    [_logger logDebug:[NSString stringWithFormat: @"[%lld] read %@ failed: %@", get_now_secs(), peripheral.identifier, error]];
     //XXX don't break connection on read failure as writes could be happening
   }
   else
   {
     NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:characteristic.value.bytes] UUIDString];
-    [_logger logLifecycle:[NSString stringWithFormat: @"[%lld] read %@ => %@", get_now_secs(), peripheral.identifier, uuid]];
+    [_logger logDebug:[NSString stringWithFormat: @"[%lld] read %@ => %@", get_now_secs(), peripheral.identifier, uuid]];
 
     self.token = uuid;
-    _lastTokenRefresh = get_now_secs();
+    [self tryFlushContact];
   }
 
-  _readCompleted = true;
-  if((!_readRequest || _readCompleted) && (!_writeRequest || _writeCompleted)){
-    //We're done with this connection
-    [self resetConnState];
-  }
+  _ops[OP_READ] = OpDone;
+  [self updateIo];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-  [_logger logLifecycle:
-   [NSString stringWithFormat: @"[%lld] write %@ (%@)", get_now_secs(), peripheral.identifier, error?@"ok":@"fail"]];
-
   if(error) {
-    [_logger logLifecycle:[NSString stringWithFormat: @"write characteristic failed with %@", error]];
-    //XXX don't break connection on write failure as reads could be happening
-  }
-
-  //nothing to do if it completed (maybe we log the fact to facilitate testing)
-
-  _writeCompleted = true;
-  if((!_readRequest || _readCompleted) && (!_writeRequest || _writeCompleted)) {
-    //We're done with this connection
-    [self resetConnState];
-  }
-}
-@end
-
-
-@interface BleRecord: NSObject
-
-@property NSString *uuid;
-@property time_t lastSeenTimestamp; //last time this device was seen
-@property time_t firstSeenTimestamp; //last time this device was logged
-@property int rssi;
-@property NSString *deviceName;
-@property NSString *localName;
-@property NSString *manufacturer;
-
-- (instancetype)initWithUUID:(NSString *)uuid peripheralName:(NSString*)name localName: (NSString*)localId manufacturer: (NSString*)manufacturer;
-
-- (void)update:(time_t)timestamp rssi:(int)rssi;
-
-- (bool)isExpired;
-@end
-
-@implementation BleRecord
-
-- (instancetype)initWithUUID:(NSString *)uuid peripheralName:(NSString*)name localName: (NSString*)localName manufacturer: (NSString*)manufacturer
-{
-  self.uuid = uuid;
-  self.deviceName = name;
-  self.localName = localName;
-  self.manufacturer = manufacturer;
-  self.lastSeenTimestamp = 0;
-  self.firstSeenTimestamp = 0;
-  self.rssi = INT_MIN;
-
-  return self;
-}
-
-- (void)update:(time_t)timestamp rssi:(int)rssi;
-{
-  if(self.firstSeenTimestamp == 0) {
-    self.firstSeenTimestamp = timestamp;
-    self.lastSeenTimestamp = timestamp;
+    [_logger logDebug:[NSString stringWithFormat: @"[%lld] write characteristic failed with %@", get_now_secs(), error]];
   } else {
-    self.lastSeenTimestamp = timestamp;
+      [_logger logDebug: [NSString stringWithFormat: @"[%lld] write success %@", get_now_secs(), peripheral.identifier]];
   }
-  if(self.rssi < rssi)
-    self.rssi = rssi;
-}
 
-- (bool)isExpired
-{
-  return (get_now_secs() - self.firstSeenTimestamp) > observation_interval_in_secs;
+  _ops[OP_WRITE] = OpDone;
+  [self updateIo];
 }
-
 
 @end
 
@@ -364,14 +388,10 @@ static dispatch_source_t create_recurring_timer(int64_t interval_sec, void (^blo
   CBCentralManager *cbCentralManager;
   CBPeripheralManager *cbPeripheralManager;
 
-  //used by scanning
-  NSMutableDictionary *ble_table;
-  dispatch_source_t queue_timer;
-
   NSUUID *currentToken;
   dispatch_source_t token_renew_timer;
   
-  NSMutableDictionary<NSString*, PeripheralTokenData*> *token_cache;
+  NSMutableDictionary<NSString*, PeripheralContactHelper*> *device_cache;
 }
 
 RCT_EXPORT_MODULE();
@@ -409,98 +429,75 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   NSURL *url = [[NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
   url = [url URLByAppendingPathComponent:@"contacts.txt"];
 
-  unlink(url.path.UTF8String); //HACK KILL ME AT END OF TESTING
   _contactsLogFile = fopen(url.path.UTF8String, "a");
-  [self logLifecycle : [NSString stringWithFormat:@"BLE backend inited contact file is %@ did open %d", url.path, _contactsLogFile != NULL ]];
+  [self logCritical: [NSString stringWithFormat:@"BLE backend inited contact file is %@ did open %d", url.path, _contactsLogFile != NULL ]];
 }
 
-RCT_EXPORT_METHOD(startScanning)
+RCT_EXPORT_METHOD(start_ble)
 {
   if(cbCentralManager != nil)
   {
-    [self logLifecycle : @"BLE scanning already in progress" ];
+    [self logCritical: @"BLE already inited" ];
     return;
   }
 
   NSDictionary *cbc_options = @{
-    CBCentralManagerOptionRestoreIdentifierKey: @"tracedefense.scanner."
+  CBCentralManagerOptionRestoreIdentifierKey: @"tracedefense.scanner."
   };
 
   cbCentralManager = [[CBCentralManager alloc]
-                      initWithDelegate: self
-                      queue: dispatch_get_main_queue()
-                      options: cbc_options];
+                    initWithDelegate: self
+                    queue: dispatch_get_main_queue()
+                    options: cbc_options];
 
-  [self logLifecycle : @"scanning init successfull" ];
+  NSDictionary *cbp_options = @{
+  CBPeripheralManagerOptionRestoreIdentifierKey: @"tracedefense.peripheral."
+  };
+
+  cbPeripheralManager = [[CBPeripheralManager alloc]
+                       initWithDelegate: self
+                       queue: dispatch_get_main_queue()
+                       options: cbp_options];
+
+
+  device_cache = [[NSMutableDictionary alloc] init];
+
+  [self logCritical: @"BLE init successfull" ];
 }
 
-RCT_EXPORT_METHOD(stopScanning)
+RCT_EXPORT_METHOD(stop_ble)
 {
   if(cbCentralManager == nil)
   {
-    [self logLifecycle : @"BLE scanning not running" ];
+    [self logCritical: @"BLE not enabled" ];
     return;
   }
-  
+
   if (cbCentralManager.isScanning)
-    [cbCentralManager stopScan];
-  
+  [cbCentralManager stopScan];
+
   cbCentralManager.delegate = nil;
   cbCentralManager = nil;
-  [self logLifecycle : @"BLE scanning stopped" ];
-}
 
-RCT_EXPORT_METHOD(startAdvertising)
-{
-  if(cbPeripheralManager != nil)
-  {
-    [self logLifecycle : @"CBP advertising already on" ];
-    return;
-  }
+  if(cbPeripheralManager.isAdvertising)
+  [cbPeripheralManager stopAdvertising];
 
-  NSDictionary *cbp_options = @{
-    CBPeripheralManagerOptionRestoreIdentifierKey: @"tracedefense.peripheral."
-  };
-
-cbPeripheralManager = [[CBPeripheralManager alloc]
-                         initWithDelegate: self
-                         queue: dispatch_get_main_queue()
-                         options: cbp_options];
-
-  [self logLifecycle : @"CBP advertising init successfull" ];
-}
-
- RCT_EXPORT_METHOD(stopAdvertising)
- {
-   if(cbPeripheralManager == nil)
-   {
-     [self logLifecycle : @"CBP advertising not happening" ];
-     return;
-   }
-  
-   if(cbPeripheralManager.isAdvertising)
-    [cbPeripheralManager stopAdvertising];
-   
-   [cbPeripheralManager removeAllServices];
+  [cbPeripheralManager removeAllServices];
 
   cbPeripheralManager.delegate = nil;
   cbPeripheralManager = nil;
+  device_cache = nil;
 
-  [self logLifecycle : @"CBP advertising stopped" ];
+  [self logCritical: @"BLE stopped" ];
 }
 
 /**
  * Logging
  */
 
--(void) clearScanState {
-  //que empty the old data
-  if(ble_table == nil)
-    ble_table = [[NSMutableDictionary alloc] init];
-  if(token_cache == nil)
-    token_cache = [[NSMutableDictionary alloc] init];
-}
-
+ -(void) flushCache: (CBPeripheral*)peripheral {
+      
+  }
 -(void) logTokenChange: (NSString *)token at:(time_t)at  {
   [self sendEventWithName:@"onTokenChange" body:@[token, [NSNumber numberWithLong:at]]];
 }
@@ -520,116 +517,72 @@ cbPeripheralManager = [[CBPeripheralManager alloc]
   }
 }
 
--(void) logLifecycle: (id)payload {
+-(void) logCritical: (id)payload {
   [self sendEventWithName:@"onLifecycleEvent" body:payload ];
-  NSLog(@"TraceDefense:: %@", payload);
+  NSLog(@"TraceDefense::CRIT:: %@", payload);
+}
+
+-(void) logDebug: (id)payload {
+#ifdef DBG_LOG
+  [self sendEventWithName:@"onLifecycleEvent" body:payload ];
+  NSLog(@"TraceDefense::INFO:: %@", payload);
+#endif
 }
 
 /**
 *CBCentralManagerDelegate Impl
 */
 -(void)centralManagerDidUpdateState:(CBCentralManager *)central {
-  [self clearScanState];
-  [self logLifecycle:[NSString stringWithFormat:@"CBM State update: %ld", (long)central.state] ];
+  [self logCritical:[NSString stringWithFormat:@"CBM State update: %ld", (long)central.state] ];
 
   if (central.state == CBManagerStatePoweredOn) {
-#if SCAN_SRV_ONLY
     NSArray *services = @[ [CBUUID UUIDWithString: _serviceUUID] ];
-#else
-      NSArray *services = nil;
-#endif
       
-      NSDictionary *options = @{
-        CBCentralManagerScanOptionAllowDuplicatesKey: @1
-      };
+    NSDictionary *options = @{
+      CBCentralManagerScanOptionAllowDuplicatesKey: @1
+    };
     
-      [ cbCentralManager scanForPeripheralsWithServices: services options: options ];
-      [self logLifecycle:@"BLE scan started"];
-    } else {
-      [self logLifecycle:@"Bluetooth not enabled"];
-    }
+    [ cbCentralManager scanForPeripheralsWithServices: services options: options ];
+    [self logCritical: @"BLE scan started"];
+  } else {
+    [self logCritical: @"Bluetooth not enabled"];
+  }
 }
 
 - (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary<NSString *,id> *)dict {
-  [self logLifecycle:@"restoring CBCentral state"];
+  [self logCritical: @"restoring CBCentral state"];
 }
-
-static NSString *nsdata_to_hex(NSData *data)
-{
-  NSUInteger capacity = data.length * 2;
-  NSMutableString *sbuf = [NSMutableString stringWithCapacity:capacity];
-  const unsigned char *buf = data.bytes;
-  NSInteger i;
-  for (i=0; i< data.length; ++i) {
-    [sbuf appendFormat:@"%02X", (int)buf[i]];
-  }
-  return sbuf;
-}
-
 
 -(void)centralManager:(CBCentralManager *)central
   didDiscoverPeripheral:(CBPeripheral *)peripheral
   advertisementData:(NSDictionary<NSString *,id> *)advertisementData
   RSSI:(NSNumber *)RSSI {
- 
-  NSString *peripheralName = peripheral.name;
-  NSString *peripheralId = peripheral.identifier.UUIDString;
-  NSNumber *rssi =  [NSNumber numberWithInteger: [RSSI integerValue]];
-  
-  NSString *localName = [advertisementData objectForKey:CBAdvertisementDataLocalNameKey];
-  if(localName == nil)
-    localName = @"<no_local_name>";
-  NSString * manufacturer_str = @"<no_manufacturer>";
-  NSData *manufacturer = [advertisementData objectForKey:CBAdvertisementDataManufacturerDataKey];
-  if(manufacturer != nil)
-    manufacturer_str = nsdata_to_hex(manufacturer);
 
-  if(peripheralName == nil)
-    peripheralName = @"<unknown>";
-  
-  BleRecord *rec = [ble_table objectForKey: peripheralId];
-
-  if(rec != nil && rec.isExpired) {
-    [self flush_record: rec why:@"scan"];
-    rec = nil;
+  PeripheralContactHelper *pch = device_cache[peripheral.identifier.UUIDString];
+  if(!pch) {
+    pch = [[PeripheralContactHelper alloc] initWithPeripheral:peripheral logger:self];
+    device_cache[peripheral.identifier.UUIDString] = pch;
   }
-   
-  if(rec == nil)
-  {
-   rec = [[BleRecord alloc] initWithUUID: peripheralId peripheralName: peripheralName localName:localName manufacturer:manufacturer_str];
-   [self add_record_to_monitor: rec];
-  }
-
-  [rec update: get_now_secs() rssi: [rssi intValue]];
-
-  //token cache maintenance
-  PeripheralTokenData *token = self->token_cache[peripheralId];
-  if(token == nil || [token isExpired]) {
-    [self logLifecycle:[NSString stringWithFormat:@"bad token is nil %d", (token == nil)]];
-    token = [[PeripheralTokenData alloc] initWithPeripheral:peripheral logger:self];
-    token_cache[peripheralId] = token;
-  }
-
-  [token beginRefresh];
+  [pch didScan:advertisementData rssi:[RSSI intValue]];
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-  PeripheralTokenData *token = self->token_cache[peripheral.identifier.UUIDString];
-  if(token)
-    [token didConnect];
+  PeripheralContactHelper *pch = device_cache[peripheral.identifier.UUIDString];
+  if(pch)
+    [pch didConnect];
   else
-    [self logLifecycle:[NSString stringWithFormat:@"didConnect: did not find PTD for %@", peripheral.identifier]];
+    [self logDebug:[NSString stringWithFormat:@"didConnect: did not find PTD for %@", peripheral.identifier]];
 
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-  PeripheralTokenData *token = self->token_cache[peripheral.identifier.UUIDString];
-  if(token)
-    [token didFailToConnect: error];
+  PeripheralContactHelper *pch = device_cache[peripheral.identifier.UUIDString];
+  if(pch)
+    [pch didFailToConnect: error];
   else
-    [self logLifecycle:[NSString stringWithFormat:@"didFailConnect: did not find PTD for %@ err %@", peripheral.identifier, error]];
+    [self logDebug:[NSString stringWithFormat:@"didFailConnect: did not find PTD for %@ err %@", peripheral.identifier, error]];
 
 }
 
@@ -639,14 +592,9 @@ static NSString *nsdata_to_hex(NSData *data)
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary<NSString *,id> *)dict
 {
-  [self logLifecycle:@"restoring CBPeripheralManager state"];
+  [self logCritical:@"restoring CBPeripheralManager state"];
 }
 
-
-- (void)clearPeripheralState
-{
-  //TODO?
-}
 
 time_t lastTokenUpdate;
 
@@ -655,7 +603,7 @@ time_t lastTokenUpdate;
   time_t now = get_now_secs();
   if((now - lastTokenUpdate) > token_renew_time_in_secs) {
     NSUUID *newToken = [NSUUID UUID];
-    [self logLifecycle:[NSString stringWithFormat:@"Updating token from %@ to %@", currentToken, newToken]];
+    [self logDebug:[NSString stringWithFormat:@"Updating token from %@ to %@", currentToken, newToken]];
     currentToken = newToken;
     [self logTokenChange:[newToken UUIDString] at:now
     ];
@@ -669,8 +617,7 @@ time_t lastTokenUpdate;
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-  [self clearPeripheralState];
-  [self logLifecycle:[NSString stringWithFormat:@"CBP State update: %ld", (long)peripheral.state] ];
+  [self logCritical:[NSString stringWithFormat:@"CBP State update: %ld", (long)peripheral.state] ];
 
   if (peripheral.state == CBPeripheralManagerStatePoweredOn)
   {
@@ -690,11 +637,11 @@ time_t lastTokenUpdate;
 
     [peripheral removeAllServices];
     [peripheral addService:the_service];
-    [self logLifecycle:@"CBP service added"];
+    [self logDebug:@"CBP service added"];
   }
   else
   {
-    [self logLifecycle:@"CBP Bluetooth peripheral not enabled"];
+    [self logCritical:@"CBP Bluetooth peripheral not enabled"];
   }
 }
 
@@ -704,7 +651,7 @@ time_t lastTokenUpdate;
   
   if(error != nil)
   {
-    [self logLifecycle:[NSString stringWithFormat: @"CBP add service failed due to %@", error]];
+    [self logCritical:[NSString stringWithFormat: @"CBP add service failed due to %@", error]];
   }
   else
   {
@@ -712,7 +659,7 @@ time_t lastTokenUpdate;
       CBAdvertisementDataLocalNameKey: @"tracedefense.app.",
       CBAdvertisementDataServiceUUIDsKey: @[ [CBUUID UUIDWithString:_serviceUUID] ]
     }];
-    [self logLifecycle:@"CBP service advertising started"];
+    [self logCritical:@"CBP service advertising started"];
   }
 }
 
@@ -720,18 +667,17 @@ time_t lastTokenUpdate;
 {
   if(error != nil)
   {
-    [self logLifecycle:[NSString stringWithFormat: @"CBP start advertising failed/2 due to %@", error] ];
+    [self logCritical:[NSString stringWithFormat: @"CBP start advertising failed due to %@", error] ];
   }
   else
   {
-    [self logLifecycle:@"CBP start advertising success"];
+    [self logCritical:@"CBP start advertising success"];
   }
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
 {
-  NSData *data = [self currentTokenData];
-  request.value = data;
+  request.value = [self currentTokenData];
   [peripheral respondToRequest:request withResult:CBATTErrorSuccess];
 }
 
@@ -742,87 +688,20 @@ time_t lastTokenUpdate;
 //    req.central.identifier;
     if(req.value == nil) {
       [peripheral respondToRequest:req withResult:CBATTErrorUnlikelyError];
-      [self logLifecycle:@"Bad write request with no data"];
+      [self logDebug:@"Bad write request with no data"];
       continue;
     }
 
     if(req.value.length != 16) {
       [peripheral respondToRequest:req withResult:CBATTErrorUnlikelyError];
-      [self logLifecycle:[NSString stringWithFormat:@"Bad write request with wrong data size %ld", req.value.length]];
+      [self logDebug:[NSString stringWithFormat:@"Bad write request with wrong data size %ld", req.value.length]];
       continue;
     }
 
     NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:req.value.bytes] UUIDString];
-    [self logLifecycle:[NSString stringWithFormat:@">>>A friend sent us uuid: %@", uuid]];
+    [self logDebug:[NSString stringWithFormat:@"Received remove token: %@", uuid]];
     [self logContact:uuid at:get_now_secs() rssi:INT_MIN kind:CONTACT_PASSIVE];
     [peripheral respondToRequest:req withResult:CBATTErrorSuccess];
-  }
-}
-
-
-/**
- * Blackground queueing and flusshing
- */
-
--(void) flush_record: (BleRecord*)rec why:(NSString*)why
-{
-//  [self logLifecycle:[NSString stringWithFormat:@"flushing %@", rec.uuid]];
-
-  PeripheralTokenData *pd = token_cache[rec.uuid];
-  if(pd == nil || pd.token == nil) {
-//    [self logLifecycle:[NSString stringWithFormat: @"Can't flush, no token %@ pd %d (%@)", rec.uuid, (pd == nil), why] ];
-  }
-  else
-  {
-    [self logContact:pd.token at:rec.firstSeenTimestamp rssi:rec.rssi kind:CONTACT_ACTIVE];
-  }
-
-  
-  [ble_table removeObjectForKey:rec.uuid];
-}
-
--(void) processTokensAndRecords
-{
-  [self logLifecycle:[NSString stringWithFormat:@"[%@] Processing timer called", [NSDate date]]];
-  
-  for(PeripheralTokenData *pd in token_cache.allValues)
-  {
-    [pd beginRefresh];
-    if([pd isExpired]) {
-      [token_cache removeObjectForKey: pd.peripheral.identifier.UUIDString];
-    }
-  }
-  //collect all expired objects
-  NSMutableArray<BleRecord*> *arr = [[NSMutableArray alloc] init];
-
-  for(NSString *key in ble_table) {
-    BleRecord *rec = [ble_table objectForKey:key];
-    if(rec.isExpired)
-      [arr addObject: rec];
-  }
-  
-  [self logLifecycle:[NSString stringWithFormat:@"Flushing %ld records", arr.count]];
-
-  for(BleRecord *rec in arr) {
-    [self flush_record: rec why:@"timer"];
-  }
-
-  if(ble_table.count == 0 && token_cache.count == 0) {
-    dispatch_source_cancel(queue_timer);
-    queue_timer = nil;
-  }
-}
-
--(void) add_record_to_monitor: (BleRecord*)rec
-{
-  [ble_table setObject:rec forKey: rec.uuid];
-
-  if(queue_timer == nil)
-  {
-    __weak BLE* w_self = self;
-    queue_timer = create_recurring_timer(observation_interval_in_secs, ^{
-      [w_self processTokensAndRecords];
-    });
   }
 }
 
