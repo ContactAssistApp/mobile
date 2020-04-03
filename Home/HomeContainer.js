@@ -18,11 +18,7 @@ class HomeContainer extends Component {
     super();
     this.state = {
       record: 0,
-      localTokens: [],
-      contactLogs: [],
-      isAdvertising: false, 
-      isScanning: false,
-      logNative: true,  
+      isBleEnabled: false
     };
   }
 
@@ -32,40 +28,7 @@ class HomeContainer extends Component {
     this.subscriptions = []
     this.subscriptions.push(bleEmitter.addListener(
       'onLifecycleEvent',
-      (data) => {
-        if(this.state.logNative)
-          console.log("log:" +data);
-      }
-    ));
-
-    this.subscriptions.push(bleEmitter.addListener(
-      'onTokenChange',
-      (data) => {
-        var tokenChange = {
-          uuid: data[0],
-          timestapm: data[1]
-        };
-
-        this.setState( {
-          localTokens: this.state.localTokens.concat([tokenChange])
-        });
-      }
-    ));
-
-    this.subscriptions.push(bleEmitter.addListener(
-      'onContact',
-      (data) => {
-        var contact = {
-          uuid: data[0],
-          timestamp: data[1],
-          rssi: data[2],
-          kind: data[3]
-        };
-
-        this.setState({
-          contactLogs: [contact].concat(this.state.contactLogs)
-        });
-      }
+      (data) => console.log("log:" +data)
     ));
 
     NativeModules.BLE.init_module(
@@ -105,12 +68,12 @@ class HomeContainer extends Component {
 
   startBle = () => {
     NativeModules.BLE.start_ble();
-    this.setState({ isScanning: true, isAdvertising: true });
+    this.setState({ isBleEnabled: true });
   }
 
   stopBle = () => {
     NativeModules.BLE.stop_ble();
-    this.setState({ isAdvertising: false, isScanning: false });
+    this.setState({ isBleEnabled: false });
   }
 
   countLogs = (kind) => {
@@ -132,10 +95,9 @@ class HomeContainer extends Component {
         <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />
         <Button title={'Export gps'} onPress={this.exportGPS} />
         <Button title={'clear storage'} onPress={this.clearAsyncStorage} />
+
         <Text>{this.state.record}</Text>
-        <Text>Advertising: {this.state.isAdvertising.toString()} Scanning : {this.state.isScanning.toString()}</Text>
-        <Text>Local tokens: {this.state.localTokens.length} Contacts: {this.state.contactLogs.length}. </Text>
-        <Text>Active contacts: {this.countLogs(CONTACT_ACTIVE)} Passive Contacts: {this.countLogs(CONTACT_PASSIVE)} </Text>
+        <Text>Bluetooth: {this.state.isBleEnabled.toString()}</Text>
       </>
     );
   }

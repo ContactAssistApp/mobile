@@ -7,17 +7,19 @@
 #include "proto.h"
 #import "BLE.h"
 
+
 /*
  BIG TODO LIST:
  
  Implement:
-  new ID generation protocol
+  new ID generation protocol (done)
   token and contact logging
-  conneciton timeout using a timer (done-ish)
+  connection timeout using a timer (done-ish)
   add delay to write from read
-  add define based heavy debugging
+  add networking retires for read/write
+  add define based heavy debugging (done)
   handle restore events
-  properly understand how to handle RSSI (we picked -82 as cutoff)
+  handle RSSI (done, send it with package and discard bad data).
  */
 
 //set this to enable high volume logging disable for release!
@@ -59,6 +61,16 @@ static FILE* _contactsLogFile;
 //active contact means a device reached out to us and send their ID
 #define CONTACT_PASSIVE 2
 
+
+
+static int sanitize_rssi(int rssi)
+{
+  if(rssi == INT_MIN)
+    rssi = 0;
+  //only values between -255 and -1 are valid, round up below -255 and down to zero.
+  //zero is a special value meaning invalid
+  return MIN(MAX(rssi, -255), 0);
+}
 
 static int64_t get_now_secs(void)
 {
@@ -110,10 +122,10 @@ static dispatch_source_t create_one_shot_timer(int64_t delay_in_secs, void (^blo
 @protocol BleLogger
 -(void) logDebug: (id)payload;
 -(void) logCritical: (id)payload;
--(NSData*)currentDeviceId;
+-(NSMutableData*)currentDeviceId;
 -(CBCentralManager *) cbc;
 -(void) flushCache: (CBPeripheral*)peripheral;
--(void)logContact: (char *)device_id at:(int64_t)at rssi:(int)rssi kind:(int)kind;
+-(void)logContact: (NSData *)device_id at:(int64_t)at rssi:(int)rssi kind:(int)kind;
 @end
 
 
@@ -133,7 +145,6 @@ typedef enum {
 -(void)didConnect;
 -(void)didFailToConnect: (NSError*)error;
 -(void)didScan:(NSDictionary<NSString *,id> *)data rssi:(int)rssi;
--(char*)currentDeviceId;
 @end
 
 #define OPS_COUNT 2
@@ -157,10 +168,9 @@ typedef enum {
   CBCharacteristic *_contact_characteristic;
 
   int64_t _lastContactFlush;
-  int _rssi;
+  int _rssi, _prevRssi;
 
-
-  char _current_device_id[PROTO_ID_SIZE];
+  NSMutableData *_current_device_data;
   bool _device_id_valid;
 }
 
@@ -171,8 +181,9 @@ typedef enum {
   //we set _lastContactFlush to force at least one tick before logging
   _creation_time = _lastContactFlush = get_now_secs();
   _rssi = INT_MIN;
-  bzero(_current_device_id, PROTO_ID_SIZE);
-  _device_id_valid = 0;
+  _prevRssi = 0;
+  _current_device_data = [[NSMutableData alloc] initWithLength:PROTO_ID_SIZE];
+  _device_id_valid = false;
 
   _peripheral.delegate = self;
   [self cancelConnection];
@@ -194,11 +205,6 @@ typedef enum {
   
   [_logger logDebug:[NSString stringWithFormat:@"new PCH for device %@", peripheral.identifier]];
   return self;
-}
-
--(char*)currentDeviceId
-{
-  return _device_id_valid ? _current_device_id : NULL;
 }
 
 -(void)queueRead {
@@ -278,7 +284,13 @@ typedef enum {
           if(i == OP_READ) {
              [_peripheral readValueForCharacteristic:_contact_characteristic];
           } else {
-            [_peripheral writeValue:[_logger currentDeviceId] forCharacteristic:_contact_characteristic type:CBCharacteristicWriteWithResponse];
+            NSMutableData *deviceId = [_logger currentDeviceId];
+            //we encode as an unsigned int, zero is reserved to mean invalid local rssi, we saturate at 255
+            int rssiToSend = -sanitize_rssi(_rssi == INT_MIN ? _prevRssi : _rssi); //pick prev if we just flushed
+            uint8_t bytes[1] = { rssiToSend & 0xFF };
+            [deviceId appendBytes:bytes length:1];
+
+            [_peripheral writeValue:deviceId forCharacteristic:_contact_characteristic type:CBCharacteristicWriteWithResponse];
           }
           _ops[i] = OpInProgress;
         } else {
@@ -315,15 +327,18 @@ typedef enum {
 {
   int64_t now = get_now_secs();
   if((now - _lastContactFlush) > contact_log_interval_in_secs && _device_id_valid) {
-    [_logger logContact: _current_device_id at:_lastContactFlush rssi:_rssi kind:CONTACT_ACTIVE];
+    [_logger logContact: _current_device_data at:_lastContactFlush rssi:sanitize_rssi(_rssi) kind:CONTACT_ACTIVE];
     _lastContactFlush = now;
+    _prevRssi = _rssi;
     _rssi = INT_MIN;
   }
 }
      
 -(void)didScan:(NSDictionary<NSString *,id> *)data rssi:(int)rssi
 {
-  _rssi = MAX(_rssi, rssi);
+  //a positive rssi is insane
+  if(rssi < 0)
+    _rssi = sanitize_rssi(MAX(_rssi, rssi));
   [self tryFlushContact];
 }
 
@@ -381,7 +396,7 @@ typedef enum {
 
     if(data != nil && data.length == PROTO_ID_SIZE) {
       [_logger logDebug:[NSString stringWithFormat: @"[%lld] read %@ good device id", get_now_secs(), peripheral.identifier]];
-      memcpy(_current_device_id, data.bytes, PROTO_ID_SIZE);
+      memcpy([_current_device_data mutableBytes], data.bytes, PROTO_ID_SIZE);
       _device_id_valid = true;
       [self tryFlushContact];
     } else {
@@ -424,9 +439,8 @@ RCT_EXPORT_MODULE();
  */
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onLifecycleEvent", @"onTokenChange", @"onContact"];
+  return @[@"onLifecycleEvent"];
 }
-
 
 /**
  * BleLogger
@@ -530,22 +544,20 @@ RCT_EXPORT_METHOD(stop_ble)
  * Logging
  */
 
- -(void) flushCache: (CBPeripheral*)peripheral {
-      
-  }
--(void) logTokenChange: (NSString *)token at:(time_t)at  {
-  [self sendEventWithName:@"onTokenChange" body:@[token, [NSNumber numberWithLong:at]]];
+ -(void) flushCache: (CBPeripheral*)peripheral
+{
+   [device_cache removeObjectForKey: peripheral.identifier.UUIDString];
 }
 
--(void) logContact: (NSString *)token at:(int64_t)at rssi:(int)rssi kind:(int)kind {
-  [self sendEventWithName:@"onContact" body:@[token, [NSNumber numberWithLongLong:at], [NSNumber numberWithInt:rssi], [NSNumber numberWithInt:kind]]];
+-(void) logContact: (NSData *)deviceId at:(int64_t)at rssi:(int)rssi kind:(int)kind {
 
   if(_contactsLogFile) {
-    NSString *str = [NSString stringWithFormat:@"{\"uuid\":\"%s\" , \"timestamp\":%lld, \"rssi\":%d , \"kind\":%d }\n",
-             (char*)token.UTF8String,
-             (int64_t)at,
-             rssi,
-             kind];
+    NSString *str = [NSString stringWithFormat:@"%@,%lld,%d,%d\n",
+                     [deviceId base64EncodedStringWithOptions:0],
+                     at,
+                     rssi,
+                     kind];
+
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     fwrite(data.bytes, data.length, 1, _contactsLogFile);
     fflush(_contactsLogFile);
@@ -632,7 +644,7 @@ RCT_EXPORT_METHOD(stop_ble)
 
 
 
--(NSData*) currentDeviceId
+-(NSMutableData*) currentDeviceId
 {
   if(!_idgen)
     return nil;
@@ -644,7 +656,7 @@ RCT_EXPORT_METHOD(stop_ble)
     return NULL;
   }
   
-  return [NSData dataWithBytes:current_id length:PROTO_ID_SIZE];
+  return [[NSMutableData alloc] initWithBytes:current_id length:PROTO_ID_SIZE];
 }
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
@@ -724,15 +736,16 @@ RCT_EXPORT_METHOD(stop_ble)
       continue;
     }
 
-    if(req.value.length != 16) {
+    if(req.value.length != 17) {
       [peripheral respondToRequest:req withResult:CBATTErrorUnlikelyError];
       [self logDebug:[NSString stringWithFormat:@"Bad write request with wrong data size %ld", (long)req.value.length]];
       continue;
     }
 
-    NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:req.value.bytes] UUIDString];
-    [self logDebug:[NSString stringWithFormat:@"Received remove token: %@", uuid]];
-    [self logContact:uuid at:get_now_secs() rssi:INT_MIN kind:CONTACT_PASSIVE];
+    NSData *device_id = [NSData dataWithBytes:req.value.bytes length:16 ];
+    int rssi = -(int)((uint8_t*)req.value.bytes)[16];
+    
+    [self logContact:device_id at:get_now_secs() rssi:rssi kind:CONTACT_PASSIVE];
     [peripheral respondToRequest:req withResult:CBATTErrorSuccess];
   }
 }

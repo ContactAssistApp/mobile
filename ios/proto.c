@@ -111,7 +111,6 @@ static void proto_one_round(proto_idgen_t *td, uint8_t *seed, uint8_t *id)
     CC_SHA256_CTX ctx;
     CC_SHA256_Init(&ctx);
     CC_SHA256_Update(&ctx, seed, 16);
-    CC_SHA256_Update(&ctx, seed, 16);
     CC_SHA256_Final(tmp, &ctx);
 
     memcpy(seed, &tmp[0], 16);
@@ -163,7 +162,7 @@ int proto_idgen_create(const char *file, int64_t step_size, proto_idgen_t **out_
     }
 
     if(lseek(res->storage_fd, 0, SEEK_END) == 0) {
-      //new file  , generate an initial token record
+      //new file, generate an initial token record
       int r = proto_idgen_new_seed(res);
       if(r) {
         proto_idgen_destroy(res);
