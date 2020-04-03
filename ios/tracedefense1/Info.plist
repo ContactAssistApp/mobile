@@ -41,8 +41,22 @@
 	<string>Trace Defense uses bluetooth to track people that comes close to you.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Trace Defense uses bluetooth to track people that comes close to you.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>App requires background tracking</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App requires background tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Trace Defense uses location to track people that comes close to you.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>App requires motion tracking</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+		<string>fetch</string>
+		<string>location</string>
+		<string>processing</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -55,19 +69,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.transistorsoft.fetch</string>
+	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-		<string>bluetooth-central</string>
-		<string>bluetooth-peripheral</string>
-	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App requires background tracking</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App requires background tracking</string>
-	<key>NSMotionUsageDescription</key>
-	<string>App requires motion tracking</string>
 </dict>
 </plist>
