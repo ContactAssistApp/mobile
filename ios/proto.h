@@ -12,6 +12,8 @@
 #define PROTO_ERROR_WRITE_FAIL -3
 #define PROTO_ERROR_BAD_INDEX -4
 #define PROTO_ERROR_CANT_SEEK -5
+#define PROTO_ERROR_CANT_READ -6
+#define PROTO_ERROR_NO_ID_FOUND -7
 
 //File format
 //fixed row len file format:
@@ -40,5 +42,7 @@ void proto_idgen_destroy(proto_idgen_t *td);
 int proto_idgen_get_current_id(proto_idgen_t *td, uint8_t **res);
 //rotate the initial seed
 int proto_idgen_new_seed(proto_idgen_t *td);
+//search for the oldest seed that's after `timestamp`
+int proto_idgen_find_seed(proto_idgen_t *td, int64_t timestamp, int64_t *out_timestamp, uint8_t *out_seed);
 
 #endif

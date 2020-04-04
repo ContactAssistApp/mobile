@@ -97,11 +97,14 @@ static int read_row(proto_idgen_t *td, proto_row_t *row)
 {
     char buff[PROTO_ROW_SIZE];
 
-    if(read(td->storage_fd, buff, PROTO_ROW_SIZE) != PROTO_ROW_SIZE)
-        return errno;
+    ssize_t r = read(td->storage_fd, buff, PROTO_ROW_SIZE);
+    if(r == 0) //eof
+        return 0;
+    if(r != PROTO_ROW_SIZE)
+        return -errno;
 
     parse_row(row, buff);
-    return 0;
+    return 1;
 }
 
 static void proto_one_round(proto_idgen_t *td, uint8_t *seed, uint8_t *id)
@@ -174,7 +177,11 @@ int proto_idgen_create(const char *file, int64_t step_size, proto_idgen_t **out_
         proto_idgen_destroy(res);
         return PROTO_ERROR_CANT_SEEK;
       }
-      read_row(res, &res->row);
+      if(read_row(res, &res->row) != 1) {
+        proto_idgen_destroy(res);
+        return PROTO_ERROR_CANT_READ;
+      }
+
       proto_one_round(res, res->row.seed, res->id);
     }
     *out_res = res;
@@ -207,4 +214,33 @@ int proto_idgen_get_current_id(proto_idgen_t *td, uint8_t **res)
     if(!r)
         *res = td->id;
     return r;
+}
+
+
+int proto_idgen_find_seed(proto_idgen_t *td, int64_t timestamp, int64_t *out_timestamp, uint8_t *out_seed)
+{
+  int r;
+  proto_row_t row;
+
+  if(timestamp > td->row.timestamp) {
+    if((r = proto_idgen_advance_to(td, timestamp)) != 0)
+      return r;
+  }
+  
+  if(lseek(td->storage_fd, 0, SEEK_SET) == -1)
+    return PROTO_ERROR_CANT_SEEK;
+    
+  
+  while((r = read_row(td, &row)) == 1) {
+    if(row.timestamp + td->step_size < timestamp) //ignore stuff before timestamp
+        continue;
+
+    *out_timestamp = row.timestamp;
+    memcpy(out_seed, row.seed, 16);
+    lseek(td->storage_fd, 0, SEEK_END);
+    return 0;
+  }
+  
+  //fail path
+  return (r < 0) ? PROTO_ERROR_CANT_READ : PROTO_ERROR_NO_ID_FOUND;
 }

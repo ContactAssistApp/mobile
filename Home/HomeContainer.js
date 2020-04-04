@@ -18,7 +18,8 @@ class HomeContainer extends Component {
     super();
     this.state = {
       record: 0,
-      isBleEnabled: false
+      isBleEnabled: false,
+      theSeed: {}
     };
   }
 
@@ -76,6 +77,19 @@ class HomeContainer extends Component {
     this.setState({ isBleEnabled: false });
   }
 
+  getDeviceSeedAndRotate = () => {
+    //14 days ago
+    NativeModules.BLE.getDeviceSeedAndRotate(24 * 14 * 3600).then(
+      result => {
+        console.log("I got: " + JSON.stringify(result));
+        this.setState({ theSeed: JSON.stringify(result) });
+      },
+      error => {
+        console.log("failed eth: " + error);
+        this.setState({ theSeed: error.message });
+      });
+  }
+
   countLogs = (kind) => {
     var count = 0;
     this.state.contactLogs.forEach(log => {
@@ -90,6 +104,7 @@ class HomeContainer extends Component {
       <>
         <Button title={'Start BLE'} onPress={this.startBle} />
         <Button title={'Stop BLE'} onPress={this.stopBle} />
+        <Button title={'GetSeed'} onPress={this.getDeviceSeedAndRotate} />
 
         <Button title={'Track GPS'} onPress={this.trackGPS} />
         <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />
@@ -98,6 +113,7 @@ class HomeContainer extends Component {
 
         <Text>{this.state.record}</Text>
         <Text>Bluetooth: {this.state.isBleEnabled.toString()}</Text>
+        <Text>{JSON.stringify(this.state.theSeed)}</Text>
       </>
     );
   }

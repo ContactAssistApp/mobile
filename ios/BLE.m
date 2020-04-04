@@ -47,13 +47,9 @@ static int64_t crypto_id_update_schedule_in_secs = 5 * 60;
 
 #endif
 
-
 static int64_t conn_start_timeout_in_seconds = 5;
-
-
 static NSString *_serviceUUID;
 static NSString *_characteristicUUID;
-
 static FILE* _contactsLogFile;
 
 //active contact means we reached out and read the ID of device
@@ -749,6 +745,61 @@ RCT_EXPORT_METHOD(stop_ble)
     [peripheral respondToRequest:req withResult:CBATTErrorSuccess];
   }
 }
+
+
+RCT_EXPORT_METHOD(getDeviceSeedAndRotate:(nonnull NSNumber *)interval resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  int64_t timestamp = [interval longLongValue];
+  [self logDebug:[NSString stringWithFormat:@"ROTATING FOR %lld", timestamp]];
+
+  if(!_idgen) {
+    reject(@"InternalStateError", @"ID generator not initialzed", nil);
+    return;
+  }
+  
+  int64_t now = proto_get_timestamp();
+  int64_t ts = 0;
+  uint8_t buff[PROTO_ID_SIZE];
+  int ret = proto_idgen_find_seed(_idgen, now - timestamp, &ts, buff);
+  if(ret) {
+    reject(@"InternalStateError", [NSString stringWithFormat:@"Failed to find an id with error %d", ret], nil);
+    return;
+  }
+
+  if(proto_idgen_new_seed(_idgen)) {
+    reject(@"InternalStateError", [NSString stringWithFormat:@"Failed to rotate key with error %d", ret], nil);
+    return;
+  }
+
+  NSMutableDictionary *res = [NSMutableDictionary dictionary];
+  res[@"seed"] = [[NSUUID alloc] initWithUUIDBytes:buff].UUIDString.lowercaseString;
+  res[@"firstTimeStamp"] = [NSNumber numberWithLongLong: ts];
+  res[@"lastTimeStamp"] = [NSNumber numberWithLongLong: timestamp];
+  resolve(res);
+}
+
+RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
+{
+  //FIXME TODO
+  [self logDebug:@"purging records!"];
+}
+
+RCT_EXPORT_METHOD(runBleQuery: resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  NSMutableArray * res = [NSMutableArray arrayWithCapacity:10];
+
+  resolve(res);
+}
+
+RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSNumber*, applyBitMask: (nonnull NSNumber*)number bits:(nonnull NSNumber*) bits)
+{
+  double val = [number doubleValue];
+  int64_t ival = *(int64_t*)(&val);
+  ival = ival & ((1ll << ([bits intValue] + 1)) - 1);
+  val = *(double*)(&ival);
+  return [NSNumber numberWithLongLong:val];
+}
+
 
 @end
 
