@@ -90,7 +90,7 @@ class Preferences extends Component {
         <View>
           <TouchableOpacity
             style={styles.next_button}
-            onPress={() => navigate('Home', {screen: 'Home'})}
+            onPress={() => navigate('BottomNav')}
           >
             <Text style={styles.next_button_text}>
               Next

@@ -4,14 +4,9 @@ import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import Nav from './Nav/Nav';
+import BottomNav from './BottomNav/BottomNav';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from './assets/colors.js';
 
 const store = configureStore();
@@ -93,7 +88,7 @@ function App() {
     <>
       <Provider store={store}>
         {showRealApp
-        ? <Nav />
+        ? <BottomNav />
         : <AppIntroSlider
             renderItem={this._renderItem}
             data={slides}

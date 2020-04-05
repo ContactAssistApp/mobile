@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import Preferences from '../Preferences/Preferences';
 import Home from '../Home/Home';
+import BottomNav from '../BottomNav/BottomNav';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -23,10 +24,10 @@ class Nav extends Component {
               }}
             />
             <Stack.Screen
-              name="Home"
-              component={Home}
+              name="BottomNav"
+              component={BottomNav}
               options={{
-                title: 'HOME',
+                title: 'BottomNav',
                 headerStyle: {
                 },
               }}

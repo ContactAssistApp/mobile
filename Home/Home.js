@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {Text} from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 class Home extends Component {
   componentDidMount() {
@@ -66,10 +67,9 @@ class Home extends Component {
   }
 
   render() {
+    const Tab = createBottomTabNavigator();
     return (
-      <>
-      <Text>Home Page!!!!~~~~~~</Text>
-      </>
+      <Text>Home</Text>
     );
   }
 }
