@@ -79,7 +79,7 @@ int64_t proto_get_timestamp(void)
   if(gettimeofday(&tv, NULL)) {
       return -1; //fails if tv is invalid
   }
-  return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+  return (int64_t)tv.tv_sec;
 }
 
 static int write_row(proto_idgen_t *td, proto_row_t *row)
