@@ -7,17 +7,17 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "proto.h"
-
+#include "util.h"
 #import <CommonCrypto/CommonDigest.h>
 
+namespace td {
 
-struct proto_row {
+struct proto_row_t {
     uint8_t seed[16];
     int64_t timestamp;
     int32_t version;
     char mode;
 };
-typedef struct proto_row proto_row_t;
 
 struct proto_idgen {
     proto_row_t row;
@@ -26,14 +26,10 @@ struct proto_idgen {
     int storage_fd;
 };
 
-static int64_t round_down_timestamp(int64_t timestamp, int64_t resolution)
-{
-    return (timestamp / resolution) * resolution;
-}
 
 static void to_hex(const void *src, int len, char *dest)
 {
-    const uint8_t *_src = src;
+    const uint8_t *_src = (uint8_t*)src;
     for(int i = 0; i < len; ++i) {
         sprintf(&dest[i * 2], "%02x", _src[i] & 0xFF);
     }
@@ -42,7 +38,7 @@ static void to_hex(const void *src, int len, char *dest)
 
 static void from_hex(const char*src, int len, void *dest)
 {
-    uint8_t *_dest = dest;
+    uint8_t *_dest = (uint8_t*)dest;
     char tmp[3] = {0};
     for(int i = 0; i < len; ++i)
     {
@@ -71,15 +67,6 @@ static void parse_row(proto_row_t *dest, char *data)
     from_hex(&data[2], 16, dest->seed);
     from_hex(&data[35], 8, &dest->timestamp);
     from_hex(&data[52], 8, &dest->version);
-}
-
-int64_t proto_get_timestamp(void)
-{
-  struct timeval tv = {0};
-  if(gettimeofday(&tv, NULL)) {
-      return -1; //fails if tv is invalid
-  }
-  return (int64_t)tv.tv_sec;
 }
 
 static int write_row(proto_idgen_t *td, proto_row_t *row)
@@ -124,7 +111,7 @@ int proto_idgen_new_seed(proto_idgen_t *td)
 {
     ++td->row.version;
     td->row.mode = PROTO_INITIAL_SEED;
-    td->row.timestamp = round_down_timestamp(proto_get_timestamp(), td->step_size);
+    td->row.timestamp = round_down_timestamp(get_timestamp(), td->step_size);
 
     int dev_rand = open("/dev/random", O_RDONLY);
     if(dev_rand < 0)
@@ -157,7 +144,7 @@ void proto_idgen_destroy(proto_idgen_t *td)
 int proto_idgen_create(const char *file, int64_t step_size, proto_idgen_t **out_res)
 {
     *out_res = NULL;
-    proto_idgen_t *res = calloc(1, sizeof(proto_idgen_t));
+    proto_idgen_t *res = (proto_idgen_t*)calloc(1, sizeof(proto_idgen_t));
     res->step_size = step_size;
     if((res->storage_fd = open(file, O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR )) < 0) {
       free(res);
@@ -210,7 +197,7 @@ static int proto_idgen_advance_to(proto_idgen_t *td, int64_t new_ts)
 int proto_idgen_get_current_id(proto_idgen_t *td, uint8_t **res)
 {
     *res = NULL;
-    int r = proto_idgen_advance_to(td, proto_get_timestamp());
+    int r = proto_idgen_advance_to(td, get_timestamp());
     if(!r)
         *res = td->id;
     return r;
@@ -243,4 +230,6 @@ int proto_idgen_find_seed(proto_idgen_t *td, int64_t timestamp, int64_t *out_tim
   
   //fail path
   return (r < 0) ? PROTO_ERROR_CANT_READ : PROTO_ERROR_NO_ID_FOUND;
+}
+
 }

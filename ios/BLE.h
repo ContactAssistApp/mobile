@@ -3,7 +3,18 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 
-@import CoreBluetooth;
+#include <CoreBluetooth/CoreBluetooth.h>
 
-@interface BLE : RCTEventEmitter <RCTBridgeModule, CBCentralManagerDelegate, CBPeripheralManagerDelegate>
+@protocol BleProtocol
+-(void) logDebug: (id)payload;
+-(void) logCritical: (id)payload;
+-(NSMutableData*)currentDeviceId;
+-(CBCentralManager *) cbc;
+-(void) flushCache: (CBPeripheral*)peripheral;
+-(void)logContact: (NSData *)device_id at:(int64_t)at rssi:(int)rssi kind:(int)kind;
+@end
+
+
+
+@interface BLE : RCTEventEmitter <RCTBridgeModule, CBCentralManagerDelegate, CBPeripheralManagerDelegate, BleProtocol>
 @end

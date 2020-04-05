@@ -30,19 +30,20 @@
 #define PROTO_ID_SIZE 16
 
 //structs
-typedef struct proto_idgen proto_idgen_t;
+namespace td {
+  typedef struct proto_idgen proto_idgen_t;
 
-//return current wall clock, monotonic clock. resolution in seconds
-int64_t proto_get_timestamp(void);
-//step size in seconds
-int proto_idgen_create(const char *file, int64_t step_size, proto_idgen_t **out_res);
-//free all stuff
-void proto_idgen_destroy(proto_idgen_t *td);
-//get the current ID
-int proto_idgen_get_current_id(proto_idgen_t *td, uint8_t **res);
-//rotate the initial seed
-int proto_idgen_new_seed(proto_idgen_t *td);
-//search for the oldest seed that's after `timestamp`
-int proto_idgen_find_seed(proto_idgen_t *td, int64_t timestamp, int64_t *out_timestamp, uint8_t *out_seed);
+  //step size in seconds
+  int proto_idgen_create(const char *file, int64_t step_size, proto_idgen_t **out_res);
+  //free all stuff
+  void proto_idgen_destroy(proto_idgen_t *td);
+  //get the current ID
+  int proto_idgen_get_current_id(proto_idgen_t *td, uint8_t **res);
+  //rotate the initial seed
+  int proto_idgen_new_seed(proto_idgen_t *td);
+  //search for the oldest seed that's after `timestamp`
+  int proto_idgen_find_seed(proto_idgen_t *td, int64_t timestamp, int64_t *out_timestamp, uint8_t *out_seed);
+
+}
 
 #endif

@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-@import CoreBluetooth;
-@import Foundation;
+#include <Foundation/Foundation.h>
+#include <CoreBluetooth/CoreBluetooth.h>
+//#import CoreBluetooth;
+//#import Foundation;
 
+#include "util.h"
 #include "proto.h"
+#include "query-engine.h"
 #import "BLE.h"
 
 
@@ -115,16 +119,6 @@ static dispatch_source_t create_one_shot_timer(int64_t delay_in_secs, void (^blo
   return timer;
 }
 
-@protocol BleLogger
--(void) logDebug: (id)payload;
--(void) logCritical: (id)payload;
--(NSMutableData*)currentDeviceId;
--(CBCentralManager *) cbc;
--(void) flushCache: (CBPeripheral*)peripheral;
--(void)logContact: (NSData *)device_id at:(int64_t)at rssi:(int)rssi kind:(int)kind;
-@end
-
-
 typedef enum {
   OpIgnore,
   OpRequested,
@@ -134,7 +128,7 @@ typedef enum {
 
 @interface PeripheralContactHelper: NSObject<CBPeripheralDelegate>
 
--(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleLogger>)logger;
+-(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleProtocol>)logger;
 
 
 //methods called by CBCentralManagerDelegate
@@ -150,7 +144,7 @@ typedef enum {
 
 @implementation PeripheralContactHelper {
   CBPeripheral *_peripheral;
-  __weak id<BleLogger> _logger;
+  __weak id<BleProtocol> _ble;
   
   int64_t _creation_time;
 
@@ -170,10 +164,10 @@ typedef enum {
   bool _device_id_valid;
 }
 
--(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleLogger>)logger
+-(instancetype)initWithPeripheral: (CBPeripheral*)peripheral logger: (id<BleProtocol>)ble
 {
   _peripheral = peripheral;
-  _logger = logger;
+  _ble = ble;
   //we set _lastContactFlush to force at least one tick before logging
   _creation_time = _lastContactFlush = get_now_secs();
   _rssi = INT_MIN;
@@ -199,12 +193,12 @@ typedef enum {
     [w_self cache_timeout];
   });
   
-  [_logger logDebug:[NSString stringWithFormat:@"new PCH for device %@", peripheral.identifier]];
+  [_ble logDebug:[NSString stringWithFormat:@"new PCH for device %@", peripheral.identifier]];
   return self;
 }
 
 -(void)queueRead {
-  [_logger logDebug:[NSString stringWithFormat:@"queue read for %@", _peripheral.identifier]];
+  [_ble logDebug:[NSString stringWithFormat:@"queue read for %@", _peripheral.identifier]];
   //only start if there isn't one in progress
   if(_ops[OP_READ] == OpIgnore)
     _ops[OP_READ] = OpRequested;
@@ -212,18 +206,18 @@ typedef enum {
 }
 
 -(void)queueWrite {
-  [_logger logDebug:[NSString stringWithFormat:@"queue write for %@", _peripheral.identifier]];
+  [_ble logDebug:[NSString stringWithFormat:@"queue write for %@", _peripheral.identifier]];
   if(_ops[OP_WRITE] == OpIgnore)
     _ops[OP_WRITE] = OpRequested;
   [self beingConnectIfNeeded];
 }
 
 -(void)cache_timeout {
-  [_logger logDebug:[NSString stringWithFormat:@"cache timeout for %@", _peripheral.identifier]];
+  [_ble logDebug:[NSString stringWithFormat:@"cache timeout for %@", _peripheral.identifier]];
   dispatch_source_cancel(_read_timer);
   dispatch_source_cancel(_write_timer);
   [self cancelConnection];
-  [_logger flushCache: _peripheral];
+  [_ble flushCache: _peripheral];
 }
 
 -(void)beingConnectIfNeeded {
@@ -235,7 +229,7 @@ typedef enum {
     case CBPeripheralStateConnecting:
       break;
     default: {
-      [_logger.cbc connectPeripheral:_peripheral options:nil];
+      [_ble.cbc connectPeripheral:_peripheral options:nil];
 
       __weak PeripheralContactHelper *w_self = self;
       _timeout_timer = create_one_shot_timer(conn_start_timeout_in_seconds, ^{
@@ -249,12 +243,12 @@ typedef enum {
 }
 
 -(void) checkForTimeout {
-  [_logger logDebug:[NSString stringWithFormat:@"connection timeout for %@", _peripheral.identifier]];
+  [_ble logDebug:[NSString stringWithFormat:@"connection timeout for %@", _peripheral.identifier]];
   [self cancelConnection];
 }
 
 -(void) cancelConnection {
-  [_logger.cbc cancelPeripheralConnection:_peripheral];
+  [_ble.cbc cancelPeripheralConnection:_peripheral];
   for(int i = 0; i < OPS_COUNT; ++i) {
     _ops[i] = OpIgnore;
   }
@@ -280,10 +274,10 @@ typedef enum {
           if(i == OP_READ) {
              [_peripheral readValueForCharacteristic:_contact_characteristic];
           } else {
-            NSMutableData *deviceId = [_logger currentDeviceId];
+            NSMutableData *deviceId = [_ble currentDeviceId];
             //we encode as an unsigned int, zero is reserved to mean invalid local rssi, we saturate at 255
             int rssiToSend = -sanitize_rssi(_rssi == INT_MIN ? _prevRssi : _rssi); //pick prev if we just flushed
-            uint8_t bytes[1] = { rssiToSend & 0xFF };
+            uint8_t bytes[1] = { (uint8_t)(rssiToSend & 0xFF) };
             [deviceId appendBytes:bytes length:1];
 
             [_peripheral writeValue:deviceId forCharacteristic:_contact_characteristic type:CBCharacteristicWriteWithResponse];
@@ -306,13 +300,13 @@ typedef enum {
 
 -(void)didConnect
 {
-  [_logger logDebug:[NSString stringWithFormat:@"connect ok. discovering services of %@", _peripheral.identifier]];
+  [_ble logDebug:[NSString stringWithFormat:@"connect ok. discovering services of %@", _peripheral.identifier]];
   [_peripheral discoverServices:@[ [CBUUID UUIDWithString: _serviceUUID]]];
 }
 
 -(void)didFailToConnect: (NSError*)error
 {
-  [_logger logDebug:[NSString stringWithFormat:@"failed to connect to %@ due to %@", _peripheral.identifier, error]];
+  [_ble logDebug:[NSString stringWithFormat:@"failed to connect to %@ due to %@", _peripheral.identifier, error]];
   [self cancelConnection];
 }
 
@@ -323,7 +317,7 @@ typedef enum {
 {
   int64_t now = get_now_secs();
   if((now - _lastContactFlush) > contact_log_interval_in_secs && _device_id_valid) {
-    [_logger logContact: _current_device_data at:_lastContactFlush rssi:sanitize_rssi(_rssi) kind:CONTACT_ACTIVE];
+    [_ble logContact: _current_device_data at:_lastContactFlush rssi:sanitize_rssi(_rssi) kind:CONTACT_ACTIVE];
     _lastContactFlush = now;
     _prevRssi = _rssi;
     _rssi = INT_MIN;
@@ -345,7 +339,7 @@ typedef enum {
   if(error)
   {
     [self cancelConnection];
-    [_logger logDebug:[NSString stringWithFormat: @"discover services failed with %@", error]];
+    [_ble logDebug:[NSString stringWithFormat: @"discover services failed with %@", error]];
     return;
   }
   CBUUID *chr_id = [CBUUID UUIDWithString:_characteristicUUID];
@@ -362,7 +356,7 @@ typedef enum {
 {
   if(error) {
     [self cancelConnection];
-    [_logger logDebug:[NSString stringWithFormat: @"discovered characteristics failed with %@", error]];
+    [_ble logDebug:[NSString stringWithFormat: @"discovered characteristics failed with %@", error]];
     return;
   }
 
@@ -381,7 +375,7 @@ typedef enum {
 {
   if(error)
   {
-    [_logger logDebug:[NSString stringWithFormat: @"[%lld] read %@ failed: %@", get_now_secs(), peripheral.identifier, error]];
+    [_ble logDebug:[NSString stringWithFormat: @"[%lld] read %@ failed: %@", get_now_secs(), peripheral.identifier, error]];
     //XXX don't break connection on read failure as writes could be happening
   }
   else
@@ -391,12 +385,12 @@ typedef enum {
 //    NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:characteristic.value.bytes] UUIDString];
 
     if(data != nil && data.length == PROTO_ID_SIZE) {
-      [_logger logDebug:[NSString stringWithFormat: @"[%lld] read %@ good device id", get_now_secs(), peripheral.identifier]];
+      [_ble logDebug:[NSString stringWithFormat: @"[%lld] read %@ good device id", get_now_secs(), peripheral.identifier]];
       memcpy([_current_device_data mutableBytes], data.bytes, PROTO_ID_SIZE);
       _device_id_valid = true;
       [self tryFlushContact];
     } else {
-      [_logger logDebug:[NSString stringWithFormat: @"[%lld] read %@ bad device id - no payload or bad size", get_now_secs(), peripheral.identifier]];
+      [_ble logDebug:[NSString stringWithFormat: @"[%lld] read %@ bad device id - no payload or bad size", get_now_secs(), peripheral.identifier]];
       _device_id_valid = false;
     }
   }
@@ -408,9 +402,9 @@ typedef enum {
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
   if(error) {
-    [_logger logDebug:[NSString stringWithFormat: @"[%lld] write characteristic failed with %@", get_now_secs(), error]];
+    [_ble logDebug:[NSString stringWithFormat: @"[%lld] write characteristic failed with %@", get_now_secs(), error]];
   } else {
-      [_logger logDebug: [NSString stringWithFormat: @"[%lld] write success %@", get_now_secs(), peripheral.identifier]];
+      [_ble logDebug: [NSString stringWithFormat: @"[%lld] write success %@", get_now_secs(), peripheral.identifier]];
   }
 
   _ops[OP_WRITE] = OpDone;
@@ -425,7 +419,7 @@ typedef enum {
   
   NSMutableDictionary<NSString*, PeripheralContactHelper*> *device_cache;
 
-  proto_idgen_t *_idgen;
+  td::proto_idgen_t *_idgen;
 }
 
 RCT_EXPORT_MODULE();
@@ -439,7 +433,7 @@ RCT_EXPORT_MODULE();
 }
 
 /**
- * BleLogger
+ * BleProtocol
  */
 -(CBCentralManager *) cbc
 {
@@ -757,7 +751,7 @@ RCT_EXPORT_METHOD(getDeviceSeedAndRotate:(nonnull NSNumber *)interval resolver:(
     return;
   }
   
-  int64_t now = proto_get_timestamp();
+  int64_t now = td::get_timestamp();
   int64_t ts = 0;
   uint8_t buff[PROTO_ID_SIZE];
   int ret = proto_idgen_find_seed(_idgen, now - timestamp, &ts, buff);

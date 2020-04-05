@@ -96,7 +96,7 @@
 		99F1ADC311164B4D88434CFB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A50FDFF524368B87000CF390 /* proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = proto.c; sourceTree = "<group>"; };
 		A50FDFF624368B87000CF390 /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
-		A5E323C2242E6FE00066AB83 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
+		A5E323C2242E6FE00066AB83 /* BLE.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BLE.mm; sourceTree = "<group>"; };
 		A5E323C3242E6FE00066AB83 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		B16E092F4292471095648AF9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		C265E1F2F323413F897ABDEC /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -166,7 +166,11 @@
 		13B07FAE1A68108700A75B9A /* tracedefense1 */ = {
 			isa = PBXGroup;
 			children = (
-				A50FDFF524368B87000CF390 /* proto.c */,
+				A50E7C64243A4C9C00F86E1A /* util.cc */,
+				A50E7C65243A4C9C00F86E1A /* util.h */,
+				A50E7C61243A4C6A00F86E1A /* query-engine.cc */,
+				A50E7C62243A4C6B00F86E1A /* query-engine.h */,
+				A50FDFF524368B87000CF390 /* proto.cc */,
 				A50FDFF624368B87000CF390 /* proto.h */,
 				1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */,
 				14431C2F242D8B4300DEFBBE /* BLE */,
@@ -195,7 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				A5E323C3242E6FE00066AB83 /* BLE.h */,
-				A5E323C2242E6FE00066AB83 /* BLE.m */,
+				A5E323C2242E6FE00066AB83 /* BLE.mm */,
 				14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */,
 				14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */,
 			);
@@ -702,9 +706,11 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
-				A50FDFF724368B87000CF390 /* proto.c in Sources */,
+				A50FDFF724368B87000CF390 /* proto.cc in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				A5E323C4242E6FE00066AB83 /* BLE.m in Sources */,
+				A50E7C63243A4C6B00F86E1A /* query-engine.cc in Sources */,
+				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
+				A50E7C66243A4C9C00F86E1A /* util.cc in Sources */,
 				140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */,
 				14431C2E242D842600DEFBBE /* Device.m in Sources */,
 			);
