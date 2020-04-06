@@ -27,11 +27,11 @@ class HomeContainer extends Component {
   componentDidMount() {
     const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
 
-    this.subscriptions = []
-    this.subscriptions.push(bleEmitter.addListener(
-      'onLifecycleEvent',
-      (data) => console.log("log:" +data)
-    ));
+    // this.subscriptions = []
+    // this.subscriptions.push(bleEmitter.addListener(
+    //   'onLifecycleEvent',
+    //   (data) => console.log("log:" +data)
+    // ));
 
     NativeModules.BLE.init_module(
       '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
@@ -188,3 +188,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HomeContainer);
+// export default HomeContainer
