@@ -11,6 +11,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
+#import <TSBackgroundFetch/TSBackgroundFetch.h>
 
 @implementation AppDelegate
 
@@ -30,6 +31,8 @@
   [self.window makeKeyAndVisible];
 
   [RNSplashScreen show];
+  // [REQUIRED] Register BackgroundFetch
+  [[TSBackgroundFetch sharedInstance] didFinishLaunching];
   return YES;
 }
 

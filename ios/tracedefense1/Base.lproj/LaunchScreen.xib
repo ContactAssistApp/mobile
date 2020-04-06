@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="landscape" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
@@ -13,78 +13,37 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="927"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CovidSafe" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="116" y="287" width="128" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="ZJo-XX-ByQ"/>
-                        <constraint firstAttribute="width" constant="128" id="lRx-7r-UiI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="aWP-JB-r4O">
-                    <rect key="frame" x="150" y="493" width="128" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="98u-8f-Xfm"/>
-                        <constraint firstAttribute="width" constant="128" id="jyE-gb-28Q"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fd9-U2-s53">
-                    <rect key="frame" x="133" y="159" width="94" height="94"/>
+                    <rect key="frame" x="133" y="156" width="128" height="166.5"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="94" id="7VU-2U-DU0"/>
-                        <constraint firstAttribute="height" constant="94" id="Cfh-de-9dL"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="f8l-vH-a7J"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="164" id="r1B-B8-PbS"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="University of Washington" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="ljq-zl-DhZ">
-                    <rect key="frame" x="116" y="528" width="128" height="33"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="v05-Lg-mRZ">
+                    <rect key="frame" x="83" y="552.5" width="195" height="45"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="128" id="BeB-Mw-8DN"/>
-                        <constraint firstAttribute="height" constant="33" id="gcG-N7-2Cl"/>
+                        <constraint firstAttribute="height" constant="45" id="EOA-OH-Bdk"/>
+                        <constraint firstAttribute="width" constant="195" id="N6Q-r1-Ow7"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Microsoft" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="rG5-1e-Ehz">
-                    <rect key="frame" x="135" y="565" width="128" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="0bf-CU-Aq2"/>
-                        <constraint firstAttribute="width" constant="128" id="qgb-UM-uq8"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.55294117647058827" green="0.33333333333333331" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.55294117649999996" green="0.33333333329999998" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="ljq-zl-DhZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="116" id="0ob-8e-pKn"/>
-                <constraint firstItem="rG5-1e-Ehz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="135" id="3IK-VE-9qS"/>
-                <constraint firstItem="fd9-U2-s53" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="159" id="ANb-PW-PPq"/>
-                <constraint firstItem="ljq-zl-DhZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Kcz-Xo-fFS"/>
-                <constraint firstItem="aWP-JB-r4O" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SoL-Dk-Iqh"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="116" id="bIF-BW-lYu"/>
-                <constraint firstItem="aWP-JB-r4O" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="150" id="bR9-Zx-gjg"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="287" id="c7p-hz-ndF"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ho0-4a-iwv"/>
-                <constraint firstItem="rG5-1e-Ehz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="565" id="lmy-1f-8dQ"/>
+                <constraint firstItem="v05-Lg-mRZ" firstAttribute="top" secondItem="fd9-U2-s53" secondAttribute="bottom" constant="230" id="4Lc-xM-HXR"/>
+                <constraint firstItem="fd9-U2-s53" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="156" id="Ani-XG-w2E"/>
+                <constraint firstItem="v05-Lg-mRZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="83" id="GUj-M4-N6h"/>
+                <constraint firstAttribute="trailing" secondItem="v05-Lg-mRZ" secondAttribute="trailing" constant="83" id="RuU-vQ-e3Z"/>
                 <constraint firstItem="fd9-U2-s53" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="o1K-4X-Qv4"/>
-                <constraint firstItem="aWP-JB-r4O" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="493" id="p5x-cU-rEn"/>
-                <constraint firstItem="ljq-zl-DhZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="528" id="pOw-ia-3jf"/>
                 <constraint firstItem="fd9-U2-s53" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="133" id="rw7-bC-hYR"/>
-                <constraint firstItem="rG5-1e-Ehz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="w3U-3t-jQw"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="44.799999999999997" y="356.67166416791605"/>
+            <point key="canvasLocation" x="44.07796101949026" y="356"/>
         </view>
     </objects>
     <resources>
-        <image name="SplashIcon" width="300" height="300"/>
+        <image name="Logo" width="195" height="40"/>
+        <image name="SplashIcon" width="128" height="166.5"/>
     </resources>
 </document>
