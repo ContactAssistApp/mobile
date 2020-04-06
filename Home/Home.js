@@ -32,29 +32,30 @@ class Home extends Component {
 
     BackgroundFetch.configure({
       minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
-    }, async (taskId) => {
-      console.log("[js] Received background-fetch event: ", taskId);
-      this.fetchQuery();
-      // Required: Signal completion of your task to native code
-      // If you fail to do this, the OS can terminate your app
-      // or assign battery-blame for consuming too much background-time
-      BackgroundFetch.finish(taskId);
-    }, (error) => {
-      console.log("[js] RNBackgroundFetch failed to start");
-      console.log(error);
-    });
+    },
+      async taskId => {
+        console.log('[js] Received background-fetch event: ', taskId);
+        this.fetchQuery();
+        // Required: Signal completion of your task to native code
+        // If you fail to do this, the OS can terminate your app
+        // or assign battery-blame for consuming too much background-time
+        BackgroundFetch.finish(taskId);
+      }, error => {
+        console.log('[js] RNBackgroundFetch failed to start');
+        console.log(error);
+      });
 
     // Optional: Query the authorization status.
     BackgroundFetch.status(status => {
       switch (status) {
         case BackgroundFetch.STATUS_RESTRICTED:
-          console.log("BackgroundFetch restricted");
+          console.log('BackgroundFetch restricted');
           break;
         case BackgroundFetch.STATUS_DENIED:
-          console.log("BackgroundFetch denied");
+          console.log('BackgroundFetch denied');
           break;
         case BackgroundFetch.STATUS_AVAILABLE:
-          console.log("BackgroundFetch is enabled");
+          console.log('BackgroundFetch is enabled');
           break;
       }
     });
@@ -96,7 +97,7 @@ class Home extends Component {
     fetch(queryURL, {
       method: 'GET',
       headers: {
-        'Ocp-Apim-Subscription-Key': '27f9b131532b4dcc93f19ccfbc299793'
+        'Ocp-Apim-Subscription-Key': '27f9b131532b4dcc93f19ccfbc299793',
       },
     })
       .then(response => {
@@ -136,7 +137,7 @@ class Home extends Component {
 
       this.setState({
         location: false,
-        ble: false
+        ble: false,
       });
       LocationServices.stop();
       NativeModules.BLE.stop_ble();
@@ -144,16 +145,12 @@ class Home extends Component {
   };
 
   render() {
-    const {navigate} = this.props.navigation;
-
     return (
       <SafeAreaView>
         <View style={styles.status_container}>
           <View style={styles.status_header}>
             <View>
-              <Text style={styles.title}>
-                CovidSafe
-              </Text>
+              <Text style={styles.title}>CovidSafe</Text>
             </View>
             <TouchableOpacity onPress={() => this.props.navigation.replace('Preferences')}>
               <Icon name="settings-outline" color={'white'} size={28} />
@@ -174,7 +171,7 @@ class Home extends Component {
                   <Text
                     style={styles.settings}
                     onPress={() => {
-                      this.props.navigation.replace('Preferences')
+                      this.props.navigation.replace('Preferences');
                     }}>
                     Settings
                   </Text>
@@ -271,24 +268,6 @@ const styles = StyleSheet.create({
   broadcast_icon: {
     paddingRight: 10,
   },
-  broadcast_text: {
-    color: colors.PURPLE_50,
-    fontSize: 18,
-    lineHeight: 22,
-    paddingLeft: 5,
-    fontWeight: '500',
-  },
-  setting: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    flex: 1,
-    flexDirection: 'row',
-  },
-  setting_title: {
-    fontSize: 16,
-    lineHeight: 23,
-    fontWeight: '500',
-  },
   broadcast_title: {
     fontSize: 18,
     lineHeight: 25,
@@ -321,7 +300,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomColor: colors.GRAY_5,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   resource_logo: {
     width: 50,
