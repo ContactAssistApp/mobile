@@ -1,14 +1,15 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
-import Nav from './Nav/Nav';
+import configureStore from './store/configureStore';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import Nav from './Nav/Nav';
+import SplashScreen from 'react-native-splash-screen';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {GetStoreData, SetStoreData} from './utils/asyncStorage';
 import colors from './assets/colors.js';
-const store = configureStore();
 
+const store = configureStore();
 const slides = [
   {
     key: 'ftue_1',
@@ -37,13 +38,28 @@ const slides = [
 ];
 
 function App() {
+  let enableFTUE = false;
+  const [statusFetched, setStatusFetched] = useState(false);
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
-  const [showRealApp, setShowRealApp] = useState(false);
+  getEnableFTUE().then(data => {
+    enableFTUE = data;
+    setStatusFetched(() => true);
+  });
 
-  renderItem = ({item}) => {
+  function getEnableFTUE() {
+    return GetStoreData('ENABLE_FTUE').then(enableFTUEString => {
+      if (enableFTUEString !== null) {
+        enableFTUE = enableFTUEString;
+      }
+      return enableFTUE;
+    });
+  }
+
+  function renderItem({item}) {
     if (item.key === 'ftue_5') {
       return (
         <View style={styles.onboarding_done_page}>
@@ -51,7 +67,7 @@ function App() {
             <Text style={styles.onboarding_done_text}>
               Let's slow the spread of {'\n'} COVID-19 together.
             </Text>
-            <TouchableOpacity style={styles.start_button} onPress={this.onDone}>
+            <TouchableOpacity style={styles.start_button} onPress={onDone}>
               <Text style={styles.start_button_text}>GET STARTED</Text>
             </TouchableOpacity>
 
@@ -74,20 +90,20 @@ function App() {
         </View>
       );
     }
-  };
+  }
 
-  onDone = () => {
-    setShowRealApp(() => true);
-  };
+  function onDone() {
+    SetStoreData('ENABLE_FTUE', 'false');
+  }
 
   return (
     <Provider store={store}>
-      {showRealApp
-      ? <Nav />
-      : <AppIntroSlider
-          renderItem={this.renderItem}
+      {statusFetched && !enableFTUE
+        ? <Nav />
+        : <AppIntroSlider
+          renderItem={renderItem}
           data={slides}
-          onDone={this.onDone}
+          onDone={onDone}
           showNextButton={false}
           showDoneButton={false}
         />
