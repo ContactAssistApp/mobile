@@ -13,6 +13,8 @@ import colors from '../assets/colors';
 
 class Health extends Component {
   render() {
+    const {navigate} = this.props.navigation;
+
     return (
       <SafeAreaView>
         <View style={styles.header}>
@@ -31,7 +33,9 @@ class Health extends Component {
           </Text>
           <TouchableOpacity
             style={styles.new_report_button}
-            onPress={()=>{}}>
+            onPress={() => {
+              navigate('Report')
+            }}>
             <Icon name="plus" color={'white'} size={20} />
             <Text style={styles.new_report_text}>
               New Report
