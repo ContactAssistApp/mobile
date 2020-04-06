@@ -8,15 +8,28 @@ import {
   TouchableOpacity,
   View,
   Image,
+  NativeModules,
+  NativeEventEmitter,
 } from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../assets/colors';
 import Toggle from '../views/Toggle';
+import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
+import LocationServices from '../Home/LocationServices';
 
 class Home extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      location: false,
+      ble: false,
+    };
+  }
   componentDidMount() {
     this.fetchQuery();
+
     BackgroundFetch.configure({
       minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
     }, async (taskId) => {
@@ -45,7 +58,37 @@ class Home extends Component {
           break;
       }
     });
+
+    const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
+    this.subscriptions = [];
+    this.subscriptions.push(bleEmitter.addListener(
+      'onLifecycleEvent',
+      (data) => console.log("log:" +data)
+    ));
+
+    NativeModules.BLE.init_module(
+      '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
+      'd945590b-5b09-4144-ace7-4063f95bd0bb', //characteristic ID
+    );
+
+    this.getSetting('ENABLE_LOCATION').then(data => {
+      this.setState({
+        location: data,
+      });
+    });
+
+    this.getSetting('ENABLE_BLE').then(data => {
+      this.setState({
+        ble: data,
+      });
+    });
   }
+
+  getSetting = key => {
+    return GetStoreData(key).then(data => {
+      return data === 'true' ? true : false;
+    });
+  };
 
   fetchQuery = () => {
     const queryURL = 'https://covidsafe.azure-api.net/api/Trace/Query?regionId=39%2c-74&lastTimestamp=0';
@@ -54,9 +97,9 @@ class Home extends Component {
       method: 'GET',
       headers: {
         'Ocp-Apim-Subscription-Key': '27f9b131532b4dcc93f19ccfbc299793'
-      }
+      },
     })
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
           response.text().then((error) => {
             console.log(error);
@@ -66,7 +109,7 @@ class Home extends Component {
           return response.json();
         }
       })
-      .then((data) => {
+      .then(data => {
         console.log(data);
         return data;
       })
@@ -75,7 +118,34 @@ class Home extends Component {
       });
   }
 
+  updateSetting = state => {
+    if (state) {
+      SetStoreData('ENABLE_LOCATION', 'true');
+      SetStoreData('ENABLE_BLE', 'true');
+
+      this.setState({
+        location: true,
+        ble: true,
+      });
+
+      LocationServices.start();
+      NativeModules.BLE.start_ble();
+    } else {
+      SetStoreData('ENABLE_LOCATION', 'false');
+      SetStoreData('ENABLE_BLE', 'false');
+
+      this.setState({
+        location: false,
+        ble: false
+      });
+      LocationServices.stop();
+      NativeModules.BLE.stop_ble();
+    }
+  };
+
   render() {
+    const {navigate} = this.props.navigation;
+
     return (
       <SafeAreaView>
         <View style={styles.status_container}>
@@ -85,49 +155,44 @@ class Home extends Component {
                 CovidSafe
               </Text>
             </View>
-            <TouchableOpacity onPress={()=>{}}>
+            <TouchableOpacity onPress={() => this.props.navigation.replace('Preferences')}>
               <Icon name="settings-outline" color={'white'} size={28} />
             </TouchableOpacity>
           </View>
           <View style={styles.broadcast_container}>
-            <View style={styles.broadcast_header}>
-              <Icon name="wifi" color={colors.PURPLE_50} size={20} />
-              <Text style={styles.broadcast_text}>Broadcasting</Text>
+            <View style={styles.broadcast}>
+              <Icon
+                name="wifi"
+                style={styles.broadcast_icon}
+                color={'green'}
+                size={24}
+              />
+              <View style={styles.broadcast_content}>
+                <Text style={styles.broadcast_title}>Broadcasting</Text>
+                <Text style={styles.broadcast_description}>
+                  Location sharing and bluetooth{'\n'}tracing are turned on.
+                  <Text
+                    style={styles.settings}
+                    onPress={() => {
+                      this.props.navigation.replace('Preferences')
+                    }}>
+                    Settings
+                  </Text>
+                </Text>
+              </View>
             </View>
-            <FlatList
-              data={[
-                {
-                  key: 'location',
-                  title: 'Location Tracking',
-                },
-                {
-                  key: 'ble',
-                  title: 'Bluetooth',
-                },
-              ]}
-              renderItem={({item}) => {
-                return (
-                  <View style={styles.setting}>
-                    <View style={styles.setting_content}>
-                      <Text style={styles.setting_title}>{item.title}</Text>
-                    </View>
-                    <View style={styles.switch_container}>
-                      <Toggle
-                        handleToggle={(state) => {
-                          this.updateSetting(item.key, state);
-                        }}
-                      />
-                    </View>
-                  </View>
-                );
-              }}
-            />
+            <View>
+              <Toggle
+                handleToggle={selectedState => {
+                  this.updateSetting(selectedState);
+                }}
+                value={this.state.location || this.state.ble}
+              />
+            </View>
           </View>
         </View>
         <View style={styles.resources_container}>
-          <Text style={styles.resources_header}>
-            Resources
-          </Text>
+          <Text style={styles.resources_header}>Resources</Text>
           <FlatList
             data={[
               {
@@ -150,15 +215,18 @@ class Home extends Component {
                       source={require('../assets/resources/logo_cdc.png')}
                     />
                     <View>
-                      <Text style={styles.resource_title}>
-                        {item.title}
-                      </Text>
+                      <Text style={styles.resource_title}>{item.title}</Text>
                       <Text style={styles.resource_description}>
                         {item.description}
                       </Text>
                     </View>
                   </View>
-                  <Icon style={styles.right_arrow} name="chevron-right" color={colors.GRAY_20} size={20} />
+                  <Icon
+                    style={styles.right_arrow}
+                    name="chevron-right"
+                    color={colors.GRAY_20}
+                    size={20}
+                  />
                 </View>
               );
             }}
@@ -187,22 +255,28 @@ const styles = StyleSheet.create({
   broadcast_container: {
     backgroundColor: 'white',
     borderRadius: 14,
-    paddingVertical: 10
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.GRAY_10,
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    justifyContent: 'space-between',
+  },
+  broadcast: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  broadcast_icon: {
+    paddingRight: 10,
   },
   broadcast_text: {
     color: colors.PURPLE_50,
     fontSize: 18,
     lineHeight: 22,
     paddingLeft: 5,
-    fontWeight: '500'
-  },
-  broadcast_header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.GRAY_10,
-    paddingHorizontal: 15,
-    paddingBottom: 10,
+    fontWeight: '500',
   },
   setting: {
     paddingHorizontal: 15,
@@ -215,11 +289,19 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     fontWeight: '500',
   },
-  setting_content: {
-    flex: 0.85,
+  broadcast_title: {
+    fontSize: 18,
+    lineHeight: 25,
+    color: colors.GRAY_90,
   },
-  switch_container: {
-    flex: 0.15,
+  broadcast_description: {
+    fontSize: 12,
+    lineHeight: 17,
+    color: '#919191',
+  },
+  settings: {
+    color: colors.PURPLE_50,
+    fontWeight: 'bold',
   },
   resources_container: {
     backgroundColor: 'white',
