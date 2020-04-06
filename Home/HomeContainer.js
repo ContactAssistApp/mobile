@@ -19,7 +19,8 @@ class HomeContainer extends Component {
     this.state = {
       record: 0,
       isBleEnabled: false,
-      theSeed: {}
+      theSeed: {},
+      queryResult: ''
     };
   }
 
@@ -90,6 +91,39 @@ class HomeContainer extends Component {
       });
   }
 
+  runQuery = () => {
+
+    args = [
+      ['111-333-444', '1a320ba1'],
+      [10247392, 19372910],
+      ['111-333-444', '73733-a132e'],
+      [10247392, 1372910],
+    ];
+
+    msgs = [
+      "First message",
+      "Second message"
+    ]
+
+
+    NativeModules.BLE.runBleQuery(args).then(
+      result => {
+        res = ''
+        for(var i = 0; i < result.length; ++i) {
+          if(result[i] == 1)
+            res += msgs[i] + "\n";
+        }
+        if(res == '')
+          res = "All good!";
+
+        this.setState({ queryResult: res});
+      },
+      error => {
+        this.setState({ queryResult: "Didn't work"});
+      }
+    )
+  }
+
   countLogs = (kind) => {
     var count = 0;
     this.state.contactLogs.forEach(log => {
@@ -105,6 +139,7 @@ class HomeContainer extends Component {
         <Button title={'Start BLE'} onPress={this.startBle} />
         <Button title={'Stop BLE'} onPress={this.stopBle} />
         <Button title={'GetSeed'} onPress={this.getDeviceSeedAndRotate} />
+        <Button title={'RunQuery'} onPress={this.runQuery} />
 
         <Button title={'Track GPS'} onPress={this.trackGPS} />
         <Button title={'Stop Track GPS'} onPress={this.stopTrackGPS} />
@@ -113,6 +148,7 @@ class HomeContainer extends Component {
 
         <Text>{this.state.record}</Text>
         <Text>Bluetooth: {this.state.isBleEnabled.toString()}</Text>
+        <Text>QUERY RESULT: {this.state.queryResult}</Text>
         <Text>{JSON.stringify(this.state.theSeed)}</Text>
       </>
     );

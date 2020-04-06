@@ -29,38 +29,35 @@ public:
 
 class Seed
 {
-    std::array<uint8_t, 16> data;
-    int64_t timestamp;
+  std::array<uint8_t, 16> data;
+  int64_t timestamp;
 
-    Seed(int64_t ts): timestamp(ts) {}
+  Seed(int64_t ts): timestamp(ts) {}
 public:
-    static const int64_t SeedStepInSecs = 15 * 60; //15min
+  static const int64_t SeedStepInSecs = 15 * 60; //15min
 
-    inline int64_t ts() { return timestamp; }
+  inline int64_t ts() { return timestamp; }
 
-    Seed(uint8_t *raw_data, int64_t ts): timestamp(ts) {
-        memcpy(&data[0], raw_data, 16);
-    }
+  Seed(uint8_t *raw_data, int64_t ts): timestamp(ts) {
+    memcpy(&data[0], raw_data, 16);
+  }
 
-    void stepInPlace(Id &id);
+  void stepInPlace(Id &id);
 };
 
 
 class BluetoothMatch
 {
-    std::vector<Seed> seeds;
+  std::vector<Seed> seeds;
 
 public:
-    static const int64_t LookBackWindowInSecs = 14 * 24 * 3600; //14 days
+  static const int64_t LookBackWindowInSecs = 14 * 24 * 3600; //14 days
 
-    void addSeed(Seed s)
-    {
-        seeds.push_back(s);
-    }
+  void addSeed(Seed &&s) { seeds.push_back(s); }
 
-    Seed at(int i) { return seeds[i]; }
+  Seed at(int i) { return seeds[i]; }
 
-    bool hasMatch(int64_t up_to, const std::vector<Id> &localIds);
+  bool hasMatch(int64_t up_to, const std::vector<Id> &localIds);
 };
 
 

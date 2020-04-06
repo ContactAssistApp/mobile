@@ -778,11 +778,46 @@ RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
   [self logDebug:@"purging records!"];
 }
 
-RCT_EXPORT_METHOD(runBleQuery: resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-  NSMutableArray * res = [NSMutableArray arrayWithCapacity:10];
+  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
+    try {
+      std::vector<td::BluetoothMatch> matches;
+      matches.resize(arr.count);
+      for(int i = 0; i < arr.count / 2; ++i) {
+        auto &bm = matches[i];
+        NSArray *seeds = arr[i * 2];
+        NSArray *timestamps = arr[i * 2 + 1];
+        for(int j = 0; j < seeds.count; ++j) {
+          NSString *s = seeds[j];
+          NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:s];
 
-  resolve(res);
+          NSNumber *ts = nil;
+          if(j < timestamps.count)
+            ts = timestamps[j];
+
+          if(uuid && ts) {
+            uint8_t tmp[16];
+            [uuid getUUIDBytes:tmp];
+            bm.addSeed(td::Seed(tmp, [ts longLongValue]));
+          }
+        }
+      }
+
+      std::vector<td::Id> localIds; //TODO
+
+      auto boolRes = performBleMatching(matches, localIds);
+
+      NSMutableArray *res = [NSMutableArray arrayWithCapacity: boolRes.size()];
+      for(auto r : boolRes)
+        [res addObject: [NSNumber numberWithInt: r ? 1 : 0]];
+
+      resolve(res);
+    } catch(std::exception e) {
+      reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %s", e.what()], nil);
+    }
+  });
+
 }
 
 RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSNumber*, applyBitMask: (nonnull NSNumber*)number bits:(nonnull NSNumber*) bits)
