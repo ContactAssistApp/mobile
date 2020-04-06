@@ -5,7 +5,9 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  NativeModules,
+  NativeEventEmitter,
 } from 'react-native';
 import colors from '../assets/colors';
 import Toggle from '../views/Toggle';
@@ -21,6 +23,21 @@ class Preferences extends Component {
     };
   }
 
+  componentDidMount() {
+    const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
+
+    this.subscriptions = []
+    this.subscriptions.push(bleEmitter.addListener(
+      'onLifecycleEvent',
+      (data) => console.log("log:" +data)
+    ));
+
+    NativeModules.BLE.init_module(
+      '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
+      'd945590b-5b09-4144-ace7-4063f95bd0bb' //characteristic ID
+    );
+  }
+
   updateSetting = (id, state) => {
     switch (id) {
       case 'notification':
@@ -33,6 +50,11 @@ class Preferences extends Component {
         }
         break;
       case 'ble':
+        if (state) {
+          NativeModules.BLE.start_ble();
+        } else {
+          NativeModules.BLE.stop_ble();
+        }
         break;
     }
   };
