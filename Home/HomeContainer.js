@@ -93,6 +93,24 @@ class HomeContainer extends Component {
 
   runQuery = () => {
 
+    //input is array of `BluetoothMatch`
+
+    var inputArray = [] //plug proto here
+    args = []
+    msgs = []
+    for(var match in inputArray) {
+      msgs.push(match.user_message);
+      seeds = []
+      timestamps = []
+      for(var bm in match.seeds) {
+        seeds.push(bm.seed);
+        timestamps.push(bm.sequence_start_time);
+      }
+      args.push(seeds);
+      args.push(timestamps);
+    }
+
+
     args = [
       ['111-333-444', '1a320ba1'],
       [10247392, 19372910],
