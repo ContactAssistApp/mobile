@@ -21,8 +21,10 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* tracedefense1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tracedefense1Tests.m */; };
-		A50FDFF724368B87000CF390 /* proto.c in Sources */ = {isa = PBXBuildFile; fileRef = A50FDFF524368B87000CF390 /* proto.c */; };
-		A5E323C4242E6FE00066AB83 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.m */; };
+		A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117593243BCAD500BCD5AA /* query-engine.cc */; };
+		A511759A243BCAD500BCD5AA /* proto.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117595243BCAD500BCD5AA /* proto.cc */; };
+		A511759B243BCAD500BCD5AA /* util.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117596243BCAD500BCD5AA /* util.cc */; };
+		A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.mm */; };
 		B537F701AA40882F8AA59C69 /* libPods-tracedefense1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-tracedefense1.a */; };
 		FA99A7DD6E78E064A6B9F89F /* libPods-tracedefense1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-tracedefense1Tests.a */; };
 		FBDFC5F03DC4A9AA826A92E4 /* libPods-tracedefense1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C959DDA6D810F94A4A1ECC56 /* libPods-tracedefense1-tvOSTests.a */; };
@@ -94,8 +96,12 @@
 		7DB4869357700CE101CFA78B /* Pods-tracedefense1Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1Tests.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1Tests/Pods-tracedefense1Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		80E2B511E00B4278976ED673 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		99F1ADC311164B4D88434CFB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		A50FDFF524368B87000CF390 /* proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = proto.c; sourceTree = "<group>"; };
-		A50FDFF624368B87000CF390 /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
+		A5117593243BCAD500BCD5AA /* query-engine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "query-engine.cc"; sourceTree = "<group>"; };
+		A5117594243BCAD500BCD5AA /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		A5117595243BCAD500BCD5AA /* proto.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = proto.cc; sourceTree = "<group>"; };
+		A5117596243BCAD500BCD5AA /* util.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cc; sourceTree = "<group>"; };
+		A5117597243BCAD500BCD5AA /* query-engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "query-engine.h"; sourceTree = "<group>"; };
+		A5117598243BCAD500BCD5AA /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
 		A5E323C2242E6FE00066AB83 /* BLE.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BLE.mm; sourceTree = "<group>"; };
 		A5E323C3242E6FE00066AB83 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		B16E092F4292471095648AF9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -166,12 +172,12 @@
 		13B07FAE1A68108700A75B9A /* tracedefense1 */ = {
 			isa = PBXGroup;
 			children = (
-				A50E7C64243A4C9C00F86E1A /* util.cc */,
-				A50E7C65243A4C9C00F86E1A /* util.h */,
-				A50E7C61243A4C6A00F86E1A /* query-engine.cc */,
-				A50E7C62243A4C6B00F86E1A /* query-engine.h */,
-				A50FDFF524368B87000CF390 /* proto.cc */,
-				A50FDFF624368B87000CF390 /* proto.h */,
+				A5117595243BCAD500BCD5AA /* proto.cc */,
+				A5117598243BCAD500BCD5AA /* proto.h */,
+				A5117593243BCAD500BCD5AA /* query-engine.cc */,
+				A5117597243BCAD500BCD5AA /* query-engine.h */,
+				A5117596243BCAD500BCD5AA /* util.cc */,
+				A5117594243BCAD500BCD5AA /* util.h */,
 				1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */,
 				14431C2F242D8B4300DEFBBE /* BLE */,
 				14431C2C242D83DF00DEFBBE /* Device */,
@@ -399,7 +405,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = JDSW6436C5;
+						DevelopmentTeam = XE6VFX5826;
 						LastSwiftMigration = 1130;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -706,11 +712,11 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
-				A50FDFF724368B87000CF390 /* proto.cc in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				A50E7C63243A4C6B00F86E1A /* query-engine.cc in Sources */,
+				A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */,
+				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
-				A50E7C66243A4C9C00F86E1A /* util.cc in Sources */,
+				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
 				140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */,
 				14431C2E242D842600DEFBBE /* Device.m in Sources */,
 			);
@@ -816,7 +822,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = JDSW6436C5;
+				DEVELOPMENT_TEAM = XE6VFX5826;
 				INFOPLIST_FILE = tracedefense1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -824,7 +830,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tracedefense1;
+				PRODUCT_BUNDLE_IDENTIFIER = ms.tracedefense1;
 				PRODUCT_NAME = tracedefense1;
 				SWIFT_OBJC_BRIDGING_HEADER = "tracedefense1-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -840,7 +846,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JDSW6436C5;
+				DEVELOPMENT_TEAM = XE6VFX5826;
 				INFOPLIST_FILE = tracedefense1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -848,7 +854,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tracedefense1;
+				PRODUCT_BUNDLE_IDENTIFIER = ms.tracedefense1;
 				PRODUCT_NAME = tracedefense1;
 				SWIFT_OBJC_BRIDGING_HEADER = "tracedefense1-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
