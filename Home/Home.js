@@ -10,7 +10,6 @@ import {
   Image,
 } from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../assets/colors';
 import Toggle from '../views/Toggle';
@@ -77,7 +76,6 @@ class Home extends Component {
   }
 
   render() {
-    const Tab = createBottomTabNavigator();
     return (
       <SafeAreaView>
         <View style={styles.status_container}>
