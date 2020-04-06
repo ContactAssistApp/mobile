@@ -12,6 +12,7 @@ import {
 import colors from '../assets/colors';
 import Toggle from '../views/Toggle';
 import LocationServices from '../Home/LocationServices';
+import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 
 class Preferences extends Component {
   constructor(props) {
@@ -25,8 +26,7 @@ class Preferences extends Component {
 
   componentDidMount() {
     const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
-
-    this.subscriptions = []
+    this.subscriptions = [];
     this.subscriptions.push(bleEmitter.addListener(
       'onLifecycleEvent',
       (data) => console.log("log:" +data)
@@ -34,9 +34,27 @@ class Preferences extends Component {
 
     NativeModules.BLE.init_module(
       '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
-      'd945590b-5b09-4144-ace7-4063f95bd0bb' //characteristic ID
+      'd945590b-5b09-4144-ace7-4063f95bd0bb', //characteristic ID
     );
+
+    this.getSetting('ENABLE_LOCATION').then(data => {
+      this.setState({
+        location: data,
+      });
+    });
+
+    this.getSetting('ENABLE_BLE').then(data => {
+      this.setState({
+        ble: data,
+      });
+    });
   }
+
+  getSetting = key => {
+    return GetStoreData(key).then(data => {
+      return data === true ? true : false;
+    });
+  };
 
   updateSetting = (id, state) => {
     switch (id) {
@@ -44,15 +62,31 @@ class Preferences extends Component {
         break;
       case 'location':
         if (state) {
+          SetStoreData('ENABLE_LOCATION', true);
+          this.setState({
+            location: true,
+          });
           LocationServices.start();
         } else {
+          SetStoreData('ENABLE_LOCATION', false);
+          this.setState({
+            location: false,
+          });
           LocationServices.stop();
         }
         break;
       case 'ble':
         if (state) {
+          SetStoreData('ENABLE_BLE', true);
+          this.setState({
+            ble: true,
+          });
           NativeModules.BLE.start_ble();
         } else {
+          SetStoreData('ENABLE_BLE', false);
+          this.setState({
+            ble: false,
+          });
           NativeModules.BLE.stop_ble();
         }
         break;
@@ -99,9 +133,12 @@ class Preferences extends Component {
                   </View>
                   <View style={styles.switch_container}>
                     <Toggle
-                      handleToggle={(state) => {
-                        this.updateSetting(item.key, state);
+                      handleToggle={selectedState => {
+                        this.updateSetting(item.key, selectedState);
+                        console.log("blah");
+                        console.log(this.state[item.key]);
                       }}
+                      value={this.state[item.key]}
                     />
                   </View>
                 </View>
@@ -168,7 +205,7 @@ const styles = StyleSheet.create({
   },
   next_button_text: {
     color: 'white',
-  }
+  },
 });
 
 export default Preferences;
