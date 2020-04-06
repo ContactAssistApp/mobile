@@ -4,36 +4,34 @@ import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import Nav from './Nav/Nav';
-import BottomNav from './BottomNav/BottomNav';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from './assets/colors.js';
-
 const store = configureStore();
 
 const slides = [
   {
-    key: 1,
+    key: 'ftue_1',
     text: 'CovidSafe notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you\'re having.',
     image: require('./assets/ftue/ftue_1.png'),
   },
   {
-    key: 2,
+    key: 'ftue_2',
     text: 'Learn if you might have been exposed. If you\'ve recently visited a location with a risk of COVID-19 exposure, you\'ll get a notification letting you know.',
     image: require('./assets/ftue/ftue_2.png'),
   },
   {
-    key: 3,
+    key: 'ftue_3',
     text: 'Take care of yourself and others Get self-care tips, connect with a healthcare professional if your symptoms worsen, and report locations you recently visited to protect others.',
     image: require('./assets/ftue/ftue_3.png'),
   },
   {
-    key: 4,
+    key: 'ftue_4',
     text: ' Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.',
     image: require('./assets/ftue/ftue_4.png'),
   },
   {
-    key: 5,
+    key: 'ftue_5',
     text: 'Let\'s slow the spread of COVID-19 together.',
   },
 ];
@@ -45,17 +43,15 @@ function App() {
 
   const [showRealApp, setShowRealApp] = useState(false);
 
-  _renderItem = ({item}) => {
-    if (item.key === 5) {
+  renderItem = ({item}) => {
+    if (item.key === 'ftue_5') {
       return (
         <View style={styles.onboarding_done_page}>
           <View style={styles.onboarding_done_container}>
             <Text style={styles.onboarding_done_text}>
               Let's slow the spread of {'\n'} COVID-19 together.
             </Text>
-            <TouchableOpacity
-              style={styles.start_button}
-              onPress={this._onDone}>
+            <TouchableOpacity style={styles.start_button} onPress={this.onDone}>
               <Text style={styles.start_button_text}>GET STARTED</Text>
             </TouchableOpacity>
 
@@ -80,25 +76,23 @@ function App() {
     }
   };
 
-  _onDone = () => {
+  onDone = () => {
     setShowRealApp(() => true);
   };
 
   return (
-    <>
-      <Provider store={store}>
-        {showRealApp
-        ? <Nav />
-        : <AppIntroSlider
-            renderItem={this._renderItem}
-            data={slides}
-            onDone={this._onDone}
-            showNextButton={false}
-            showDoneButton={false}
-          />
-        }
-      </Provider>
-    </>
+    <Provider store={store}>
+      {showRealApp
+      ? <Nav />
+      : <AppIntroSlider
+          renderItem={this.renderItem}
+          data={slides}
+          onDone={this.onDone}
+          showNextButton={false}
+          showDoneButton={false}
+        />
+      }
+    </Provider>
   );
 }
 
