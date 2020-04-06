@@ -52,7 +52,7 @@ class Preferences extends Component {
 
   getSetting = key => {
     return GetStoreData(key).then(data => {
-      return data === true ? true : false;
+      return data === 'true' ? true : false;
     });
   };
 
@@ -62,13 +62,13 @@ class Preferences extends Component {
         break;
       case 'location':
         if (state) {
-          SetStoreData('ENABLE_LOCATION', true);
+          SetStoreData('ENABLE_LOCATION', 'true');
           this.setState({
             location: true,
           });
           LocationServices.start();
         } else {
-          SetStoreData('ENABLE_LOCATION', false);
+          SetStoreData('ENABLE_LOCATION', 'false');
           this.setState({
             location: false,
           });
@@ -77,13 +77,13 @@ class Preferences extends Component {
         break;
       case 'ble':
         if (state) {
-          SetStoreData('ENABLE_BLE', true);
+          SetStoreData('ENABLE_BLE', 'true');
           this.setState({
             ble: true,
           });
           NativeModules.BLE.start_ble();
         } else {
-          SetStoreData('ENABLE_BLE', false);
+          SetStoreData('ENABLE_BLE', 'false');
           this.setState({
             ble: false,
           });
