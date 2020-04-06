@@ -9,7 +9,6 @@ import {
   View,
   Image,
   NativeModules,
-  NativeEventEmitter,
 } from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,9 +29,8 @@ class Home extends Component {
   componentDidMount() {
     this.fetchQuery();
 
-    BackgroundFetch.configure({
-      minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
-    },
+    BackgroundFetch.configure(
+      {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
       async taskId => {
         console.log('[js] Received background-fetch event: ', taskId);
         this.fetchQuery();
@@ -40,10 +38,12 @@ class Home extends Component {
         // If you fail to do this, the OS can terminate your app
         // or assign battery-blame for consuming too much background-time
         BackgroundFetch.finish(taskId);
-      }, error => {
+      },
+      error => {
         console.log('[js] RNBackgroundFetch failed to start');
         console.log(error);
-      });
+      },
+    );
 
     // Optional: Query the authorization status.
     BackgroundFetch.status(status => {
@@ -59,13 +59,6 @@ class Home extends Component {
           break;
       }
     });
-
-    const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
-    this.subscriptions = [];
-    this.subscriptions.push(bleEmitter.addListener(
-      'onLifecycleEvent',
-      (data) => console.log("log:" +data)
-    ));
 
     NativeModules.BLE.init_module(
       '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
