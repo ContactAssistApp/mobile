@@ -1,4 +1,4 @@
-import {GetStoreData, SetStoreData} from './General';
+import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
 import {PERMISSIONS, check, RESULTS, request} from 'react-native-permissions';

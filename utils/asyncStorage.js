@@ -1,9 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
-// import _ from 'lodash';
-
 /**
  * Get Data from Store
-
  *
  * @param {string} key
  * @param {boolean} isString
@@ -25,7 +22,6 @@ export async function GetStoreData(key, isString = true) {
 
 /**
  * Set data from store
-
  *
  * @param {string} key
  * @param {object} item
