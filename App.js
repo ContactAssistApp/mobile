@@ -88,7 +88,7 @@ function App() {
     <>
       <Provider store={store}>
         {showRealApp
-        ? <BottomNav />
+        ? <Nav />
         : <AppIntroSlider
             renderItem={this._renderItem}
             data={slides}
