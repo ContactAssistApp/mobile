@@ -25,12 +25,12 @@ class Preferences extends Component {
   }
 
   componentDidMount() {
-    if(NativeModules.BLE.logSub === undefined) {
-      const bleEmitter = new NativeEventEmitter(NativeModules.BLE);  
+    if (NativeModules.BLE.logSub === undefined) {
+      const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
       NativeModules.BLE.logSub = bleEmitter.addListener(
-          'onLifecycleEvent',
-          (data) => console.log("log:" +data)
-        );
+        'onLifecycleEvent',
+        data => console.log('log:' + data),
+      );
     }
     NativeModules.BLE.init_module(
       '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID

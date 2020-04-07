@@ -11,27 +11,29 @@ import {
 } from 'react-native';
 import colors from '../assets/colors';
 import {REPORT_BLE_URL} from '../utils/endpoints';
+import {getLatestCoarseLocation} from '../utils/helper';
 
 class Report extends Component {
   uploadBLE = () => {
     let seeds = [];
     this.getDeviceSeedAndRotate().then(data => {
       seeds.push(data);
-      this.reportBLE(seeds);
+      getLatestCoarseLocation().then(location => {
+        this.reportBLE(seeds, location);
+      });
     });
   };
 
-  reportBLE = seeds => {
+  reportBLE = (seeds, location) => {
     const requestBody = {
       "seeds": seeds,
       "region": {
-        "latitudePrefix": 74.12,
-        "longitudePrefix": -39.12,
+        "latitudePrefix": location.latitudePrefix,
+        "longitudePrefix": location.longitudePrefix,
         "precision": 4
       }
     };
 
-    console.log(requestBody);
     fetch(REPORT_BLE_URL, {
       method: 'PUT',
       headers: {
