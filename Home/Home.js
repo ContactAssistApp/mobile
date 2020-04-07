@@ -23,6 +23,7 @@ import {
   FETCH_MESSAGE_INFO_URL,
 } from '../utils/endpoints';
 import Notification from './Notification';
+import {DEFAULT_NOTIFICATION} from '../utils/helper';
 
 class Home extends Component {
   constructor() {
@@ -31,7 +32,7 @@ class Home extends Component {
     this.state = {
       location: false,
       ble: false,
-      notifications: ['Based on your location history, we believe you might have been in the same place as people infected with COVID-19.'],
+      notifications: [DEFAULT_NOTIFICATION],
     };
   }
 
@@ -161,7 +162,8 @@ class Home extends Component {
         let notifications = [];
         results.forEach((result, index) => {
           if (result === 1) {
-            notifications.push(msgs[index] || 'BLE default message');
+            const msg = msgs[index] ? msgs[index] : DEFAULT_NOTIFICATION;
+            notifications.push(msg);
           }
         });
         return notifications;
