@@ -14,6 +14,12 @@ import {REPORT_BLE_URL} from '../utils/endpoints';
 import {getLatestCoarseLocation} from '../utils/helper';
 
 class Report extends Component {
+  constructor() {
+    super();
+    this.state = {
+      uploadBLESuccess: false,
+    }
+  }
   uploadBLE = () => {
     let seeds = [];
     this.getDeviceSeedAndRotate().then(data => {
@@ -50,6 +56,9 @@ class Report extends Component {
             return;
           });
         }
+        this.setState({
+          uploadBLESuccess: true
+        });
         return;
       })
       .catch(err => {
@@ -88,6 +97,13 @@ class Report extends Component {
               Upload Trace Data
             </Text>
           </TouchableOpacity>
+          {
+            this.state.uploadBLESuccess && (
+              <Text>
+                Success!
+              </Text>
+            )
+          }
         </View>
       </SafeAreaView>
     );
