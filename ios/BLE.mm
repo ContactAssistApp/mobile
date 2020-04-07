@@ -27,9 +27,9 @@
  */
 
 //set this to enable high volume logging disable for release!
-#define DBG_LOG
+static bool DebugLogEnabled = false;
 //set this to make the protocol to act in non-conforming, but extremely fast. good for developing.
-#define USE_FAST_DEV_VALUES
+static bool UseFastDevValues = false;
 
 //we let up to this many times of leeway for the timer subsystem to delay execution
 #define TIMER_LEEWAY 5
@@ -445,13 +445,37 @@ RCT_EXPORT_MODULE();
  */
 
 
-RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characteristicUUID)
+RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characteristicUUID options:(NSDictionary*)options)
 {
   if(_serviceUUID != nil)
     return;
 
   _serviceUUID = serviceUUID;
   _characteristicUUID = characteristicUUID;
+  DebugLogEnabled = false;
+  UseFastDevValues = false;
+  
+  if(options != nil) {
+    if([@"yes" isEqual:[options objectForKey:@"DebugLog"]])
+      DebugLogEnabled = true;
+    if([@"yes" isEqual:[options objectForKey:@"FastDevScan"]])
+      UseFastDevValues = true;
+  }
+
+  if(UseFastDevValues) {
+    contact_log_interval_in_secs = 5;
+    local_id_write_interval_in_secs = 10;
+    remote_id_read_interval_in_secs = 20;
+    device_cache_ttl_in_secs = 1 * 60;
+    crypto_id_update_schedule_in_secs = 5 * 60;
+  } else {
+    contact_log_interval_in_secs = 5 * 60;
+    local_id_write_interval_in_secs = 10 * 60;
+    remote_id_read_interval_in_secs = 15 * 60;
+    device_cache_ttl_in_secs = 30 * 60;
+    crypto_id_update_schedule_in_secs = 5 * 60;
+  }
+
 
   NSURL *docs_url = [[NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
   NSURL *contact_url = [docs_url URLByAppendingPathComponent:@"contacts.txt"];
@@ -548,6 +572,9 @@ RCT_EXPORT_METHOD(stop_ble)
                      rssi,
                      kind];
 
+    NSString *uuid_str = [[NSUUID alloc] initWithUUIDBytes:(uint8_t*)deviceId.bytes ].UUIDString;
+    [self logDebug:[NSString stringWithFormat:@"new contact to %@ at %lld rssi %d kind %d", uuid_str, at, rssi, kind]];
+
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     fwrite(data.bytes, data.length, 1, _contactsLogFile);
     fflush(_contactsLogFile);
@@ -560,10 +587,10 @@ RCT_EXPORT_METHOD(stop_ble)
 }
 
 -(void) logDebug: (id)payload {
-#ifdef DBG_LOG
-  [self sendEventWithName:@"onLifecycleEvent" body:payload ];
-  NSLog(@"TraceDefense::INFO:: %@", payload);
-#endif
+  if(DebugLogEnabled) {
+    [self sendEventWithName:@"onLifecycleEvent" body:payload ];
+    NSLog(@"TraceDefense::INFO:: %@", payload);
+  }
 }
 
 /**
@@ -767,8 +794,8 @@ RCT_EXPORT_METHOD(getDeviceSeedAndRotate:(nonnull NSNumber *)interval resolver:(
 
   NSMutableDictionary *res = [NSMutableDictionary dictionary];
   res[@"seed"] = [[NSUUID alloc] initWithUUIDBytes:buff].UUIDString.lowercaseString;
-  res[@"firstTimeStamp"] = [NSNumber numberWithLongLong: ts];
-  res[@"lastTimeStamp"] = [NSNumber numberWithLongLong: timestamp];
+  res[@"sequenceStartTime"] = [NSNumber numberWithLongLong: ts];
+  res[@"sequenceEndTime"] = [NSNumber numberWithLongLong: timestamp];
   resolve(res);
 }
 

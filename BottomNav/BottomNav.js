@@ -7,7 +7,7 @@ import HealthNav from '../Health/HealthNav';
 import Resources from '../Resources/Resources';
 import HomeContainer from '../Home/HomeContainer'
 
-const ADD_DEBUG_SCREEN = true
+const ADD_DEBUG_SCREEN = __DEV__
 
 const Tab = createBottomTabNavigator();
 
