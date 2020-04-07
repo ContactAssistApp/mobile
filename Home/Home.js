@@ -17,6 +17,12 @@ import colors from '../assets/colors';
 import Toggle from '../views/Toggle';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import LocationServices from '../Home/LocationServices';
+import {
+  GET_QUERY_SIZE_URL,
+  GET_MESSAGE_IDS_URL,
+  FETCH_MESSAGE_INFO_URL,
+} from '../utils/endpoints';
+import Notification from './Notification';
 
 class Home extends Component {
   constructor() {
@@ -25,19 +31,17 @@ class Home extends Component {
     this.state = {
       location: false,
       ble: false,
+      notifications: ['Based on your location history, we believe you might have been in the same place as people infected with COVID-19.'],
     };
   }
-  componentDidMount() {
-    this.fetchQuery();
 
+  componentDidMount() {
+    this.processQueries();
     BackgroundFetch.configure(
       {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
       async taskId => {
         console.log('[js] Received background-fetch event: ', taskId);
-        this.fetchQuery();
-        // Required: Signal completion of your task to native code
-        // If you fail to do this, the OS can terminate your app
-        // or assign battery-blame for consuming too much background-time
+        this.processQueries();
         BackgroundFetch.finish(taskId);
       },
       error => {
@@ -61,18 +65,18 @@ class Home extends Component {
       }
     });
 
-    if(NativeModules.BLE.logSub === undefined) {
-      const bleEmitter = new NativeEventEmitter(NativeModules.BLE);  
+    if (NativeModules.BLE.logSub === undefined) {
+      const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
       NativeModules.BLE.logSub = bleEmitter.addListener(
-          'onLifecycleEvent',
-          (data) => console.log("log:" +data)
-        );
+        'onLifecycleEvent',
+        (data) => console.log("log:" +data)
+      );
     }
+
     NativeModules.BLE.init_module(
       '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
       'd945590b-5b09-4144-ace7-4063f95bd0bb', //characteristic ID
     );
-
 
     this.getSetting('ENABLE_LOCATION').then(data => {
       this.setState({
@@ -85,6 +89,14 @@ class Home extends Component {
         ble: data,
       });
     });
+
+    this.getNotifications().then(data => {
+      if (data) {
+        this.setState({
+          notifications: data,
+        });
+      }
+    });
   }
 
   getSetting = key => {
@@ -93,33 +105,136 @@ class Home extends Component {
     });
   };
 
-  fetchQuery = () => {
-    const queryURL = 'https://covidsafe.azure-api.net/api/Trace/Query?regionId=39%2c-74&lastTimestamp=0';
+  getNotifications = () => {
+    return GetStoreData('NOTIFICATIONS').then(data => {
+      if (data) {
+        return JSON.parse(data);
+      }
+      return;
+    });
+  };
 
-    fetch(queryURL, {
-      method: 'GET',
+  processQueries = async () => {
+    let querySize = await this.fetchQuerySize();
+    if (querySize < 1000) {
+      const location = {
+        lat: 74.12,
+        lon: -39.12,
+        precision: 2
+      };
+      const messageIDs = await this.fetchMessageID(location);
+      const messages = await this.fetchMessages(messageIDs);
+
+      let args = [];
+      let msgs = [];
+
+      messages.forEach(messageObj => {
+        const {bluetoothMatches} = messageObj;
+
+        bluetoothMatches.forEach(match => {
+          const {userMessage, seeds} = match;
+          msgs.push(userMessage);
+          let timestamps = [];
+          let seedsArray = [];
+          seeds.forEach(seedObj => {
+            timestamps.push(seedObj.sequenceStartTime);
+            seedsArray.push(seedObj.seed);
+          });
+
+          args.push(seedsArray);
+          args.push(timestamps);
+        });
+      });
+
+      let notifications = await this.searchQuery(args, msgs);
+      if (notifications && notifications.length > 0) {
+        SetStoreData('NOTIFICATIONS', notifications);
+      }
+    } else {
+      // TODO: adjust coarse location
+    }
+  }
+
+  searchQuery = async (args, msgs) => {
+    return NativeModules.BLE.runBleQuery(args).then(
+      results => {
+        let notifications = [];
+        results.forEach((result, index) => {
+          if (result === 1) {
+            notifications.push(msgs[index] || 'BLE default message');
+          }
+        });
+        return notifications;
+      },
+      error => {
+        console.log(error);
+      },
+    );
+  };
+
+  fetchQuerySize = () => {
+    const url = `${GET_QUERY_SIZE_URL}?lat=74.12&lon=-39.12&precision=2&lastTimestamp=0`;
+
+    return fetch(url, {
       headers: {
-        'Ocp-Apim-Subscription-Key': '27f9b131532b4dcc93f19ccfbc299793',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
     })
       .then(response => {
-        if (!response.ok) {
-          response.text().then((error) => {
-            console.log(error);
-            return;
-          });
-        } else {
-          return response.json();
-        }
+        return response.json();
       })
       .then(data => {
-        console.log(data);
+        const {sizeOfQueryResponse} = data;
+        return sizeOfQueryResponse;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
+  fetchMessageID = location => {
+    const url = `${GET_MESSAGE_IDS_URL}?lat=${location.lat}&lon=${location.lon}&precision=${location.precision}&lastTimestamp=0`;
+
+    return fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const {messageInfoes} = data;
+        return messageInfoes;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
+  fetchMessages = messageIDs => {
+    return fetch(FETCH_MESSAGE_INFO_URL, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        "RequestedQueries": messageIDs
+      }),
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
         return data;
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
       });
-  }
+  };
 
   updateSetting = state => {
     if (state) {
@@ -190,6 +305,11 @@ class Home extends Component {
             </View>
           </View>
         </View>
+
+        {this.state.notifications && this.state.notifications.length > 0 && (
+          <Notification notifications={this.state.notifications} />
+        )}
+
         <View style={styles.resources_container}>
           <Text style={styles.resources_header}>Resources</Text>
           <FlatList
