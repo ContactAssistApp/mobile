@@ -1,5 +1,11 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
+import BackgroundFetch from 'react-native-background-fetch';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LocationServices from '../Home/LocationServices';
+import Notification from './Notification';
+import Toggle from '../views/Toggle';
+import colors from '../assets/colors';
 import {
   FlatList,
   SafeAreaView,
@@ -11,19 +17,9 @@ import {
   NativeModules,
   NativeEventEmitter,
 } from 'react-native';
-import BackgroundFetch from 'react-native-background-fetch';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import colors from '../assets/colors';
-import Toggle from '../views/Toggle';
+import {GET_MESSAGE_IDS_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
+import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import LocationServices from '../Home/LocationServices';
-import {
-  GET_QUERY_SIZE_URL,
-  GET_MESSAGE_IDS_URL,
-  FETCH_MESSAGE_INFO_URL,
-} from '../utils/endpoints';
-import Notification from './Notification';
-import {DEFAULT_NOTIFICATION} from '../utils/helper';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 
 class Home extends Component {
@@ -79,9 +75,9 @@ class Home extends Component {
       '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
       'd945590b-5b09-4144-ace7-4063f95bd0bb', //characteristic ID
       {
-        "DebugLog": "yes",
-        "FastDevScan": "no"
-      }
+        DebugLog: 'yes',
+        FastDevScan: 'no',
+      },
     );
 
     this.getSetting('ENABLE_LOCATION').then(data => {
@@ -122,40 +118,36 @@ class Home extends Component {
 
   processQueries = async () => {
     const location = await getLatestCoarseLocation();
-    let querySize = await this.fetchQuerySize(location);
+    const messageIDs = await this.fetchMessageID(location);
+    const messages = await this.fetchMessages(messageIDs);
+    let args = [];
+    let msgs = [];
 
-    if (querySize < 1000) {
-      const messageIDs = await this.fetchMessageID(location);
-      const messages = await this.fetchMessages(messageIDs);
-      let args = [];
-      let msgs = [];
+    messages.forEach(messageObj => {
+      const {bluetoothMatches} = messageObj;
 
-      messages.forEach(messageObj => {
-        const {bluetoothMatches} = messageObj;
-
-        bluetoothMatches.forEach(match => {
-          const {userMessage, seeds} = match;
-          msgs.push(userMessage);
-          let timestamps = [];
-          let seedsArray = [];
-          seeds.forEach(seedObj => {
+      bluetoothMatches.forEach(match => {
+        const {userMessage, seeds} = match;
+        msgs.push(userMessage);
+        let timestamps = [];
+        let seedsArray = [];
+        seeds.forEach(seedObj => {
+          if (seedObj && seedObj.seed) {
             timestamps.push(seedObj.sequenceStartTime);
             seedsArray.push(seedObj.seed);
-          });
-
-          args.push(seedsArray);
-          args.push(timestamps);
+          }
         });
-      });
 
-      let notifications = await this.searchQuery(args, msgs);
-      if (notifications && notifications.length > 0) {
-        SetStoreData('NOTIFICATIONS', notifications);
-      }
-    } else {
-      // TODO: adjust coarse location
+        args.push(seedsArray);
+        args.push(timestamps);
+      });
+    });
+
+    let notifications = await this.searchQuery(args, msgs);
+    if (notifications && notifications.length > 0) {
+      SetStoreData('NOTIFICATIONS', notifications);
     }
-  }
+  };
 
   searchQuery = async (args, msgs) => {
     return NativeModules.BLE.runBleQuery(args).then(
@@ -173,27 +165,6 @@ class Home extends Component {
         console.log(error);
       },
     );
-  };
-
-  fetchQuerySize = location => {
-    const url = `${GET_QUERY_SIZE_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=0`;
-
-    return fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        const {sizeOfQueryResponse} = data;
-        return sizeOfQueryResponse;
-      })
-      .catch(err => {
-        console.error(err);
-      });
   };
 
   fetchMessageID = location => {

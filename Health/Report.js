@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
+import {REPORT_BLE_URL} from '../utils/endpoints';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,22 +10,22 @@ import {
   Image,
   NativeModules,
 } from 'react-native';
+import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
-import {REPORT_BLE_URL} from '../utils/endpoints';
-import {getLatestCoarseLocation} from '../utils/helper';
 
 class Report extends Component {
   constructor() {
     super();
     this.state = {
       uploadBLESuccess: false,
-    }
+    };
   }
+
   uploadBLE = () => {
     let seeds = [];
     this.getDeviceSeedAndRotate().then(data => {
       seeds.push(data);
-      getLatestCoarseLocation().then(location => {
+      getLatestCoarseLocation(true).then(location => {
         this.reportBLE(seeds, location);
       });
     });
@@ -36,7 +37,7 @@ class Report extends Component {
       "region": {
         "latitudePrefix": location.latitudePrefix,
         "longitudePrefix": location.longitudePrefix,
-        "precision": 4
+        "precision": location.precision
       }
     };
 
@@ -57,7 +58,7 @@ class Report extends Component {
           });
         }
         this.setState({
-          uploadBLESuccess: true
+          uploadBLESuccess: true,
         });
         return;
       })

@@ -1,9 +1,11 @@
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
+import {GetStoreData} from './asyncStorage';
+import {GET_QUERY_SIZE_URL} from './endpoints';
+import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
 
-export function getLatestCoarseLocation() {
+export function getLatestCoarseLocation(isReporting = false) {
   return getLatestLocation().then(location => {
     const {latitude: lat, longitude: lon} = location;
-    const coarsLocation = getCoarseLocation(lat, lon);
+    const coarsLocation = getCoarseLocation(lat, lon, isReporting);
     return coarsLocation;
   });
 }
@@ -15,32 +17,53 @@ function getLatestLocation() {
   });
 }
 
-function getCoarseLocation(lat, lon) {
-  const initialPrecision = 0; //corresponds to 1 degrees ~ 111 km
-  const bestPrecision = 4; //corresponds to 1 / 16 degree ~ 7 km
+function getCoarseLocation(lat, lon, isReporting) {
+  const bestPrecision = PRECISION_LIMIT; //corresponds to 1 / 16 degree ~ 7 km
+  const initialPrecision = isReporting ? bestPrecision : 0; // 0corresponds to 1 degrees ~ 111 km
 
-  for (let precision = initialPrecision; precision < bestPrecision; ++precision) {
-    const coarseLat = round(lat, precision);
-    const coarseLon = round(lon, precision);
+  let precision = initialPrecision;
+  let coarseLat = round(lat, precision);
+  let coarseLon = round(lon, precision);
 
+  for (; precision < bestPrecision; ++precision) {
     if (canWeAfford(coarseLat, coarseLon, precision)) {
-      return {
-        latitudePrefix: coarseLat,
-        longitudePrefix: coarseLon,
-        precision,
-      };
+      break;
     }
+    coarseLat = round(lat, precision);
+    coarseLon = round(lon, precision);
   }
 
   return {
-    latitudePrefix: round(lat, bestPrecision),
-    longitudePrefix: round(lat, bestPrecision),
-    precision: bestPrecision,
+    latitudePrefix: coarseLat,
+    longitudePrefix: coarseLon,
+    precision,
   };
 }
 
-function canWeAfford(coarseLat, coarseLon, precision) {
-  return true;
+async function canWeAfford(lat, lon, precision) {
+  let querySize = await fetchQuerySize(lat, lon, precision);
+  return querySize <= QUERY_SIZE_LIMIT ? true : false;
+}
+
+function fetchQuerySize(lat, lon, precision) {
+  const url = `${GET_QUERY_SIZE_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=0`;
+
+  return fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      const {sizeOfQueryResponse} = data;
+      return sizeOfQueryResponse;
+    })
+    .catch(err => {
+      console.error(err);
+    });
 }
 
 function round(d, precision) {
