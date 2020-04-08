@@ -11,8 +11,8 @@ export default function Toggle(props) {
   return (
     <View style={styles.container}>
       <Switch
-        trackColor={{false: colors.GRAY_5, true: colors.PURPLE_50}}
-        ios_backgroundColor={colors.GRAY_5}
+        trackColor={{false: colors.card_border, true: colors.primary_theme}}
+        ios_backgroundColor={colors.fill_off}
         onValueChange={toggleSwitch}
         value={props.value}
       />

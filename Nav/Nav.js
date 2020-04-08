@@ -4,6 +4,7 @@ import Preferences from '../Preferences/Preferences';
 import BottomNav from '../BottomNav/BottomNav';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import colors from '../assets/colors';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ class Nav extends Component {
               component={Preferences}
               options={{
                 title: 'Select your preferences',
+                headerTintColor: colors.primary_theme,
                 headerStyle: {
                 },
               }}
