@@ -23,7 +23,8 @@ import {
   FETCH_MESSAGE_INFO_URL,
 } from '../utils/endpoints';
 import Notification from './Notification';
-import {DEFAULT_NOTIFICATION, getLatestCoarseLocation} from '../utils/helper';
+import {DEFAULT_NOTIFICATION} from '../utils/helper';
+import {getLatestCoarseLocation} from '../utils/coarseLocation';
 
 class Home extends Component {
   constructor() {
@@ -120,11 +121,10 @@ class Home extends Component {
   };
 
   processQueries = async () => {
-    let location = await getLatestCoarseLocation();
+    const location = await getLatestCoarseLocation();
     let querySize = await this.fetchQuerySize(location);
 
     if (querySize < 1000) {
-      location.precision = 2;
       const messageIDs = await this.fetchMessageID(location);
       const messages = await this.fetchMessages(messageIDs);
       let args = [];
@@ -176,7 +176,7 @@ class Home extends Component {
   };
 
   fetchQuerySize = location => {
-    const url = `${GET_QUERY_SIZE_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=2&lastTimestamp=0`;
+    const url = `${GET_QUERY_SIZE_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=0`;
 
     return fetch(url, {
       headers: {
