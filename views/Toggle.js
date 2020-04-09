@@ -9,14 +9,12 @@ export default function Toggle(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Switch
-        trackColor={{false: colors.card_border, true: colors.primary_theme}}
-        ios_backgroundColor={colors.fill_off}
-        onValueChange={toggleSwitch}
-        value={props.value}
-      />
-    </View>
+    <Switch
+      trackColor={{false: colors.card_border, true: colors.primary_theme}}
+      ios_backgroundColor={colors.fill_off}
+      onValueChange={toggleSwitch}
+      value={props.value}
+    />
   );
 }
 
@@ -24,11 +22,3 @@ Toggle.propTypes = {
   handleToggle: PropTypes.func.isRequired,
   value: PropTypes.bool.isRequired,
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

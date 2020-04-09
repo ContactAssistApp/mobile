@@ -7,11 +7,12 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../assets/colors';
-import Toggle from '../views/Toggle';
-import LocationServices from '../Home/LocationServices';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import Ble from '../ble/ble';
+import CustomIcon from '../assets/icons/CustomIcon.js';
+import LocationServices from '../Home/LocationServices';
+import Toggle from '../views/Toggle';
+import colors from '../assets/colors';
 
 class Preferences extends Component {
   constructor(props) {
@@ -93,35 +94,43 @@ class Preferences extends Component {
                 key: 'notification',
                 title: 'Notifications',
                 description: 'Recieve notifications for local alerts and updates',
+                iconName: 'alert_24',
               },
               {
                 key: 'location',
                 title: 'Location',
                 description: 'Share your location information with healthcare providers.',
+                iconName: 'location_24',
               },
               {
                 key: 'ble',
                 title: 'Bluetooth',
                 description: 'Odio tempor orci dapibus ultrices in iaculis nunc sed augue.',
+                iconName: 'bluetooth_24',
               },
             ]}
             renderItem={({item}) => {
               return (
                 <View style={styles.setting}>
+                  <CustomIcon
+                    name={item.iconName}
+                    color={colors.gray_icon}
+                    size={24}
+                    style={styles.setting_icon}
+                  />
                   <View style={styles.setting_content}>
                     <Text style={styles.setting_title}>{item.title}</Text>
                     <Text style={styles.setting_description}>
                       {item.description}
                     </Text>
                   </View>
-                  <View style={styles.switch_container}>
-                    <Toggle
-                      handleToggle={selectedState => {
-                        this.updateSetting(item.key, selectedState);
-                      }}
-                      value={this.state[item.key]}
-                    />
-                  </View>
+                  <Toggle
+                    handleToggle={selectedState => {
+                      this.updateSetting(item.key, selectedState);
+                    }}
+                    value={this.state[item.key]}
+                    style={styles.toggle}
+                  />
                 </View>
               );
             }}
@@ -151,10 +160,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   setting: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingVertical: 20,
-    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  setting_icon: {
+    flex: 1,
+    paddingRight: 15,
+  },
+  setting_content: {
+    flex: 11,
+  },
+  toggle: {
+    flex: 1,
   },
   setting_title: {
     fontSize: 17,
@@ -168,12 +188,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: -0.24,
     color: colors.secondary_body_copy,
-  },
-  setting_content: {
-    flex: 0.85,
-  },
-  switch_container: {
-    flex: 0.15,
   },
   next_button: {
     marginHorizontal: 20,
