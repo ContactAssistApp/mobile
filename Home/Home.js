@@ -14,13 +14,12 @@ import {
   TouchableOpacity,
   View,
   Image,
-  NativeModules,
-  NativeEventEmitter,
 } from 'react-native';
 import {GET_MESSAGE_IDS_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
+import Ble from '../ble/ble';
 
 class Home extends Component {
   constructor() {
@@ -62,23 +61,6 @@ class Home extends Component {
           break;
       }
     });
-
-    if (NativeModules.BLE.logSub === undefined) {
-      const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
-      NativeModules.BLE.logSub = bleEmitter.addListener(
-        'onLifecycleEvent',
-        (data) => console.log("log:" +data)
-      );
-    }
-
-    NativeModules.BLE.init_module(
-      '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
-      'd945590b-5b09-4144-ace7-4063f95bd0bb', //characteristic ID
-      {
-        DebugLog: 'yes',
-        FastDevScan: 'no',
-      },
-    );
 
     this.getSetting('ENABLE_LOCATION').then(data => {
       this.setState({
@@ -150,7 +132,7 @@ class Home extends Component {
   };
 
   searchQuery = async (args, msgs) => {
-    return NativeModules.BLE.runBleQuery(args).then(
+    return Ble.runBleQuery(args).then(
       results => {
         let notifications = [];
         results.forEach((result, index) => {
@@ -221,7 +203,7 @@ class Home extends Component {
       });
 
       LocationServices.start();
-      NativeModules.BLE.start_ble();
+      Ble.start();
     } else {
       SetStoreData('ENABLE_LOCATION', 'false');
       SetStoreData('ENABLE_BLE', 'false');
@@ -231,7 +213,7 @@ class Home extends Component {
         ble: false,
       });
       LocationServices.stop();
-      NativeModules.BLE.stop_ble();
+      Ble.stop();
     }
   };
 

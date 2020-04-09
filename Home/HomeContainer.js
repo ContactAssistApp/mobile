@@ -3,9 +3,9 @@ import {Button, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {startScan} from './actions.js';
 import {bindActionCreators} from 'redux';
-import {NativeModules, NativeEventEmitter} from 'react-native';
 import LocationServices from './LocationServices';
 import AsyncStorage from '@react-native-community/async-storage';
+import Ble from '../ble/ble';
 
 //active contact means we reached out and read the ID of device
 const CONTACT_ACTIVE = 1;
@@ -25,22 +25,6 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    const bleEmitter = new NativeEventEmitter(NativeModules.BLE);
-
-    // this.subscriptions = []
-    // this.subscriptions.push(bleEmitter.addListener(
-    //   'onLifecycleEvent',
-    //   (data) => console.log("log:" +data)
-    // ));
-
-    NativeModules.BLE.init_module(
-      '8cf0282e-d80f-4eb7-a197-e3e0f965848d', //service ID
-      'd945590b-5b09-4144-ace7-4063f95bd0bb', //characteristic ID
-      {
-        "DebugLog": "yes",
-        "FastDevScan": "no"
-      }
-    );
   }
 
   trackGPS = () => {
@@ -69,22 +53,23 @@ class HomeContainer extends Component {
   };
 
   componentWillUnmount() {
-    this.subscriptions.forEach(e => e.remove());
   }
 
   startBle = () => {
-    NativeModules.BLE.start_ble();
+    console.log("HEHEHE " + Ble.start2)
+    console.log("ALAALAL " + Ble)
+    Ble.start();
     this.setState({ isBleEnabled: true });
   }
 
   stopBle = () => {
-    NativeModules.BLE.stop_ble();
+    Ble.stop();
     this.setState({ isBleEnabled: false });
   }
 
   getDeviceSeedAndRotate = () => {
     //14 days ago
-    NativeModules.BLE.getDeviceSeedAndRotate(24 * 14 * 3600).then(
+    Ble.getDeviceSeedAndRotate(24 * 14 * 3600).then(
       result => {
         console.log("I got: " + JSON.stringify(result));
         this.setState({ theSeed: JSON.stringify(result) });
@@ -128,7 +113,7 @@ class HomeContainer extends Component {
     ]
 
 
-    NativeModules.BLE.runBleQuery(args).then(
+    Ble.runBleQuery(args).then(
       result => {
         res = ''
         for(var i = 0; i < result.length; ++i) {

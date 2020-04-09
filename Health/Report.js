@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
   Image,
-  NativeModules,
 } from 'react-native';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
+import Ble from '../ble/ble';
 
 class Report extends Component {
   constructor() {
@@ -69,7 +69,7 @@ class Report extends Component {
 
   getDeviceSeedAndRotate = () => {
     //14 days ago
-    return NativeModules.BLE.getDeviceSeedAndRotate(24 * 14 * 3600).then(
+    return Ble.getDeviceSeedAndRotate(24 * 14 * 3600).then(
       result => {
         console.log('I got: ' + JSON.stringify(result));
         return result;
