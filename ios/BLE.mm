@@ -9,6 +9,7 @@
 #include "util.h"
 #include "proto.h"
 #include "query-engine.h"
+#include "contact.h"
 #import "BLE.h"
 
 
@@ -36,31 +37,15 @@ static bool UseFastDevValues = false;
 
 //global config options
 
-#ifdef USE_FAST_DEV_VALUES
-static int64_t contact_log_interval_in_secs = 5; //active contact logging
-static int64_t local_id_write_interval_in_secs = 10; //send my id to remote devices / passive logging
-static int64_t remote_id_read_interval_in_secs = 20; //read remote id
-static int64_t device_cache_ttl_in_secs = 1 * 60; //drop local cache on remote device
-static int64_t crypto_id_update_schedule_in_secs = 5 * 60;
-#else
-static int64_t contact_log_interval_in_secs = 5 * 60; //active contact logging
-static int64_t local_id_write_interval_in_secs = 10 * 60;
-static int64_t remote_id_read_interval_in_secs = 15 * 60;
-static int64_t device_cache_ttl_in_secs = 30 * 60;
-static int64_t crypto_id_update_schedule_in_secs = 5 * 60;
-
-#endif
+static int64_t contact_log_interval_in_secs; //active contact logging
+static int64_t local_id_write_interval_in_secs; //send my id to remote devices / passive logging
+static int64_t remote_id_read_interval_in_secs; //read remote id
+static int64_t device_cache_ttl_in_secs; //drop local cache on remote device
+static int64_t crypto_id_update_schedule_in_secs;
 
 static int64_t conn_start_timeout_in_seconds = 5;
 static NSString *_serviceUUID;
 static NSString *_characteristicUUID;
-static FILE* _contactsLogFile;
-
-//active contact means we reached out and read the ID of device
-#define CONTACT_ACTIVE 1
-//active contact means a device reached out to us and send their ID
-#define CONTACT_PASSIVE 2
-
 
 
 static int sanitize_rssi(int rssi)
@@ -317,7 +302,7 @@ typedef enum {
 {
   int64_t now = get_now_secs();
   if((now - _lastContactFlush) > contact_log_interval_in_secs && _device_id_valid) {
-    [_ble logContact: _current_device_data at:_lastContactFlush rssi:sanitize_rssi(_rssi) kind:CONTACT_ACTIVE];
+    [_ble logContact: _current_device_data at:_lastContactFlush rssi:sanitize_rssi(_rssi) kind:td::ContactKind::ActiveContact];
     _lastContactFlush = now;
     _prevRssi = _rssi;
     _rssi = INT_MIN;
@@ -381,8 +366,6 @@ typedef enum {
   else
   {
     NSData *data = characteristic.value;
-    
-//    NSString *uuid = [[[NSUUID alloc] initWithUUIDBytes:characteristic.value.bytes] UUIDString];
 
     if(data != nil && data.length == PROTO_ID_SIZE) {
       [_ble logDebug:[NSString stringWithFormat: @"[%lld] read %@ good device id", get_now_secs(), peripheral.identifier]];
@@ -420,6 +403,7 @@ typedef enum {
   NSMutableDictionary<NSString*, PeripheralContactHelper*> *device_cache;
 
   td::proto_idgen_t *_idgen;
+  td::ContactStore *_contacts;
 }
 
 RCT_EXPORT_MODULE();
@@ -469,11 +453,11 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
     device_cache_ttl_in_secs = 1 * 60;
     crypto_id_update_schedule_in_secs = 5 * 60;
   } else {
-    contact_log_interval_in_secs = 5 * 60;
-    local_id_write_interval_in_secs = 10 * 60;
-    remote_id_read_interval_in_secs = 15 * 60;
+    contact_log_interval_in_secs = 1 * 60;
+    local_id_write_interval_in_secs = 5 * 60;
+    remote_id_read_interval_in_secs = 10 * 60;
     device_cache_ttl_in_secs = 30 * 60;
-    crypto_id_update_schedule_in_secs = 5 * 60;
+    crypto_id_update_schedule_in_secs = 15 * 60;
   }
 
 
@@ -481,10 +465,11 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   NSURL *contact_url = [docs_url URLByAppendingPathComponent:@"contacts.txt"];
   NSURL *ids_url = [docs_url URLByAppendingPathComponent:@"ids.txt"];
 
-  _contactsLogFile = fopen(contact_url.path.UTF8String, "a");
-  if(!_contactsLogFile) {
-    NSLog(@"Error opening contacts fileat %@", contact_url.path);
-    [NSException raise:NSInvalidArgumentException format:@"Error opening contacts fileat %@", contact_url.path];
+  try {
+    _contacts = new td::ContactStore(contact_url.path.UTF8String);
+  } catch(std::exception *e) {
+    NSLog(@"Error opening contacts store %@ due to %s", contact_url.path, e->what());
+    [NSException raise:NSInvalidArgumentException format:@"Error opening contacts fileat %@ reason: %s", contact_url.path, e->what()];
   }
   
   int res = proto_idgen_create(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs, &_idgen);
@@ -563,21 +548,19 @@ RCT_EXPORT_METHOD(stop_ble)
    [device_cache removeObjectForKey: peripheral.identifier.UUIDString];
 }
 
--(void) logContact: (NSData *)deviceId at:(int64_t)at rssi:(int)rssi kind:(int)kind {
+-(void) logContact: (NSData *)deviceId at:(int64_t)at rssi:(int)rssi kind:(td::ContactKind)kind {
 
-  if(_contactsLogFile) {
+  if(_contacts) {
     NSString *str = [NSString stringWithFormat:@"%@,%lld,%d,%d\n",
                      [deviceId base64EncodedStringWithOptions:0],
                      at,
                      rssi,
-                     kind];
+                     (int)kind];
 
     NSString *uuid_str = [[NSUUID alloc] initWithUUIDBytes:(uint8_t*)deviceId.bytes ].UUIDString;
-    [self logDebug:[NSString stringWithFormat:@"new contact to %@ at %lld rssi %d kind %d", uuid_str, at, rssi, kind]];
-
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    fwrite(data.bytes, data.length, 1, _contactsLogFile);
-    fflush(_contactsLogFile);
+    [self logDebug:[NSString stringWithFormat:@"new contact to %@ at %lld rssi %d kind %d", uuid_str, at, rssi, (int)kind]];
+    
+    _contacts->log(td::ContactLogEntry(td::Id((uint8_t *)deviceId.bytes), at, rssi, kind));
   }
 }
 
@@ -762,7 +745,7 @@ RCT_EXPORT_METHOD(stop_ble)
     NSData *device_id = [NSData dataWithBytes:req.value.bytes length:16 ];
     int rssi = -(int)((uint8_t*)req.value.bytes)[16];
     
-    [self logContact:device_id at:get_now_secs() rssi:rssi kind:CONTACT_PASSIVE];
+    [self logContact:device_id at:get_now_secs() rssi:rssi kind:td::ContactKind::PassiveContact];
     [peripheral respondToRequest:req withResult:CBATTErrorSuccess];
   }
 }
@@ -807,6 +790,7 @@ RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
 
 RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
+  __weak BLE *_w_ble = self;
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
     try {
       std::vector<td::BluetoothMatch> matches;
@@ -831,7 +815,13 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
         }
       }
 
-      std::vector<td::Id> localIds; //TODO
+      
+      std::vector<td::Id> localIds;
+      {
+        BLE * ble = _w_ble;
+        if(ble)
+          ble->_contacts->findContactsSince(td::get_timestamp() - td::BluetoothMatch::LookBackWindowInSecs);
+      }
 
       auto boolRes = performBleMatching(matches, localIds);
 

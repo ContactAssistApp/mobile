@@ -4,6 +4,7 @@
 #import <React/RCTEventEmitter.h>
 
 #include <CoreBluetooth/CoreBluetooth.h>
+#include "contact-model.h"
 
 @protocol BleProtocol
 -(void) logDebug: (id)payload;
@@ -11,7 +12,7 @@
 -(NSMutableData*)currentDeviceId;
 -(CBCentralManager *) cbc;
 -(void) flushCache: (CBPeripheral*)peripheral;
--(void)logContact: (NSData *)device_id at:(int64_t)at rssi:(int)rssi kind:(int)kind;
+-(void)logContact: (NSData *)device_id at:(int64_t)at rssi:(int)rssi kind:(td::ContactKind)kind;
 @end
 
 

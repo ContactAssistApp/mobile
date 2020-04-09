@@ -3,29 +3,9 @@
 
 #include <vector>
 #include <array>
+#include "contact-model.h"
 
 namespace td {
-
-class Id
-{
-    std::array<uint8_t, 16> data;
-    friend class Seed;
-public:
-  explicit Id(uint8_t *raw_data)
-  {
-    memcpy(&data[0], raw_data, 16);
-  }
-  
-  explicit Id() {}
-
-  bool operator<(const Id& other) const {
-    return memcmp(&data[0], &other.data[0], 16) < 0;
-  }
-
-  bool operator==(const Id& other) const {
-    return data == other.data;
-  }
-};
 
 class Seed
 {

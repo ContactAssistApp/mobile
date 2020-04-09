@@ -9,6 +9,8 @@
 
 namespace td {
 
+
+
 void Seed::stepInPlace(Id &id)
 {
     uint8_t buffer[32];
@@ -30,7 +32,7 @@ bool BluetoothMatch::hasMatch(int64_t up_to, const std::vector<Id> &localIds)
   Id id;
 
   for(auto &s : seeds) {
-    int64_t steps = (up_to - s.ts()) / Seed::SeedStepInSecs;
+    size_t steps = (size_t)((up_to - s.ts()) / Seed::SeedStepInSecs);
     allIds.reserve(steps);
     while(s.ts() < up_to) {
       s.stepInPlace(id);

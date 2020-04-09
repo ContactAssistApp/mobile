@@ -25,6 +25,8 @@
 		A511759A243BCAD500BCD5AA /* proto.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117595243BCAD500BCD5AA /* proto.cc */; };
 		A511759B243BCAD500BCD5AA /* util.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117596243BCAD500BCD5AA /* util.cc */; };
 		A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.mm */; };
+		A5EEA9B0243E332300DDC471 /* contact.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9AC243E332300DDC471 /* contact.cc */; };
+		A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9B1243E33A800DDC471 /* contact-model.cc */; };
 		B537F701AA40882F8AA59C69 /* libPods-tracedefense1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-tracedefense1.a */; };
 		FA99A7DD6E78E064A6B9F89F /* libPods-tracedefense1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-tracedefense1Tests.a */; };
 		FBDFC5F03DC4A9AA826A92E4 /* libPods-tracedefense1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C959DDA6D810F94A4A1ECC56 /* libPods-tracedefense1-tvOSTests.a */; };
@@ -104,6 +106,10 @@
 		A5117598243BCAD500BCD5AA /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
 		A5E323C2242E6FE00066AB83 /* BLE.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BLE.mm; sourceTree = "<group>"; };
 		A5E323C3242E6FE00066AB83 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
+		A5EEA9AC243E332300DDC471 /* contact.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = contact.cc; sourceTree = "<group>"; };
+		A5EEA9AE243E332300DDC471 /* contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contact.h; sourceTree = "<group>"; };
+		A5EEA9AF243E332300DDC471 /* contact-model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "contact-model.h"; sourceTree = "<group>"; };
+		A5EEA9B1243E33A800DDC471 /* contact-model.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "contact-model.cc"; sourceTree = "<group>"; };
 		B16E092F4292471095648AF9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		C265E1F2F323413F897ABDEC /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C7F87A4AC1994270AC1163B9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
@@ -172,6 +178,10 @@
 		13B07FAE1A68108700A75B9A /* tracedefense1 */ = {
 			isa = PBXGroup;
 			children = (
+				A5EEA9B1243E33A800DDC471 /* contact-model.cc */,
+				A5EEA9AF243E332300DDC471 /* contact-model.h */,
+				A5EEA9AC243E332300DDC471 /* contact.cc */,
+				A5EEA9AE243E332300DDC471 /* contact.h */,
 				A5117595243BCAD500BCD5AA /* proto.cc */,
 				A5117598243BCAD500BCD5AA /* proto.h */,
 				A5117593243BCAD500BCD5AA /* query-engine.cc */,
@@ -713,7 +723,9 @@
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				A5EEA9B0243E332300DDC471 /* contact.cc in Sources */,
 				A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */,
+				A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */,
 				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
 				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
