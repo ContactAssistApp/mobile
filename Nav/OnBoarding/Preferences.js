@@ -7,12 +7,16 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import Ble from '../ble/ble';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import LocationServices from '../Home/LocationServices';
-import Toggle from '../views/Toggle';
-import colors from '../assets/colors';
+import {GetStoreData, SetStoreData} from '../../utils/asyncStorage';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {updateFTUE} from '../actions';
+import Ble from '../../ble/ble';
+import CustomIcon from '../../assets/icons/CustomIcon.js';
+import LocationServices from '../../Home/LocationServices';
+import PropTypes from 'prop-types';
+import Toggle from '../../views/Toggle';
+import colors from '../../assets/colors';
 
 class Preferences extends Component {
   constructor(props) {
@@ -76,6 +80,13 @@ class Preferences extends Component {
     });
   };
 
+  completeFTUE = () => {
+    this.props.updateFTUE({
+      field: 'enableFTUE',
+      value: 'false',
+    });
+  };
+
   render() {
     const {navigate} = this.props.navigation;
 
@@ -83,7 +94,7 @@ class Preferences extends Component {
       <SafeAreaView style={styles.container}>
         <View style={styles.intro_container}>
           <Text style={styles.intro_text}>
-            Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.
+            For improved location accuracy and awareness, turn on location permissions.
           </Text>
         </View>
         <View style={styles.settings}>
@@ -138,7 +149,10 @@ class Preferences extends Component {
         </View>
         <TouchableOpacity
           style={styles.next_button}
-          onPress={() => navigate('BottomNav')}>
+          onPress={() => {
+            this.completeFTUE();
+            navigate('BottomNav');
+          }}>
           <Text style={styles.next_button_text}>Next</Text>
         </TouchableOpacity>
       </SafeAreaView>
@@ -206,4 +220,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Preferences;
+Preferences.propTypes = {
+  updateFTUE: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateFTUE,
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Preferences);

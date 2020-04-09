@@ -1,8 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from '../../assets/icons/CustomIcon.js';
 import {
   ImageBackground,
   StyleSheet,
@@ -10,11 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SetStoreData} from '../utils/asyncStorage';
-import colors from '../assets/colors.js';
+import {SetStoreData} from '../../utils/asyncStorage';
+import colors from '../../assets/colors.js';
 
 class FTUE extends Component {
   renderItem = ({item}) => {
+    const {navigate} = this.props.navigation;
     if (item.key === 'ftue_5') {
       return (
         <View style={styles.ftue_container}>
@@ -22,11 +22,7 @@ class FTUE extends Component {
             <ImageBackground style={styles.ftue_bg} source={item.image}>
               <View style={styles.ftue_links}>
                 <View style={styles.privacy_link}>
-                  <CustomIcon
-                    name={'lock16'}
-                    color={'white'}
-                    size={16}
-                  />
+                  <CustomIcon name={'lock16'} color={'white'} size={16} />
                   <Text style={styles.privacy_text}>Privacy</Text>
                 </View>
                 <View style={styles.terms_link}>
@@ -59,8 +55,8 @@ class FTUE extends Component {
   };
 
   onDone = () => {
-    SetStoreData('ENABLE_FTUE', 'false');
-    this.props.handleOnDone();
+    // SetStoreData('ENABLE_FTUE', 'false');
+    this.props.navigation.navigate('Preferences');
   };
 
   render() {
@@ -69,30 +65,30 @@ class FTUE extends Component {
         key: 'ftue_1',
         title: 'Welcome to CovidSafe',
         text: 'CovidSafe notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you\'re having.',
-        image: require('../assets/ftue/ftue_1.png'),
+        image: require('../../assets/ftue/ftue_1.png'),
       },
       {
         key: 'ftue_2',
         title: 'Exposure Notifcations',
         text: 'Learn if you might have been exposed. If you\'ve recently visited a location with a risk of COVID-19 exposure, you\'ll get a notification letting you know.',
-        image: require('../assets/ftue/ftue_2.png'),
+        image: require('../../assets/ftue/ftue_2.png'),
       },
       {
         key: 'ftue_3',
         title: 'Self-Care Tips',
         text: 'Take care of yourself and others Get self-care tips, connect with a healthcare professional if your symptoms worsen, and report locations you recently visited to protect others.',
-        image: require('../assets/ftue/ftue_3.png'),
+        image: require('../../assets/ftue/ftue_3.png'),
       },
       {
         key: 'ftue_4',
         title: 'Your Privacy',
         text: 'Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.',
-        image: require('../assets/ftue/ftue_4.png'),
+        image: require('../../assets/ftue/ftue_4.png'),
       },
       {
         key: 'ftue_5',
         title: 'Let\'s slow the spread of COVID-19 together',
-        image: require('../assets/ftue/ftue_5.png'),
+        image: require('../../assets/ftue/ftue_5.png'),
       },
     ];
 
@@ -100,7 +96,6 @@ class FTUE extends Component {
       <AppIntroSlider
         renderItem={this.renderItem}
         data={slides}
-        onDone={this.onDone}
         showNextButton={false}
         showDoneButton={false}
       />
@@ -180,9 +175,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
-FTUE.propTypes = {
-  handleOnDone: PropTypes.func.isRequired,
-};
 
 export default FTUE;

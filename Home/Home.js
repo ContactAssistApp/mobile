@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import BackgroundFetch from 'react-native-background-fetch';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LocationServices from '../Home/LocationServices';
 import Notification from './Notification';
 import Toggle from '../views/Toggle';
@@ -14,12 +13,14 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
 } from 'react-native';
 import {GET_MESSAGE_IDS_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import Ble from '../ble/ble';
+import CustomIcon from '../assets/icons/CustomIcon.js';
 
 class Home extends Component {
   constructor() {
@@ -28,7 +29,7 @@ class Home extends Component {
     this.state = {
       location: false,
       ble: false,
-      notifications: [],
+      notifications: [DEFAULT_NOTIFICATION],
     };
   }
 
@@ -218,186 +219,213 @@ class Home extends Component {
   };
 
   render() {
+    const {location, ble} = this.state;
+    const isBroadcasting = location || ble;
+    const broadcastStatus = isBroadcasting ? 'On' : 'Off';
+
     return (
-      <SafeAreaView>
-        <View style={styles.status_container}>
-          <View style={styles.status_header}>
-            <View>
-              <Text style={styles.title}>CovidSafe</Text>
-            </View>
-            <TouchableOpacity onPress={() => this.props.navigation.replace('Preferences')}>
-              <Icon name="settings-outline" color={'white'} size={28} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.broadcast_container}>
-            <View style={styles.broadcast}>
-              <Icon
-                name="wifi"
-                style={styles.broadcast_icon}
-                color={'green'}
-                size={24}
-              />
-              <View style={styles.broadcast_content}>
-                <Text style={styles.broadcast_title}>Broadcasting</Text>
-                <Text style={styles.broadcast_description}>
-                  Location sharing and bluetooth{'\n'}tracing are turned on.
-                  <Text
-                    style={styles.settings}
-                    onPress={() => {
-                      this.props.navigation.replace('Preferences');
-                    }}>
-                    Settings
-                  </Text>
-                </Text>
+      <>
+        <SafeAreaView style={styles.status_bar} />
+        <SafeAreaView>
+          <ScrollView>
+            <View style={styles.status_container}>
+              <View style={styles.status_header}>
+                <View style={styles.title_container}>
+                  <Image
+                    style={styles.logo}
+                    source={require('../assets/home/logo.png')}
+                  />
+                  <Text style={styles.title}>CovidSafe</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.replace('Preferences')}>
+                  <CustomIcon
+                    name={'settings24'}
+                    color={colors.gray_icon}
+                    size={24}
+                  />
+                </TouchableOpacity>
               </View>
-            </View>
-            <View>
-              <Toggle
-                handleToggle={selectedState => {
-                  this.updateSetting(selectedState);
-                }}
-                value={this.state.location || this.state.ble}
-              />
-            </View>
-          </View>
-        </View>
-
-        {this.state.notifications && this.state.notifications.length > 0 && (
-          <Notification notifications={this.state.notifications} />
-        )}
-
-        <View style={styles.resources_container}>
-          <Text style={styles.resources_header}>Resources</Text>
-          <FlatList
-            data={[
-              {
-                key: 'cdc',
-                title: 'CDC Guidance',
-                description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-              },
-              {
-                key: 'nyc',
-                title: 'NYC Health Guidance',
-                description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-              },
-            ]}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.resource}>
-                  <View style={styles.resource_content}>
-                    <Image
-                      style={styles.resource_logo}
-                      source={require('../assets/resources/logo_cdc.png')}
-                    />
-                    <View>
-                      <Text style={styles.resource_title}>{item.title}</Text>
-                      <Text style={styles.resource_description}>
-                        {item.description}
+              <View style={styles.broadcast_container}>
+                <View style={styles.broadcast}>
+                  <View style={styles.broadcast_content}>
+                    <Text style={styles.broadcast_title}>
+                      {`Broadcasting ${broadcastStatus}`}
+                    </Text>
+                    <Text style={styles.broadcast_description}>
+                      {isBroadcasting
+                        ? 'Turn broadcasting on to\nimprove the accuracy of your\nnotifications. '
+                        : 'Limited trace data is being\ncollected. We keep your identity\nanonymous. '
+                      }
+                      <Text
+                        style={styles.lear_more_link}
+                        onPress={() => {
+                          this.props.navigation.replace('Preferences');
+                        }}>
+                        Learn More
                       </Text>
-                    </View>
+                    </Text>
                   </View>
-                  <Icon
-                    style={styles.right_arrow}
-                    name="chevron-right"
-                    color={colors.GRAY_20}
-                    size={20}
+                </View>
+                <View>
+                  <Toggle
+                    handleToggle={selectedState => {
+                      this.updateSetting(selectedState);
+                    }}
+                    value={this.state.location || this.state.ble}
                   />
                 </View>
-              );
-            }}
-          />
-        </View>
-      </SafeAreaView>
+              </View>
+            </View>
+
+            {this.state.notifications && this.state.notifications.length > 0 && (
+              <Notification notifications={this.state.notifications} />
+            )}
+
+            <View style={styles.resources_container}>
+              <Text style={styles.resources_header}>Resources</Text>
+              <FlatList
+                scrollEnabled={'false'}
+                data={[
+                  {
+                    key: 'cdc',
+                    title: 'CDC Guidance',
+                    description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
+                  },
+                  {
+                    key: 'nyc',
+                    title: 'NYC Health Guidance',
+                    description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
+                  },
+                ]}
+                renderItem={({item}) => {
+                  return (
+                    <View style={styles.resource}>
+                      <Image
+                        style={styles.resource_logo}
+                        source={require('../assets/resources/logo_cdc.png')}
+                      />
+                      <View>
+                        <Text style={styles.resource_title}>{item.title}</Text>
+                        <Text style={styles.resource_description}>
+                          {item.description}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  status_bar: {
+    backgroundColor: 'white',
+  },
   status_container: {
-    backgroundColor: colors.PURPLE_50,
-    padding: 15,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  logo: {
+    width: 30,
+    height: 30,
+    marginRight: 5,
+  },
+  title: {
+    color: colors.section_title,
+    fontSize: 24,
+    fontWeight: '500',
+  },
+  title_container: {
+    flexDirection: 'row',
   },
   status_header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 10,
-  },
-  title: {
-    fontSize: 24,
-    color: 'white',
-    fontWeight: '500',
+    alignItems: 'center',
   },
   broadcast_container: {
-    backgroundColor: 'white',
-    borderRadius: 14,
-    paddingVertical: 10,
+    marginVertical: 10,
+    backgroundColor: colors.fill_on,
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.GRAY_10,
-    paddingHorizontal: 15,
-    paddingBottom: 10,
     justifyContent: 'space-between',
   },
   broadcast: {
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  broadcast_icon: {
-    paddingRight: 10,
-  },
   broadcast_title: {
-    fontSize: 18,
-    lineHeight: 25,
-    color: colors.GRAY_90,
+    color: colors.module_title,
+    fontWeight: '600',
+    fontSize: 22,
+    lineHeight: 26,
+    letterSpacing: 0.35,
+    paddingBottom: 10,
   },
   broadcast_description: {
-    fontSize: 12,
-    lineHeight: 17,
-    color: '#919191',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
+    color: colors.secondary_body_copy,
   },
-  settings: {
-    color: colors.PURPLE_50,
-    fontWeight: 'bold',
+  lear_more_link: {
+    color: colors.primary_theme,
   },
   resources_container: {
     backgroundColor: 'white',
     height: '100%',
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginTop: 20,
+    marginHorizontal: 10,
   },
   resources_header: {
     fontWeight: '600',
-    fontSize: 18,
-    lineHeight: 22,
-    padding: 15,
+    fontSize: 22,
+    lineHeight: 26,
+    letterSpacing: 0.35,
+    color: colors.module_title,
   },
   resource: {
     paddingHorizontal: 15,
     paddingVertical: 20,
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomColor: colors.GRAY_5,
-    borderBottomWidth: 1,
+    fontWeight: '600',
+    fontSize: 17,
+    lineHeight: 22,
+    letterSpacing: -0.408,
+    color: colors.module_title,
   },
   resource_logo: {
     width: 50,
     height: 50,
     marginRight: 10,
   },
-  resource_content: {
-    flexDirection: 'row',
-    flex: 0.8,
-  },
   resource_title: {
     fontSize: 17,
     lineHeight: 22,
+    fontWeight: '600',
+    letterSpacing: -0.408,
+    color: colors.module_title,
   },
   resource_description: {
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
-    color: colors.GRAY_50,
+    color: colors.secondary_body_copy,
   },
 });
 
