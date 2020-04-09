@@ -143,6 +143,8 @@ class HomeContainer extends Component {
   render() {
     return (
       <>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text>                This the debug help page, have fun!</Text>
         <Button title={'Start BLE'} onPress={this.startBle} />
         <Button title={'Stop BLE'} onPress={this.stopBle} />
         <Button title={'GetSeed'} onPress={this.getDeviceSeedAndRotate} />
