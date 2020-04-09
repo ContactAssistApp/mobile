@@ -9,6 +9,9 @@
 namespace td
 {
 
+//14 days
+#define CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS (14 * 24 * 3600)
+
 class ContactLogEntry
 {
   int64_t _timestamp;

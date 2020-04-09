@@ -6,6 +6,9 @@
 
 namespace td {
 
+#define PROTO_ID_SIZE 16
+
+
 class Id
 {
     std::array<uint8_t, 16> data;
@@ -15,8 +18,9 @@ public:
   {
     memcpy(&data[0], raw_data, 16);
   }
-  
+
   explicit Id() {}
+  inline const uint8_t* bytes() const { return &data[0]; }
 
   bool operator<(const Id& other) const {
     return memcmp(&data[0], &other.data[0], 16) < 0;
@@ -34,6 +38,37 @@ public:
   //crypto unsafe pseudo-random ID useful for testing only
   static Id randomId();
   static Id parse(const std::string &s);
+};
+
+
+class Seed
+{
+  std::array<uint8_t, 16> data;
+  int64_t timestamp;
+
+  Seed(int64_t ts): timestamp(ts) {}
+public:
+  // static const int64_t SeedStepInSecs = 15 * 60; //15min
+
+  inline int64_t ts() { return timestamp; }
+  explicit Seed(): timestamp(-1){}
+  inline const uint8_t* bytes() const { return &data[0]; }
+
+  Seed(uint8_t *raw_data, int64_t ts): timestamp(ts) {
+    memcpy(&data[0], raw_data, 16);
+  }
+
+  bool isValid() { return timestamp > 0; }
+
+  void stepInPlace(Id &id, int64_t stepSize);
+
+  std::string serialize() const;
+  //crypto unsafe pseudo-random Seed - useful for testing only
+  static Seed unsafeRandomSeed(int64_t timestamp);
+  //crypto safe random Seed - bad for testing and slow
+  static Seed safeRandomSeed(int64_t timestamp);
+  static Seed parse(const std::string &s);
+
 };
 
 enum ContactKind

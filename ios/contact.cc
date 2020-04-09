@@ -9,20 +9,10 @@
 #include <fstream>
 
 #include "contact.h"
+#include "util.h"
 
 namespace td
 {
-
-static std::vector<std::string> split(const std::string &s, char delim) {
-  std::vector<std::string> res;
-  std::istringstream iss(s);
-
-  std::string item;
-  while (std::getline(iss, item, delim))
-    res.push_back(item);
-
-  return res;
-}
 
 std::string ContactLogEntry::serialize() const {
   std::stringstream ss;
@@ -32,7 +22,7 @@ std::string ContactLogEntry::serialize() const {
 
 ContactLogEntry ContactLogEntry::parse(std::string line)
 {
-  auto s = split(line, ',');
+  auto s = split_str(line, ',');
   int64_t ts = std::stoll(s[0]);
   Id id = Id::parse(s[1]);
   int rssi = std::stoi(s[2]);

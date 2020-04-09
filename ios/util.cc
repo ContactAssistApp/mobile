@@ -1,4 +1,5 @@
 #include <sys/time.h>
+#include <sstream>
 
 #include "util.h"
 
@@ -17,6 +18,17 @@ int64_t get_timestamp()
       return -1; //fails if tv is invalid
   }
   return (int64_t)tv.tv_sec;
+}
+
+std::vector<std::string> split_str(const std::string &s, char delim) {
+    std::vector<std::string> res;
+    std::istringstream iss(s);
+
+    std::string item;
+    while (std::getline(iss, item, delim))
+        res.push_back(item);
+
+    return res;
 }
 
 }

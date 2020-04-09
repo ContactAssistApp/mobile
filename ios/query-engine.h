@@ -7,31 +7,15 @@
 
 namespace td {
 
-class Seed
-{
-  std::array<uint8_t, 16> data;
-  int64_t timestamp;
-
-  Seed(int64_t ts): timestamp(ts) {}
-public:
-  static const int64_t SeedStepInSecs = 15 * 60; //15min
-
-  inline int64_t ts() { return timestamp; }
-
-  Seed(uint8_t *raw_data, int64_t ts): timestamp(ts) {
-    memcpy(&data[0], raw_data, 16);
-  }
-
-  void stepInPlace(Id &id);
-};
 
 
 class BluetoothMatch
 {
   std::vector<Seed> seeds;
-
+  int64_t _lookBackWindow, _seedStepSize;
 public:
-  static const int64_t LookBackWindowInSecs = 14 * 24 * 3600; //14 days
+//  static const int64_t LookBackWindowInSecs = 14 * 24 * 3600; //14 days
+  BluetoothMatch(int64_t lookBackWindow, int64_t seedStepSize): _lookBackWindow(lookBackWindow), _seedStepSize(seedStepSize) {}
 
   void addSeed(Seed &&s) { seeds.push_back(s); }
 

@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <sys/time.h>
-
-#include <CommonCrypto/CommonDigest.h>
 #include "util.h"
 #include "query-engine.h"
 
@@ -9,33 +7,18 @@
 
 namespace td {
 
-
-
-void Seed::stepInPlace(Id &id)
-{
-    uint8_t buffer[32];
-    CC_SHA256_CTX ctx;
-    CC_SHA256_Init(&ctx);
-    CC_SHA256_Update(&ctx, &data[0], 16);
-    CC_SHA256_Final(buffer, &ctx);
-
-    memcpy(&data[0], buffer, 16);
-    memcpy(&id.data[0], buffer +  16, 16);
-    timestamp += SeedStepInSecs;
-}
-
 bool BluetoothMatch::hasMatch(int64_t up_to, const std::vector<Id> &localIds)
 {
   std::vector<Id> allIds;
-  allIds.reserve(LookBackWindowInSecs / Seed::SeedStepInSecs / 2); //on average, each report is 7days old
-  int64_t add_from = up_to - LookBackWindowInSecs;
+  allIds.reserve(_lookBackWindow / _seedStepSize / 2); //on average, each report is 7days old
+  int64_t add_from = up_to - _lookBackWindow;
   Id id;
 
   for(auto &s : seeds) {
-    size_t steps = (size_t)((up_to - s.ts()) / Seed::SeedStepInSecs);
+    size_t steps = (size_t)((up_to - s.ts()) / _seedStepSize);
     allIds.reserve(steps);
     while(s.ts() < up_to) {
-      s.stepInPlace(id);
+      s.stepInPlace(id, _seedStepSize);
       if(s.ts() >= add_from)
         allIds.push_back(id);
     }

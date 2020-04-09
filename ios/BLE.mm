@@ -402,7 +402,7 @@ typedef enum {
   
   NSMutableDictionary<NSString*, PeripheralContactHelper*> *device_cache;
 
-  td::proto_idgen_t *_idgen;
+  td::SeedStore *_seeds;
   td::ContactStore *_contacts;
 }
 
@@ -472,10 +472,11 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
     [NSException raise:NSInvalidArgumentException format:@"Error opening contacts fileat %@ reason: %s", contact_url.path, e->what()];
   }
   
-  int res = proto_idgen_create(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs, &_idgen);
-  if(res < 0) {
-    NSLog(@"Error opening crypto id database: %d at %@", res, ids_url.path);
-    [NSException raise:NSInvalidArgumentException format:@"Error opening crypto id database: %d at %@", res, ids_url.path];
+  try {
+    _seeds = new td::SeedStore(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs);
+  } catch(std::exception *e) {
+    NSLog(@"Error opening crypto id database: %s at %@", e->what(), ids_url.path);
+    [NSException raise:NSInvalidArgumentException format:@"Error opening crypto id database: %s at %@", e->what(), ids_url.path];
   }
 
   [self logCritical: [NSString stringWithFormat:@"BLE backend inited contacts %@ and ids %@", contact_url.path, ids_url.path]];
@@ -549,17 +550,9 @@ RCT_EXPORT_METHOD(stop_ble)
 }
 
 -(void) logContact: (NSData *)deviceId at:(int64_t)at rssi:(int)rssi kind:(td::ContactKind)kind {
-
   if(_contacts) {
-    NSString *str = [NSString stringWithFormat:@"%@,%lld,%d,%d\n",
-                     [deviceId base64EncodedStringWithOptions:0],
-                     at,
-                     rssi,
-                     (int)kind];
-
     NSString *uuid_str = [[NSUUID alloc] initWithUUIDBytes:(uint8_t*)deviceId.bytes ].UUIDString;
     [self logDebug:[NSString stringWithFormat:@"new contact to %@ at %lld rssi %d kind %d", uuid_str, at, rssi, (int)kind]];
-    
     _contacts->log(td::ContactLogEntry(td::Id((uint8_t *)deviceId.bytes), at, rssi, kind));
   }
 }
@@ -646,26 +639,26 @@ RCT_EXPORT_METHOD(stop_ble)
 
 -(NSMutableData*) currentDeviceId
 {
-  if(!_idgen)
+  if(!_seeds)
     return nil;
-  
-  uint8_t *current_id = NULL;
-  int res = proto_idgen_get_current_id(_idgen, &current_id);
-  if(res) {
-    [self logCritical:[NSString stringWithFormat:@"Failed to update id database error: %d", res]];
+
+  try
+  {
+    td::Id cur = _seeds->getCurrentId();
+    return [[NSMutableData alloc] initWithBytes:cur.bytes() length:PROTO_ID_SIZE];
+  } catch(std::exception * e)
+  {
+    [self logCritical:[NSString stringWithFormat:@"Failed to fetch from id database error: %s", e->what()]];
     return NULL;
   }
-  
-  return [[NSMutableData alloc] initWithBytes:current_id length:PROTO_ID_SIZE];
 }
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
   [self logCritical:[NSString stringWithFormat:@"CBP State update: %ld", (long)peripheral.state] ];
 
-  if (peripheral.state == CBPeripheralManagerStatePoweredOn)
+  if (peripheral.state == CBManagerStatePoweredOn)
   {
-
     CBUUID *characteristicUUID = [CBUUID UUIDWithString: _characteristicUUID];
     CBCharacteristicProperties properties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite;
     CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
@@ -756,30 +749,29 @@ RCT_EXPORT_METHOD(getDeviceSeedAndRotate:(nonnull NSNumber *)interval resolver:(
   int64_t timestamp = [interval longLongValue];
   [self logDebug:[NSString stringWithFormat:@"ROTATING FOR %lld", timestamp]];
 
-  if(!_idgen) {
+  if(!_seeds) {
     reject(@"InternalStateError", @"ID generator not initialzed", nil);
     return;
   }
   
-  int64_t now = td::get_timestamp();
-  int64_t ts = 0;
-  uint8_t buff[PROTO_ID_SIZE];
-  int ret = proto_idgen_find_seed(_idgen, now - timestamp, &ts, buff);
-  if(ret) {
-    reject(@"InternalStateError", [NSString stringWithFormat:@"Failed to find an id with error %d", ret], nil);
-    return;
-  }
+  try {
+    int64_t now = td::get_timestamp();
+    auto allSeeds = _seeds->getSeeds(now - timestamp);
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] initWithCapacity:allSeeds.size()];
+    for(auto &s : allSeeds) {
+      NSMutableDictionary *seedVal = [NSMutableDictionary dictionary];
+      seedVal[@"seed"] = [[NSUUID alloc] initWithUUIDBytes:s.bytes()].UUIDString.lowercaseString;
+      seedVal[@"sequenceStartTime"] = [NSNumber numberWithLongLong: s.ts()];
+      seedVal[@"sequenceEndTime"] = [NSNumber numberWithLongLong: now];
+      [arr addObject:seedVal];
+    }
+    _seeds->rotateSeed();
 
-  if(proto_idgen_new_seed(_idgen)) {
-    reject(@"InternalStateError", [NSString stringWithFormat:@"Failed to rotate key with error %d", ret], nil);
-    return;
+    resolve(arr);
+  } catch(std::exception *e) {
+    reject(@"InternalStateError", [NSString stringWithFormat:@"Failed to fetch seeds and rotate due to: %s", e->what()], nil);
   }
-
-  NSMutableDictionary *res = [NSMutableDictionary dictionary];
-  res[@"seed"] = [[NSUUID alloc] initWithUUIDBytes:buff].UUIDString.lowercaseString;
-  res[@"sequenceStartTime"] = [NSNumber numberWithLongLong: ts];
-  res[@"sequenceEndTime"] = [NSNumber numberWithLongLong: timestamp];
-  resolve(res);
 }
 
 RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
@@ -794,7 +786,7 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
     try {
       std::vector<td::BluetoothMatch> matches;
-      matches.resize(arr.count);
+      matches.resize(arr.count, td::BluetoothMatch(CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS, crypto_id_update_schedule_in_secs));
       for(int i = 0; i < arr.count / 2; ++i) {
         auto &bm = matches[i];
         NSArray *seeds = arr[i * 2];
@@ -820,7 +812,7 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
       {
         BLE * ble = _w_ble;
         if(ble)
-          ble->_contacts->findContactsSince(td::get_timestamp() - td::BluetoothMatch::LookBackWindowInSecs);
+          localIds = ble->_contacts->findContactsSince(td::get_timestamp() - CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS);
       }
 
       auto boolRes = performBleMatching(matches, localIds);
