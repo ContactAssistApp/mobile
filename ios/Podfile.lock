@@ -235,7 +235,7 @@ PODS:
     - React
   - RNPermissions (2.0.10):
     - React
-  - RNReanimated (1.8.0):
+  - RNReanimated (1.7.1):
     - React
   - RNScreens (2.4.0):
     - React
@@ -366,7 +366,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  "@mauron85_react-native-background-geolocation": 70177f5ccd8844497a2f5f0a23c77ee4c4608d42
+  "@mauron85_react-native-background-geolocation": fa34ab82e94212be16ef6e75c32bcb707b0a1524
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
@@ -382,7 +382,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
+  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -394,13 +394,13 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNBackgroundFetch: e05168cafe22d2f7252a0aedefb0a16b822bd3b1
-  RNCAsyncStorage: b16697280b08bab4b5f2f67f752d93d13a52e9ed
-  RNCMaskedView: 90dd32f5b786bd562e876e1421ea77c700cbf71e
-  RNCPushNotificationIOS: a38f0b8c4f6f5226cd1d8eeb21ab5670f4a09892
+  RNBackgroundFetch: 388cf1595934d22fed275b8db9b48a28bb4eb7b6
+  RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
+  RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
+  RNCPushNotificationIOS: a0b6894f4ad9b93d9dac467fdf4d055660ac8a0d
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
-  RNPermissions: 8afd37dbc1be65748363c6a90caffd1806567651
-  RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
+  RNPermissions: 1008d3511fee0e25739cf81c4af0d1b2248f1053
+  RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
   RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b

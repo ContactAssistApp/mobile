@@ -56,8 +56,6 @@ class HomeContainer extends Component {
   }
 
   startBle = () => {
-    console.log("HEHEHE " + Ble.start2)
-    console.log("ALAALAL " + Ble)
     Ble.start();
     this.setState({ isBleEnabled: true });
   }
