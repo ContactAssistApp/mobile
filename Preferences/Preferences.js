@@ -94,19 +94,19 @@ class Preferences extends Component {
                 key: 'notification',
                 title: 'Notifications',
                 description: 'Recieve notifications for local alerts and updates',
-                iconName: 'alert_24',
+                iconName: 'alert24',
               },
               {
                 key: 'location',
                 title: 'Location',
                 description: 'Share your location information with healthcare providers.',
-                iconName: 'location_24',
+                iconName: 'location24',
               },
               {
                 key: 'ble',
                 title: 'Bluetooth',
                 description: 'Odio tempor orci dapibus ultrices in iaculis nunc sed augue.',
-                iconName: 'bluetooth_24',
+                iconName: 'bluetooth24',
               },
             ]}
             renderItem={({item}) => {
