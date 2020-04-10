@@ -30,23 +30,23 @@ const Ble = {
     },
 
     start: function() {
-        bleInit();
+        Ble.bleInit();
         NativeModules.BLE.start_ble();
     },
 
     
     stop: function() {
-        bleInit();
+        Ble.bleInit();
         NativeModules.BLE.stop_ble();
     },
 
     getDeviceSeedAndRotate: function(interval) {
-        bleInit();
+        Ble.bleInit();
         return NativeModules.BLE.getDeviceSeedAndRotate(interval);
     },
 
     runBleQuery: function(args) {
-        bleInit();
+        Ble.bleInit();
         return NativeModules.BLE.runBleQuery(args);
     }
 }
