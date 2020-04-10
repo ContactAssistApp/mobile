@@ -25,6 +25,7 @@ public:
   Id getCurrentId();
 
   std::vector<Seed> getSeeds(int64_t oldest);
+  void purgeOldRecords(int64_t age);
 };
 }
 

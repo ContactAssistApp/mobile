@@ -82,12 +82,40 @@ std::vector<Seed> SeedStore::getSeeds(int64_t oldest)
     }
     return res;
 }
+
+void SeedStore::purgeOldRecords(int64_t age)
+{
+    std::string tmp_file = _fileName + ".tmp";
+    std::ifstream infile;
+    std::ofstream outfile;
+    
+    infile.exceptions(std::ifstream::badbit);
+    outfile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+
+    infile.open(_fileName);
+    outfile.open(tmp_file);
+
+    std::string line;
+    while (std::getline(infile, line)) {
+        Seed tmp = Seed::parse(line);
+        if(tmp.ts() >= age) {
+            outfile.write(line.c_str(), line.size());
+            outfile.put('\n');
+        }
+    }
+    infile.close();
+    outfile.flush();
+    outfile.close();
+    rename(tmp_file.c_str(), _fileName.c_str());
+}
+
 }
 
 // int main ()
 // {
 //     td::SeedStore ss("seeds.txt", 2);
-//     ss.rotateSeed();
+//     // ss.rotateSeed();
+//     ss.purgeOldRecords(td::get_timestamp() - 1000);
 //     auto res = ss.getSeeds(td::get_timestamp() -  1000);
 //     printf("got %ld seeds\n", res.size());
 //     for(auto &s : res) {

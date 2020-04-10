@@ -18,13 +18,14 @@
  
  Implement:
   new ID generation protocol (done)
-  token and contact logging
+  token and contact logging (done)
   connection timeout using a timer (done-ish)
-  add delay to write from read
-  add networking retires for read/write
   add define based heavy debugging (done)
-  handle restore events
   handle RSSI (done, send it with package and discard bad data).
+
+  handle restore events
+  add delay to write from read
+  add networking retries for read/write
  */
 
 //set this to enable high volume logging disable for release!
@@ -778,6 +779,16 @@ RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
 {
   //FIXME TODO
   [self logDebug:@"purging records!"];
+  int64_t how_old = td::get_timestamp() - CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS;
+  try {
+    if(_seeds)
+      _seeds->purgeOldRecords(how_old);
+    if(_contacts)
+      _contacts->purgeOldRecords(how_old);
+    [self logCritical:@"record purge done"];
+  } catch(std::exception *e) {
+    [self logCritical:[NSString stringWithFormat:@"record purging failed with %s", e->what()]];
+  }
 }
 
 RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)

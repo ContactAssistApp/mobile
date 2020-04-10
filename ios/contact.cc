@@ -95,4 +95,29 @@ std::vector<Id> ContactStore::findContactsSince(int64_t initialTime)
   return res;
 }
 
+void ContactStore::purgeOldRecords(int64_t age)
+{
+    std::string tmp_file = _logFileName + ".tmp";
+    std::ifstream infile;
+    std::ofstream outfile;
+    
+    infile.exceptions(std::ifstream::badbit);
+    outfile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+
+    infile.open(_logFileName);
+    outfile.open(tmp_file);
+
+    std::string line;
+    while (std::getline(infile, line)) {
+      ContactLogEntry log = ContactLogEntry::parse(line);
+      if(log.ts() >= age) {
+        outfile.write(line.c_str(), line.size());
+        outfile.put('\n');
+        }
+    }
+    infile.close();
+    outfile.flush();
+    outfile.close();
+    rename(tmp_file.c_str(), _logFileName.c_str());
+}
 }

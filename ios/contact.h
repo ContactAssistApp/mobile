@@ -43,7 +43,7 @@ public:
   explicit ContactStore(std::string logFileName): _logFileName(logFileName) { }
   void log(const ContactLogEntry &c);
   std::vector<Id> findContactsSince(int64_t initialTime);
-
+  void purgeOldRecords(int64_t age);
 };
 
 }
