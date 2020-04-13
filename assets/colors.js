@@ -2,6 +2,7 @@ const colors = {
   section_title: '#000000',
   module_title: '#333333',
   body_copy: '#404040',
+  secondary_body_copy: '#6E6E6E',
   gray_icon: '#6E6E6E',
   card_border: '#F1F1F1',
   card_canvas: '#FFFFFF',

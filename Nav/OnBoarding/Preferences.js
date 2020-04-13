@@ -7,11 +7,16 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../assets/colors';
-import Toggle from '../views/Toggle';
-import LocationServices from '../Home/LocationServices';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import Ble from '../ble/ble';
+import {GetStoreData, SetStoreData} from '../../utils/asyncStorage';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {updateFTUE} from '../actions';
+import Ble from '../../ble/ble';
+import CustomIcon from '../../assets/icons/CustomIcon.js';
+import LocationServices from '../../Home/LocationServices';
+import PropTypes from 'prop-types';
+import Toggle from '../../views/Toggle';
+import colors from '../../assets/colors';
 
 class Preferences extends Component {
   constructor(props) {
@@ -44,40 +49,42 @@ class Preferences extends Component {
   };
 
   updateSetting = (id, state) => {
+    const storageKey = {
+      notification: 'ENABLE_NOTIFICATION',
+      location: 'ENABLE_LOCATION',
+      ble: 'ENABLE_BLE',
+    };
+
     switch (id) {
       case 'notification':
         break;
       case 'location':
         if (state) {
-          SetStoreData('ENABLE_LOCATION', 'true');
-          this.setState({
-            location: true,
-          });
           LocationServices.start();
         } else {
-          SetStoreData('ENABLE_LOCATION', 'false');
-          this.setState({
-            location: false,
-          });
           LocationServices.stop();
         }
         break;
       case 'ble':
         if (state) {
-          SetStoreData('ENABLE_BLE', 'true');
-          this.setState({
-            ble: true,
-          });
           Ble.start();
         } else {
-          SetStoreData('ENABLE_BLE', 'false');
-          this.setState({
-            ble: false,
-          });
           Ble.stop();
         }
         break;
     }
+
+    SetStoreData(storageKey[id], state);
+    this.setState({
+      [id]: state,
+    });
+  };
+
+  completeFTUE = () => {
+    this.props.updateFTUE({
+      field: 'enableFTUE',
+      value: 'false',
+    });
   };
 
   render() {
@@ -87,62 +94,67 @@ class Preferences extends Component {
       <SafeAreaView style={styles.container}>
         <View style={styles.intro_container}>
           <Text style={styles.intro_text}>
-            Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.
+            For improved location accuracy and awareness, turn on location permissions.
           </Text>
         </View>
         <View style={styles.settings}>
           <FlatList
+            scrollEnabled={'false'}
             data={[
               {
                 key: 'notification',
                 title: 'Notifications',
                 description: 'Recieve notifications for local alerts and updates',
+                iconName: 'alert24',
               },
               {
                 key: 'location',
                 title: 'Location',
                 description: 'Share your location information with healthcare providers.',
+                iconName: 'location24',
               },
               {
                 key: 'ble',
                 title: 'Bluetooth',
                 description: 'Odio tempor orci dapibus ultrices in iaculis nunc sed augue.',
+                iconName: 'bluetooth24',
               },
             ]}
             renderItem={({item}) => {
               return (
                 <View style={styles.setting}>
+                  <CustomIcon
+                    name={item.iconName}
+                    color={colors.gray_icon}
+                    size={24}
+                    style={styles.setting_icon}
+                  />
                   <View style={styles.setting_content}>
                     <Text style={styles.setting_title}>{item.title}</Text>
                     <Text style={styles.setting_description}>
                       {item.description}
                     </Text>
                   </View>
-                  <View style={styles.switch_container}>
-                    <Toggle
-                      handleToggle={selectedState => {
-                        this.updateSetting(item.key, selectedState);
-                        console.log("blah");
-                        console.log(this.state[item.key]);
-                      }}
-                      value={this.state[item.key]}
-                    />
-                  </View>
+                  <Toggle
+                    handleToggle={selectedState => {
+                      this.updateSetting(item.key, selectedState);
+                    }}
+                    value={this.state[item.key]}
+                    style={styles.toggle}
+                  />
                 </View>
               );
             }}
           />
         </View>
-        <View>
-          <TouchableOpacity
-            style={styles.next_button}
-            onPress={() => navigate('BottomNav')}
-          >
-            <Text style={styles.next_button_text}>
-              Next
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.next_button}
+          onPress={() => {
+            this.completeFTUE();
+            navigate('BottomNav');
+          }}>
+          <Text style={styles.next_button_text}>Next</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   intro_text: {
-    color: colors.GRAY_50,
+    color: colors.secondary_body_copy,
   },
   settings: {
     marginHorizontal: 20,
@@ -162,37 +174,61 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   setting: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingVertical: 20,
-    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  setting_title: {
-    fontSize: 16,
-    lineHeight: 23,
-  },
-  setting_description: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: colors.GRAY_50,
+  setting_icon: {
+    flex: 1,
+    paddingRight: 15,
   },
   setting_content: {
-    flex: 0.85,
+    flex: 11,
   },
-  switch_container: {
-    flex: 0.15,
+  toggle: {
+    flex: 1,
+  },
+  setting_title: {
+    fontSize: 17,
+    lineHeight: 22,
+    letterSpacing: -0.408,
+    color: colors.body_copy,
+    paddingBottom: 5,
+  },
+  setting_description: {
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
+    color: colors.secondary_body_copy,
   },
   next_button: {
     marginHorizontal: 20,
-    marginVertical: 30,
-    borderRadius: 2,
-    backgroundColor: colors.PURPLE_50,
+    marginVertical: 40,
+    borderRadius: 8,
+    backgroundColor: colors.primary_theme,
     paddingVertical: 15,
     alignItems: 'center',
   },
   next_button_text: {
+    fontWeight: '500',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
     color: 'white',
   },
 });
 
-export default Preferences;
+Preferences.propTypes = {
+  updateFTUE: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateFTUE,
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Preferences);

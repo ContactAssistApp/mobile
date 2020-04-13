@@ -29,9 +29,11 @@ class Notification extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.GRAY_40,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginTop: 20,
+    marginHorizontal: 10,
   },
   title: {
     color: '#EF0976',
