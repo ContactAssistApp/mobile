@@ -59,6 +59,18 @@ void Seed::stepInPlace(Id &id, int64_t stepSize)
     timestamp += stepSize;
 }
 
+Id Seed::genId() const {
+  Id id;
+  uint8_t buffer[32];
+  CC_SHA256_CTX ctx;
+  CC_SHA256_Init(&ctx);
+  CC_SHA256_Update(&ctx, &data[0], 16);
+  CC_SHA256_Final(buffer, &ctx);
+
+  memcpy(&id.data[0], buffer +  16, 16);
+  return id;
+}
+
 std::string Seed::serialize() const
 {
   std::stringstream ss;

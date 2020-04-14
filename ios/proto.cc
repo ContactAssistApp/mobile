@@ -14,113 +14,175 @@
 
 namespace td {
 
-void SeedStore::writeCurrentSeed()
-{
-    int fd = open(_fileName.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR );
-    if(!fd) 
-        throw new std::runtime_error("Could not append to seeds log");
-    std::stringstream ss;
-    ss << _currentSeed.serialize() << "\n";
+class SeedDiskData {
+    Seed _s_star;
+    Seed _s_current;
+    int64_t _window;
+    SeedDiskData() {}
+public:
+    static SeedDiskData createNew(int64_t now, int64_t stepSize, int64_t window)
+    {
+        now = round_down_timestamp(now, stepSize);
+        SeedDiskData res;
+        res._s_star = Seed::safeRandomSeed(now - window);
+        res._s_current = res._s_star;
+        res._window = window;
 
-    auto str = ss.str();
-    write(fd, str.c_str(), str.size());
-    fsync(fd);
-    close(fd);
-}
+        Id tmp;
+        while(res._s_current.ts() < now) {
+            res._s_current.stepInPlace(tmp, stepSize);
+        }
+        return res;
+    }
+
+    static SeedDiskData loadFrom(const std::string &location)
+    {
+        SeedDiskData res;
+
+        std::ifstream infile(location);
+
+        std::string line;
+        if (!std::getline(infile, line))
+            throw new std::runtime_error("Could not read from seed file");
+        res._window = std::stoll(line);
+
+        if (!std::getline(infile, line))
+            throw new std::runtime_error("Could not read from seed file");
+        res._s_star = Seed::parse(line);
+
+        if (!std::getline(infile, line))
+            throw new std::runtime_error("Could not read from seed file");
+        res._s_current = Seed::parse(line);
+
+        return res;
+    }
+
+    void saveTo(const std::string &location)
+    {
+        auto tmp_file = location + ".tmp";
+        std::ofstream outfile;
+        outfile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+        
+        outfile.open(tmp_file);
+
+        outfile << _window << std::endl;
+        outfile << _s_star.serialize() << std::endl;
+        outfile << _s_current.serialize() << std::endl;
+
+        outfile.flush();
+        outfile.close();
+        rename(tmp_file.c_str(), location.c_str());
+    }
+
+    Id stepTo(int64_t now, int64_t stepSize)
+    {
+        now = round_down_timestamp(now, stepSize);
+        if(_s_current.ts() >= now)
+            return _s_current.genId();
+
+        Id id;
+        while(_s_current.ts() < now) {
+            _s_current.stepInPlace(id, stepSize);
+            if((_s_current.ts() - _s_star.ts()) > _window) {
+                Id tmp;
+                _s_star.stepInPlace(tmp, stepSize);
+            }
+        }
+        return id;
+    }
+
+    void changeWindow(int64_t newWindow, int64_t stepSize)
+    {
+        _window = newWindow;
+
+        //roll s_star forward if the new window is smaller
+        Id tmp;
+        while((_s_current.ts() - _s_star.ts()) > _window) {
+            _s_star.stepInPlace(tmp, stepSize);
+        }
+    }
+
+    int64_t window() const { return _window; }
+    Seed sstar() const {return _s_star; }
+};
 
 int64_t SeedStore::get_rounded_timestamp()
 {
     return round_down_timestamp(get_timestamp(), _stepSize);
 }
 
-SeedStore::SeedStore(const std::string &storageLocation, int64_t step_size): _fileName(storageLocation), _stepSize(step_size)
+SeedStore::SeedStore(const std::string &storageLocation, int64_t step_size, int64_t initialWindow): _fileName(storageLocation), _stepSize(step_size), _window(initialWindow), _timestamp(0)
 {
-    std::ifstream infile(storageLocation);
-
-    std::string line;
-    Seed tmp;
-    while (std::getline(infile, line)) {
-        tmp = Seed::parse(line);
+    try {
+        SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    } catch(std::exception *e) {
+        printf("failed to load due to %s\n", e->what());
+        SeedDiskData sdd = SeedDiskData::createNew(get_rounded_timestamp(), _stepSize, _window);
+        sdd.saveTo(_fileName);
     }
-
-    if(tmp.isValid())
-        _currentSeed = tmp;
-    else {
-        _currentSeed = Seed::safeRandomSeed(get_rounded_timestamp());
-        writeCurrentSeed();
-    }
-
-    _currentSeed.stepInPlace(_currentId, _stepSize);
 }
 
 Id SeedStore::getCurrentId()
 {
-    auto now = get_rounded_timestamp();
-    while(_currentSeed.ts() < now) {
-        _currentSeed.stepInPlace(_currentId, _stepSize);
-    }
+    int64_t now = get_rounded_timestamp();
+    if(now == _timestamp)
+        return _currentId;
+
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    _currentId = sdd.stepTo(now, _stepSize);
+    sdd.saveTo(_fileName);
     return _currentId;
 }
 
-void SeedStore::rotateSeed()
+void SeedStore::changeWindow(int64_t newWindow)
 {
-    _currentSeed = Seed::safeRandomSeed(get_rounded_timestamp());
-    writeCurrentSeed();
-    _currentSeed.stepInPlace(_currentId, _stepSize);
+    if(newWindow == _window)
+        return;
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+
+    sdd.changeWindow(newWindow, _stepSize);
+    sdd.saveTo(_fileName);
 }
 
-std::vector<Seed> SeedStore::getSeeds(int64_t oldest)
+Seed SeedStore::getSeedAndRotate()
 {
-    std::vector<Seed> res;
-    std::ifstream infile(_fileName);
-
-    std::string line;
-    while (std::getline(infile, line)) {
-        Seed tmp = Seed::parse(line);
-        if(tmp.ts() >= oldest)
-            res.push_back(tmp);
+    int64_t now = get_rounded_timestamp();
+    Seed seed;
+    //if there's not data, still report something
+    if(access(_fileName.c_str(), F_OK) == -1)
+    {
+        seed = Seed::safeRandomSeed(now - _window);
     }
-    return res;
+    else
+    {
+        SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+        sdd.stepTo(now, _stepSize);
+        seed = sdd.sstar();
+    }
+
+    SeedDiskData newData = SeedDiskData::createNew(now, _stepSize, _window);
+    newData.saveTo(_fileName);
+    _timestamp = 0; //force a refresh
+
+    return seed;
 }
 
-void SeedStore::purgeOldRecords(int64_t age)
+void SeedStore::makeSeedCurrent()
 {
-    std::string tmp_file = _fileName + ".tmp";
-    std::ifstream infile;
-    std::ofstream outfile;
-    
-    infile.exceptions(std::ifstream::badbit);
-    outfile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-
-    infile.open(_fileName);
-    outfile.open(tmp_file);
-
-    std::string line;
-    while (std::getline(infile, line)) {
-        Seed tmp = Seed::parse(line);
-        if(tmp.ts() >= age) {
-            outfile.write(line.c_str(), line.size());
-            outfile.put('\n');
-        }
-    }
-    infile.close();
-    outfile.flush();
-    outfile.close();
-    rename(tmp_file.c_str(), _fileName.c_str());
+    getCurrentId();
 }
 
 }
 
 // int main ()
 // {
-//     td::SeedStore ss("seeds.txt", 2);
-//     // ss.rotateSeed();
-//     ss.purgeOldRecords(td::get_timestamp() - 1000);
-//     auto res = ss.getSeeds(td::get_timestamp() -  1000);
-//     printf("got %ld seeds\n", res.size());
-//     for(auto &s : res) {
-//         printf(">%s\n", s.serialize().c_str());
-//     }
-//     printf("here\n");
+//     // td::SeedData sd;
+//     td::SeedStore ss("seeds.txt", 100, 1000);
+//     printf("get id: %s\n", ss.getCurrentId().serialize().c_str());
+//     sleep(2);
+//     printf("get id: %s\n", ss.getCurrentId().serialize().c_str());
+//     // sleep(2);
+//     printf("rotate got me %s\n", ss.getSeedAndRotate().serialize().c_str());
+//     printf("get id: %s\n", ss.getCurrentId().serialize().c_str());
 //     return 0;
 // }

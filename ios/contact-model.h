@@ -61,6 +61,7 @@ public:
   bool isValid() { return timestamp > 0; }
 
   void stepInPlace(Id &id, int64_t stepSize);
+  Id genId() const;
 
   std::string serialize() const;
   //crypto unsafe pseudo-random Seed - useful for testing only

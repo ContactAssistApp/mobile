@@ -11,22 +11,22 @@ namespace td {
 
 class SeedStore {
   std::string _fileName;
-  int64_t _stepSize;
-  Seed _currentSeed;
+  int64_t _stepSize, _window, _timestamp;
   Id _currentId;
 
-  void writeCurrentSeed();
   int64_t get_rounded_timestamp();
 
 public:
-  explicit SeedStore(const std::string &storageLocation, int64_t step_size);
-  
-  void rotateSeed();
+  //initialWindow only matters if there's no existing seed data.
+  explicit SeedStore(const std::string &storageLocation, int64_t step_size, int64_t initialWindow);
+
   Id getCurrentId();
 
-  std::vector<Seed> getSeeds(int64_t oldest);
-  void purgeOldRecords(int64_t age);
+  void changeWindow(int64_t newWindow);
+  Seed getSeedAndRotate();
+  void makeSeedCurrent();
 };
+
 }
 
 #endif

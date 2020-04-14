@@ -3,8 +3,7 @@
 
 #include <Foundation/Foundation.h>
 #include <CoreBluetooth/CoreBluetooth.h>
-//#import CoreBluetooth;
-//#import Foundation;
+#import <React/RCTConvert.h>
 
 #include "util.h"
 #include "proto.h"
@@ -43,6 +42,7 @@ static int64_t local_id_write_interval_in_secs; //send my id to remote devices /
 static int64_t remote_id_read_interval_in_secs; //read remote id
 static int64_t device_cache_ttl_in_secs; //drop local cache on remote device
 static int64_t crypto_id_update_schedule_in_secs;
+static int64_t key_rotation_window_in_secs;
 
 static int64_t conn_start_timeout_in_seconds = 5;
 static NSString *_serviceUUID;
@@ -439,12 +439,19 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   _characteristicUUID = characteristicUUID;
   DebugLogEnabled = false;
   UseFastDevValues = false;
-  
+
+  key_rotation_window_in_secs = 14 * 24 * 3600; //default of 14 days
+
   if(options != nil) {
     if([@"yes" isEqual:[options objectForKey:@"DebugLog"]])
       DebugLogEnabled = true;
     if([@"yes" isEqual:[options objectForKey:@"FastDevScan"]])
       UseFastDevValues = true;
+    if([options objectForKey:@"RetentionWindow"] != nil) {
+      int64_t val = [RCTConvert NSNumber:options[@"RetentionWindow"]].longLongValue;
+      if(val > 0)
+        key_rotation_window_in_secs = val;
+    }
   }
 
   if(UseFastDevValues) {
@@ -474,7 +481,7 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   }
   
   try {
-    _seeds = new td::SeedStore(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs);
+    _seeds = new td::SeedStore(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs, key_rotation_window_in_secs);
   } catch(std::exception *e) {
     NSLog(@"Error opening crypto id database: %s at %@", e->what(), ids_url.path);
     [NSException raise:NSInvalidArgumentException format:@"Error opening crypto id database: %s at %@", e->what(), ids_url.path];
@@ -757,17 +764,14 @@ RCT_EXPORT_METHOD(getDeviceSeedAndRotate:(nonnull NSNumber *)interval resolver:(
   
   try {
     int64_t now = td::get_timestamp();
-    auto allSeeds = _seeds->getSeeds(now - timestamp);
+    auto seed = _seeds->getSeedAndRotate();
     
-    NSMutableArray *arr = [[NSMutableArray alloc] initWithCapacity:allSeeds.size()];
-    for(auto &s : allSeeds) {
-      NSMutableDictionary *seedVal = [NSMutableDictionary dictionary];
-      seedVal[@"seed"] = [[NSUUID alloc] initWithUUIDBytes:s.bytes()].UUIDString.lowercaseString;
-      seedVal[@"sequenceStartTime"] = [NSNumber numberWithLongLong: s.ts()];
-      seedVal[@"sequenceEndTime"] = [NSNumber numberWithLongLong: now];
-      [arr addObject:seedVal];
-    }
-    _seeds->rotateSeed();
+    NSMutableArray *arr = [[NSMutableArray alloc] initWithCapacity:1];
+    NSMutableDictionary *seedVal = [NSMutableDictionary dictionary];
+    seedVal[@"seed"] = [[NSUUID alloc] initWithUUIDBytes:seed.bytes()].UUIDString.lowercaseString;
+    seedVal[@"sequenceStartTime"] = [NSNumber numberWithLongLong: seed.ts()];
+    seedVal[@"sequenceEndTime"] = [NSNumber numberWithLongLong: now];
+    [arr addObject:seedVal];
 
     resolve(arr);
   } catch(std::exception *e) {
@@ -782,7 +786,7 @@ RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
   int64_t how_old = td::get_timestamp() - CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS;
   try {
     if(_seeds)
-      _seeds->purgeOldRecords(how_old);
+      _seeds->makeSeedCurrent();
     if(_contacts)
       _contacts->purgeOldRecords(how_old);
     [self logCritical:@"record purge done"];
