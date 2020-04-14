@@ -70,7 +70,7 @@ class AppNav extends Component {
                   options={{
                     title: 'Select your preferences',
                     headerTintColor: colors.primary_theme,
-                    // headerBackTitle: '',
+                    headerBackTitle: ' ',
                   }}
                 />
               )}
