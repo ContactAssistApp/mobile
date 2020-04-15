@@ -8,12 +8,6 @@ const navReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'UPDATE_FTUE':
       const {field, value} = payload;
-      const newState = {
-        ...state,
-        [field]: value,
-      };
-      console.log("====REDUCCER===");
-      console.log(newState);
       return {
         ...state,
         [field]: value,

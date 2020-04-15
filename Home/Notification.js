@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 class Notification extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} key={'notification'}>
         <Text style={styles.title}>You May Have Been Exposed</Text>
         {
           this.props.notifications.map(notification => {

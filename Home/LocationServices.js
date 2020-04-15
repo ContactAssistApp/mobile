@@ -4,14 +4,13 @@ import {Alert, Platform, Linking} from 'react-native';
 import {PERMISSIONS, check, RESULTS, request} from 'react-native-permissions';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
+import {DEFAULT_LOG_WINDOW} from '../utils/constants';
 
 let instanceCount = 0;
 
 export class LocationData {
   constructor() {
-    this.locationInterval = 60000 * 5; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
-    // DEBUG: Reduce Time intervall for faster debugging
-    // this.locationInterval = 5000;
+    this.locationInterval = 60000 * 10; // Time (in milliseconds) between location information polls.  E.g. 60000*10 = 10 minutes
   }
 
   getLocationData = () => {
@@ -46,15 +45,21 @@ export class LocationData {
     };
   }
 */
-  saveLocation(location) {
-    console.log("save location");
+  getLogWindow = () => {
+    return GetStoreData('LOG_WINDOW').then(data => {
+      return data;
+    });
+  };
+
+  async saveLocation(location) {
+    let logWindow = await this.getLogWindow();
+    logWindow = logWindow ? logWindow : DEFAULT_LOG_WINDOW;
     // Persist this location data in our local storage of time/lat/lon values
     this.getLocationData().then(locationArray => {
-      console.log("location");
       // Always work in UTC, not the local time in the locationData
       let nowUTC = new Date().toISOString();
       let unixtimeUTC = Date.parse(nowUTC);
-      let unixtimeUTC_14daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 14;
+      let unixtimeUTC_14daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * parseInt(logWindow, 10);
 
       // Curate the list of points, only keep the last 14 days
       let curated = [];

@@ -6,6 +6,8 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  ScrollView,
+  TextInput,
 } from 'react-native';
 import {GetStoreData, SetStoreData} from '../../utils/asyncStorage';
 import {bindActionCreators} from 'redux';
@@ -17,6 +19,7 @@ import LocationServices from '../../Home/LocationServices';
 import PropTypes from 'prop-types';
 import Toggle from '../../views/Toggle';
 import colors from '../../assets/colors';
+import {DEFAULT_LOG_WINDOW} from '../../utils/constants';
 
 class Preferences extends Component {
   constructor(props) {
@@ -25,6 +28,7 @@ class Preferences extends Component {
       notification: false,
       location: false,
       ble: false,
+      log_window: '',
     };
   }
 
@@ -40,11 +44,32 @@ class Preferences extends Component {
         ble: data,
       });
     });
+
+    this.getLogWindow().then(data => {
+      if (data) {
+        this.setState({
+          log_window: data,
+        });
+      } else {
+        this.setState({
+          log_window: DEFAULT_LOG_WINDOW,
+        });
+
+        SetStoreData('LOG_WINDOW', DEFAULT_LOG_WINDOW);
+        Ble.updateLogWindow(DEFAULT_LOG_WINDOW);
+      }
+    });
   }
 
   getSetting = key => {
     return GetStoreData(key).then(data => {
       return data === 'true' ? true : false;
+    });
+  };
+
+  getLogWindow = () => {
+    return GetStoreData('LOG_WINDOW').then(data => {
+      return data;
     });
   };
 
@@ -92,69 +117,109 @@ class Preferences extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.intro_container}>
-          <Text style={styles.intro_text}>
-            For improved location accuracy and awareness, turn on location permissions.
-          </Text>
-        </View>
-        <View style={styles.settings}>
-          <FlatList
-            scrollEnabled={'false'}
-            data={[
-              {
-                key: 'notification',
-                title: 'Notifications',
-                description: 'Recieve notifications for local alerts and updates',
-                iconName: 'alert24',
-              },
-              {
-                key: 'location',
-                title: 'Location',
-                description: 'Share your location information with healthcare providers.',
-                iconName: 'location24',
-              },
-              {
-                key: 'ble',
-                title: 'Bluetooth',
-                description: 'Odio tempor orci dapibus ultrices in iaculis nunc sed augue.',
-                iconName: 'bluetooth24',
-              },
-            ]}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.setting}>
-                  <CustomIcon
-                    name={item.iconName}
-                    color={colors.gray_icon}
-                    size={24}
-                    style={styles.setting_icon}
-                  />
-                  <View style={styles.setting_content}>
-                    <Text style={styles.setting_title}>{item.title}</Text>
-                    <Text style={styles.setting_description}>
-                      {item.description}
-                    </Text>
-                  </View>
-                  <Toggle
-                    handleToggle={selectedState => {
-                      this.updateSetting(item.key, selectedState);
-                    }}
-                    value={this.state[item.key]}
-                    style={styles.toggle}
-                  />
-                </View>
-              );
-            }}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.next_button}
-          onPress={() => {
-            this.completeFTUE();
-            navigate('BottomNav');
-          }}>
-          <Text style={styles.next_button_text}>Next</Text>
-        </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.intro_container}>
+            <Text style={styles.intro_text}>
+              For improved location accuracy and awareness, turn on location permissions.
+            </Text>
+          </View>
+          <View style={styles.settings}>
+            <FlatList
+              scrollEnabled={'false'}
+              data={[
+                {
+                  key: 'notification',
+                  title: 'Notifications',
+                  description: 'Recieve notifications for local alerts and updates',
+                  iconName: 'alert24',
+                },
+                {
+                  key: 'location',
+                  title: 'Location',
+                  description: 'Share your location information with healthcare providers.',
+                  iconName: 'location24',
+                },
+                {
+                  key: 'ble',
+                  title: 'Bluetooth',
+                  description: 'Enables the detection of exposure risks within a close distance to you, anonymously.',
+                  iconName: 'bluetooth24',
+                },
+                {
+                  key: 'log_window',
+                  title: 'Length of data storage',
+                  description: 'Number of days until local logs are automatically deleted',
+                  iconName: 'warning24',
+                },
+              ]}
+              renderItem={({item}) => {
+                if (item.key === 'log_window') {
+                  return (
+                    <View style={styles.setting}>
+                      <CustomIcon
+                        name={item.iconName}
+                        color={colors.gray_icon}
+                        size={24}
+                        style={styles.setting_icon}
+                      />
+                      <View style={styles.setting_content}>
+                        <Text style={styles.setting_title}>{item.title}</Text>
+                        <Text style={styles.setting_description}>
+                          {item.description}
+                        </Text>
+                      </View>
+                      <TextInput
+                        style={styles.log_window_input}
+                        keyboardType={'numeric'}
+                        onChangeText={text => {
+                          this.setState({log_window: text});
+                        }}
+                        value={this.state.log_window}
+                        maxLength={2}
+                        onEndEditing={() => {
+                          SetStoreData('LOG_WINDOW', this.state.log_window);
+                          Ble.updateLogWindow(this.state.log_window);
+                        }}
+                      />
+                    </View>
+                  );
+                } else {
+                  return (
+                    <View style={styles.setting}>
+                      <CustomIcon
+                        name={item.iconName}
+                        color={colors.gray_icon}
+                        size={24}
+                        style={styles.setting_icon}
+                      />
+                      <View style={styles.setting_content}>
+                        <Text style={styles.setting_title}>{item.title}</Text>
+                        <Text style={styles.setting_description}>
+                          {item.description}
+                        </Text>
+                      </View>
+                      <Toggle
+                        handleToggle={selectedState => {
+                          this.updateSetting(item.key, selectedState);
+                        }}
+                        value={this.state[item.key]}
+                        style={styles.toggle}
+                      />
+                    </View>
+                  );
+                }
+              }}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.next_button}
+            onPress={() => {
+              this.completeFTUE();
+              navigate('BottomNav');
+            }}>
+            <Text style={styles.next_button_text}>Next</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -189,6 +254,13 @@ const styles = StyleSheet.create({
   },
   toggle: {
     flex: 1,
+  },
+  log_window_input: {
+    flex: 2,
+    height: 40,
+    borderColor: colors.border,
+    borderWidth: 1,
+    textAlign: 'center',
   },
   setting_title: {
     fontSize: 17,
