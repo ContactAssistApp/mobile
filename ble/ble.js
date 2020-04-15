@@ -34,7 +34,7 @@ const Ble = {
         NativeModules.BLE.start_ble();
     },
 
-    
+
     stop: function() {
         Ble.bleInit();
         NativeModules.BLE.stop_ble();
@@ -48,6 +48,11 @@ const Ble = {
     runBleQuery: function(args) {
         Ble.bleInit();
         return NativeModules.BLE.runBleQuery(args);
+    },
+
+    updateLogWindow: function(logWindow) {
+      //TODO: write logWindow value to native side storage
+      // here logWindow is a string, e.g. '15'
     }
 }
 
