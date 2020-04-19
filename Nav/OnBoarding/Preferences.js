@@ -149,7 +149,7 @@ class Preferences extends Component {
                   key: 'log_window',
                   title: 'Length of data storage',
                   description: 'Number of days until local logs are automatically deleted',
-                  iconName: 'warning24',
+                  iconName: 'usage24',
                 },
               ]}
               renderItem={({item}) => {

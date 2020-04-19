@@ -16,47 +16,60 @@ class Health extends Component {
     const {navigate} = this.props.navigation;
 
     return (
-      <SafeAreaView>
-        <View style={styles.header}>
-          <Text style={styles.title}>Health Report</Text>
-        </View>
-        <View style={styles.reporting_container}>
-          <Image
-            style={styles.reporting_logo}
-            source={require('../assets/health/report.png')}
-          />
-          <Text style={styles.reporting_title}>
-            Help your community by {'\n'} reporting your diagnosis
-          </Text>
-          <Text style={styles.reporting_description}>
-            Your report will be anonymous and your {'\n'} identity will be protected.
-          </Text>
-          <TouchableOpacity
-            style={styles.new_report_button}
-            onPress={() => {
-              navigate('Report')
-            }}>
-            <Icon name="plus" color={'white'} size={20} />
-            <Text style={styles.new_report_text}>
-              New Report
+      <>
+        <SafeAreaView style={styles.status_bar} />
+        <SafeAreaView>
+          <View style={styles.header}>
+            <Image
+              style={styles.logo}
+              source={require('../assets/home/logo.png')}
+            />
+            <Text style={styles.title}>Health Report</Text>
+          </View>
+          <View style={styles.reporting_container}>
+            <Image
+              style={styles.reporting_logo}
+              source={require('../assets/health/report.png')}
+            />
+            <Text style={styles.reporting_title}>
+              Help your community by {'\n'} reporting your diagnosis
             </Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+            <Text style={styles.reporting_description}>
+              Your report will be anonymous and{'\n'} your identity will be protected.
+            </Text>
+            <TouchableOpacity
+              style={styles.new_report_button}
+              onPress={() => {
+                navigate('Report');
+              }}>
+              <Icon name="plus" color={'white'} size={20} />
+              <Text style={styles.new_report_text}>New Report</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  status_bar: {
+    backgroundColor: 'white',
+  },
   header: {
-    backgroundColor: colors.PURPLE_50,
     flexDirection: 'row',
+    backgroundColor: 'white',
     paddingVertical: 15,
     paddingHorizontal: 10,
   },
+  logo: {
+    width: 30,
+    height: 30,
+    marginRight: 5,
+  },
   title: {
     fontSize: 24,
-    color: 'white',
+    color: colors.section_title,
     fontWeight: '500',
   },
   reporting_container: {
@@ -70,24 +83,26 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   reporting_title: {
-    fontSize: 20,
-    lineHeight: 26,
+    paddingVertical: 20,
+    fontWeight: '600',
+    fontSize: 17,
+    lineHeight: 22,
     textAlign: 'center',
-    paddingVertical: 10,
+    letterSpacing: -0.408,
   },
   reporting_description: {
-    fontSize: 14,
-    lineHeight: 18,
+    color: colors.secondary_body_copy,
+    fontSize: 15,
+    lineHeight: 20,
     textAlign: 'center',
-    color: colors.GRAY_50,
-    paddingVertical: 10,
+    letterSpacing: -0.24,
   },
   new_report_button: {
-    backgroundColor: colors.PURPLE_50,
+    backgroundColor: colors.primary_theme,
     borderRadius: 100,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
+    paddingVertical: 12,
     paddingHorizontal: 20,
     top: 50,
   },

@@ -1,5 +1,5 @@
 import {GetStoreData} from './asyncStorage';
-import {GET_QUERY_SIZE_URL} from './endpoints';
+import {GET_MESSAGE_LIST_URL} from './endpoints';
 import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
 
 export function getLatestCoarseLocation(isReporting = false) {
@@ -46,20 +46,13 @@ async function canWeAfford(lat, lon, precision) {
 }
 
 function fetchQuerySize(lat, lon, precision) {
-  const url = `${GET_QUERY_SIZE_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=0`;
+  const url = `${GET_MESSAGE_LIST_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=0`;
 
   return fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
+    method: 'HEAD',
   })
     .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      const {sizeOfQueryResponse} = data;
-      return sizeOfQueryResponse;
+      return response.headers.get('content-length');
     })
     .catch(err => {
       console.error(err);

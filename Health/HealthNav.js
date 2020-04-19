@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Health from './Health';
 import Report from './Report';
+import colors from '../assets/colors';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +17,7 @@ class HealthNav extends Component {
           options={{
             title: 'Health Report',
             headerStyle: {
-              height: 0
+              height: 0,
             },
           }}
         />
@@ -26,8 +26,8 @@ class HealthNav extends Component {
           component={Report}
           options={{
             title: 'Report Summary',
-            headerStyle: {
-            },
+            headerTintColor: colors.primary_theme,
+            headerBackTitle: ' ',
           }}
         />
       </Stack.Navigator>

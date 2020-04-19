@@ -1,26 +1,21 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 
 class Notification extends Component {
   render() {
     return (
-      <View style={styles.container} key={'notification'}>
+      <View style={styles.container}>
         <Text style={styles.title}>You May Have Been Exposed</Text>
-        {
-          this.props.notifications.map(notification => {
-            return (
-              <Text style={styles.message}>{notification}</Text>
-            );
-          })
-        }
+        {this.props.notifications.map((notification, idx) => {
+          return (
+            <Text key={`notification_${idx}`} style={styles.message}>
+              {notification}
+            </Text>
+          );
+        })}
       </View>
     );
   }
@@ -46,9 +41,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
-    color: '#6E6E6E',
+    color: colors.secondary_body_copy,
     paddingVertical: 15,
-  }
+  },
 });
 
 Notification.propTypes = {
