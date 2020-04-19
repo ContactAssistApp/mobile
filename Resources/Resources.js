@@ -5,31 +5,47 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from 'react-native';
 import colors from '../assets/colors';
 
 class Resources extends Component {
   render() {
     return (
-      <SafeAreaView>
-        <View style={styles.header}>
+      <>
+        <SafeAreaView style={styles.status_bar} />
+        <SafeAreaView>
+          <View style={styles.header}>
+            <Image
+              style={styles.logo}
+              source={require('../assets/home/logo.png')}
+            />
           <Text style={styles.title}>Resources</Text>
-        </View>
-      </SafeAreaView>
+          </View>
+        </SafeAreaView>
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  status_bar: {
+    backgroundColor: 'white',
+  },
   header: {
-    backgroundColor: colors.PURPLE_50,
     flexDirection: 'row',
+    backgroundColor: 'white',
     paddingVertical: 15,
     paddingHorizontal: 10,
   },
+  logo: {
+    width: 30,
+    height: 30,
+    marginRight: 5,
+  },
   title: {
     fontSize: 24,
-    color: 'white',
+    color: colors.section_title,
     fontWeight: '500',
   },
 });

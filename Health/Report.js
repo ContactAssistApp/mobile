@@ -89,22 +89,16 @@ class Report extends Component {
         />
         <View style={styles.result_container}>
           <Text style={styles.title}>
-            Positive COVID-19 diagnosis confirmed
+            Positive COVID-19 Diagnosis Reported
           </Text>
           <TouchableOpacity
             style={styles.upload_trace_button}
             onPress={this.uploadBLE}>
             <Text style={styles.upload_trace_button_text}>
-              Upload Trace Data
+              Upload Your Trace Data
             </Text>
           </TouchableOpacity>
-          {
-            this.state.uploadBLESuccess && (
-              <Text>
-                Success!
-              </Text>
-            )
-          }
+          {this.state.uploadBLESuccess && <Text>Success!</Text>}
         </View>
       </SafeAreaView>
     );
@@ -121,9 +115,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     lineHeight: 31,
+    letterSpacing: 0.33,
   },
   upload_trace_button: {
-    backgroundColor: colors.PURPLE_50,
+    backgroundColor: colors.primary_theme,
     paddingVertical: 15,
     alignItems: 'center',
     borderRadius: 8,

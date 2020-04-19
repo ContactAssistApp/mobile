@@ -7,6 +7,7 @@ import Toggle from '../views/Toggle';
 import colors from '../assets/colors';
 import {
   FlatList,
+  RefreshControl,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -15,7 +16,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {GET_MESSAGE_IDS_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
+import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
@@ -27,9 +28,10 @@ class Home extends Component {
     super();
 
     this.state = {
+      refreshing: false,
       location: false,
       ble: false,
-      notifications: [DEFAULT_NOTIFICATION],
+      notifications: [],
     };
   }
 
@@ -102,33 +104,34 @@ class Home extends Component {
   processQueries = async () => {
     const location = await getLatestCoarseLocation();
     const messageIDs = await this.fetchMessageID(location);
-    const messages = await this.fetchMessages(messageIDs);
-    let args = [];
-    let msgs = [];
+    if (messageIDs && messageIDs.length > 0) {
+      const messages = await this.fetchMessages(messageIDs);
+      let args = [];
+      let msgs = [];
 
-    messages.forEach(messageObj => {
-      const {bluetoothMatches} = messageObj;
+      messages.forEach(messageObj => {
+        const {bluetoothMatches} = messageObj;
+        bluetoothMatches.forEach(match => {
+          const {userMessage, seeds} = match;
+          msgs.push(userMessage);
+          let timestamps = [];
+          let seedsArray = [];
+          seeds.forEach(seedObj => {
+            if (seedObj && seedObj.seed) {
+              timestamps.push(seedObj.sequenceStartTime);
+              seedsArray.push(seedObj.seed);
+            }
+          });
 
-      bluetoothMatches.forEach(match => {
-        const {userMessage, seeds} = match;
-        msgs.push(userMessage);
-        let timestamps = [];
-        let seedsArray = [];
-        seeds.forEach(seedObj => {
-          if (seedObj && seedObj.seed) {
-            timestamps.push(seedObj.sequenceStartTime);
-            seedsArray.push(seedObj.seed);
-          }
+          args.push(seedsArray);
+          args.push(timestamps);
         });
-
-        args.push(seedsArray);
-        args.push(timestamps);
       });
-    });
 
-    let notifications = await this.searchQuery(args, msgs);
-    if (notifications && notifications.length > 0) {
-      SetStoreData('NOTIFICATIONS', notifications);
+      let notifications = await this.searchQuery(args, msgs);
+      if (notifications && notifications.length > 0) {
+        SetStoreData('NOTIFICATIONS', notifications);
+      }
     }
   };
 
@@ -151,7 +154,7 @@ class Home extends Component {
   };
 
   fetchMessageID = location => {
-    const url = `${GET_MESSAGE_IDS_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=0`;
+    const url = `${GET_MESSAGE_LIST_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=0`;
 
     return fetch(url, {
       headers: {
@@ -218,6 +221,14 @@ class Home extends Component {
     }
   };
 
+  handleOnRefresh = () => {
+    this.setState({
+      refreshing: true,
+    });
+
+    this.processQueries().then(() => this.setState({refreshing: false}));
+  };
+
   render() {
     const {location, ble} = this.state;
     const isBroadcasting = location || ble;
@@ -226,98 +237,103 @@ class Home extends Component {
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
-        <SafeAreaView>
-          <ScrollView>
-            <View style={styles.status_container}>
-              <View style={styles.status_header}>
-                <View style={styles.title_container}>
-                  <Image
-                    style={styles.logo}
-                    source={require('../assets/home/logo.png')}
-                  />
-                  <Text style={styles.title}>CovidSafe</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.replace('Preferences')}>
-                  <CustomIcon
-                    name={'settings24'}
-                    color={colors.gray_icon}
-                    size={24}
-                  />
-                </TouchableOpacity>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.handleOnRefresh}
+            />
+          }
+        >
+          <View style={styles.status_container}>
+            <View style={styles.status_header}>
+              <View style={styles.title_container}>
+                <Image
+                  style={styles.logo}
+                  source={require('../assets/home/logo.png')}
+                />
+                <Text style={styles.title}>CovidSafe</Text>
               </View>
-              <View style={styles.broadcast_container}>
-                <View style={styles.broadcast}>
-                  <View style={styles.broadcast_content}>
-                    <Text style={styles.broadcast_title}>
-                      {`Broadcasting ${broadcastStatus}`}
+              <TouchableOpacity
+                onPress={() => this.props.navigation.replace('Preferences')}>
+                <CustomIcon
+                  name={'settings24'}
+                  color={colors.gray_icon}
+                  size={24}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.broadcast_container}>
+              <View style={styles.broadcast}>
+                <View style={styles.broadcast_content}>
+                  <Text style={styles.broadcast_title}>
+                    {`Broadcasting ${broadcastStatus}`}
+                  </Text>
+                  <Text style={styles.broadcast_description}>
+                    {isBroadcasting
+                      ? 'Turn broadcasting on to\nimprove the accuracy of your\nnotifications. '
+                      : 'Limited trace data is being\ncollected. We keep your identity\nanonymous. '
+                    }
+                    <Text
+                      style={styles.lear_more_link}
+                      onPress={() => {
+                        this.props.navigation.replace('Preferences');
+                      }}>
+                      Learn More
                     </Text>
-                    <Text style={styles.broadcast_description}>
-                      {isBroadcasting
-                        ? 'Turn broadcasting on to\nimprove the accuracy of your\nnotifications. '
-                        : 'Limited trace data is being\ncollected. We keep your identity\nanonymous. '
-                      }
-                      <Text
-                        style={styles.lear_more_link}
-                        onPress={() => {
-                          this.props.navigation.replace('Preferences');
-                        }}>
-                        Learn More
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <Toggle
+                  handleToggle={selectedState => {
+                    this.updateSetting(selectedState);
+                  }}
+                  value={this.state.location || this.state.ble}
+                />
+              </View>
+            </View>
+          </View>
+
+          {this.state.notifications && this.state.notifications.length > 0 && (
+            <Notification notifications={this.state.notifications} />
+          )}
+
+          <View style={styles.resources_container}>
+            <Text style={styles.resources_header}>Resources</Text>
+            <FlatList
+              scrollEnabled={'false'}
+              data={[
+                {
+                  key: 'cdc',
+                  title: 'CDC Guidance',
+                  description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
+                },
+                {
+                  key: 'nyc',
+                  title: 'NYC Health Guidance',
+                  description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
+                },
+              ]}
+              renderItem={({item}) => {
+                return (
+                  <View style={styles.resource}>
+                    <Image
+                      style={styles.resource_logo}
+                      source={require('../assets/resources/logo_cdc.png')}
+                    />
+                    <View>
+                      <Text style={styles.resource_title}>{item.title}</Text>
+                      <Text style={styles.resource_description}>
+                        {item.description}
                       </Text>
-                    </Text>
-                  </View>
-                </View>
-                <View>
-                  <Toggle
-                    handleToggle={selectedState => {
-                      this.updateSetting(selectedState);
-                    }}
-                    value={this.state.location || this.state.ble}
-                  />
-                </View>
-              </View>
-            </View>
-
-            {this.state.notifications && this.state.notifications.length > 0 && (
-              <Notification notifications={this.state.notifications} />
-            )}
-
-            <View style={styles.resources_container}>
-              <Text style={styles.resources_header}>Resources</Text>
-              <FlatList
-                scrollEnabled={'false'}
-                data={[
-                  {
-                    key: 'cdc',
-                    title: 'CDC Guidance',
-                    description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-                  },
-                  {
-                    key: 'nyc',
-                    title: 'NYC Health Guidance',
-                    description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-                  },
-                ]}
-                renderItem={({item}) => {
-                  return (
-                    <View style={styles.resource}>
-                      <Image
-                        style={styles.resource_logo}
-                        source={require('../assets/resources/logo_cdc.png')}
-                      />
-                      <View>
-                        <Text style={styles.resource_title}>{item.title}</Text>
-                        <Text style={styles.resource_description}>
-                          {item.description}
-                        </Text>
-                      </View>
                     </View>
-                  );
-                }}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        </ScrollView>
       </>
     );
   }

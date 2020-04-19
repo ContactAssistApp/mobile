@@ -5,9 +5,11 @@ import colors from '../assets/colors.js';
 import Home from '../Home/Home';
 import HealthNav from '../Health/HealthNav';
 import Resources from '../Resources/Resources';
-import HomeContainer from '../Home/HomeContainer'
+import CustomIcon from '../assets/icons/CustomIcon.js';
+import ContactLog from '../ContactLog/ContactLog';
+import HomeContainer from '../Home/HomeContainer';
 
-const ADD_DEBUG_SCREEN = __DEV__
+const ADD_DEBUG_SCREEN = false;
 
 const Tab = createBottomTabNavigator();
 
@@ -16,17 +18,26 @@ export default function BottomNav() {
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: colors.PURPLE_50,
-        inactiveTintColor: colors.GRAY_50,
-      }}
-    >
+        activeTintColor: colors.primary_theme,
+        inactiveTintColor: colors.gray_icon,
+      }}>
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (
-            <Icon name="home" color={color} size={28} />
+            <CustomIcon name={'home24'} color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ContactLog"
+        component={ContactLog}
+        options={{
+          tabBarLabel: 'Contact Log',
+          tabBarIcon: ({color}) => (
+            <CustomIcon name={'contactLog24'} color={color} size={24} />
           ),
         }}
       />
@@ -36,7 +47,7 @@ export default function BottomNav() {
         options={{
           tabBarLabel: 'Health',
           tabBarIcon: ({color}) => (
-            <Icon name="heart-outline" color={color} size={28} />
+            <CustomIcon name={'heart24'} color={color} size={24} />
           ),
         }}
       />
@@ -46,22 +57,22 @@ export default function BottomNav() {
         options={{
           tabBarLabel: 'Resources',
           tabBarIcon: ({color}) => (
-            <Icon name="file-document-box-outline" color={color} size={28} />
+            <CustomIcon name={'resource24'} color={color} size={24} />
           ),
         }}
       />
-    { ADD_DEBUG_SCREEN && 
-      <Tab.Screen
-        name="Debug"
-        component={HomeContainer}
-        options={{
-          tabBarLabel: 'Debug',
-          tabBarIcon: ({color}) => (
-            <Icon name="iframe-outline" color={color} size={28} />
-          ),
-        }}
-      />
-    }
+      {ADD_DEBUG_SCREEN && (
+        <Tab.Screen
+          name="Debug"
+          component={HomeContainer}
+          options={{
+            tabBarLabel: 'Debug',
+            tabBarIcon: ({color}) => (
+              <Icon name="iframe-outline" color={color} size={28} />
+            ),
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 }
