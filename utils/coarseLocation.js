@@ -22,15 +22,15 @@ function getCoarseLocation(lat, lon, isReporting) {
   const initialPrecision = isReporting ? bestPrecision : 0; // 0corresponds to 1 degrees ~ 111 km
 
   let precision = initialPrecision;
-  let coarseLat = round(lat, precision);
-  let coarseLon = round(lon, precision);
+  let coarseLat = roundNew(lat, precision);
+  let coarseLon = roundNew(lon, precision);
 
   for (; precision < bestPrecision; ++precision) {
     if (canWeAfford(coarseLat, coarseLon, precision)) {
       break;
     }
-    coarseLat = round(lat, precision);
-    coarseLon = round(lon, precision);
+    coarseLat = roundNew(lat, precision);
+    coarseLon = roundNew(lon, precision);
   }
 
   return {
@@ -57,6 +57,11 @@ function fetchQuerySize(lat, lon, precision) {
     .catch(err => {
       console.error(err);
     });
+}
+
+function roundNew(d, precision) {
+  let shift = 1 << 16; //16 is some number that 1 << 32 > 180 and bigger than maximum precision value that we are using
+  return round(d + shift, precision) - shift;
 }
 
 function round(d, precision) {
