@@ -102,18 +102,26 @@ class Home extends Component {
   };
 
   processQueries = async () => {
-    const location = await getLatestCoarseLocation();
+    let location = await getLatestCoarseLocation();
+    location = {
+      latitudePrefix: 40.6875,
+      longitudePrefix: -73.9375,
+      precision: 4,
+    };
     const messageIDs = await this.fetchMessageID(location);
     if (messageIDs && messageIDs.length > 0) {
       const messages = await this.fetchMessages(messageIDs);
       let args = [];
       let msgs = [];
-
       messages.forEach(messageObj => {
         const {bluetoothMatches} = messageObj;
         bluetoothMatches.forEach(match => {
           const {userMessage, seeds} = match;
-          msgs.push(userMessage);
+          if (userMessage) {
+            msgs.push(userMessage);
+          } else {
+            msgs.push(DEFAULT_NOTIFICATION);
+          }
           let timestamps = [];
           let seedsArray = [];
           seeds.forEach(seedObj => {
@@ -141,7 +149,7 @@ class Home extends Component {
         let notifications = [];
         results.forEach((result, index) => {
           if (result === 1) {
-            const msg = msgs[index] ? msgs[index] : DEFAULT_NOTIFICATION;
+            const msg = msgs[index];
             notifications.push(msg);
           }
         });

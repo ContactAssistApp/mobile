@@ -22,9 +22,9 @@ class Report extends Component {
   }
 
   uploadBLE = () => {
-    let seeds = [];
+    let seeds;
     this.getDeviceSeedAndRotate().then(data => {
-      seeds.push(data);
+      seeds = data;
       getLatestCoarseLocation(true).then(location => {
         this.reportBLE(seeds, location);
       });
@@ -44,7 +44,6 @@ class Report extends Component {
     fetch(REPORT_BLE_URL, {
       method: 'PUT',
       headers: {
-        'Ocp-Apim-Subscription-Key': '037bcd2a220b4f45a023e521fc129ef2',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
