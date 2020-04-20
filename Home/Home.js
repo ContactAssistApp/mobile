@@ -103,11 +103,6 @@ class Home extends Component {
 
   processQueries = async () => {
     let location = await getLatestCoarseLocation();
-    location = {
-      latitudePrefix: 40.6875,
-      longitudePrefix: -73.9375,
-      precision: 4,
-    };
     const messageIDs = await this.fetchMessageID(location);
     if (messageIDs && messageIDs.length > 0) {
       const messages = await this.fetchMessages(messageIDs);
