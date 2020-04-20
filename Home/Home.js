@@ -22,6 +22,7 @@ import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import Ble from '../ble/ble';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import SymptomTracker from '../SymptomTracker/SymptomTracker';
 
 class Home extends Component {
   constructor() {
@@ -301,6 +302,8 @@ class Home extends Component {
           {this.state.notifications && this.state.notifications.length > 0 && (
             <Notification notifications={this.state.notifications} />
           )}
+
+          <SymptomTracker />
 
           <View style={styles.resources_container}>
             <Text style={styles.resources_header}>Resources</Text>

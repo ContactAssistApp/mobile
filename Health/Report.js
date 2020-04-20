@@ -26,7 +26,11 @@ class Report extends Component {
     this.getDeviceSeedAndRotate().then(data => {
       seeds = data;
       getLatestCoarseLocation(true).then(location => {
-        this.reportBLE(seeds, location);
+        if (location) {
+          this.reportBLE(seeds, location);
+        }
+
+        // TODO: handle null case
       });
     });
   };
