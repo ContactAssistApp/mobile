@@ -17,7 +17,7 @@ public:
 //  static const int64_t LookBackWindowInSecs = 14 * 24 * 3600; //14 days
   BluetoothMatch(int64_t lookBackWindow, int64_t seedStepSize): _lookBackWindow(lookBackWindow), _seedStepSize(seedStepSize) {}
 
-  void addSeed(Seed &&s) { seeds.push_back(s); }
+  void addSeed(const Seed &s) { seeds.push_back(s); }
 
   Seed at(int i) { return seeds[i]; }
 

@@ -116,7 +116,7 @@ SeedStore::SeedStore(const std::string &storageLocation, int64_t step_size, int6
     try {
         SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
     } catch(std::exception *e) {
-        printf("failed to load due to %s\n", e->what());
+        //TODO report that somehow
         SeedDiskData sdd = SeedDiskData::createNew(get_rounded_timestamp(), _stepSize, _window);
         sdd.saveTo(_fileName);
     }
@@ -130,6 +130,7 @@ Id SeedStore::getCurrentId()
 
     SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
     _currentId = sdd.stepTo(now, _stepSize);
+    _timestamp = now;
     sdd.saveTo(_fileName);
     return _currentId;
 }
@@ -167,22 +168,17 @@ Seed SeedStore::getSeedAndRotate()
     return seed;
 }
 
+Seed SeedStore::unsafeGetSeedAndNotRotate()
+{
+    int64_t now = get_rounded_timestamp();
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    sdd.stepTo(now, _stepSize);
+    return sdd.sstar();
+}
+
 void SeedStore::makeSeedCurrent()
 {
     getCurrentId();
 }
 
 }
-
-// int main ()
-// {
-//     // td::SeedData sd;
-//     td::SeedStore ss("seeds.txt", 100, 1000);
-//     printf("get id: %s\n", ss.getCurrentId().serialize().c_str());
-//     sleep(2);
-//     printf("get id: %s\n", ss.getCurrentId().serialize().c_str());
-//     // sleep(2);
-//     printf("rotate got me %s\n", ss.getSeedAndRotate().serialize().c_str());
-//     printf("get id: %s\n", ss.getCurrentId().serialize().c_str());
-//     return 0;
-// }

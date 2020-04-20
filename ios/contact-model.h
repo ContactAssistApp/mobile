@@ -54,10 +54,6 @@ public:
   explicit Seed(): timestamp(-1){}
   inline const uint8_t* bytes() const { return &data[0]; }
 
-  Seed(uint8_t *raw_data, int64_t ts): timestamp(ts) {
-    memcpy(&data[0], raw_data, 16);
-  }
-
   bool isValid() { return timestamp > 0; }
 
   void stepInPlace(Id &id, int64_t stepSize);

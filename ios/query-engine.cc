@@ -23,6 +23,7 @@ bool BluetoothMatch::hasMatch(int64_t up_to, const std::vector<Id> &localIds)
         allIds.push_back(id);
     }
   }
+
   std::sort(allIds.begin(), allIds.end());
   //We should probably record when this happens because it happening is >bad<
   allIds.erase(std::unique(allIds.begin(), allIds.end()), allIds.end());

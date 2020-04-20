@@ -12,8 +12,12 @@ namespace td {
 static void write_arr(std::stringstream &ss, const uint8_t *data)
 {
   ss << std::hex;
-  for(int i = 0; i < 16; ++i)
-      ss << (int)(data[i] & 0xFF);
+  for(int i = 0; i < 16; ++i) {
+    uint32_t v = data[i];
+    if(v < 0x10)
+      ss << 0;
+    ss << v;
+  }
 }
 
 static void read_arr(const std::string &s, uint8_t *data)

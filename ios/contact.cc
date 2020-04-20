@@ -86,12 +86,12 @@ std::vector<Id> ContactStore::findContactsSince(int64_t initialTime)
       ptr->passive_contacts++;
   }
 
-    std::vector<Id> res;
-    for(auto &kv : id_agg) {
-      auto s = kv.first.serialize();
-      if(kv.second->is_significant())
-        res.push_back(kv.first);
-    }
+  printf("candidates %lu\n", id_agg.size());
+  std::vector<Id> res;
+  for(auto &kv : id_agg) {
+    if(kv.second->is_significant())
+      res.push_back(kv.first);
+  }
   return res;
 }
 

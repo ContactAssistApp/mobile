@@ -24,6 +24,7 @@ public:
 
   void changeWindow(int64_t newWindow);
   Seed getSeedAndRotate();
+  Seed unsafeGetSeedAndNotRotate();
   void makeSeedCurrent();
 };
 
