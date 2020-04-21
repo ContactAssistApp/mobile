@@ -1,36 +1,58 @@
 import SQLite from 'react-native-sqlite-storage';
 
-function errorCB(err) {
-  console.log("SQL Error: " + err);
-}
+const SQL = {
+  errorCB: function(err) {
+    console.log('SQL Error: ' + err);
+  },
 
-function successCB() {
-  console.log("SQL executed fine");
-}
+  successCB: function() {
+    console.log('SQL executed successfully');
+  },
 
-function openCB() {
-  console.log("Database OPENED");
-}
+  openCB: function() {
+    console.log('Database OPENED');
+  },
 
-export function initDB() {
-  const dbName = 'covidSafe.db';
-  const db = SQLite.openDatabase(
-    {name: dbName, location: 'default'},
-    openCB,
-    errorCB
-  );
-  //
-  // db.transaction((tx) => {
-  //   tx.executeSql('SELECT * FROM Employees a, Departments b WHERE a.department = b.department_id', [], (tx, results) => {
-  //     console.log("Query completed");
-  //
-  //     // Get rows with Web SQL Database spec compliance.
-  //
-  //     var len = results.rows.length;
-  //     for (let i = 0; i < len; i++) {
-  //       let row = results.rows.item(i);
-  //       console.log(`Employee name: ${row.name}, Dept Name: ${row.deptName}`);
-  //     }
-  //   });
-  // });
-}
+  initDB: function() {
+    const dbName = 'covidSafe.db';
+    const db = SQLite.openDatabase(
+      {name: dbName, location: 'default'},
+      this.openCB,
+      this.errorCB,
+    );
+    return db;
+  },
+
+  createTable: function(db, sqlStatement, args = []) {
+    db.transaction(txn => {
+      txn.executeSql(sqlStatement, args, this.successCB, this.errorCB);
+    });
+  },
+
+  insert: function(db, sqlStatement, args = []) {
+    db.transaction(txn => {
+      txn.executeSql(sqlStatement, args);
+    });
+  },
+
+  get: async (db, sqlStatement, args = []) => {
+    return new Promise((resolve, reject) => {
+      db.transaction(txn => {
+        txn.executeSql(sqlStatement, args, (tx, results) => {
+          const {rows} = results;
+          let items = [];
+          for (let i = 0; i < rows.length; i++) {
+            items.push({
+              ...rows.item(i),
+            });
+          }
+          console.log("==items===");
+          console.log(items);
+          resolve(items);
+        });
+      });
+    });
+  },
+};
+
+export default SQL;

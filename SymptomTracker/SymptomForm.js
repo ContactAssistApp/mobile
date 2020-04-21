@@ -3,35 +3,14 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
+import Accordion from '../views/Accordion';
 
-class Record extends Component {
-  handleAdd = () => {
-    this.props.navigate('SymptomForm');
-  };
-
+class SymptomForm extends Component {
   render() {
-    const {timeOfDay, logTime} = this.props;
+    const {} = this.props;
     return (
       <>
-        <View style={styles.record}>
-          <View style={styles.icon_wrapper}>
-            <CustomIcon
-              name={'edit24'}
-              color={colors.gray_icon}
-              size={24}
-              style={styles.record_icon}
-            />
-          </View>
-          <View style={styles.record_detail}>
-            <Text style={styles.title}>{timeOfDay}</Text>
-            <Text style={styles.time}>{logTime ? logTime : 'Not logged'}</Text>
-          </View>
-          {!logTime && (
-            <TouchableOpacity onPress={this.handleAdd}>
-              <Text>Add</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        <Text>Select Your Symptoms:</Text>
       </>
     );
   }
@@ -67,10 +46,9 @@ const styles = StyleSheet.create({
   },
 });
 
-Record.propTypes = {
+SymptomForm.propTypes = {
   timeOfDay: PropTypes.string.isRequired,
   logTime: PropTypes.string.isRequired,
-  navigate: PropTypes.func.isRequired,
 };
 
-export default Record;
+export default SymptomForm;

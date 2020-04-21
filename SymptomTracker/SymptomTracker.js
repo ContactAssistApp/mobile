@@ -1,17 +1,37 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import colors from '../assets/colors';
 import Record from './Record';
-import {initDB} from '../utils/SQL';
+import SQL from '../utils/SQL';
+import PropTypes from 'prop-types';
 
 class SymptomTracker extends Component {
+  constructor() {
+    super();
+    this.state = {
+      records: [],
+    };
+  }
   componentDidMount() {
-    initDB();
+    const db = SQL.initDB();
+    const createTableSQL = 'CREATE TABLE IF NOT EXISTS SymptomLog(date VARCHAR(10) PRIMARY KEY NOT NULL, timeOfDate VARCHAR(2), timestamp INTEGER)';
+    SQL.createTable(db, createTableSQL);
+    this.fetchLog(db).then(records => {
+      console.log("==records===");
+      console.log(records);
+      this.setState({
+        records,
+      });
+    });
+  }
+
+  fetchLog = async db => {
+    const date = new Date();
+    const todayDate = date.toLocaleDateString();
+    const sql = `SELECT * FROM SymptomLog WHERE date = ${todayDate}`;
+    const result = await SQL.get(db, sql);
+
+    return result;
   }
 
   dateSuffix = today => {
@@ -71,9 +91,13 @@ class SymptomTracker extends Component {
         </View>
         <Record
           timeOfDay={'AM'}
+          logTime={''}
+          navigate={this.props.navigate}
         />
         <Record
           timeOfDay={'PM'}
+          logTime={''}
+          navigate={this.props.navigate}
         />
       </View>
     );
@@ -105,4 +129,7 @@ const styles = StyleSheet.create({
   },
 });
 
+SymptomTracker.propTypes = {
+  navigate: PropTypes.func.isRequired,
+};
 export default SymptomTracker;

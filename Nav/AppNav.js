@@ -7,6 +7,7 @@ import {GetStoreData} from '../utils/asyncStorage';
 import FTUE from './OnBoarding/FTUE';
 import Preferences from './OnBoarding/Preferences';
 import BottomNav from './BottomNav';
+import SymptomForm from '../SymptomTracker/SymptomForm';
 import colors from '../assets/colors';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -80,6 +81,15 @@ class AppNav extends Component {
                 options={{
                   title: 'Home',
                   headerStyle: {height: 0},
+                  // headerBackTitle: '',
+                }}
+              />
+              <Stack.Screen
+                name="SymptomForm"
+                component={SymptomForm}
+                options={{
+                  title: 'Create New Log',
+                  // headerStyle: {height: 0},
                   // headerBackTitle: '',
                 }}
               />
