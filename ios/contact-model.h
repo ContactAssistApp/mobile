@@ -50,6 +50,10 @@ class Seed
 public:
   // static const int64_t SeedStepInSecs = 15 * 60; //15min
 
+  Seed(uint8_t *raw_data, int64_t ts): timestamp(ts) {
+    memcpy(&data[0], raw_data, 16);
+  }
+
   inline int64_t ts() { return timestamp; }
   explicit Seed(): timestamp(-1){}
   inline const uint8_t* bytes() const { return &data[0]; }
