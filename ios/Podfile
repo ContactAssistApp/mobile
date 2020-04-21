@@ -40,7 +40,7 @@ target 'tracedefense1' do
 
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways.podspec"
-  pod 'Permission-BluetoothAlways', :path => "#{permissions_path}/BluetoothAlways.podspec"
+  pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral.podspec"
 
   target 'tracedefense1Tests' do
     inherit! :search_paths
