@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* tracedefense1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tracedefense1Tests.m */; };
-		1123ACC52B400C4FFD59E85D /* libPods-tracedefense1-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75651575E3F0264CB5F9AE05 /* libPods-tracedefense1-tvOS.a */; };
+		00E356F31AD99517003FC87E /* covidsafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* covidsafeTests.m */; };
+		1123ACC52B400C4FFD59E85D /* libPods-covidsafe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75651575E3F0264CB5F9AE05 /* libPods-covidsafe-tvOS.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F6FCB242B9AE6005BE5B9 /* ble.swift */; };
 		1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */; };
 		14431C2E242D842600DEFBBE /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C2D242D842600DEFBBE /* Device.m */; };
 		14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */; };
@@ -21,16 +20,16 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* tracedefense1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tracedefense1Tests.m */; };
+		2DCD954D1E0B4F2C00145EB5 /* covidsafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* covidsafeTests.m */; };
 		A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117593243BCAD500BCD5AA /* query-engine.cc */; };
 		A511759A243BCAD500BCD5AA /* proto.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117595243BCAD500BCD5AA /* proto.cc */; };
 		A511759B243BCAD500BCD5AA /* util.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117596243BCAD500BCD5AA /* util.cc */; };
 		A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.mm */; };
 		A5EEA9B0243E332300DDC471 /* contact.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9AC243E332300DDC471 /* contact.cc */; };
 		A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9B1243E33A800DDC471 /* contact-model.cc */; };
-		B537F701AA40882F8AA59C69 /* libPods-tracedefense1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-tracedefense1.a */; };
-		FA99A7DD6E78E064A6B9F89F /* libPods-tracedefense1Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-tracedefense1Tests.a */; };
-		FBDFC5F03DC4A9AA826A92E4 /* libPods-tracedefense1-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C959DDA6D810F94A4A1ECC56 /* libPods-tracedefense1-tvOSTests.a */; };
+		B537F701AA40882F8AA59C69 /* libPods-covidsafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */; };
+		FA99A7DD6E78E064A6B9F89F /* libPods-covidsafeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-covidsafeTests.a */; };
+		FBDFC5F03DC4A9AA826A92E4 /* libPods-covidsafe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C959DDA6D810F94A4A1ECC56 /* libPods-covidsafe-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +38,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = tracedefense1;
+			remoteInfo = covidsafe;
 		};
 		14431C482431186F00DEFBBE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -53,51 +52,50 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "tracedefense1-tvOS";
+			remoteInfo = "covidsafe-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* tracedefense1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tracedefense1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* covidsafeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = covidsafeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* tracedefense1Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tracedefense1Tests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* covidsafeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = covidsafeTests.m; sourceTree = "<group>"; };
 		01ED4399B90141E99089C57B /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		0C4ED3CB69A3833F2FD57841 /* Pods-tracedefense1-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1-tvOS/Pods-tracedefense1-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* tracedefense1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tracedefense1.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = tracedefense1/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = tracedefense1/AppDelegate.m; sourceTree = "<group>"; };
+		0C4ED3CB69A3833F2FD57841 /* Pods-covidsafe-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOS/Pods-covidsafe-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* covidsafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = covidsafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = covidsafe/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = covidsafe/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = tracedefense1/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = tracedefense1/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tracedefense1/main.m; sourceTree = "<group>"; };
-		140F6FCA242B9AE6005BE5B9 /* tracedefense1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracedefense1-Bridging-Header.h"; sourceTree = "<group>"; };
-		140F6FCB242B9AE6005BE5B9 /* ble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ble.swift; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = covidsafe/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = covidsafe/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = covidsafe/main.m; sourceTree = "<group>"; };
+		140F6FCA242B9AE6005BE5B9 /* covidsafe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "covidsafe-Bridging-Header.h"; sourceTree = "<group>"; };
 		1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		14431C2B242D82AA00DEFBBE /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		14431C2D242D842600DEFBBE /* Device.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconBroadcast.m; sourceTree = "<group>"; };
 		14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconBroadcast.h; sourceTree = "<group>"; };
 		14431C432431186F00DEFBBE /* RCTBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBackgroundGeolocation.xcodeproj; path = "../node_modules/@mauron85/react-native-background-geolocation/ios/RCTBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
-		1E8EF93ABAD24F224FBD3553 /* libPods-tracedefense1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tracedefense1.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F2626E92A547D8ACCF17C51 /* Pods-tracedefense1-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1-tvOSTests/Pods-tracedefense1-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		1FCD43A2CE3EA8E1EB58114E /* Pods-tracedefense1-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-tracedefense1-tvOSTests/Pods-tracedefense1-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		20173B307854474D904FDD38 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* tracedefense1-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tracedefense1-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* tracedefense1-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tracedefense1-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* covidsafe-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "covidsafe-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* covidsafe-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "covidsafe-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32B340A48E104DDE8BD90A57 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		35472C232F804031A439818A /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = ../assets/fonts/icomoon.ttf; sourceTree = "<group>"; };
 		367E31A5FA504202B39AA810 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		36B9E1BD81D64C668DEABB35 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		50FAD737B3D61BF0CCBB5DB2 /* Pods-tracedefense1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1/Pods-tracedefense1.debug.xcconfig"; sourceTree = "<group>"; };
-		5364CF8CA98B6D3A0C567ABA /* Pods-tracedefense1-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1-tvOS.release.xcconfig"; path = "Target Support Files/Pods-tracedefense1-tvOS/Pods-tracedefense1-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		65C93B14685B20313947CDD1 /* Pods-tracedefense1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1.release.xcconfig"; path = "Target Support Files/Pods-tracedefense1/Pods-tracedefense1.release.xcconfig"; sourceTree = "<group>"; };
-		66A8C52FF0B3D509B10AA6BE /* Pods-tracedefense1Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1Tests.release.xcconfig"; path = "Target Support Files/Pods-tracedefense1Tests/Pods-tracedefense1Tests.release.xcconfig"; sourceTree = "<group>"; };
-		699AA3E9F6385F4132621C76 /* libPods-tracedefense1Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tracedefense1Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50FAD737B3D61BF0CCBB5DB2 /* Pods-covidsafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe/Pods-covidsafe.debug.xcconfig"; sourceTree = "<group>"; };
+		5364CF8CA98B6D3A0C567ABA /* Pods-covidsafe-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOS.release.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOS/Pods-covidsafe-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		65C93B14685B20313947CDD1 /* Pods-covidsafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe.release.xcconfig"; path = "Target Support Files/Pods-covidsafe/Pods-covidsafe.release.xcconfig"; sourceTree = "<group>"; };
+		66A8C52FF0B3D509B10AA6BE /* Pods-covidsafeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafeTests.release.xcconfig"; path = "Target Support Files/Pods-covidsafeTests/Pods-covidsafeTests.release.xcconfig"; sourceTree = "<group>"; };
+		699AA3E9F6385F4132621C76 /* libPods-covidsafeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F36BFB077D4428C90C9A01B /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		733A164A3869471D9B3C31C1 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		75651575E3F0264CB5F9AE05 /* libPods-tracedefense1-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tracedefense1-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DB4869357700CE101CFA78B /* Pods-tracedefense1Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tracedefense1Tests.debug.xcconfig"; path = "Target Support Files/Pods-tracedefense1Tests/Pods-tracedefense1Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		75651575E3F0264CB5F9AE05 /* libPods-covidsafe-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB4869357700CE101CFA78B /* Pods-covidsafeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafeTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafeTests/Pods-covidsafeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		80E2B511E00B4278976ED673 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		99F1ADC311164B4D88434CFB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A5117593243BCAD500BCD5AA /* query-engine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "query-engine.cc"; sourceTree = "<group>"; };
@@ -115,7 +113,7 @@
 		B16E092F4292471095648AF9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		C265E1F2F323413F897ABDEC /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C7F87A4AC1994270AC1163B9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		C959DDA6D810F94A4A1ECC56 /* libPods-tracedefense1-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tracedefense1-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C959DDA6D810F94A4A1ECC56 /* libPods-covidsafe-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9938D4C0F65454AA656A943 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		E2E049DD21E04D6DAADB789A /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		E777A0CCD25544E896DEB60F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -129,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA99A7DD6E78E064A6B9F89F /* libPods-tracedefense1Tests.a in Frameworks */,
+				FA99A7DD6E78E064A6B9F89F /* libPods-covidsafeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B537F701AA40882F8AA59C69 /* libPods-tracedefense1.a in Frameworks */,
+				B537F701AA40882F8AA59C69 /* libPods-covidsafe.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1123ACC52B400C4FFD59E85D /* libPods-tracedefense1-tvOS.a in Frameworks */,
+				1123ACC52B400C4FFD59E85D /* libPods-covidsafe-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,20 +151,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBDFC5F03DC4A9AA826A92E4 /* libPods-tracedefense1-tvOSTests.a in Frameworks */,
+				FBDFC5F03DC4A9AA826A92E4 /* libPods-covidsafe-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* tracedefense1Tests */ = {
+		00E356EF1AD99517003FC87E /* covidsafeTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* tracedefense1Tests.m */,
+				00E356F21AD99517003FC87E /* covidsafeTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = tracedefense1Tests;
+			path = covidsafeTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -177,7 +175,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* tracedefense1 */ = {
+		13B07FAE1A68108700A75B9A /* covidsafe */ = {
 			isa = PBXGroup;
 			children = (
 				A5EEA9B1243E33A800DDC471 /* contact-model.cc */,
@@ -201,7 +199,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = tracedefense1;
+			name = covidsafe;
 			sourceTree = "<group>";
 		};
 		14431C2C242D83DF00DEFBBE /* Device */ = {
@@ -237,10 +235,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				1E8EF93ABAD24F224FBD3553 /* libPods-tracedefense1.a */,
-				75651575E3F0264CB5F9AE05 /* libPods-tracedefense1-tvOS.a */,
-				C959DDA6D810F94A4A1ECC56 /* libPods-tracedefense1-tvOSTests.a */,
-				699AA3E9F6385F4132621C76 /* libPods-tracedefense1Tests.a */,
+				1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */,
+				75651575E3F0264CB5F9AE05 /* libPods-covidsafe-tvOS.a */,
+				C959DDA6D810F94A4A1ECC56 /* libPods-covidsafe-tvOSTests.a */,
+				699AA3E9F6385F4132621C76 /* libPods-covidsafeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -248,14 +246,14 @@
 		7B0FBEBB544EE0DE9AC58962 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				50FAD737B3D61BF0CCBB5DB2 /* Pods-tracedefense1.debug.xcconfig */,
-				65C93B14685B20313947CDD1 /* Pods-tracedefense1.release.xcconfig */,
-				0C4ED3CB69A3833F2FD57841 /* Pods-tracedefense1-tvOS.debug.xcconfig */,
-				5364CF8CA98B6D3A0C567ABA /* Pods-tracedefense1-tvOS.release.xcconfig */,
-				1F2626E92A547D8ACCF17C51 /* Pods-tracedefense1-tvOSTests.debug.xcconfig */,
-				1FCD43A2CE3EA8E1EB58114E /* Pods-tracedefense1-tvOSTests.release.xcconfig */,
-				7DB4869357700CE101CFA78B /* Pods-tracedefense1Tests.debug.xcconfig */,
-				66A8C52FF0B3D509B10AA6BE /* Pods-tracedefense1Tests.release.xcconfig */,
+				50FAD737B3D61BF0CCBB5DB2 /* Pods-covidsafe.debug.xcconfig */,
+				65C93B14685B20313947CDD1 /* Pods-covidsafe.release.xcconfig */,
+				0C4ED3CB69A3833F2FD57841 /* Pods-covidsafe-tvOS.debug.xcconfig */,
+				5364CF8CA98B6D3A0C567ABA /* Pods-covidsafe-tvOS.release.xcconfig */,
+				1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */,
+				1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */,
+				7DB4869357700CE101CFA78B /* Pods-covidsafeTests.debug.xcconfig */,
+				66A8C52FF0B3D509B10AA6BE /* Pods-covidsafeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -271,14 +269,13 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				140F6FCB242B9AE6005BE5B9 /* ble.swift */,
-				13B07FAE1A68108700A75B9A /* tracedefense1 */,
+				13B07FAE1A68108700A75B9A /* covidsafe */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* tracedefense1Tests */,
+				00E356EF1AD99517003FC87E /* covidsafeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				7B0FBEBB544EE0DE9AC58962 /* Pods */,
-				140F6FCA242B9AE6005BE5B9 /* tracedefense1-Bridging-Header.h */,
+				140F6FCA242B9AE6005BE5B9 /* covidsafe-Bridging-Header.h */,
 				B469C8AEC1E6445ABF6FA081 /* Resources */,
 			);
 			indentWidth = 2;
@@ -289,10 +286,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* tracedefense1.app */,
-				00E356EE1AD99517003FC87E /* tracedefense1Tests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* tracedefense1-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* tracedefense1-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* covidsafe.app */,
+				00E356EE1AD99517003FC87E /* covidsafeTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* covidsafe-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* covidsafe-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -324,9 +321,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* tracedefense1Tests */ = {
+		00E356ED1AD99517003FC87E /* covidsafeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "tracedefense1Tests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "covidsafeTests" */;
 			buildPhases = (
 				DBEA153B7877EFBCA9AFEE18 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -338,14 +335,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = tracedefense1Tests;
-			productName = tracedefense1Tests;
-			productReference = 00E356EE1AD99517003FC87E /* tracedefense1Tests.xctest */;
+			name = covidsafeTests;
+			productName = covidsafeTests;
+			productReference = 00E356EE1AD99517003FC87E /* covidsafeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* tracedefense1 */ = {
+		13B07F861A680F5B00A75B9A /* covidsafe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "tracedefense1" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "covidsafe" */;
 			buildPhases = (
 				509921158E712A85BC246681 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -359,14 +356,14 @@
 			);
 			dependencies = (
 			);
-			name = tracedefense1;
-			productName = tracedefense1;
-			productReference = 13B07F961A680F5B00A75B9A /* tracedefense1.app */;
+			name = covidsafe;
+			productName = covidsafe;
+			productReference = 13B07F961A680F5B00A75B9A /* covidsafe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* tracedefense1-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* covidsafe-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "tracedefense1-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "covidsafe-tvOS" */;
 			buildPhases = (
 				B88A3392F2A97878300A4E3B /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -379,14 +376,14 @@
 			);
 			dependencies = (
 			);
-			name = "tracedefense1-tvOS";
-			productName = "tracedefense1-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* tracedefense1-tvOS.app */;
+			name = "covidsafe-tvOS";
+			productName = "covidsafe-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* covidsafe-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* tracedefense1-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* covidsafe-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "tracedefense1-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "covidsafe-tvOSTests" */;
 			buildPhases = (
 				D99BA0E846F5E0E5A3CB0A51 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -398,9 +395,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "tracedefense1-tvOSTests";
-			productName = "tracedefense1-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* tracedefense1-tvOSTests.xctest */;
+			name = "covidsafe-tvOSTests";
+			productName = "covidsafe-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* covidsafe-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -414,15 +411,17 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = JDSW6436C5;
+						DevelopmentTeam = THEWY9596Q;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = JDSW6436C5;
+						DevelopmentTeam = THEWY9596Q;
 						LastSwiftMigration = 1130;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = THEWY9596Q;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
@@ -432,7 +431,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tracedefense1" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "covidsafe" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -452,10 +451,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* tracedefense1 */,
-				00E356ED1AD99517003FC87E /* tracedefense1Tests */,
-				2D02E47A1E0B4A5D006451C7 /* tracedefense1-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* tracedefense1-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* covidsafe */,
+				00E356ED1AD99517003FC87E /* covidsafeTests */,
+				2D02E47A1E0B4A5D006451C7 /* covidsafe-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* covidsafe-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -526,7 +525,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tracedefense1/Pods-tracedefense1-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-covidsafe/Pods-covidsafe-resources.sh",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -565,7 +564,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tracedefense1/Pods-tracedefense1-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-covidsafe/Pods-covidsafe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
@@ -597,7 +596,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tracedefense1-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-covidsafe-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -619,7 +618,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tracedefense1-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-covidsafe-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -641,7 +640,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tracedefense1-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-covidsafe-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -663,7 +662,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tracedefense1Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-covidsafeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -715,7 +714,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* tracedefense1Tests.m in Sources */,
+				00E356F31AD99517003FC87E /* covidsafeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,7 +732,6 @@
 				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
 				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
-				140F6FCC242B9AE6005BE5B9 /* ble.swift in Sources */,
 				14431C2E242D842600DEFBBE /* Device.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -751,7 +749,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* tracedefense1Tests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* covidsafeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,12 +758,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* tracedefense1 */;
+			target = 13B07F861A680F5B00A75B9A /* covidsafe */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* tracedefense1-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* covidsafe-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -777,7 +775,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = tracedefense1;
+			path = covidsafe;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -785,16 +783,15 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DB4869357700CE101CFA78B /* Pods-tracedefense1Tests.debug.xcconfig */;
+			baseConfigurationReference = 7DB4869357700CE101CFA78B /* Pods-covidsafeTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = JDSW6436C5;
+				DEVELOPMENT_TEAM = THEWY9596Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = tracedefense1Tests/Info.plist;
+				INFOPLIST_FILE = covidsafeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -804,19 +801,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tracedefense1.app/tracedefense1";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/covidsafe.app/covidsafe";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66A8C52FF0B3D509B10AA6BE /* Pods-tracedefense1Tests.release.xcconfig */;
+			baseConfigurationReference = 66A8C52FF0B3D509B10AA6BE /* Pods-covidsafeTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = JDSW6436C5;
-				INFOPLIST_FILE = tracedefense1Tests/Info.plist;
+				DEVELOPMENT_TEAM = THEWY9596Q;
+				INFOPLIST_FILE = covidsafeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -826,29 +822,32 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tracedefense1.app/tracedefense1";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/covidsafe.app/covidsafe";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50FAD737B3D61BF0CCBB5DB2 /* Pods-tracedefense1.debug.xcconfig */;
+			baseConfigurationReference = 50FAD737B3D61BF0CCBB5DB2 /* Pods-covidsafe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = JDSW6436C5;
-				INFOPLIST_FILE = tracedefense1/Info.plist;
+				DEVELOPMENT_TEAM = THEWY9596Q;
+				INFOPLIST_FILE = covidsafe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tracedefense1;
-				PRODUCT_NAME = tracedefense1;
-				SWIFT_OBJC_BRIDGING_HEADER = "tracedefense1-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.uw.CovidSafe;
+				PRODUCT_NAME = covidsafe;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "covidsafe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -857,22 +856,25 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65C93B14685B20313947CDD1 /* Pods-tracedefense1.release.xcconfig */;
+			baseConfigurationReference = 65C93B14685B20313947CDD1 /* Pods-covidsafe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JDSW6436C5;
-				INFOPLIST_FILE = tracedefense1/Info.plist;
+				DEVELOPMENT_TEAM = THEWY9596Q;
+				INFOPLIST_FILE = covidsafe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tracedefense1;
-				PRODUCT_NAME = tracedefense1;
-				SWIFT_OBJC_BRIDGING_HEADER = "tracedefense1-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.uw.CovidSafe;
+				PRODUCT_NAME = covidsafe;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "covidsafe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -880,7 +882,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0C4ED3CB69A3833F2FD57841 /* Pods-tracedefense1-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 0C4ED3CB69A3833F2FD57841 /* Pods-covidsafe-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -889,16 +891,17 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = THEWY9596Q;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "tracedefense1-tvOS/Info.plist";
+				INFOPLIST_FILE = "covidsafe-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.tracedefense1-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.uw.CovidSafe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -908,7 +911,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5364CF8CA98B6D3A0C567ABA /* Pods-tracedefense1-tvOS.release.xcconfig */;
+			baseConfigurationReference = 5364CF8CA98B6D3A0C567ABA /* Pods-covidsafe-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -918,15 +921,16 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = THEWY9596Q;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "tracedefense1-tvOS/Info.plist";
+				INFOPLIST_FILE = "covidsafe-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.tracedefense1-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.uw.CovidSafe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -936,7 +940,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F2626E92A547D8ACCF17C51 /* Pods-tracedefense1-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -946,24 +950,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "tracedefense1-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "covidsafe-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.tracedefense1-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.covidsafe-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tracedefense1-tvOS.app/tracedefense1-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/covidsafe-tvOS.app/covidsafe-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FCD43A2CE3EA8E1EB58114E /* Pods-tracedefense1-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -973,17 +977,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "tracedefense1-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "covidsafe-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.tracedefense1-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.covidsafe-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tracedefense1-tvOS.app/tracedefense1-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/covidsafe-tvOS.app/covidsafe-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1090,7 +1094,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "tracedefense1Tests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "covidsafeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1099,7 +1103,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "tracedefense1" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "covidsafe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1108,7 +1112,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "tracedefense1-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "covidsafe-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1117,7 +1121,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "tracedefense1-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "covidsafe-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1126,7 +1130,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tracedefense1" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "covidsafe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
