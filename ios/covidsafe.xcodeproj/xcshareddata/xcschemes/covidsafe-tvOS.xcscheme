@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83CBBA2D1A601D0E00E9B192"
+               BlueprintIdentifier = "2D2A28121D9B038B00D4039D"
                BuildableName = "libReact.a"
-               BlueprintName = "React"
+               BlueprintName = "React-tvOS"
                ReferencedContainer = "container:../node_modules/react-native/React/React.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "tracedefense1.app"
-               BlueprintName = "tracedefense1"
-               ReferencedContainer = "container:tracedefense1.xcodeproj">
+               BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+               BuildableName = "covidsafe-tvOS.app"
+               BlueprintName = "covidsafe-tvOS"
+               ReferencedContainer = "container:covidsafe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -42,10 +42,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "tracedefense1Tests.xctest"
-               BlueprintName = "tracedefense1Tests"
-               ReferencedContainer = "container:tracedefense1.xcodeproj">
+               BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
+               BuildableName = "covidsafe-tvOSTests.xctest"
+               BlueprintName = "covidsafe-tvOSTests"
+               ReferencedContainer = "container:covidsafe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -55,27 +55,29 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tracedefense1.app"
-            BlueprintName = "tracedefense1"
-            ReferencedContainer = "container:tracedefense1.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "tracedefense1Tests.xctest"
-               BlueprintName = "tracedefense1Tests"
-               ReferencedContainer = "container:tracedefense1.xcodeproj">
+               BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
+               BuildableName = "covidsafe-tvOSTests.xctest"
+               BlueprintName = "covidsafe-tvOSTests"
+               ReferencedContainer = "container:covidsafe.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            BuildableName = "covidsafe-tvOS.app"
+            BlueprintName = "covidsafe-tvOS"
+            ReferencedContainer = "container:covidsafe.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -91,12 +93,14 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tracedefense1.app"
-            BlueprintName = "tracedefense1"
-            ReferencedContainer = "container:tracedefense1.xcodeproj">
+            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            BuildableName = "covidsafe-tvOS.app"
+            BlueprintName = "covidsafe-tvOS"
+            ReferencedContainer = "container:covidsafe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -108,10 +112,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tracedefense1.app"
-            BlueprintName = "tracedefense1"
-            ReferencedContainer = "container:tracedefense1.xcodeproj">
+            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            BuildableName = "covidsafe-tvOS.app"
+            BlueprintName = "covidsafe-tvOS"
+            ReferencedContainer = "container:covidsafe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

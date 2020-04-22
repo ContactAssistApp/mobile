@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'tracedefense1' do
-  # Pods for tracedefense1
+target 'covidsafe' do
+  # Pods for covidsafe
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -42,7 +42,7 @@ target 'tracedefense1' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways.podspec"
   pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral.podspec"
 
-  target 'tracedefense1Tests' do
+  target 'covidsafeTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -50,10 +50,10 @@ target 'tracedefense1' do
   use_native_modules!
 end
 
-target 'tracedefense1-tvOS' do
-  # Pods for tracedefense1-tvOS
+target 'covidsafe-tvOS' do
+  # Pods for covidsafe-tvOS
 
-  target 'tracedefense1-tvOSTests' do
+  target 'covidsafe-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
