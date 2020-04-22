@@ -22,12 +22,22 @@ class Record extends Component {
     return (
       <>
         <View style={styles.record}>
-          <View style={styles.icon_wrapper}>
-            <CustomIcon
-              name={'edit24'}
-              size={24}
-              style={styles.record_icon}
-            />
+          <View style={[
+              styles.icon_wrapper,
+              logTime ? styles.checkmark_wrapper : styles.edit_wrapper,
+            ]}>
+            {logTime
+              ? <CustomIcon
+                  name={'checkmark24'}
+                  size={24}
+                  style={styles.checkmark_icon}
+                  color={colors.warning_low}
+                />
+              : <CustomIcon
+                  name={'edit24'}
+                  size={24}
+                  style={styles.record_icon}
+                />}
           </View>
           <View style={styles.record_detail}>
             <Text style={styles.title}>{timeOfDay}</Text>
@@ -51,13 +61,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   icon_wrapper: {
-    backgroundColor: colors.fill_off,
     width: 44,
     height: 44,
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
+  },
+  checkmark_wrapper: {
+    backgroundColor: '#DFF6DD',
+  },
+  edit_wrapper: {
+    backgroundColor: colors.fill_off,
   },
   record_detail: {
     flex: 1,

@@ -1,6 +1,7 @@
 const initialState = {
   date: '',
   timeOfDay: '',
+  ts: '',
   fever: 0,
   feverOnsetDate: '',
   feverTemperature: '',

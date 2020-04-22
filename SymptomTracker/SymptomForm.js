@@ -15,7 +15,7 @@ import Cough from './Cough';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import SQL from '../utils/SQL';
+import {SetStoreData} from '../utils/asyncStorage';
 
 class SymptomForm extends Component {
   handleCheckboxPress = (id, value) => {
@@ -26,60 +26,19 @@ class SymptomForm extends Component {
   };
 
   submitForm = () => {
-    const {
-      symptoms: {
-        date,
-        timeOfDay,
-        fever,
-        feverOnsetDate,
-        feverTemperature,
-        feverDays,
-        abdominalPain,
-        chills,
-        cough,
-        coughOnsetDate,
-        coughDays,
-        coughSeverity,
-        diarrhea,
-        difficultyBreathing,
-        headache,
-        muscleAches,
-        soreThroat,
-        vomiting,
-        other,
-      },
+    let {
+      symptoms,
+      symptoms: {date, timeOfDay},
     } = this.props;
+    const currentTime = new Date().getTime();
 
-    const symptomSql = 'INSERT INTO Symptom(date, fever, feverOnsetDate, feverTemperature, feverDays, abdominalPain, chills, cough, coughOnsetDate, coughDays, coughSeverity, diarrhea, difficultyBreathing, headache, muscleAches, soreThroat, vomiting, other) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    this.props.updateSymptom({
+      field: 'ts',
+      value: currentTime,
+    });
 
-    const symptomArgs = [
-      `${date}_${timeOfDay}`,
-      fever,
-      feverOnsetDate,
-      feverTemperature,
-      feverDays,
-      abdominalPain,
-      chills,
-      cough,
-      coughOnsetDate,
-      coughDays,
-      coughSeverity,
-      diarrhea,
-      difficultyBreathing,
-      headache,
-      muscleAches,
-      soreThroat,
-      vomiting,
-      other,
-    ];
-    const db = SQL.initDB();
-    SQL.insert(db, symptomSql, symptomArgs);
-    const logSql = 'INSERT INTO SymptomLog(date, timeOfDate, timestamp) VALUES (?,?,?)';
-    const logArgs = [date, timeOfDay, new Date().getTime()];
-    console.log(logArgs);
-    SQL.insert(db, logSql, logArgs);
-    console.log(logArgs);
-    SQL.closeDB(db);
+    symptoms.ts = currentTime;
+    SetStoreData(`SYMPTOM_${date}_${timeOfDay}`, symptoms);
   };
 
   render() {

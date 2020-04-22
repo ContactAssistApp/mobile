@@ -2,26 +2,22 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import colors from '../assets/colors';
 import Record from './Record';
-import SQL from '../utils/SQL';
 import PropTypes from 'prop-types';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {GetStoreData} from '../utils/asyncStorage';
 
 class SymptomTracker extends Component {
   constructor() {
     super();
     this.state = {
-      records: [],
+      amLog: null,
+      pmLog: null,
     };
   }
-  componentDidMount() {
-    const db = SQL.initDB();
-    const createLogTable = 'CREATE TABLE IF NOT EXISTS SymptomLog(date VARCHAR(10) PRIMARY KEY NOT NULL, timeOfDate VARCHAR(2), timestamp INTEGER)';
-    const createSymptomTable = 'CREATE TABLE IF NOT EXISTS Symptom(date VARCHAR(12) PRIMARY KEY NOT NULL, fever INTEGER, feverOnsetDate VARCHAR(5), feverTemperature INTEGER, feverDays INTEGER, abdominalPain INTEGER, chills INTEGER, cough INTEGER, coughOnsetDate VARCHAR(5), coughDays INTEGER, coughSeverity INTEGER, diarrhea INTEGER, difficultyBreathing INTEGER, headache INTEGER, muscleAches INTEGER, soreThroat INTEGER, vomiting INTEGER, other INTEGER)';
 
-    SQL.createTable(db, createLogTable);
-    SQL.createTable(db, createSymptomTable);
+  componentDidMount() {
     const d = new Date();
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
@@ -41,19 +37,16 @@ class SymptomTracker extends Component {
       value: todayDate,
     });
 
-    this.fetchLog(db, todayDate).then(records => {
-      this.setState({
-        records,
-      });
-    });
-    // SQL.closeDB(db);
+    this.fetchLog(todayDate);
   }
 
-  fetchLog = async (db, todayDate) => {
-    const sql = `SELECT * FROM SymptomLog WHERE date = ${todayDate}`;
-    const result = await SQL.get(db, sql);
-
-    return result;
+  fetchLog = async todayDate => {
+    let amLog = await GetStoreData(`SYMPTOM_${todayDate}_AM`);
+    let pmLog = await GetStoreData(`SYMPTOM_${todayDate}_PM`);
+    this.setState({
+      amLog: JSON.parse(amLog),
+      pmLog: JSON.parse(pmLog),
+    });
   };
 
   dateSuffix = today => {
@@ -113,12 +106,20 @@ class SymptomTracker extends Component {
         </View>
         <Record
           timeOfDay={'AM'}
-          logTime={''}
+          logTime={
+            this.state.amLog
+            ? new Date(this.state.amLog.ts).toLocaleString()
+            : ''
+          }
           navigate={this.props.navigate}
         />
         <Record
           timeOfDay={'PM'}
-          logTime={''}
+          logTime={
+            this.state.pmLog
+            ? new Date(this.state.pmLog.ts).toLocaleString()
+            : ''
+          }
           navigate={this.props.navigate}
         />
       </View>
