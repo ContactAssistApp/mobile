@@ -28,7 +28,6 @@ class Accordion extends Component {
               this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
             }
             size={30}
-            color={colors.gray_icon}
           />
         </TouchableOpacity>
         <View style={styles.parentHr} />
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: colors.gray_icon,
   },
   row: {
     flexDirection: 'row',

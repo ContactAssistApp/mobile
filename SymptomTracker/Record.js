@@ -17,7 +17,6 @@ class Record extends Component {
           <View style={styles.icon_wrapper}>
             <CustomIcon
               name={'edit24'}
-              color={colors.gray_icon}
               size={24}
               style={styles.record_icon}
             />
