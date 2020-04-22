@@ -12,74 +12,132 @@ import PropTypes from 'prop-types';
 import Accordion from '../views/Accordion';
 import Checkbox from '../views/Checkbox';
 import Fever from './Fever';
+import {updateSymptom} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class SymptomForm extends Component {
+  handleCheckboxPress = (id, value) => {
+    this.props.updateSymptom({
+      field: id,
+      value: !value,
+    });
+  };
+
   render() {
-    const {} = this.props;
+    const {
+      symptoms: {
+        fever,
+        abdominalPain,
+        chills,
+        cough,
+        diarrhea,
+        difficultyBreathing,
+        headache,
+        muscleAches,
+        soreThroat,
+        vomiting,
+        other,
+      },
+    } = this.props;
+
     return (
       <ScrollView>
         <Text style={styles.header}>Select Your Symptoms:</Text>
         <View style={styles.symptom_list}>
-          <Accordion title={'Fever'} style={styles.symptom}>
+          <Accordion withCheckbox={true} title={'Fever'} style={styles.symptom}>
             <Fever />
           </Accordion>
           <View style={styles.symptom}>
             <Checkbox
-              selected={false}
+              onPress={() => {
+                this.handleCheckboxPress('abdominalPain', abdominalPain);
+              }}
+              selected={abdominalPain}
               text={'Abdominal pain'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('chills', chills);
+              }}
+              selected={chills}
               text={'Chills'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('cough', cough);
+              }}
+              selected={cough}
               text={'Cough'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('diarrhea', diarrhea);
+              }}
+              selected={diarrhea}
               text={'Diarrhea'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress(
+                  'difficultyBreathing',
+                  difficultyBreathing
+                );
+              }}
+              selected={difficultyBreathing}
               text={'Difficulty breathing'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('headache', headache);
+              }}
+              selected={headache}
               text={'Headache'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('muscleAches', muscleAches);
+              }}
+              selected={muscleAches}
               text={'Muscle aches / pains'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('soreThroat', soreThroat);
+              }}
+              selected={soreThroat}
               text={'Sore throat'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('vomiting', vomiting);
+              }}
+              selected={vomiting}
               text={'Vomiting'}
             />
           </View>
           <View style={styles.symptom}>
             <Checkbox
-              selected={true}
+              onPress={() => {
+                this.handleCheckboxPress('other', other);
+              }}
+              selected={other}
               text={'Other'}
             />
           </View>
@@ -131,8 +189,22 @@ const styles = StyleSheet.create({
 });
 
 SymptomForm.propTypes = {
+  updateSymptom: PropTypes.func.isRequired,
   timeOfDay: PropTypes.string.isRequired,
   logTime: PropTypes.string.isRequired,
 };
 
-export default SymptomForm;
+const mapStateToProps = state => {
+  return {
+    symptoms: state.symptomReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateSymptom
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SymptomForm);

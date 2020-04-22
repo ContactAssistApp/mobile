@@ -8,18 +8,24 @@ class Fever extends Component {
     return (
       <>
         <Text>Onset Date:</Text>
-        <TextInput />
+        <TextInput style={styles.inputbox} />
         <Text>Highest Temperature:</Text>
-        <TextInput />
+        <TextInput style={styles.inputbox} />
         <Text>Days Experienced:</Text>
-        <TextInput />
+        <TextInput style={styles.inputbox} />
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
-
+  inputbox: {
+    marginBottom: 20,
+    height: 40,
+    width: 200,
+    borderBottomColor: colors.primary_theme,
+    borderBottomWidth: 1,
+  },
 });
 
 Fever.propTypes = {

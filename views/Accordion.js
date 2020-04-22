@@ -24,8 +24,7 @@ class Accordion extends Component {
           style={styles.row}
           onPress={() => this.toggleExpand()}>
           <View style={styles.checkbox_wrapper}>
-            {this.props.withCheckbox && (<Checkbox text={''} />)}
-
+            {this.props.withCheckbox && <Checkbox text={''} />}
             <Text style={[styles.title, styles.font]}>{this.props.title}</Text>
           </View>
           <Icon
@@ -56,8 +55,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // height: 56,
-    // paddingLeft: 20,
+    height: 56,
+    paddingLeft: 20,
     paddingRight: 18,
     alignItems: 'center',
   },
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   child: {
-    // paddingHorizontal: 25,
+    paddingHorizontal: 25,
   },
 });
 
