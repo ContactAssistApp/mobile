@@ -36,6 +36,12 @@ target 'covidsafe' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways.podspec"
+  pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral.podspec"
+
   target 'covidsafeTests' do
     inherit! :search_paths
     # Pods for testing
