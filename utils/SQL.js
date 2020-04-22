@@ -23,6 +23,10 @@ const SQL = {
     return db;
   },
 
+  closeDB: function(db) {
+    db.close();
+  },
+
   createTable: function(db, sqlStatement, args = []) {
     db.transaction(txn => {
       txn.executeSql(sqlStatement, args, this.successCB, this.errorCB);
@@ -31,7 +35,9 @@ const SQL = {
 
   insert: function(db, sqlStatement, args = []) {
     db.transaction(txn => {
-      txn.executeSql(sqlStatement, args);
+      txn.executeSql(sqlStatement, args, this.successCB, (err) => {
+        console.log(err);
+      });
     });
   },
 
@@ -46,8 +52,6 @@ const SQL = {
               ...rows.item(i),
             });
           }
-          console.log("==items===");
-          console.log(items);
           resolve(items);
         });
       });

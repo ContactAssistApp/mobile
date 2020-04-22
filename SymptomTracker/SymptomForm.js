@@ -15,13 +15,71 @@ import Cough from './Cough';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import SQL from '../utils/SQL';
 
 class SymptomForm extends Component {
   handleCheckboxPress = (id, value) => {
     this.props.updateSymptom({
       field: id,
-      value: !value,
+      value: value === 0 ? 1 : 0,
     });
+  };
+
+  submitForm = () => {
+    const {
+      symptoms: {
+        date,
+        timeOfDay,
+        fever,
+        feverOnsetDate,
+        feverTemperature,
+        feverDays,
+        abdominalPain,
+        chills,
+        cough,
+        coughOnsetDate,
+        coughDays,
+        coughSeverity,
+        diarrhea,
+        difficultyBreathing,
+        headache,
+        muscleAches,
+        soreThroat,
+        vomiting,
+        other,
+      },
+    } = this.props;
+
+    const symptomSql = 'INSERT INTO Symptom(date, fever, feverOnsetDate, feverTemperature, feverDays, abdominalPain, chills, cough, coughOnsetDate, coughDays, coughSeverity, diarrhea, difficultyBreathing, headache, muscleAches, soreThroat, vomiting, other) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+
+    const symptomArgs = [
+      `${date}_${timeOfDay}`,
+      fever,
+      feverOnsetDate,
+      feverTemperature,
+      feverDays,
+      abdominalPain,
+      chills,
+      cough,
+      coughOnsetDate,
+      coughDays,
+      coughSeverity,
+      diarrhea,
+      difficultyBreathing,
+      headache,
+      muscleAches,
+      soreThroat,
+      vomiting,
+      other,
+    ];
+    const db = SQL.initDB();
+    SQL.insert(db, symptomSql, symptomArgs);
+    const logSql = 'INSERT INTO SymptomLog(date, timeOfDate, timestamp) VALUES (?,?,?)';
+    const logArgs = [date, timeOfDay, new Date().getTime()];
+    console.log(logArgs);
+    SQL.insert(db, logSql, logArgs);
+    console.log(logArgs);
+    SQL.closeDB(db);
   };
 
   render() {
@@ -152,7 +210,7 @@ class SymptomForm extends Component {
         </View>
         <TouchableOpacity
           style={styles.next_button}
-          onPress={() => {}}>
+          onPress={this.submitForm}>
           <Text style={styles.next_button_text}>Next</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -198,8 +256,6 @@ const styles = StyleSheet.create({
 
 SymptomForm.propTypes = {
   updateSymptom: PropTypes.func.isRequired,
-  timeOfDay: PropTypes.string.isRequired,
-  logTime: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => {

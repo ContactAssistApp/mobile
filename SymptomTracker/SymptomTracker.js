@@ -4,6 +4,9 @@ import colors from '../assets/colors';
 import Record from './Record';
 import SQL from '../utils/SQL';
 import PropTypes from 'prop-types';
+import {updateSymptom} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class SymptomTracker extends Component {
   constructor() {
@@ -14,25 +17,44 @@ class SymptomTracker extends Component {
   }
   componentDidMount() {
     const db = SQL.initDB();
-    const createTableSQL = 'CREATE TABLE IF NOT EXISTS SymptomLog(date VARCHAR(10) PRIMARY KEY NOT NULL, timeOfDate VARCHAR(2), timestamp INTEGER)';
-    SQL.createTable(db, createTableSQL);
-    this.fetchLog(db).then(records => {
-      console.log("==records===");
-      console.log(records);
+    const createLogTable = 'CREATE TABLE IF NOT EXISTS SymptomLog(date VARCHAR(10) PRIMARY KEY NOT NULL, timeOfDate VARCHAR(2), timestamp INTEGER)';
+    const createSymptomTable = 'CREATE TABLE IF NOT EXISTS Symptom(date VARCHAR(12) PRIMARY KEY NOT NULL, fever INTEGER, feverOnsetDate VARCHAR(5), feverTemperature INTEGER, feverDays INTEGER, abdominalPain INTEGER, chills INTEGER, cough INTEGER, coughOnsetDate VARCHAR(5), coughDays INTEGER, coughSeverity INTEGER, diarrhea INTEGER, difficultyBreathing INTEGER, headache INTEGER, muscleAches INTEGER, soreThroat INTEGER, vomiting INTEGER, other INTEGER)';
+
+    SQL.createTable(db, createLogTable);
+    SQL.createTable(db, createSymptomTable);
+    const d = new Date();
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    const todayDate = [year, month, day].join('');
+
+    this.props.updateSymptom({
+      field: 'date',
+      value: todayDate,
+    });
+
+    this.fetchLog(db, todayDate).then(records => {
       this.setState({
         records,
       });
     });
+    // SQL.closeDB(db);
   }
 
-  fetchLog = async db => {
-    const date = new Date();
-    const todayDate = date.toLocaleDateString();
+  fetchLog = async (db, todayDate) => {
     const sql = `SELECT * FROM SymptomLog WHERE date = ${todayDate}`;
     const result = await SQL.get(db, sql);
 
     return result;
-  }
+  };
 
   dateSuffix = today => {
     let todayObj = today;
@@ -131,5 +153,20 @@ const styles = StyleSheet.create({
 
 SymptomTracker.propTypes = {
   navigate: PropTypes.func.isRequired,
+  updateSymptom: PropTypes.func.isRequired,
 };
-export default SymptomTracker;
+
+const mapStateToProps = state => {
+  return {
+    symptoms: state.symptomReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateSymptom
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SymptomTracker);

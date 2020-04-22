@@ -3,9 +3,17 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
+import {updateSymptom} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Record extends Component {
   handleAdd = () => {
+    this.props.updateSymptom({
+      field: 'timeOfDay',
+      value: this.props.timeOfDay,
+    });
+
     this.props.navigate('SymptomForm');
   };
 
@@ -72,4 +80,17 @@ Record.propTypes = {
   navigate: PropTypes.func.isRequired,
 };
 
-export default Record;
+const mapStateToProps = state => {
+  return {
+    symptoms: state.symptomReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateSymptom
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Record);

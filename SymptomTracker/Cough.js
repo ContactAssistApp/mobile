@@ -66,30 +66,30 @@ class Cough extends Component {
             <TouchableOpacity
               style={[
                 styles.severity_button,
-                coughSeverity === '1' ? styles.mild_selected : '',
+                coughSeverity === 1 ? styles.mild_selected : '',
               ]}
               onPress={() => {
-                this.selectSeverity('1');
+                this.selectSeverity(1);
               }}>
               <Text style={styles.button_text}>Mild</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.severity_button,
-                coughSeverity === '2' ? styles.moderate_selected : '',
+                coughSeverity === 2 ? styles.moderate_selected : '',
               ]}
               onPress={() => {
-                this.selectSeverity('2');
+                this.selectSeverity(2);
               }}>
               <Text style={styles.button_text}>Moderate</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.severity_button,
-                coughSeverity === '3' ? styles.severe_selected : '',
+                coughSeverity === 3 ? styles.severe_selected : '',
               ]}
               onPress={() => {
-                this.selectSeverity('3');
+                this.selectSeverity(3);
               }}>
               <Text style={styles.button_text}>Severe</Text>
             </TouchableOpacity>
