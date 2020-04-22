@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  TextInput,
 } from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
@@ -45,7 +44,14 @@ class SymptomForm extends Component {
       <ScrollView>
         <Text style={styles.header}>Select Your Symptoms:</Text>
         <View style={styles.symptom_list}>
-          <Accordion withCheckbox={true} title={'Fever'} style={styles.symptom}>
+          <Accordion
+            onPress={() => {
+              this.handleCheckboxPress('fever', fever);
+            }}
+            withCheckbox={true}
+            checkboxSelected={fever}
+            title={'Fever'}
+            style={styles.symptom}>
             <Fever />
           </Accordion>
           <View style={styles.symptom}>

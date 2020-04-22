@@ -24,7 +24,13 @@ class Accordion extends Component {
           style={styles.row}
           onPress={() => this.toggleExpand()}>
           <View style={styles.checkbox_wrapper}>
-            {this.props.withCheckbox && <Checkbox text={''} />}
+            {this.props.withCheckbox && (
+              <Checkbox
+                text={''}
+                onPress={this.props.onPress}
+                selected={this.props.checkboxSelected}
+              />
+            )}
             <Text style={[styles.title, styles.font]}>{this.props.title}</Text>
           </View>
           <Icon
