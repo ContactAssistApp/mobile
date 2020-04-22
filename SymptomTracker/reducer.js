@@ -1,5 +1,8 @@
 const initialState = {
   fever: false,
+  feverOnsetDate: '',
+  feverTemperature: '',
+  feverDays: '',
   abdominalPain: false,
   chills: false,
   cough: false,

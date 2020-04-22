@@ -2,17 +2,58 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput} from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
+import {updateSymptom} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Fever extends Component {
+  handleEdit = (id, value) => {
+    this.props.updateSymptom({
+      field: id,
+      value,
+    });
+  };
+
   render() {
+    const {
+      symptoms: {
+        feverOnsetDate,
+        feverTemperature,
+        feverDays,
+      },
+    } = this.props;
+
     return (
       <>
         <Text>Onset Date:</Text>
-        <TextInput style={styles.inputbox} />
+        <TextInput
+          style={styles.inputbox}
+          keyboardType={'default'}
+          onChangeText={text => {
+            this.handleEdit('feverOnsetDate', text);
+          }}
+          value={feverOnsetDate}
+        />
         <Text>Highest Temperature:</Text>
-        <TextInput style={styles.inputbox} />
+        <TextInput
+          style={styles.inputbox}
+          keyboardType={'numeric'}
+          onChangeText={text => {
+            this.handleEdit('feverTemperature', text);
+          }}
+          value={feverTemperature}
+          maxLength={3}
+        />
         <Text>Days Experienced:</Text>
-        <TextInput style={styles.inputbox} />
+        <TextInput
+          style={styles.inputbox}
+          keyboardType={'numeric'}
+          onChangeText={text => {
+            this.handleEdit('feverDays', text);
+          }}
+          value={feverDays}
+          maxLength={2}
+        />
       </>
     );
   }
@@ -29,7 +70,20 @@ const styles = StyleSheet.create({
 });
 
 Fever.propTypes = {
-  // timeOfDay: PropTypes.string.isRequired,
+  updateSymptom: PropTypes.func.isRequired,
 };
 
-export default Fever;
+const mapStateToProps = state => {
+  return {
+    symptoms: state.symptomReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateSymptom
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Fever);
