@@ -1,21 +1,52 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActionSheetIOS,
+} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
+import {DeleteStoreData} from '../utils/asyncStorage';
 import {connect} from 'react-redux';
 
 class Record extends Component {
   handleAdd = () => {
     this.props.updateSymptom({
-      field: 'timeOfDay',
-      value: this.props.timeOfDay,
+      timeOfDay: this.props.timeOfDay,
     });
 
     this.props.navigate('SymptomForm');
   };
+
+  handleAction = () => {
+    const {
+      timeOfDay,
+      symptoms: {date},
+    } = this.props;
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancel', 'Edit', 'Delete'],
+        destructiveButtonIndex: 2,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) {
+          this.props.updateSymptom({
+            timeOfDay: this.props.timeOfDay,
+          });
+
+          this.props.navigate('SymptomForm');
+        } else if (buttonIndex === 2) {
+          DeleteStoreData(`SYMPTOM_${date}_${timeOfDay}`);
+        }
+      }
+    );
+  }
 
   render() {
     const {timeOfDay, logTime} = this.props;
@@ -30,24 +61,46 @@ class Record extends Component {
               ? <CustomIcon
                   name={'checkmark24'}
                   size={24}
-                  style={styles.checkmark_icon}
                   color={colors.warning_low}
                 />
               : <CustomIcon
                   name={'edit24'}
                   size={24}
-                  style={styles.record_icon}
-                />}
+                  color={colors.gray_icon}
+                />
+            }
           </View>
           <View style={styles.record_detail}>
             <Text style={styles.title}>{timeOfDay}</Text>
-            <Text style={styles.time}>{logTime ? logTime : 'Not logged'}</Text>
+            <Text style={styles.time}>
+              {logTime ? `Saved ${logTime}` : 'Not logged'}
+            </Text>
           </View>
-          {!logTime && (
-            <TouchableOpacity onPress={this.handleAdd}>
-              <Text>Add</Text>
-            </TouchableOpacity>
-          )}
+          {
+            logTime
+              ? (
+                <TouchableOpacity
+                  style={styles.action_button}
+                  onPress={this.handleAction}>
+                  <CustomIcon
+                    name={'action24'}
+                    size={20}
+                    color={colors.gray_icon}
+                  />
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity
+                  style={styles.add_button}
+                  onPress={this.handleAdd}>
+                  <CustomIcon
+                    name={'add24'}
+                    size={16}
+                    color={colors.gray_icon}
+                  />
+                </TouchableOpacity>
+              )
+          }
         </View>
       </>
     );
@@ -86,6 +139,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 16,
     color: colors.secondary_body_copy,
+  },
+  action_button: {
+    paddingLeft: 20,
+    paddingRight: 15,
+  },
+  add_button: {
+    paddingLeft: 20,
+    paddingRight: 10,
   },
 });
 

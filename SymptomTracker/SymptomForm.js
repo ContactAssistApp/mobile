@@ -15,13 +15,27 @@ import Cough from './Cough';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {SetStoreData} from '../utils/asyncStorage';
+import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 
 class SymptomForm extends Component {
+  componentDidMount() {
+    this.fetchLog();
+  }
+
+  fetchLog = async () => {
+    const {
+      symptoms: {date, timeOfDay},
+    } = this.props;
+    let log = await GetStoreData(`SYMPTOM_${date}_${timeOfDay}`);
+    if (log) {
+      log = JSON.parse(log);
+      this.props.updateSymptom(log);
+    }
+  };
+
   handleCheckboxPress = (id, value) => {
     this.props.updateSymptom({
-      field: id,
-      value: value === 0 ? 1 : 0,
+      [id]: value === 0 ? 1 : 0,
     });
   };
 
@@ -33,8 +47,7 @@ class SymptomForm extends Component {
     const currentTime = new Date().getTime();
 
     this.props.updateSymptom({
-      field: 'ts',
-      value: currentTime,
+      ts: currentTime,
     });
 
     symptoms.ts = currentTime;

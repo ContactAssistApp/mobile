@@ -15,8 +15,7 @@ import {connect} from 'react-redux';
 class Cough extends Component {
   handleEdit = (id, value) => {
     this.props.updateSymptom({
-      field: id,
-      value,
+      [id]: value,
     });
   };
 
@@ -30,8 +29,7 @@ class Cough extends Component {
     }
 
     this.props.updateSymptom({
-      field: 'coughSeverity',
-      value,
+      coughSeverity: value,
     });
   };
 

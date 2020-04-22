@@ -9,8 +9,7 @@ import {connect} from 'react-redux';
 class Fever extends Component {
   handleEdit = (id, value) => {
     this.props.updateSymptom({
-      field: id,
-      value,
+      [id]: value,
     });
   };
 

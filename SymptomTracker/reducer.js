@@ -26,12 +26,13 @@ const symptomReducer = (state = initialState, action) => {
 
   switch (type) {
     case 'UPDATE_SYMPTOM':
-      const {field, value} = payload;
-      return {
-        ...state,
-        [field]: value,
-      };
-
+      Object.entries(payload).forEach(([key, val]) => {
+        state = {
+          ...state,
+          [key]: val,
+        };
+      });
+      return state;
     default:
       return state;
   }

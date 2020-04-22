@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import Record from './Record';
 import PropTypes from 'prop-types';
@@ -33,8 +33,7 @@ class SymptomTracker extends Component {
     const todayDate = [year, month, day].join('');
 
     this.props.updateSymptom({
-      field: 'date',
-      value: todayDate,
+      date: todayDate,
     });
 
     this.fetchLog(todayDate);
