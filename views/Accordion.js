@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {colors} from '../assets/colors';
+import colors from '../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Checkbox from './Checkbox';
 
 class Accordion extends Component {
   constructor(props) {
@@ -22,19 +23,21 @@ class Accordion extends Component {
         <TouchableOpacity
           style={styles.row}
           onPress={() => this.toggleExpand()}>
-          <Text style={[styles.title, styles.font]}>{this.props.title}</Text>
+          <View style={styles.checkbox_wrapper}>
+            <Checkbox text={''} />
+            <Text style={[styles.title, styles.font]}>{this.props.title}</Text>
+          </View>
           <Icon
             name={
               this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
             }
-            size={30}
+            color={colors.gray_icon}
+            size={24}
           />
         </TouchableOpacity>
         <View style={styles.parentHr} />
         {this.state.expanded && (
-          <View style={styles.child}>
-            <Text>{this.props.data}</Text>
-          </View>
+          <View style={styles.child}>{this.props.children}</View>
         )}
       </View>
     );
@@ -43,24 +46,26 @@ class Accordion extends Component {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  checkbox_wrapper: {
+    flexDirection: 'row',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 56,
-    paddingLeft: 25,
+    paddingLeft: 20,
     paddingRight: 18,
     alignItems: 'center',
-    // backgroundColor: colors.CGRAY,
   },
   parentHr: {
     height: 1,
     width: '100%',
   },
   child: {
-    padding: 16,
+    paddingHorizontal: 25,
   },
 });
 
