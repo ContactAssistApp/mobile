@@ -25,7 +25,7 @@ class Fever extends Component {
 
     return (
       <>
-        <Text>Onset Date:</Text>
+        <Text style={styles.label}>Onset Date:</Text>
         <TextInput
           style={styles.inputbox}
           keyboardType={'default'}
@@ -34,7 +34,7 @@ class Fever extends Component {
           }}
           value={feverOnsetDate}
         />
-        <Text>Highest Temperature:</Text>
+        <Text style={styles.label}>Highest Temperature:</Text>
         <TextInput
           style={styles.inputbox}
           keyboardType={'numeric'}
@@ -44,7 +44,7 @@ class Fever extends Component {
           value={feverTemperature}
           maxLength={3}
         />
-        <Text>Days Experienced:</Text>
+        <Text style={styles.label}>Days Experienced:</Text>
         <TextInput
           style={styles.inputbox}
           keyboardType={'numeric'}
@@ -60,12 +60,20 @@ class Fever extends Component {
 }
 
 const styles = StyleSheet.create({
+  label: {
+    fontSize: 12,
+    lineHeight: 15,
+    textTransform: 'capitalize',
+    color: colors.gray_icon,
+    marginBottom: 8,
+  },
   inputbox: {
-    marginBottom: 20,
+    marginBottom: 15,
     height: 40,
     width: 200,
     borderBottomColor: colors.primary_theme,
     borderBottomWidth: 1,
+    backgroundColor: colors.card_border,
   },
 });
 

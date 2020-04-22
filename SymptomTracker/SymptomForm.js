@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import Accordion from '../views/Accordion';
 import Checkbox from '../views/Checkbox';
 import Fever from './Fever';
+import Cough from './Cough';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -72,15 +73,16 @@ class SymptomForm extends Component {
               text={'Chills'}
             />
           </View>
-          <View style={styles.symptom}>
-            <Checkbox
-              onPress={() => {
-                this.handleCheckboxPress('cough', cough);
-              }}
-              selected={cough}
-              text={'Cough'}
-            />
-          </View>
+          <Accordion
+            onPress={() => {
+              this.handleCheckboxPress('cough', cough);
+            }}
+            withCheckbox={true}
+            checkboxSelected={cough}
+            title={'Cough'}
+            style={styles.symptom}>
+            <Cough />
+          </Accordion>
           <View style={styles.symptom}>
             <Checkbox
               onPress={() => {
