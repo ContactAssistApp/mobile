@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {REPORT_BLE_URL} from '../utils/endpoints';
 import {
-  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,6 +12,7 @@ import {
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
 import Ble from '../ble/ble';
+import PrepareInterview from './PrepareInterview';
 
 class Report extends Component {
   constructor() {
@@ -29,7 +30,6 @@ class Report extends Component {
         if (location) {
           this.reportBLE(seeds, location);
         }
-
         // TODO: handle null case
       });
     });
@@ -85,15 +85,12 @@ class Report extends Component {
 
   render() {
     return (
-      <SafeAreaView>
+      <ScrollView>
         <Image
           style={styles.reporting_logo}
           source={require('../assets/health/report_bg.png')}
         />
         <View style={styles.result_container}>
-          <Text style={styles.title}>
-            Positive COVID-19 Diagnosis Reported
-          </Text>
           <TouchableOpacity
             style={styles.upload_trace_button}
             onPress={this.uploadBLE}>
@@ -103,7 +100,9 @@ class Report extends Component {
           </TouchableOpacity>
           {this.state.uploadBLESuccess && <Text>Success!</Text>}
         </View>
-      </SafeAreaView>
+        <Text style={styles.header}>Next Steps</Text>
+        <PrepareInterview />
+      </ScrollView>
     );
   }
 }
@@ -132,6 +131,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
   },
+  header: {
+    fontSize: 20,
+    lineHeight: 26,
+    textTransform: 'capitalize',
+    color: colors.module_title,
+    margin: 15,
+    marginTop: 25,
+  }
 });
 
 export default Report;

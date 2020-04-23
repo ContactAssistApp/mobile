@@ -8,36 +8,38 @@ import {
   Image,
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import SymptomTracker from '../SymptomTracker/SymptomTracker';
-import Report from './Report';
-import colors from '../assets/colors';
+import colors from '../../assets/colors';
+import Symptoms from './Symptoms';
+import Locations from './Locations';
+import People from './People';
+import Summary from './Summary';
 
-class Health extends Component {
+class InterviewPrepContainer extends Component {
   constructor() {
     super();
     this.state = {
       index: 0,
       routes: [
-        {key: 'symptoms', title: 'symptoms'},
-        {key: 'diagnosis', title: 'diagnosis'},
+        {key: 'symptoms', title: '1. Symptoms'},
+        {key: 'locations', title: '2. Locations'},
+        {key: 'people', title: '3. People'},
+        {key: 'summary', title: '4. Summary'},
       ],
     };
   }
 
   render() {
-    const symptomsRoute = () => (
-      <SymptomTracker />
-    );
-
-    const diagnosisRoute = () => (
-      <Report />
-    );
-
+    const symptomsRoute = () => <Symptoms />;
+    const locationsRoute = () => <Locations />;
+    const peopleRoute = () => <People />;
+    const summaryRoute = () => <Summary />;
     const initialLayout = {width: Dimensions.get('window').width};
 
     const renderScene = SceneMap({
       symptoms: symptomsRoute,
-      diagnosis: diagnosisRoute,
+      locations: locationsRoute,
+      people: peopleRoute,
+      summary: summaryRoute,
     });
 
     const renderTabBar = props => (
@@ -54,11 +56,7 @@ class Health extends Component {
       <>
         <SafeAreaView style={styles.status_bar}/>
         <View style={styles.header}>
-          <Image
-            style={styles.logo}
-            source={require('../assets/home/logo.png')}
-          />
-          <Text style={styles.title}>Health Report</Text>
+          <Text style={styles.title}>Interview preparation</Text>
         </View>
         <TabView
           navigationState={this.state}
@@ -104,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Health;
+export default InterviewPrepContainer;
