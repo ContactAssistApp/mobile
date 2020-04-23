@@ -8,6 +8,7 @@ import FTUE from './OnBoarding/FTUE';
 import Preferences from './OnBoarding/Preferences';
 import BottomNav from './BottomNav';
 import SymptomForm from '../SymptomTracker/SymptomForm';
+import Confirmation from '../SymptomTracker/Confirmation';
 import colors from '../assets/colors';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -89,6 +90,15 @@ class AppNav extends Component {
                 component={SymptomForm}
                 options={{
                   title: 'Create New Log',
+                  // headerStyle: {height: 0},
+                  // headerBackTitle: '',
+                }}
+              />
+              <Stack.Screen
+                name="Confirmation"
+                component={Confirmation}
+                options={{
+                  title: 'Confirmation',
                   // headerStyle: {height: 0},
                   // headerBackTitle: '',
                 }}

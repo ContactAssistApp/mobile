@@ -1,58 +1,86 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
+  StyleSheet,
+  Dimensions,
+  Text,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import SymptomTracker from '../SymptomTracker/SymptomTracker';
+import Report from './Report';
 import colors from '../assets/colors';
 
 class Health extends Component {
+  constructor() {
+    super();
+    this.state = {
+      index: 0,
+      routes: [
+        {key: 'symptoms', title: 'symptoms'},
+        {key: 'diagnosis', title: 'diagnosis'},
+      ],
+    };
+  }
+
   render() {
-    const {navigate} = this.props.navigation;
+    const symptomsRoute = () => (
+      <SymptomTracker />
+    );
+
+    const diagnosisRoute = () => (
+      <Report />
+    );
+
+    const initialLayout = {width: Dimensions.get('window').width};
+
+    const renderScene = SceneMap({
+      symptoms: symptomsRoute,
+      diagnosis: diagnosisRoute,
+    });
+
+    const renderTabBar = props => (
+      <TabBar
+        {...props}
+        indicatorStyle={{backgroundColor: colors.primary_theme}}
+        style={styles.tab_bar}
+        activeColor={colors.section_title}
+        inactiveColor={colors.gray_icon}
+      />
+    );
 
     return (
       <>
-        <SafeAreaView style={styles.status_bar} />
-        <SafeAreaView>
-          <View style={styles.header}>
-            <Image
-              style={styles.logo}
-              source={require('../assets/home/logo.png')}
-            />
-            <Text style={styles.title}>Health Report</Text>
-          </View>
-          <View style={styles.reporting_container}>
-            <Image
-              style={styles.reporting_logo}
-              source={require('../assets/health/report.png')}
-            />
-            <Text style={styles.reporting_title}>
-              Help your community by {'\n'} reporting your diagnosis
-            </Text>
-            <Text style={styles.reporting_description}>
-              Your report will be anonymous and{'\n'} your identity will be protected.
-            </Text>
-            <TouchableOpacity
-              style={styles.new_report_button}
-              onPress={() => {
-                navigate('Report');
-              }}>
-              <Icon name="plus" color={'white'} size={20} />
-              <Text style={styles.new_report_text}>New Report</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+        <SafeAreaView style={styles.status_bar}/>
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={require('../assets/home/logo.png')}
+          />
+          <Text style={styles.title}>Health Report</Text>
+        </View>
+        <TabView
+          navigationState={this.state}
+          renderTabBar={renderTabBar}
+          renderScene={renderScene}
+          onIndexChange={idx => {
+            this.setState({index: idx});
+          }}
+          initialLayout={initialLayout}
+        />
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  scene: {
+    flex: 1,
+  },
+  tab_bar: {
+    backgroundColor: 'white',
+  },
   status_bar: {
     backgroundColor: 'white',
   },
@@ -61,6 +89,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 15,
     paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.card_border,
   },
   logo: {
     width: 30,
@@ -71,46 +101,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.section_title,
     fontWeight: '500',
-  },
-  reporting_container: {
-    backgroundColor: 'white',
-    height: '100%',
-    alignItems: 'center',
-  },
-  reporting_logo: {
-    width: 180,
-    height: 180,
-    marginTop: 80,
-  },
-  reporting_title: {
-    paddingVertical: 20,
-    fontWeight: '600',
-    fontSize: 17,
-    lineHeight: 22,
-    textAlign: 'center',
-    letterSpacing: -0.408,
-  },
-  reporting_description: {
-    color: colors.secondary_body_copy,
-    fontSize: 15,
-    lineHeight: 20,
-    textAlign: 'center',
-    letterSpacing: -0.24,
-  },
-  new_report_button: {
-    backgroundColor: colors.primary_theme,
-    borderRadius: 100,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    top: 50,
-  },
-  new_report_text: {
-    color: 'white',
-    fontSize: 15,
-    lineHeight: 20,
-    paddingLeft: 5,
   },
 });
 
