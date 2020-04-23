@@ -52,6 +52,7 @@ class SymptomForm extends Component {
 
     symptoms.ts = currentTime;
     SetStoreData(`SYMPTOM_${date}_${timeOfDay}`, symptoms);
+    this.props.navigation.navigate('Confirmation');
   };
 
   render() {

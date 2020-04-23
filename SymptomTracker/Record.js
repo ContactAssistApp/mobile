@@ -44,9 +44,9 @@ class Record extends Component {
         } else if (buttonIndex === 2) {
           DeleteStoreData(`SYMPTOM_${date}_${timeOfDay}`);
         }
-      }
+      },
     );
-  }
+  };
 
   render() {
     const {timeOfDay, logTime} = this.props;
@@ -54,9 +54,9 @@ class Record extends Component {
       <>
         <View style={styles.record}>
           <View style={[
-              styles.icon_wrapper,
-              logTime ? styles.checkmark_wrapper : styles.edit_wrapper,
-            ]}>
+            styles.icon_wrapper,
+            logTime ? styles.checkmark_wrapper : styles.edit_wrapper,
+          ]}>
             {logTime
               ? <CustomIcon
                   name={'checkmark24'}
