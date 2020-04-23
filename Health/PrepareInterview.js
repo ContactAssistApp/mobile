@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {REPORT_BLE_URL} from '../utils/endpoints';
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -24,7 +22,7 @@ class PrepareInterview extends Component {
           presentationStyle="pageSheet"
           visible={true}
           onRequestClose={() => {
-            
+
           }}
         >
           <InterviewPrepContainer />

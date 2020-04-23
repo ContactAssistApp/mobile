@@ -1,44 +1,16 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {REPORT_BLE_URL} from '../utils/endpoints';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {connect} from 'react-redux';
+import SymptomsSummary from './SymptomsSummary';
 
 class Confirmation extends Component {
   render() {
     const {
-      symptoms,
       symptoms: {timeOfDay, ts},
     } = this.props;
-
-    const symptomMap = {
-      fever: 'Fever:',
-      feverOnsetDate: 'Onset date:',
-      feverTemperature: 'Highest temp:',
-      feverDays: 'Duration (days):',
-      abdominalPain: 'Abdominal pain:',
-      chills: 'Chills',
-      cough: 'Cough',
-      coughOnsetDate: 'Onset date:',
-      coughDays: 'Duration (days):',
-      coughSeverity: 'Severity:',
-      diarrhea: 'Diarrhea',
-      difficultyBreathing: 'Difficulty breathing',
-      headache: 'Headache',
-      muscleAches: 'Muscle aches / pain',
-      soreThroat: 'Sore throat',
-      vomiting: 'Vomiting',
-      other: 'Other',
-    };
 
     return (
       <ScrollView>
@@ -62,98 +34,8 @@ class Confirmation extends Component {
             </View>
           </View>
         </View>
-        <Text style={styles.symptom_header}>SYMPTOMS</Text>
-        <View>
-          {Object.entries(symptoms).map(([key, val]) => {
-            if (val === 1) {
-              if (key === 'fever') {
-                const {feverOnsetDate, feverTemperature, feverDays} = symptoms;
-                return (
-                  <View style={styles.symptom_card}>
-                    <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                    {feverOnsetDate && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.feverOnsetDate}
-                        </Text>
-                        <Text style={styles.value}>
-                          {symptoms.feverOnsetDate}
-                        </Text>
-                      </View>
-                    )}
-                    {feverTemperature && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.feverTemperature}
-                        </Text>
-                        <Text style={styles.value}>
-                          {symptoms.feverTemperature}
-                        </Text>
-                      </View>
-                    )}
-                    {feverDays && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>{symptomMap.feverDays}</Text>
-                        <Text style={styles.value}>{symptoms.feverDays}</Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              } else if (key === 'cough') {
-                const {coughOnsetDate, coughDays, coughSeverity} = symptoms;
-                let coughSeverityString = '';
-                if (coughSeverity === 1) {
-                  coughSeverityString = 'Mild';
-                } else if (coughSeverity === 2) {
-                  coughSeverityString = 'Moderate';
-                } else if (coughSeverity === 3) {
-                  coughSeverityString = 'Severe';
-                }
-                return (
-                  <View style={styles.symptom_card}>
-                    <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                    {coughOnsetDate && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.coughOnsetDate}
-                        </Text>
-                        <Text style={styles.value}>
-                          {symptoms.coughOnsetDate}
-                        </Text>
-                      </View>
-                    )}
-                    {coughDays && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>{symptomMap.coughDays}</Text>
-                        <Text style={styles.value}>{symptoms.coughDays}</Text>
-                      </View>
-                    )}
-                    {coughSeverity > 0 && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.coughSeverity}
-                        </Text>
-                        <Text style={styles.value}>{coughSeverityString}</Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              } else {
-                return (
-                  <View style={styles.symptom_card}>
-                    <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                  </View>
-                );
-              }
-            }
-          })}
-        </View>
 
-        <View style={styles.privacy_container}>
-          <Text style={styles.privacy_text}>
-            This information is stored in the app on your phone and remains private to you.
-          </Text>
-        </View>
+        <SymptomsSummary />
       </ScrollView>
     );
   }
@@ -242,7 +124,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 40,
     padding: 20,
-  }
+  },
 });
 
 const mapStateToProps = state => {

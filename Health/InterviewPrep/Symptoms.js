@@ -1,14 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../../assets/colors';
+import SymptomsSummary from '../../SymptomTracker/SymptomsSummary';
 
 class Symptoms extends Component {
   render() {
@@ -28,10 +22,7 @@ class Symptoms extends Component {
             We’ve detected severe symptoms in your recent reports, and collected them below.
           </Text>
         </View>
-        <Text style={styles.section_title}>
-          Symptoms
-        </Text>
-
+        <SymptomsSummary />
       </ScrollView>
     );
   }
@@ -73,8 +64,7 @@ const styles = StyleSheet.create({
     color: colors.secondary_body_copy,
     padding: 20,
     backgroundColor: colors.card_border,
-    
-  }
+  },
 });
 
 export default Symptoms;
