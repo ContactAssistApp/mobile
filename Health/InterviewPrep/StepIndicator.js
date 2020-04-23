@@ -1,65 +1,34 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import colors from '../../assets/colors';
 
 class StepIndicator extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.indicator_wrapper}>
-          <View style={styles.number_wrapper}>
-            <Text style={styles.number}>1</Text>
-          </View>
-          <Text style={styles.label}>Symptoms</Text>
+      <View style={styles.indicator_wrapper}>
+        <View
+          style={[
+            styles.number_wrapper,
+            this.props.selected ? styles.selected : '',
+          ]}>
+          <Text
+            style={[
+              styles.number,
+              this.props.selected ? styles.selected_number : '',
+            ]}>
+            {this.props.number}
+          </Text>
         </View>
-        <View style={styles.indicator_wrapper}>
-          <View style={styles.number_wrapper}>
-            <Text style={styles.number}>2</Text>
-          </View>
-          <Text style={styles.label}>Locations</Text>
-        </View>
-        <View style={styles.indicator_wrapper}>
-          <View style={styles.number_wrapper}>
-            <Text style={styles.number}>3</Text>
-          </View>
-          <Text style={styles.label}>People</Text>
-        </View>
-        <View style={styles.indicator_wrapper}>
-          <View style={styles.number_wrapper}>
-            <Text style={styles.number}>4</Text>
-          </View>
-          <Text style={styles.label}>Summary</Text>
-        </View>
+        <Text style={styles.label}>{this.props.label}</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.card_border,
-  },
   indicator_wrapper: {
     alignItems: 'center',
-  },
-  number: {
-    fontWeight: '500',
-    fontSize: 14,
-    lineHeight: 16,
-    textAlign: 'center',
-    color: colors.section_title,
   },
   number_wrapper: {
     backgroundColor: colors.card_border,
@@ -69,6 +38,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 5,
+  },
+  selected: {
+    backgroundColor: colors.primary_theme,
+  },
+  number: {
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 16,
+    textAlign: 'center',
+    color: colors.section_title,
+  },
+  selected_number: {
+    color: 'white',
   },
   label: {
     fontSize: 12,

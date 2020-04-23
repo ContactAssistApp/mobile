@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Dimensions,
-  Text,
-} from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {SafeAreaView, View, StyleSheet, Dimensions, Text} from 'react-native';
 import colors from '../../assets/colors';
 import Symptoms from './Symptoms';
 import Locations from './Locations';
 import People from './People';
 import Summary from './Summary';
-import StepIndicator from './StepIndicator';
+import StepIndicatorContainer from './StepIndicatorContainer';
 
 class InterviewPrepContainer extends Component {
   constructor() {
@@ -29,9 +22,8 @@ class InterviewPrepContainer extends Component {
         <View style={styles.header}>
           <Text style={styles.title}>Interview preparation</Text>
         </View>
-        <StepIndicator />
+        <StepIndicatorContainer index={this.state.index} />
         {this.state.index === 0 && <Symptoms />}
-
       </>
     );
   }
