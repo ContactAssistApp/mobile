@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     color: colors.module_title,
     margin: 15,
     marginTop: 25,
-  }
+  },
 });
 
 export default Report;

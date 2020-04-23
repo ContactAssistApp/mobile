@@ -14,51 +14,66 @@ class Symptoms extends Component {
   render() {
     return (
       <ScrollView>
-        <View style={styles.header}>
-          <Image
-            style={styles.clipboard}
-            source={require('../../assets/health/clipboard.png')}
-          />
-          <Text style={styles.title}>
-            Your public health Agency will be contacting you For an Interview
+        <View style={styles.intro_container}>
+          <View style={styles.header}>
+            <Image
+              style={styles.clipboard}
+              source={require('../../assets/health/clipboard.png')}
+            />
+            <Text style={styles.title}>
+              Review which symptoms you{'\n'}would like to include.
+            </Text>
+          </View>
+          <Text style={styles.description}>
+            We’ve detected severe symptoms in your recent reports, and collected them below.
           </Text>
         </View>
+        <Text style={styles.section_title}>
+          Symptoms
+        </Text>
+
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  result_container: {
-    backgroundColor: 'white',
+  intro_container: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.card_border,
     paddingVertical: 20,
-    paddingHorizontal: 15,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 26,
-    lineHeight: 31,
-    letterSpacing: 0.33,
-  },
-  upload_trace_button: {
-    backgroundColor: colors.primary_theme,
-    paddingVertical: 15,
-    alignItems: 'center',
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  upload_trace_button_text: {
-    color: 'white',
-    fontSize: 15,
-    lineHeight: 20,
   },
   header: {
-    fontSize: 20,
-    lineHeight: 26,
-    textTransform: 'capitalize',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  clipboard: {
+    width: 60,
+    height: 70,
+  },
+  title: {
+    paddingLeft: 10,
+    fontSize: 18,
+    lineHeight: 25,
+    color: colors.section_title,
+  },
+  description: {
+    fontSize: 14,
+    lineHeight: 20,
     color: colors.module_title,
-    margin: 15,
-    marginTop: 25,
+    paddingHorizontal: 20,
+  },
+  section_title: {
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 18,
+    textTransform: 'uppercase',
+    color: colors.secondary_body_copy,
+    padding: 20,
+    backgroundColor: colors.card_border,
+    
   }
 });
 

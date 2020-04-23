@@ -20,13 +20,15 @@ class PrepareInterview extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <Modal
-        presentationStyle="pageSheet"
-        visible={true}
-        onRequestClose={() => {}}
-      >
-        <InterviewPrepContainer />
-      </Modal>
+        <Modal
+          presentationStyle="pageSheet"
+          visible={true}
+          onRequestClose={() => {
+            
+          }}
+        >
+          <InterviewPrepContainer />
+        </Modal>
         <View style={styles.header}>
           <Image
             style={styles.clipboard}
