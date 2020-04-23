@@ -39,3 +39,13 @@ export async function SetStoreData(key, item) {
     console.log(error.message);
   }
 }
+
+export async function DeleteStoreData(key) {
+  try {
+    await AsyncStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

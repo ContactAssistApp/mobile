@@ -4,16 +4,22 @@ import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
 
 export function getLatestCoarseLocation(isReporting = false) {
   return getLatestLocation().then(location => {
-    const {latitude: lat, longitude: lon} = location;
-    const coarsLocation = getCoarseLocation(lat, lon, isReporting);
-    return coarsLocation;
+    if (location) {
+      const {latitude: lat, longitude: lon} = location;
+      const coarsLocation = getCoarseLocation(lat, lon, isReporting);
+      return coarsLocation;
+    }
+    return null;
   });
 }
 
 function getLatestLocation() {
   return GetStoreData('LOCATION_DATA').then(data => {
     const locations = JSON.parse(data);
-    return locations[locations.length - 1];
+    if (locations && locations.length > 0) {
+      return locations[locations.length - 1];
+    }
+    return null;
   });
 }
 

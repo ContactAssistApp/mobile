@@ -1,0 +1,172 @@
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActionSheetIOS,
+} from 'react-native';
+import CustomIcon from '../assets/icons/CustomIcon.js';
+import colors from '../assets/colors';
+import PropTypes from 'prop-types';
+import {updateSymptom} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {DeleteStoreData} from '../utils/asyncStorage';
+import {connect} from 'react-redux';
+
+class Record extends Component {
+  handleAdd = () => {
+    this.props.updateSymptom({
+      timeOfDay: this.props.timeOfDay,
+    });
+
+    this.props.navigate('SymptomForm');
+  };
+
+  handleAction = () => {
+    const {
+      timeOfDay,
+      symptoms: {date},
+    } = this.props;
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancel', 'Edit', 'Delete'],
+        destructiveButtonIndex: 2,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) {
+          this.props.updateSymptom({
+            timeOfDay: this.props.timeOfDay,
+          });
+
+          this.props.navigate('SymptomForm');
+        } else if (buttonIndex === 2) {
+          DeleteStoreData(`SYMPTOM_${date}_${timeOfDay}`);
+        }
+      }
+    );
+  }
+
+  render() {
+    const {timeOfDay, logTime} = this.props;
+    return (
+      <>
+        <View style={styles.record}>
+          <View style={[
+              styles.icon_wrapper,
+              logTime ? styles.checkmark_wrapper : styles.edit_wrapper,
+            ]}>
+            {logTime
+              ? <CustomIcon
+                  name={'checkmark24'}
+                  size={24}
+                  color={colors.warning_low}
+                />
+              : <CustomIcon
+                  name={'edit24'}
+                  size={24}
+                  color={colors.gray_icon}
+                />
+            }
+          </View>
+          <View style={styles.record_detail}>
+            <Text style={styles.title}>{timeOfDay}</Text>
+            <Text style={styles.time}>
+              {logTime ? `Saved ${logTime}` : 'Not logged'}
+            </Text>
+          </View>
+          {
+            logTime
+              ? (
+                <TouchableOpacity
+                  style={styles.action_button}
+                  onPress={this.handleAction}>
+                  <CustomIcon
+                    name={'action24'}
+                    size={20}
+                    color={colors.gray_icon}
+                  />
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity
+                  style={styles.add_button}
+                  onPress={this.handleAdd}>
+                  <CustomIcon
+                    name={'add24'}
+                    size={16}
+                    color={colors.gray_icon}
+                  />
+                </TouchableOpacity>
+              )
+          }
+        </View>
+      </>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  record: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  icon_wrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  checkmark_wrapper: {
+    backgroundColor: '#DFF6DD',
+  },
+  edit_wrapper: {
+    backgroundColor: colors.fill_off,
+  },
+  record_detail: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: colors.module_title,
+  },
+  time: {
+    fontSize: 14,
+    lineHeight: 16,
+    color: colors.secondary_body_copy,
+  },
+  action_button: {
+    paddingLeft: 20,
+    paddingRight: 15,
+  },
+  add_button: {
+    paddingLeft: 20,
+    paddingRight: 10,
+  },
+});
+
+Record.propTypes = {
+  timeOfDay: PropTypes.string.isRequired,
+  logTime: PropTypes.string.isRequired,
+  navigate: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    symptoms: state.symptomReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateSymptom
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Record);

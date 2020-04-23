@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Switch, StyleSheet} from 'react-native';
+import {Switch} from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 
