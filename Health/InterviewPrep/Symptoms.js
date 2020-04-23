@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../../assets/colors';
 import SymptomsSummary from '../../SymptomTracker/SymptomsSummary';
 
 class Symptoms extends Component {
   render() {
     return (
-      <ScrollView>
+      <>
         <View style={styles.intro_container}>
           <View style={styles.header}>
             <Image
@@ -23,7 +23,7 @@ class Symptoms extends Component {
           </Text>
         </View>
         <SymptomsSummary />
-      </ScrollView>
+      </>
     );
   }
 }

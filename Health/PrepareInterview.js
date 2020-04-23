@@ -13,19 +13,25 @@ import InterviewPrepContainer from './InterviewPrep/InterviewPrepContainer';
 class PrepareInterview extends Component {
   constructor() {
     super();
+    this.state = {
+      modalOn: false,
+    };
   }
+
+  closeModal = () => {
+    this.setState({
+      modalOn: false,
+    });
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <Modal
           presentationStyle="pageSheet"
-          visible={true}
-          onRequestClose={() => {
-
-          }}
+          visible={this.state.modalOn}
         >
-          <InterviewPrepContainer />
+          <InterviewPrepContainer handleModalClose={this.closeModal} />
         </Modal>
         <View style={styles.header}>
           <Image
@@ -43,7 +49,9 @@ class PrepareInterview extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-
+              this.setState({
+                modalOn: true,
+              });
             }}>
             <Text style={styles.button_text}>prepare for your interview</Text>
           </TouchableOpacity>
