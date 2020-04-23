@@ -81,50 +81,6 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: colors.secondary_body_copy,
   },
-  symptom_header: {
-    fontWeight: '500',
-    fontSize: 14,
-    lineHeight: 18,
-    textTransform: 'uppercase',
-    color: colors.secondary_body_copy,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-  },
-  symptom_card: {
-    backgroundColor: 'white',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.card_border,
-  },
-  symptom_name: {
-    fontWeight: '500',
-    fontSize: 16,
-    lineHeight: 23,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 2,
-  },
-  label: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: colors.body_copy,
-    paddingRight: 5,
-  },
-  value: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: colors.body_copy,
-  },
-  privacy_container: {
-    borderRadius: 8,
-    backgroundColor: colors.fill_off,
-    marginHorizontal: 25,
-    marginTop: 25,
-    marginBottom: 40,
-    padding: 20,
-  },
 });
 
 const mapStateToProps = state => {

@@ -127,45 +127,6 @@ class SymptomsSummary extends Component {
 }
 
 const styles = StyleSheet.create({
-  hero: {
-    width: '100%',
-    height: 104,
-  },
-  header: {
-    backgroundColor: 'white',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 20,
-    lineHeight: 24,
-    textTransform: 'capitalize',
-    marginBottom: 20,
-  },
-  icon_wrapper: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
-    backgroundColor: colors.fill_on,
-  },
-  record: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  time_of_day: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#212121',
-  },
-  ts: {
-    fontSize: 14,
-    lineHeight: 16,
-    color: colors.secondary_body_copy,
-  },
   symptom_header: {
     fontWeight: '500',
     fontSize: 14,
