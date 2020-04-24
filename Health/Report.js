@@ -87,7 +87,7 @@ class Report extends Component {
     return (
       <ScrollView>
         <Image
-          style={styles.reporting_logo}
+          style={styles.hero}
           source={require('../assets/health/report_bg.png')}
         />
         <View style={styles.result_container}>
@@ -108,6 +108,10 @@ class Report extends Component {
 }
 
 const styles = StyleSheet.create({
+  hero: {
+    width: '100%',
+    height: 104,
+  },
   result_container: {
     backgroundColor: 'white',
     paddingVertical: 20,

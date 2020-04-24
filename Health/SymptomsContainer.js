@@ -54,7 +54,9 @@ class SymptomsContainer extends Component {
       <ScrollView>
         <View style={styles.header}>
           <Text style={styles.date}>{this.state.date}</Text>
-          <TouchableOpacity onPress={this.toggleCalendar}>
+          <TouchableOpacity
+            style={styles.calendar_button}
+            onPress={this.toggleCalendar}>
             <CustomIcon
               name={'calendar24'}
               color={
@@ -99,7 +101,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#212121',
-  }
+  },
+  calendar_button: {
+    width: 35,
+    alignItems: 'center',
+  },
 });
 
 export default SymptomsContainer;
