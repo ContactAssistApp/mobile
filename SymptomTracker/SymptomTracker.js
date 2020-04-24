@@ -27,6 +27,17 @@ class SymptomTracker extends Component {
     this.fetchLog(d);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.date.getTime() !== this.props.date.getTime()) {
+      const d = DateConverter.calendarFormat(this.props.date);
+      this.props.updateSymptom({
+        date: d,
+      });
+
+      this.fetchLog(d);
+    }
+  }
+
   fetchLog = async d => {
     let amLog = await GetStoreData(`SYMPTOM_${d}_AM`);
     let pmLog = await GetStoreData(`SYMPTOM_${d}_PM`);
