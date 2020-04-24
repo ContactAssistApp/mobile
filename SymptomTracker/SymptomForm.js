@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
@@ -16,11 +17,26 @@ import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
+import Confirmation from './Confirmation';
 
 class SymptomForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modalOn: false,
+    };
+  }
+
   componentDidMount() {
     this.fetchLog();
   }
+
+  closeModal = () => {
+    this.setState({
+      modalOn: false,
+    });
+    this.props.navigation.navigate('BottomNav');
+  };
 
   fetchLog = async () => {
     const {
@@ -52,7 +68,9 @@ class SymptomForm extends Component {
 
     symptoms.ts = currentTime;
     SetStoreData(`SYMPTOM_${date}_${timeOfDay}`, symptoms);
-    this.props.navigation.navigate('Confirmation');
+    this.setState({
+      modalOn: true,
+    });
   };
 
   render() {
@@ -74,6 +92,9 @@ class SymptomForm extends Component {
 
     return (
       <ScrollView>
+        <Modal presentationStyle="pageSheet" visible={this.state.modalOn}>
+          <Confirmation handleModalClose={this.closeModal} />
+        </Modal>
         <Text style={styles.header}>Select Your Symptoms:</Text>
         <View style={styles.symptom_list}>
           <Accordion

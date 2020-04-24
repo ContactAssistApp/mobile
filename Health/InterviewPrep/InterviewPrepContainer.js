@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   previous_text: {
     color: colors.section_title,
-  }
+  },
 });
 
 export default InterviewPrepContainer;
