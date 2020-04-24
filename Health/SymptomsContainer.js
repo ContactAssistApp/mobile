@@ -12,6 +12,7 @@ import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import {Agenda} from 'react-native-calendars';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import DateConverter from '../utils/date';
+import {GetKeys} from '../utils/asyncStorage';
 
 class SymptomsContainer extends Component {
   constructor() {
@@ -20,8 +21,27 @@ class SymptomsContainer extends Component {
     this.state = {
       date: DateConverter.dateString(new Date()),
       calendarExpand: false,
+      markedDates: {},
     };
   }
+
+  componentDidMount() {
+    this.fetchDaysWithLog();
+  }
+
+  fetchDaysWithLog = async () => {
+    const keys = await GetKeys('SYMPTOM_');
+    if (keys && keys.length > 0) {
+      const days = keys.map(key => {
+        return key.split('_')[1];
+      });
+      let markedDates = {};
+      days.forEach(day => {
+        markedDates[day] = {marked: true};
+      });
+      this.setState({markedDates});
+    }
+  };
 
   toggleCalendar = () => {
     if (!this.state.calendarExpand) {
@@ -73,6 +93,7 @@ class SymptomsContainer extends Component {
           pastScrollRange={1}
           futureScrollRange={1}
           hideKnob={true}
+          markedDates={this.state.markedDates}
           renderEmptyData = {() => {return (<SymptomTracker />)}}
           theme={{
             selectedDayTextColor: colors.primary_theme,

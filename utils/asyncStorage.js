@@ -49,3 +49,19 @@ export async function DeleteStoreData(key) {
     return false;
   }
 }
+
+export async function GetKeys(keyPrefix) {
+  const allKeys = await AsyncStorage.getAllKeys();
+  return allKeys.filter(key => {
+    return key.startsWith(keyPrefix);
+  });
+}
+
+export async function GetMulti(keys) {
+  const results = await AsyncStorage.multiGet(keys);
+  return results.map(result => {
+    return {
+      [result[0]]: JSON.parse(result[1]),
+    };
+  });
+}
