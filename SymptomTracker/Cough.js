@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
     color: colors.body_copy,
   },
   mild_selected: {
-    backgroundColor: '#DFF6DD',
+    backgroundColor: colors.chip_mild,
   },
   moderate_selected: {
-    backgroundColor: '#FFF2C8',
+    backgroundColor: colors.chip_moderate,
   },
   severe_selected: {
-    backgroundColor: colors.warning_high,
+    backgroundColor: colors.chip_severe,
   },
 });
 

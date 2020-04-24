@@ -16,6 +16,9 @@ const colors = {
   warning_low: '#6BB700',
   warning_medium: '#D49900',
   warning_high: '#E83A3A',
+  chip_mild: '#DFF6DD',
+  chip_moderate: '#FFF4CE',
+  chip_severe: '#FED9CC',
 };
 
 export default colors;

@@ -78,6 +78,7 @@ class SymptomsContainer extends Component {
             selectedDayTextColor: colors.primary_theme,
             selectedDayBackgroundColor: colors.fill_on,
             dayTextColor: colors.secondary_body_copy,
+            todayTextColor: colors.secondary_body_copy,
             dotColor: '#ACACAC',
             selectedDotColor: colors.primary_theme,
           }}
