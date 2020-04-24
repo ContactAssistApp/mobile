@@ -25,7 +25,9 @@ class Health extends Component {
   }
 
   render() {
-    const symptomsRoute = () => <SymptomsContainer />;
+    const symptomsRoute = () => {
+      return <SymptomsContainer navigate={this.props.navigation.navigate} />;
+    };
     const diagnosisRoute = () => <Report />;
     const initialLayout = {width: Dimensions.get('window').width};
 

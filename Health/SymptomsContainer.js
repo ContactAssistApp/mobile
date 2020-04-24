@@ -102,7 +102,12 @@ class SymptomsContainer extends Component {
             });
           }}
           renderEmptyData={() => {
-            return (<SymptomTracker date={this.state.date} />);
+            return (
+              <SymptomTracker
+                date={this.state.date}
+                navigate={this.props.navigate}
+              />
+            );
           }}
           theme={{
             selectedDayTextColor: colors.primary_theme,
