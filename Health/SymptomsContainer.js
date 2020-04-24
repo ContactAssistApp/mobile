@@ -6,19 +6,19 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image,
 } from 'react-native';
 import colors from '../assets/colors';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {Agenda} from 'react-native-calendars';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import DateConverter from '../utils/date';
 
 class SymptomsContainer extends Component {
   constructor() {
     super();
     this.agendaRef = React.createRef();
     this.state = {
-      date: 'Wednesday, April 23',
+      date: DateConverter.dateString(new Date()),
       calendarExpand: false,
     };
   }
@@ -70,13 +70,10 @@ class SymptomsContainer extends Component {
         </View>
         <Agenda
           ref={this.agendaRef}
-          pastScrollRange={0}
-          futureScrollRange={0}
+          pastScrollRange={1}
+          futureScrollRange={1}
           hideKnob={true}
-          renderEmptyData = {() => {return (<SymptomTracker/>)}}
-          // markedDates={{
-          //   '2020-04-25': {selected: true, marked: true},
-          // }}
+          renderEmptyData = {() => {return (<SymptomTracker />)}}
           theme={{
             selectedDayTextColor: colors.primary_theme,
             selectedDayBackgroundColor: colors.fill_on,
