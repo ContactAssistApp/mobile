@@ -9,9 +9,21 @@ import {
   Image,
 } from 'react-native';
 import colors from '../assets/colors';
-import Accordion from '../views/Accordion';
+import BottomSheet from 'reanimated-bottom-sheet';
 
 class Resources extends Component {
+  renderHeader = () => (
+    <Text>
+      What is the purpose of this app?
+    </Text>
+  )
+
+  renderContent = () => (
+    <Text>
+      CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it — public health authorities and their contact tracing teams.
+    </Text>
+  )
+
   render() {
     return (
       <>
@@ -27,13 +39,13 @@ class Resources extends Component {
           <View style={styles.faq_container}>
             <Text style={styles.faq_header}>Frequently Asked Questions</Text>
             <Text style={styles.faq_section_header}>About CovidSafe</Text>
-            <Accordion
-              withCheckbox={false}
-              title={'What is the purpose of this app?'}>
-              <Text style={styles.faq_content}>
-                CovidSafe is an app that seeks to reduce the spread of coronavirus by helping people learn if they've been exposed and take care of themselves if they become ill. CovidSafe also reduces the burden on medical providers by offering people who have been positively diagnosed a safe, private, and fast way to report locations they've visited recently, as well as self-care tips for those well enough to isolate at home.
-              </Text>
-            </Accordion>
+            <View style={styles.container}>
+              <BottomSheet
+                snapPoints={[450, 300, 0]}
+                renderContent={this.renderContent}
+                renderHeader={this.renderHeader}
+              />
+            </View>
           </View>
         </ScrollView>
       </>
