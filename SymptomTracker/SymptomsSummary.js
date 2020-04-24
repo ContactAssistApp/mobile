@@ -12,7 +12,7 @@ class SymptomsSummary extends Component {
       feverOnsetDate: 'Onset date:',
       feverTemperature: 'Highest temp:',
       feverDays: 'Duration (days):',
-      abdominalPain: 'Abdominal pain:',
+      abdominalPain: 'Abdominal pain',
       chills: 'Chills',
       cough: 'Cough',
       coughOnsetDate: 'Onset date:',
@@ -36,7 +36,7 @@ class SymptomsSummary extends Component {
               if (key === 'fever') {
                 const {feverOnsetDate, feverTemperature, feverDays} = symptoms;
                 return (
-                  <View style={styles.symptom_card}>
+                  <View style={styles.symptom_card} key={key}>
                     <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
                     {feverOnsetDate && (
                       <View style={styles.row}>
@@ -77,7 +77,7 @@ class SymptomsSummary extends Component {
                   coughSeverityString = 'Severe';
                 }
                 return (
-                  <View style={styles.symptom_card}>
+                  <View style={styles.symptom_card} key={key}>
                     <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
                     {coughOnsetDate && (
                       <View style={styles.row}>
@@ -107,7 +107,7 @@ class SymptomsSummary extends Component {
                 );
               } else {
                 return (
-                  <View style={styles.symptom_card}>
+                  <View style={styles.symptom_card} key={key}>
                     <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
                   </View>
                 );

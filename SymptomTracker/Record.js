@@ -60,12 +60,12 @@ class Record extends Component {
             {logTime
               ? <CustomIcon
                   name={'checkmark24'}
-                  size={24}
+                  size={20}
                   color={colors.warning_low}
                 />
               : <CustomIcon
                   name={'edit24'}
-                  size={24}
+                  size={20}
                   color={colors.gray_icon}
                 />
             }

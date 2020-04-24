@@ -28,8 +28,6 @@ export async function GetStoreData(key, isString = true) {
  */
 export async function SetStoreData(key, item) {
   try {
-    //we want to wait for the Promise returned by AsyncStorage.setItem()
-    //to be resolved to the actual value before returning the value
     if (typeof item !== 'string') {
       item = JSON.stringify(item);
     }
@@ -48,4 +46,20 @@ export async function DeleteStoreData(key) {
     console.log(error);
     return false;
   }
+}
+
+export async function GetKeys(keyPrefix) {
+  const allKeys = await AsyncStorage.getAllKeys();
+  return allKeys.filter(key => {
+    return key.startsWith(keyPrefix);
+  });
+}
+
+export async function GetMulti(keys) {
+  const results = await AsyncStorage.multiGet(keys);
+  return results.map(result => {
+    return {
+      [result[0]]: JSON.parse(result[1]),
+    };
+  });
 }

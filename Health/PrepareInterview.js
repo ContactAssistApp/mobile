@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import colors from '../assets/colors';
 import InterviewPrepContainer from './InterviewPrep/InterviewPrepContainer';
+
 class PrepareInterview extends Component {
   constructor() {
     super();

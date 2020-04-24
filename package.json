@@ -21,6 +21,7 @@
     "react-native": "0.61.5",
     "react-native-app-intro-slider": "^4.0.0",
     "react-native-background-fetch": "^3.0.4",
+    "react-native-calendars": "^1.265.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-permissions": "^2.0.10",
     "react-native-push-notification": "^3.1.9",
@@ -32,6 +33,7 @@
     "react-native-tab-view": "^2.14.0",
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^6.0.0",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.19",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },

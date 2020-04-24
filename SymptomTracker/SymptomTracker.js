@@ -7,6 +7,7 @@ import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData} from '../utils/asyncStorage';
+import DateConverter from '../utils/date';
 
 class SymptomTracker extends Component {
   constructor() {
@@ -18,20 +19,7 @@ class SymptomTracker extends Component {
   }
 
   componentDidMount() {
-    const d = new Date();
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (day.length < 2) {
-      day = '0' + day;
-    }
-
-    const todayDate = [year, month, day].join('');
-
+    const todayDate = DateConverter.calendarFormat(new Date());
     this.props.updateSymptom({
       date: todayDate,
     });
@@ -48,55 +36,8 @@ class SymptomTracker extends Component {
     });
   };
 
-  dateSuffix = today => {
-    let todayObj = today;
-    if (/1/.test(parseInt((todayObj + '').charAt(0), 10))) {
-      return 'th';
-    }
-    todayObj = parseInt((todayObj + '').charAt(1), 10);
-    return todayObj === 1
-      ? 'st'
-      : todayObj === 2
-      ? 'nd'
-      : todayObj === 3
-      ? 'rd'
-      : 'th';
-  };
-
   render() {
-    let today = new Date();
-    const weekday = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    const dayOfWeek = weekday[today.getDay()];
-
-    const dayOfMonth =
-      today.getDate() < 10
-        ? '0' + today.getDate() + this.dateSuffix(today)
-        : today.getDate() + this.dateSuffix(today);
-
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    const curMonth = months[today.getMonth()];
-    let todayString = `${dayOfWeek}, ${curMonth} ${dayOfMonth}`;
+    let todayString = DateConverter.dateString(new Date());
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
@@ -107,7 +48,7 @@ class SymptomTracker extends Component {
           timeOfDay={'AM'}
           logTime={
             this.state.amLog
-            ? new Date(this.state.amLog.ts).toLocaleString()
+            ? DateConverter.timeString(this.state.amLog.ts)
             : ''
           }
           navigate={this.props.navigate}
@@ -116,7 +57,7 @@ class SymptomTracker extends Component {
           timeOfDay={'PM'}
           logTime={
             this.state.pmLog
-            ? new Date(this.state.pmLog.ts).toLocaleString()
+            ? DateConverter.timeString(this.state.pmLog.ts)
             : ''
           }
           navigate={this.props.navigate}

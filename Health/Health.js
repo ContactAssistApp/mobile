@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import SymptomTracker from '../SymptomTracker/SymptomTracker';
+import SymptomsContainer from './SymptomsContainer';
 import Report from './Report';
 import colors from '../assets/colors';
 
@@ -25,14 +25,8 @@ class Health extends Component {
   }
 
   render() {
-    const symptomsRoute = () => (
-      <SymptomTracker />
-    );
-
-    const diagnosisRoute = () => (
-      <Report />
-    );
-
+    const symptomsRoute = () => <SymptomsContainer />;
+    const diagnosisRoute = () => <Report />;
     const initialLayout = {width: Dimensions.get('window').width};
 
     const renderScene = SceneMap({
@@ -52,7 +46,7 @@ class Health extends Component {
 
     return (
       <>
-        <SafeAreaView style={styles.status_bar}/>
+        <SafeAreaView style={styles.status_bar} />
         <View style={styles.header}>
           <Image
             style={styles.logo}
