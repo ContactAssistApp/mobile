@@ -59,8 +59,8 @@ class SymptomTracker extends Component {
           timeOfDay={'AM'}
           logTime={
             this.state.amLog
-            ? DateConverter.timeString(this.state.amLog.ts)
-            : ''
+              ? DateConverter.timeString(this.state.amLog.ts)
+              : ''
           }
           navigate={this.props.navigate}
         />
@@ -68,8 +68,8 @@ class SymptomTracker extends Component {
           timeOfDay={'PM'}
           logTime={
             this.state.pmLog
-            ? DateConverter.timeString(this.state.pmLog.ts)
-            : ''
+              ? DateConverter.timeString(this.state.pmLog.ts)
+              : ''
           }
           navigate={this.props.navigate}
         />

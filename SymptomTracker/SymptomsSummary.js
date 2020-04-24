@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import {connect} from 'react-redux';
+import Privacy from '../Privacy/Privacy';
 
 class SymptomsSummary extends Component {
   render() {
@@ -115,12 +116,7 @@ class SymptomsSummary extends Component {
             }
           })}
         </View>
-
-        <View style={styles.privacy_container}>
-          <Text style={styles.privacy_text}>
-            This information is stored in the app on your phone and remains private to you.
-          </Text>
-        </View>
+        <Privacy />
       </>
     );
   }
@@ -163,14 +159,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     color: colors.body_copy,
-  },
-  privacy_container: {
-    borderRadius: 8,
-    backgroundColor: colors.fill_off,
-    marginHorizontal: 25,
-    marginTop: 25,
-    marginBottom: 40,
-    padding: 20,
   },
 });
 
