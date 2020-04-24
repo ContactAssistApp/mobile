@@ -104,7 +104,6 @@ class SymptomsContainer extends Component {
             selectedDotColor: colors.primary_theme,
           }}
         />
-        <SymptomTracker />
       </ScrollView>
     );
   }

@@ -28,8 +28,6 @@ export async function GetStoreData(key, isString = true) {
  */
 export async function SetStoreData(key, item) {
   try {
-    //we want to wait for the Promise returned by AsyncStorage.setItem()
-    //to be resolved to the actual value before returning the value
     if (typeof item !== 'string') {
       item = JSON.stringify(item);
     }
