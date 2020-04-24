@@ -42,7 +42,7 @@ class Confirmation extends Component {
             <View style={styles.record}>
               <View style={styles.icon_wrapper}>
                 <CustomIcon
-                  name={'usage24'}
+                  name={'confirmation24'}
                   size={20}
                   color={colors.primary_theme}
                 />
