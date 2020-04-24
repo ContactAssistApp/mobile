@@ -94,6 +94,7 @@ class SymptomsContainer extends Component {
           futureScrollRange={1}
           hideKnob={true}
           markedDates={this.state.markedDates}
+          onDayPress={(day)=>{console.log('day: ', day)}}
           renderEmptyData = {() => {return (<SymptomTracker />)}}
           theme={{
             selectedDayTextColor: colors.primary_theme,
