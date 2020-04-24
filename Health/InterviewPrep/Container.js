@@ -31,7 +31,7 @@ class InterviewPrepContainer extends Component {
           <TouchableOpacity onPress={this.props.handleModalClose}>
             <CustomIcon name={'close24'} color={colors.gray_icon} size={24} />
           </TouchableOpacity>
-          <Text style={styles.title}>Interview preparation</Text>
+          <Text style={styles.title}>Interview Preparation</Text>
         </View>
         <ScrollView>
           <StepIndicatorContainer index={this.state.index} />

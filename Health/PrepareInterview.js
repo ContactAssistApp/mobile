@@ -9,13 +9,14 @@ import {
   Modal,
 } from 'react-native';
 import colors from '../assets/colors';
-import InterviewPrepContainer from './InterviewPrep/InterviewPrepContainer';
+import InterviewPrepIntro from './InterviewPrep/Intro';
 
 class PrepareInterview extends Component {
   constructor() {
     super();
     this.state = {
       modalOn: false,
+      step: 0,
     };
   }
 
@@ -25,14 +26,23 @@ class PrepareInterview extends Component {
     });
   };
 
+  handlePrevious = () => {
+    this.setState({
+      step: this.state.step - 1,
+    });
+  }
+
+  handleNext = () => {
+    this.setState({
+      step: this.state.step + 1,
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Modal
-          presentationStyle="pageSheet"
-          visible={this.state.modalOn}
-        >
-          <InterviewPrepContainer handleModalClose={this.closeModal} />
+        <Modal presentationStyle="pageSheet" visible={this.state.modalOn}>
+          <InterviewPrepIntro handleModalClose={this.closeModal} />
         </Modal>
         <View style={styles.header}>
           <Image
