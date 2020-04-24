@@ -8,11 +8,14 @@ import {
   TouchableOpacity,
   View,
   Image,
+  Alert,
+  Linking,
 } from 'react-native';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
 import Ble from '../ble/ble';
 import PrepareInterview from './PrepareInterview';
+import {UW_URL} from '../utils/constants';
 
 class Report extends Component {
   constructor() {
@@ -91,11 +94,31 @@ class Report extends Component {
           source={require('../assets/health/report_bg.png')}
         />
         <View style={styles.result_container}>
+          <TouchableOpacity style={styles.button} onPress={this.uploadBLE}>
+            <Text style={styles.button_text}>Upload Your Trace Data</Text>
+          </TouchableOpacity>
           <TouchableOpacity
-            style={styles.upload_trace_button}
-            onPress={this.uploadBLE}>
-            <Text style={styles.upload_trace_button_text}>
-              Upload Your Trace Data
+            style={[styles.button, styles.learn_more]}
+            onPress={() =>
+              Alert.alert(
+                'Trace Data',
+                'If you upload trace data, people who have visited any locations you’ve recently been to will be notified that they may have been exposed.\n\nRest assured, your personal identity and information will be kept private.',
+                [
+                  {
+                    text: 'Learn More',
+                    onPress: () => {
+                      Linking.openURL(UW_URL);
+                    },
+                  },
+                  {
+                    text: 'Got it',
+                    style: 'cancel'
+                  },
+                ],
+                {cancelable: false}
+              )}>
+            <Text style={[styles.button_text, styles.learn_more_text]}>
+              What Happens When Upload Trace Data?
             </Text>
           </TouchableOpacity>
           {this.state.uploadBLESuccess && <Text>Success!</Text>}
@@ -123,17 +146,25 @@ const styles = StyleSheet.create({
     lineHeight: 31,
     letterSpacing: 0.33,
   },
-  upload_trace_button: {
+  button: {
     backgroundColor: colors.primary_theme,
     paddingVertical: 15,
     alignItems: 'center',
     borderRadius: 8,
     marginTop: 20,
   },
-  upload_trace_button_text: {
+  learn_more: {
+    backgroundColor: 'white',
+    borderColor: colors.card_border,
+    borderWidth: 1,
+  },
+  button_text: {
     color: 'white',
     fontSize: 15,
     lineHeight: 20,
+  },
+  learn_more_text: {
+    color: colors.primary_theme,
   },
   header: {
     fontSize: 20,
