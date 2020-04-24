@@ -303,7 +303,10 @@ class Home extends Component {
             <Notification notifications={this.state.notifications} />
           )}
 
-          <SymptomTracker navigate={this.props.navigation.navigate} />
+          <SymptomTracker
+            navigate={this.props.navigation.navigate}
+            date={new Date()}
+          />
 
           <View style={styles.resources_container}>
             <Text style={styles.resources_header}>Resources</Text>

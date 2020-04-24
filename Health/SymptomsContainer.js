@@ -19,7 +19,7 @@ class SymptomsContainer extends Component {
     super();
     this.agendaRef = React.createRef();
     this.state = {
-      date: DateConverter.dateString(new Date()),
+      date: new Date(),
       calendarExpand: false,
       markedDates: {},
     };
@@ -73,7 +73,9 @@ class SymptomsContainer extends Component {
     return (
       <ScrollView>
         <View style={styles.header}>
-          <Text style={styles.date}>{this.state.date}</Text>
+          <Text style={styles.date}>
+            {DateConverter.dateString(this.state.date)}
+          </Text>
           <TouchableOpacity
             style={styles.calendar_button}
             onPress={this.toggleCalendar}>
@@ -94,8 +96,14 @@ class SymptomsContainer extends Component {
           futureScrollRange={1}
           hideKnob={true}
           markedDates={this.state.markedDates}
-          onDayPress={(day)=>{console.log('day: ', day)}}
-          renderEmptyData = {() => {return (<SymptomTracker />)}}
+          onDayPress={day => {
+            this.setState({
+              date: new Date(day.dateString),
+            });
+          }}
+          renderEmptyData={() => {
+            return (<SymptomTracker date={this.state.date} />);
+          }}
           theme={{
             selectedDayTextColor: colors.primary_theme,
             selectedDayBackgroundColor: colors.fill_on,
