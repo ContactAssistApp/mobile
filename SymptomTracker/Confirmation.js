@@ -13,6 +13,7 @@ import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {connect} from 'react-redux';
 import SymptomsSummary from './SymptomsSummary';
+import DateConverter from '../utils/date';
 
 class Confirmation extends Component {
   render() {
@@ -48,7 +49,9 @@ class Confirmation extends Component {
               </View>
               <View>
                 <Text style={styles.time_of_day}>{timeOfDay}</Text>
-                <Text style={styles.ts}>{new Date(ts).toLocaleString()}</Text>
+                <Text style={styles.ts}>
+                {`${DateConverter.dateString(new Date(ts))} | Saved ${DateConverter.timeString(ts)}`}
+                </Text>
               </View>
             </View>
           </View>

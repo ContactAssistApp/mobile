@@ -64,9 +64,12 @@ const DateConverter = {
     const curMonth = months[dateObj.getMonth()];
     return `${dayOfWeek}, ${curMonth} ${dayOfMonth}`;
   },
-  timeString: function() {
-
-  }
-}
+  timeString: function(ts) {
+    return new Date(ts).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  },
+};
 
 export default DateConverter;
