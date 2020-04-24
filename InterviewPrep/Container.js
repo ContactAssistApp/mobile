@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import colors from '../../assets/colors';
+import colors from '../assets/colors';
 import Symptoms from './Symptoms';
 import Locations from './Locations';
 import People from './People';
 import Summary from './Summary';
 import StepIndicatorContainer from './StepIndicatorContainer';
-import CustomIcon from '../../assets/icons/CustomIcon.js';
+import CustomIcon from '../assets/icons/CustomIcon.js';
 
 class InterviewPrepContainer extends Component {
   constructor() {

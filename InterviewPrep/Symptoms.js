@@ -1,26 +1,28 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../../assets/colors';
+import colors from '../assets/colors';
+import SymptomsSummary from '../SymptomTracker/SymptomsSummary';
 
-class People extends Component {
+class Symptoms extends Component {
   render() {
     return (
       <>
         <View style={styles.intro_container}>
           <View style={styles.header}>
             <Image
-              style={styles.icon}
-              source={require('../../assets/health/people.png')}
+              style={styles.clipboard}
+              source={require('../../assets/health/clipboard.png')}
             />
             <Text style={styles.title}>
-              Review the people you’ve been{'\n'}in contact with recently.
+              Review which symptoms you{'\n'}would like to include.
             </Text>
           </View>
           <Text style={styles.description}>
-            Below are locations you’ve recently visited for 10 minutes or more.
+            We’ve detected severe symptoms in your recent reports, and collected them below.
           </Text>
         </View>
+        <SymptomsSummary />
       </>
     );
   }
@@ -38,12 +40,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 20,
   },
-  icon: {
-    width: 50,
-    height: 60,
+  clipboard: {
+    width: 60,
+    height: 70,
   },
   title: {
-    paddingLeft: 20,
+    paddingLeft: 10,
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
@@ -65,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default People;
+export default Symptoms;

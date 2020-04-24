@@ -14,7 +14,7 @@ import {
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
 import Ble from '../ble/ble';
-import PrepareInterview from './PrepareInterview';
+import PrepareInterview from '../PrepareInterview/PrepareInterview';
 import {UW_URL} from '../utils/constants';
 
 class Report extends Component {

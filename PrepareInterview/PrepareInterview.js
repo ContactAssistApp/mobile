@@ -9,14 +9,13 @@ import {
   Modal,
 } from 'react-native';
 import colors from '../assets/colors';
-import InterviewPrepIntro from './InterviewPrep/Intro';
+import InterviewPrepIntro from '../InterviewPrep/Intro';
 
 class PrepareInterview extends Component {
   constructor() {
     super();
     this.state = {
       modalOn: false,
-      step: 0,
     };
   }
 
@@ -25,18 +24,6 @@ class PrepareInterview extends Component {
       modalOn: false,
     });
   };
-
-  handlePrevious = () => {
-    this.setState({
-      step: this.state.step - 1,
-    });
-  }
-
-  handleNext = () => {
-    this.setState({
-      step: this.state.step + 1,
-    });
-  }
 
   render() {
     return (

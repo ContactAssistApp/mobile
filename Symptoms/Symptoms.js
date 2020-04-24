@@ -14,7 +14,7 @@ import CustomIcon from '../assets/icons/CustomIcon.js';
 import DateConverter from '../utils/date';
 import {GetKeys} from '../utils/asyncStorage';
 
-class SymptomsContainer extends Component {
+class Symptoms extends Component {
   constructor() {
     super();
     this.agendaRef = React.createRef();
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SymptomsContainer;
+export default Symptoms;

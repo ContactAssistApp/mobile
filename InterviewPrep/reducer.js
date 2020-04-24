@@ -2,7 +2,7 @@ const initialState = {
   diagnosisPageIdx: 0,
 };
 
-const healthReducer = (state = initialState, action) => {
+const interviewPrepReducer = (state = initialState, action) => {
   const {payload, type} = action;
 
   switch (type) {
@@ -18,4 +18,4 @@ const healthReducer = (state = initialState, action) => {
   }
 };
 
-export default healthReducer;
+export default interviewPrepReducer;

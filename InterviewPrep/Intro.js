@@ -8,9 +8,9 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import colors from '../../assets/colors';
-import CustomIcon from '../../assets/icons/CustomIcon.js';
-import Privacy from '../../Privacy/Privacy';
+import colors from '../assets/colors';
+import CustomIcon from '../assets/icons/CustomIcon.js';
+import Privacy from '../Privacy/Privacy';
 
 class InterviewPrepIntro extends Component {
   render() {
@@ -26,7 +26,7 @@ class InterviewPrepIntro extends Component {
         <ScrollView>
           <Image
             style={styles.hero}
-            source={require('../../assets/health/interview_prep_bg.png')}
+            source={require('../assets/health/interview_prep_bg.png')}
           />
           <View style={styles.container}>
             <Text style={styles.section_title}>

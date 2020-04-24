@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import SymptomsContainer from './SymptomsContainer';
+import Symptoms from '../Symptoms/Symptoms';
 import Report from './Report';
 import colors from '../assets/colors';
 
@@ -26,7 +26,7 @@ class Health extends Component {
 
   render() {
     const symptomsRoute = () => {
-      return <SymptomsContainer navigate={this.props.navigation.navigate} />;
+      return <Symptoms navigate={this.props.navigation.navigate} />;
     };
     const diagnosisRoute = () => <Report />;
     const initialLayout = {width: Dimensions.get('window').width};
