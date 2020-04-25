@@ -20,9 +20,10 @@ import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
-import Ble from '../ble/ble';
+import Ble from '../utils/ble';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
+import SettingsModal from '../Settings/SettingsModal';
 
 class Home extends Component {
   constructor() {
@@ -258,14 +259,7 @@ class Home extends Component {
                 />
                 <Text style={styles.title}>CovidSafe</Text>
               </View>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.replace('Preferences')}>
-                <CustomIcon
-                  name={'settings24'}
-                  color={colors.gray_icon}
-                  size={24}
-                />
-              </TouchableOpacity>
+              <SettingsModal />
             </View>
             <View style={styles.broadcast_container}>
               <View style={styles.broadcast}>

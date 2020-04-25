@@ -1,0 +1,59 @@
+import React, {Component} from 'react';
+import {
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Modal as NativeModal,
+} from 'react-native';
+import CustomIcon from '../assets/icons/CustomIcon.js';
+import colors from '../assets/colors';
+import PropTypes from 'prop-types';
+
+class Modal extends Component {
+  render() {
+    const {visible, title} = this.props;
+
+    return (
+      <NativeModal presentationStyle="pageSheet" visible={visible}>
+        <SafeAreaView style={styles.status_bar} />
+        <View style={styles.header}>
+          <TouchableOpacity onPress={this.props.handleModalClose}>
+            <CustomIcon name={'close24'} color={colors.gray_icon} size={24} />
+          </TouchableOpacity>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+        <ScrollView>{this.props.children}</ScrollView>
+      </NativeModal>
+    );
+  }
+}
+
+Modal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+};
+
+const styles = StyleSheet.create({
+  status_bar: {
+    backgroundColor: 'white',
+  },
+  header: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.card_border,
+    alignItems: 'center',
+  },
+  title: {
+    paddingLeft: 20,
+    fontSize: 24,
+    color: colors.section_title,
+    fontWeight: '500',
+  },
+});
+
+export default Modal;

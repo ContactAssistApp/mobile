@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import colors from '../assets/colors';
 import Symptoms from './Symptoms';
 import Locations from './Locations';
 import People from './People';
 import Summary from './Summary';
 import StepIndicatorContainer from './StepIndicatorContainer';
-import CustomIcon from '../assets/icons/CustomIcon.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -32,64 +24,55 @@ class InterviewPrepContainer extends Component {
 
     return (
       <>
-        <SafeAreaView style={styles.status_bar} />
-        <View style={styles.header}>
-          <TouchableOpacity onPress={this.props.handleModalClose}>
-            <CustomIcon name={'close24'} color={colors.gray_icon} size={24} />
-          </TouchableOpacity>
-          <Text style={styles.title}>Interview Preparation</Text>
-        </View>
-        <ScrollView>
-          <StepIndicatorContainer index={this.state.index} />
+        <StepIndicatorContainer index={this.state.index} />
+        {
           {
-            {
-              0: <Symptoms />,
-              1: <Locations />,
-              2: <People />,
-              3: <Summary />,
-            }[this.state.index]
-          }
-          <View style={styles.button_group}>
-            {this.state.index < 3 && (
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  this.setState({
-                    index: this.state.index + 1,
-                  });
-                }}>
-                <Text style={styles.button_text}>next</Text>
-              </TouchableOpacity>
-            )}
-            {this.state.index === 3 && (
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-
-                }}>
-                <Text style={styles.button_text}>save</Text>
-              </TouchableOpacity>
-            )}
+            0: <Symptoms />,
+            1: <Locations />,
+            2: <People />,
+            3: <Summary />,
+          }[this.state.index]
+        }
+        <View style={styles.button_group}>
+          {this.state.index < 3 && (
             <TouchableOpacity
-              style={[styles.button, styles.previous]}
+              style={styles.button}
               onPress={() => {
-                if (this.state.index > 0) {
-                  this.setState({
-                    index: this.state.index - 1,
-                  });
-                } else {
-                  this.props.updatePageIndex({
-                    field: 'pageIndex',
-                    value: pageIndex - 1,
-                  });
-                }
+                this.setState({
+                  index: this.state.index + 1,
+                });
               }}>
-              <Text style={[styles.button_text, styles.previous_text]}>
-                previous
-              </Text>
+              <Text style={styles.button_text}>next</Text>
             </TouchableOpacity>
-          </View>
-        </ScrollView>
+          )}
+          {this.state.index === 3 && (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+
+              }}>
+              <Text style={styles.button_text}>save</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={[styles.button, styles.previous]}
+            onPress={() => {
+              if (this.state.index > 0) {
+                this.setState({
+                  index: this.state.index - 1,
+                });
+              } else {
+                this.props.updatePageIndex({
+                  field: 'pageIndex',
+                  value: pageIndex - 1,
+                });
+              }
+            }}>
+            <Text style={[styles.button_text, styles.previous_text]}>
+              previous
+            </Text>
+          </TouchableOpacity>
+        </View>
       </>
     );
   }

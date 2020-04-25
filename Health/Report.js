@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
-import Ble from '../ble/ble';
+import Ble from '../utils/ble';
 import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
 import {UW_URL} from '../utils/constants';
 
