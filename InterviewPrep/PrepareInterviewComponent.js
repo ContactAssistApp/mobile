@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Modal,
 } from 'react-native';
 import colors from '../assets/colors';
 import InterviewPrepIntro from './Intro';
 import InterviewPrepContainer from './Container';
+import Modal from '../views/Modal';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -22,7 +22,7 @@ class PrepareInterviewComponent extends Component {
     };
   }
 
-  closeModal = () => {
+  handleModalClose = () => {
     this.setState({
       modalOn: false,
     });
@@ -32,11 +32,14 @@ class PrepareInterviewComponent extends Component {
     const {pageIndex} = this.props.prepData;
     return (
       <View style={styles.container}>
-        <Modal presentationStyle="pageSheet" visible={this.state.modalOn}>
+        <Modal
+          visible={this.state.modalOn}
+          handleModalClose={this.handleModalClose}
+          title={'Interview Preparation'}>
           {
             {
-              0: <InterviewPrepIntro handleModalClose={this.closeModal} />,
-              1: <InterviewPrepContainer handleModalClose={this.closeModal} />,
+              0: <InterviewPrepIntro />,
+              1: <InterviewPrepContainer />,
             }[pageIndex]
           }
         </Modal>
