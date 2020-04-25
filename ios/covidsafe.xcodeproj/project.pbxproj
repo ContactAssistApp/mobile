@@ -16,6 +16,7 @@
 		1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */; };
 		14431C2E242D842600DEFBBE /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C2D242D842600DEFBBE /* Device.m */; };
 		14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */; };
+		14CCE7D02454B5FE00937BF4 /* locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7CF2454B5FE00937BF4 /* locations.swift */; };
 		17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35472C232F804031A439818A /* icomoon.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -77,6 +78,7 @@
 		14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconBroadcast.m; sourceTree = "<group>"; };
 		14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconBroadcast.h; sourceTree = "<group>"; };
 		14431C432431186F00DEFBBE /* RCTBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBackgroundGeolocation.xcodeproj; path = "../node_modules/@mauron85/react-native-background-geolocation/ios/RCTBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		14CCE7CF2454B5FE00937BF4 /* locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locations.swift; sourceTree = "<group>"; };
 		1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 		13B07FAE1A68108700A75B9A /* covidsafe */ = {
 			isa = PBXGroup;
 			children = (
+				14CCE7CB2454B58A00937BF4 /* ContactLog */,
 				A5EEA9B1243E33A800DDC471 /* contact-model.cc */,
 				A5EEA9AF243E332300DDC471 /* contact-model.h */,
 				A5EEA9AC243E332300DDC471 /* contact.cc */,
@@ -228,6 +231,14 @@
 				14431C492431186F00DEFBBE /* libRCTBackgroundGeolocation.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		14CCE7CB2454B58A00937BF4 /* ContactLog */ = {
+			isa = PBXGroup;
+			children = (
+				14CCE7CF2454B5FE00937BF4 /* locations.swift */,
+			);
+			name = ContactLog;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -732,6 +743,7 @@
 				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
 				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
+				14CCE7D02454B5FE00937BF4 /* locations.swift in Sources */,
 				14431C2E242D842600DEFBBE /* Device.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -785,6 +797,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DB4869357700CE101CFA78B /* Pods-covidsafeTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -809,6 +822,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 66A8C52FF0B3D509B10AA6BE /* Pods-covidsafeTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = THEWY9596Q;
