@@ -1,12 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import InterviewPrepIntro from './Intro';
 import InterviewPrepContainer from './Container';

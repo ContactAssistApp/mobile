@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  Modal,
 } from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
@@ -18,6 +17,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import Confirmation from './Confirmation';
+import Modal from '../views/Modal';
 
 class SymptomForm extends Component {
   constructor() {
@@ -92,9 +92,13 @@ class SymptomForm extends Component {
 
     return (
       <ScrollView>
-        <Modal presentationStyle="pageSheet" visible={this.state.modalOn}>
-          <Confirmation handleModalClose={this.closeModal} />
+        <Modal
+          visible={this.state.modalOn}
+          handleModalClose={this.closeModal}
+          title={'Confirmation'}>
+          <Confirmation />
         </Modal>
+
         <Text style={styles.header}>Select Your Symptoms:</Text>
         <View style={styles.symptom_list}>
           <Accordion
