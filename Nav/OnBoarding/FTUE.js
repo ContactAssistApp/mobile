@@ -55,7 +55,7 @@ class FTUE extends Component {
   };
 
   onDone = () => {
-    // SetStoreData('ENABLE_FTUE', 'false');
+    SetStoreData('ENABLE_FTUE', 'false');
     this.props.navigation.navigate('Preferences');
   };
 

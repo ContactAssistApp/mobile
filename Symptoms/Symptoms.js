@@ -99,6 +99,7 @@ class Symptoms extends Component {
           onDayPress={day => {
             this.setState({
               date: new Date(day.dateString),
+              calendarExpand: false,
             });
           }}
           renderEmptyData={() => {
