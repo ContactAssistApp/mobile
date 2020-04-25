@@ -10,7 +10,7 @@ class Summary extends Component {
         <View style={styles.header}>
           <Image
             style={styles.icon}
-            source={require('../../assets/health/summary.png')}
+            source={require('../assets/health/summary.png')}
           />
           <Text style={styles.title}>
             Save this list for reference{'\n'}during your interview.

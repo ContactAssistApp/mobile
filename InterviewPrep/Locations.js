@@ -11,7 +11,7 @@ class Locations extends Component {
           <View style={styles.header}>
             <Image
               style={styles.icon}
-              source={require('../../assets/health/map.png')}
+              source={require('../assets/health/map.png')}
             />
             <Text style={styles.title}>
               Review your location history{'\n'}from the last 14 days.

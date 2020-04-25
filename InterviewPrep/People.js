@@ -11,7 +11,7 @@ class People extends Component {
           <View style={styles.header}>
             <Image
               style={styles.icon}
-              source={require('../../assets/health/people.png')}
+              source={require('../assets/health/people.png')}
             />
             <Text style={styles.title}>
               Review the people you’ve been{'\n'}in contact with recently.

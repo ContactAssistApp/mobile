@@ -14,6 +14,10 @@ import People from './People';
 import Summary from './Summary';
 import StepIndicatorContainer from './StepIndicatorContainer';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {updatePageIndex} from './actions.js';
 
 class InterviewPrepContainer extends Component {
   constructor() {
@@ -24,6 +28,8 @@ class InterviewPrepContainer extends Component {
   }
 
   render() {
+    const {pageIndex} = this.props.prepData;
+
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
@@ -64,19 +70,24 @@ class InterviewPrepContainer extends Component {
                 <Text style={styles.button_text}>save</Text>
               </TouchableOpacity>
             )}
-            {this.state.index > 0 && (
-              <TouchableOpacity
-                style={[styles.button, styles.previous]}
-                onPress={() => {
+            <TouchableOpacity
+              style={[styles.button, styles.previous]}
+              onPress={() => {
+                if (this.state.index > 0) {
                   this.setState({
                     index: this.state.index - 1,
                   });
-                }}>
-                <Text style={[styles.button_text, styles.previous_text]}>
-                  previous
-                </Text>
-              </TouchableOpacity>
-            )}
+                } else {
+                  this.props.updatePageIndex({
+                    field: 'pageIndex',
+                    value: pageIndex - 1,
+                  });
+                }
+              }}>
+              <Text style={[styles.button_text, styles.previous_text]}>
+                previous
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </>
@@ -129,4 +140,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InterviewPrepContainer;
+InterviewPrepContainer.propTypes = {
+  updatePageIndex: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    prepData: state.interviewPrepReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updatePageIndex
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InterviewPrepContainer);

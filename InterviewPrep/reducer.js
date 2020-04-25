@@ -1,5 +1,5 @@
 const initialState = {
-  diagnosisPageIdx: 0,
+  pageIndex: 0,
 };
 
 const interviewPrepReducer = (state = initialState, action) => {

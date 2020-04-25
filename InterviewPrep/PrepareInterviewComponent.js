@@ -9,9 +9,12 @@ import {
   Modal,
 } from 'react-native';
 import colors from '../assets/colors';
-import InterviewPrepIntro from '../InterviewPrep/Intro';
+import InterviewPrepIntro from './Intro';
+import InterviewPrepContainer from './Container';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-class PrepareInterview extends Component {
+class PrepareInterviewComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -26,10 +29,16 @@ class PrepareInterview extends Component {
   };
 
   render() {
+    const {pageIndex} = this.props.prepData;
     return (
       <View style={styles.container}>
         <Modal presentationStyle="pageSheet" visible={this.state.modalOn}>
-          <InterviewPrepIntro handleModalClose={this.closeModal} />
+          {
+            {
+              0: <InterviewPrepIntro handleModalClose={this.closeModal} />,
+              1: <InterviewPrepContainer handleModalClose={this.closeModal} />,
+            }[pageIndex]
+          }
         </Modal>
         <View style={styles.header}>
           <Image
@@ -118,4 +127,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PrepareInterview;
+InterviewPrepIntro.propTypes = {
+  updatePageIndex: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    prepData: state.interviewPrepReducer,
+  };
+};
+
+export default connect(mapStateToProps)(PrepareInterviewComponent);

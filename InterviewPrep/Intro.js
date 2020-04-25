@@ -11,9 +11,14 @@ import {
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import Privacy from '../Privacy/Privacy';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {updatePageIndex} from './actions.js';
 
 class InterviewPrepIntro extends Component {
   render() {
+    const {pageIndex} = this.props.prepData;
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
@@ -78,6 +83,10 @@ class InterviewPrepIntro extends Component {
             <TouchableOpacity
               style={styles.start_button}
               onPress={() => {
+                this.props.updatePageIndex({
+                  field: 'pageIndex',
+                  value: pageIndex + 1,
+                });
               }}>
               <Text style={styles.start_button_text}>Get started</Text>
             </TouchableOpacity>
@@ -165,4 +174,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InterviewPrepIntro;
+InterviewPrepIntro.propTypes = {
+  updatePageIndex: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    prepData: state.interviewPrepReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updatePageIndex
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InterviewPrepIntro);
