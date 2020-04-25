@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../../assets/colors';
+import colors from '../assets/colors';
 
-class People extends Component {
+class Locations extends Component {
   render() {
     return (
       <>
@@ -11,10 +11,10 @@ class People extends Component {
           <View style={styles.header}>
             <Image
               style={styles.icon}
-              source={require('../../assets/health/people.png')}
+              source={require('../assets/health/map.png')}
             />
             <Text style={styles.title}>
-              Review the people you’ve been{'\n'}in contact with recently.
+              Review your location history{'\n'}from the last 14 days.
             </Text>
           </View>
           <Text style={styles.description}>
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   icon: {
-    width: 50,
-    height: 60,
+    width: 60,
+    height: 70,
   },
   title: {
-    paddingLeft: 20,
+    paddingLeft: 10,
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default People;
+export default Locations;

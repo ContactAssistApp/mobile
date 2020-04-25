@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../../assets/colors';
-import SymptomsSummary from '../../SymptomTracker/SymptomsSummary';
+import colors from '../assets/colors';
+import SymptomsSummary from '../SymptomTracker/SymptomsSummary';
 
 class Symptoms extends Component {
   render() {
@@ -12,7 +12,7 @@ class Symptoms extends Component {
           <View style={styles.header}>
             <Image
               style={styles.clipboard}
-              source={require('../../assets/health/clipboard.png')}
+              source={require('../assets/health/clipboard.png')}
             />
             <Text style={styles.title}>
               Review which symptoms you{'\n'}would like to include.

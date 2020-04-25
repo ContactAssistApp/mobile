@@ -1,27 +1,25 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../../assets/colors';
+import colors from '../assets/colors';
 
-class Locations extends Component {
+class Summary extends Component {
   render() {
     return (
-      <>
-        <View style={styles.intro_container}>
-          <View style={styles.header}>
-            <Image
-              style={styles.icon}
-              source={require('../../assets/health/map.png')}
-            />
-            <Text style={styles.title}>
-              Review your location history{'\n'}from the last 14 days.
-            </Text>
-          </View>
-          <Text style={styles.description}>
-            Below are locations you’ve recently visited for 10 minutes or more.
+      <View style={styles.intro_container}>
+        <View style={styles.header}>
+          <Image
+            style={styles.icon}
+            source={require('../assets/health/summary.png')}
+          />
+          <Text style={styles.title}>
+            Save this list for reference{'\n'}during your interview.
           </Text>
         </View>
-      </>
+        <Text style={styles.description}>
+          Please review the information below and save your list. Don’t worry, you can always come back to edit this list later.
+        </Text>
+      </View>
     );
   }
 }
@@ -39,11 +37,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   icon: {
-    width: 60,
-    height: 70,
+    width: 54,
+    height: 55,
   },
   title: {
-    paddingLeft: 10,
+    paddingLeft: 20,
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
@@ -65,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Locations;
+export default Summary;

@@ -19,17 +19,28 @@ class SymptomTracker extends Component {
   }
 
   componentDidMount() {
-    const todayDate = DateConverter.calendarFormat(new Date());
+    const d = DateConverter.calendarFormat(this.props.date);
     this.props.updateSymptom({
-      date: todayDate,
+      date: d,
     });
 
-    this.fetchLog(todayDate);
+    this.fetchLog(d);
   }
 
-  fetchLog = async todayDate => {
-    let amLog = await GetStoreData(`SYMPTOM_${todayDate}_AM`);
-    let pmLog = await GetStoreData(`SYMPTOM_${todayDate}_PM`);
+  componentDidUpdate(prevProps) {
+    if (prevProps.date.getTime() !== this.props.date.getTime()) {
+      const d = DateConverter.calendarFormat(this.props.date);
+      this.props.updateSymptom({
+        date: d,
+      });
+
+      this.fetchLog(d);
+    }
+  }
+
+  fetchLog = async d => {
+    let amLog = await GetStoreData(`SYMPTOM_${d}_AM`);
+    let pmLog = await GetStoreData(`SYMPTOM_${d}_PM`);
     this.setState({
       amLog: JSON.parse(amLog),
       pmLog: JSON.parse(pmLog),
@@ -37,19 +48,19 @@ class SymptomTracker extends Component {
   };
 
   render() {
-    let todayString = DateConverter.dateString(new Date());
+    let dateString = DateConverter.dateString(this.props.date);
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
           <Text style={styles.header}>Symptom Tracker</Text>
-          <Text style={styles.description}>{todayString}</Text>
+          <Text style={styles.description}>{dateString}</Text>
         </View>
         <Record
           timeOfDay={'AM'}
           logTime={
             this.state.amLog
-            ? DateConverter.timeString(this.state.amLog.ts)
-            : ''
+              ? DateConverter.timeString(this.state.amLog.ts)
+              : ''
           }
           navigate={this.props.navigate}
         />
@@ -57,8 +68,8 @@ class SymptomTracker extends Component {
           timeOfDay={'PM'}
           logTime={
             this.state.pmLog
-            ? DateConverter.timeString(this.state.pmLog.ts)
-            : ''
+              ? DateConverter.timeString(this.state.pmLog.ts)
+              : ''
           }
           navigate={this.props.navigate}
         />

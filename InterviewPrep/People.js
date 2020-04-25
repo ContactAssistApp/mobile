@@ -1,25 +1,27 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../../assets/colors';
+import colors from '../assets/colors';
 
-class Summary extends Component {
+class People extends Component {
   render() {
     return (
-      <View style={styles.intro_container}>
-        <View style={styles.header}>
-          <Image
-            style={styles.icon}
-            source={require('../../assets/health/summary.png')}
-          />
-          <Text style={styles.title}>
-            Save this list for reference{'\n'}during your interview.
+      <>
+        <View style={styles.intro_container}>
+          <View style={styles.header}>
+            <Image
+              style={styles.icon}
+              source={require('../assets/health/people.png')}
+            />
+            <Text style={styles.title}>
+              Review the people you’ve been{'\n'}in contact with recently.
+            </Text>
+          </View>
+          <Text style={styles.description}>
+            Below are locations you’ve recently visited for 10 minutes or more.
           </Text>
         </View>
-        <Text style={styles.description}>
-          Please review the information below and save your list. Don’t worry, you can always come back to edit this list later.
-        </Text>
-      </View>
+      </>
     );
   }
 }
@@ -37,8 +39,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   icon: {
-    width: 54,
-    height: 55,
+    width: 50,
+    height: 60,
   },
   title: {
     paddingLeft: 20,
@@ -63,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Summary;
+export default People;

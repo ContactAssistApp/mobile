@@ -41,7 +41,6 @@ const DateConverter = {
       'Saturday',
     ];
     const dayOfWeek = weekday[dateObj.getDay()];
-
     const dayOfMonth =
       dateObj.getDate() < 10
         ? '0' + dateObj.getDate() + dateSuffix(dateObj)

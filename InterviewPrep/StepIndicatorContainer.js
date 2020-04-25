@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
-import colors from '../../assets/colors';
+import colors from '../assets/colors';
 import StepIndicator from './StepIndicator';
 
 class StepIndicatorContainer extends Component {

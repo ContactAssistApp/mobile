@@ -14,7 +14,7 @@ import {
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import colors from '../assets/colors';
 import Ble from '../ble/ble';
-import PrepareInterview from './PrepareInterview';
+import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
 import {UW_URL} from '../utils/constants';
 
 class Report extends Component {
@@ -124,7 +124,7 @@ class Report extends Component {
           {this.state.uploadBLESuccess && <Text>Success!</Text>}
         </View>
         <Text style={styles.header}>Next Steps</Text>
-        <PrepareInterview />
+        <PrepareInterviewComponent />
       </ScrollView>
     );
   }
