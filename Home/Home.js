@@ -20,7 +20,7 @@ import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
-import Ble from '../ble/ble';
+import Ble from '../utils/ble';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 

@@ -5,7 +5,7 @@ import {startScan} from './actions.js';
 import {bindActionCreators} from 'redux';
 import LocationServices from './LocationServices';
 import AsyncStorage from '@react-native-community/async-storage';
-import Ble from '../ble/ble';
+import Ble from '../utils/ble';
 
 //active contact means we reached out and read the ID of device
 const CONTACT_ACTIVE = 1;
