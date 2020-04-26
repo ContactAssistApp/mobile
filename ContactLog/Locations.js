@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import colors from '../assets/colors';
 import {NativeModules} from 'react-native';
+import {GetStoreData} from '../utils/asyncStorage';
 
 class Locations extends Component {
   constructor() {
@@ -18,38 +19,61 @@ class Locations extends Component {
   }
 
   componentDidMount() {
-    this.fetchAddresses();
-  }
+    this.getLocationData().then(locations => {
+      if (locations && locations.length > 0) {
+        let locationList = locations;
+        if (locations.length > 5) {
+          locationList = locations.slice(5);
+        }
 
-  fetchAddresses = () => {
-    const locations = [
-    {
-      latitude: 50.934430,
-      longitude: -102.816690,
-      time: 1587843741483,
-    },
-    {
-      latitude: 50.934430,
-      longitude: -102.816690,
-      time: 1587843793871,
-    },
-    {
-      latitude: 50.934430,
-      longitude: -102.816690,
-      time: 1587843806886,
-    },
-    {
-      latitude: 40.742050,
-      longitude: -73.993851,
-      time: 1587843813376,
-    }];
-
-    NativeModules.Locations.reverseGeoCode(locations, addresses => {
-      this.setState({
-        addresses,
-      });
+        NativeModules.Locations.reverseGeoCode(locationList, addresses => {
+          this.setState({
+            addresses,
+          });
+        });
+      }
     });
   }
+
+  getLocationData = () => {
+    return GetStoreData('LOCATION_DATA').then(locationArrayString => {
+      let locationArray = [];
+      if (locationArrayString !== null) {
+        locationArray = JSON.parse(locationArrayString);
+      }
+      return locationArray;
+    });
+  };
+
+  // fetchAddresses = () => {
+  //   const locations = [
+  //   {
+  //     latitude: 50.934430,
+  //     longitude: -102.816690,
+  //     time: 1587843741483,
+  //   },
+  //   {
+  //     latitude: 50.934430,
+  //     longitude: -102.816690,
+  //     time: 1587843793871,
+  //   },
+  //   {
+  //     latitude: 50.934430,
+  //     longitude: -102.816690,
+  //     time: 1587843806886,
+  //   },
+  //   {
+  //     latitude: 40.742050,
+  //     longitude: -73.993851,
+  //     time: 1587843813376,
+  //   }];
+  //
+  //   NativeModules.Locations.reverseGeoCode(locations, addresses => {
+  //     this.setState({
+  //       addresses,
+  //     });
+  //   });
+  // }
 
   render() {
     return (

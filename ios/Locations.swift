@@ -57,7 +57,6 @@ class Locations: NSObject {
                     
                       //async - sequential reserved - fixed size
                       placeList[index] = AddressTS(address: addressString, timestamp: timestamp)
-                              
                       asyncGroup.leave()
                   }
               }
@@ -136,7 +135,9 @@ class Locations: NSObject {
       
       var addresses = [String]()
       for addressPeriod in AddressPeriodList {
-        addresses.append(addressPeriod.address)
+        if (addressPeriod.address != "" && !addresses.contains(addressPeriod.address)) {
+          addresses.append(addressPeriod.address)
+        }
       }
     
       return addresses
