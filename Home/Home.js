@@ -6,25 +6,25 @@ import Notification from './Notification';
 import Toggle from '../views/Toggle';
 import colors from '../assets/colors';
 import {
-  FlatList,
   RefreshControl,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Image,
   ScrollView,
+  Linking,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import Ble from '../utils/ble';
-import CustomIcon from '../assets/icons/CustomIcon.js';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import SettingsModal from '../Settings/SettingsModal';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
+import {UW_URL} from '../utils/constants';
+import Privacy from '../Privacy/Privacy';
 
 class Home extends Component {
   constructor() {
@@ -275,9 +275,7 @@ class Home extends Component {
                     }
                     <Text
                       style={styles.lear_more_link}
-                      onPress={() => {
-                        this.props.navigation.replace('Preferences');
-                      }}>
+                      onPress={() => Linking.openURL(UW_URL)}>
                       Learn More
                     </Text>
                   </Text>
@@ -304,6 +302,7 @@ class Home extends Component {
           />
 
           <ResourcesComponent />
+          <Privacy />
         </ScrollView>
       </>
     );

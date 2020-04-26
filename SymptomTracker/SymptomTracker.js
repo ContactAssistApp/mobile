@@ -52,7 +52,7 @@ class SymptomTracker extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
-          <Text style={styles.header}>Symptom Tracker</Text>
+          <Text style={styles.header}>Symptom Tracker[DEMO]</Text>
           <Text style={styles.description}>{dateString}</Text>
         </View>
         <Record
@@ -84,8 +84,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginTop: 20,
-    marginHorizontal: 10,
+    margin: 16,
   },
   header_container: {
     marginBottom: 20,

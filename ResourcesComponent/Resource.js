@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  Linking
-} from 'react-native';
+import {StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
 import colors from '../assets/colors';
 
 class Resource extends Component {
