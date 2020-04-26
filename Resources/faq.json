@@ -1,0 +1,60 @@
+{
+  "faqs": [
+    {
+      "q": "What is the purpose of this app?",
+      "a": "CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it — public health authorities and their contact tracing teams."
+    },
+    {
+      "q": "How does this app benefit me?",
+      "a": "CovidSafe offers several features to protect both you and your community:\n\n- Get notified about possible exposure. You may be notified if someone who was near you within the last two weeks has come down with symptoms of COVID-19. The measure of 'near' is not as precise as the medical definition (within 6 feet for more than 10 minutes), but it is accurate up to a few meters.\n\n- Track your symptoms. The symptoms you track may be useful to assist public health teams if you are confirmed positive, and for having this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads."
+    },
+    {
+      "q": "Who can use CovidSafe?",
+      "a": "When it becomes available for use, CovidSafe is free, and anyone can use it."
+    },
+    {
+      "q": "Who else benefits from my participation with this app?",
+      "a": "CovidSafe is capable of alerting people who have been in areas where coronavirus is active. If you test positive for coronavirus, you'll also be able to anonymously notify others you may have been in contact with over the past two weeks to alert them that they may have been exposed, and to prepare them for potential contact tracing interviews."
+    },
+    {
+      "q": "How does CovidSafe help public health officials?",
+      "a": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CovidSafe helps people who have tested positive remember locations they’ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster."
+    },
+    {
+      "q": "If I test positive and I disclose it via CovidSafe, what information is revealed to others?",
+      "a": "Other people with the application, who have been exposed may be notified, along with the time the exposure occurred. No other information will be revealed."
+    },
+    {
+      "q": "If I test negative, can a malicious person get access to my phone’s broadcasts and report me as being positive?",
+      "a": "No, this isn’t possible. The app is encrypted to prevent it from happening using similar security technology used for other purposes, such as online banking."
+    },
+    {
+      "q": "If someone else obtains data used to alert people who have been exposed, what can they learn?",
+      "a": "They'll see a sequence of random identifiers that have been broadcast over time near people who have tested positive for coronavirus. They could assume the location of the person who tested positive if the random identifiers were collected at specific locations. Otherwise, the person remains anonymous. The security of the system relies on the fact this data can be made public without compromising privacy."
+    },
+    {
+      "q": "If I receive a message that I have been exposed, what is disclosed to the public?",
+      "a": "Nothing about your identity will be disclosed to the public."
+    },
+    {
+      "q": "Can the identity of a person who chooses to report they’ve tested positive be guessed by others?",
+      "a": "Possibly. A person who was near someone who has tested positive may be able to guess the infected person's identity. If there are two or more people who were near someone who has tested positive, the process of identifying the infected person may be easier. However, the person's identity will never be broadcast directly. People’s identities aren’t stored in the data. Only the infected person’s random broadcast is stored."
+    },
+    {
+      "q": "What data is stored on my phone? What data about me is stored publicly?",
+      "a": "Each phone broadcasts a random signal (using Bluetooth) to other nearby phones. All phones remember the signals they send and receive for two weeks. These broadcast signals can be thought of as non-identifying random numbers. The signal each phone broadcasts changes, so the signals remain anonymous and can’t be linked to a specific person. If someone tests positive and chooses to disclose this information to help others, they would be disclosing only their phone's broadcasts for the past two weeks. This lets other people using CovidSafe check if they were near the infected person to determine if they were exposed, based on their own phones' broadcasts."
+    },
+    {
+      "q": "How does location tracking work?",
+      "a": "See the Bluetooth section in the PACT white paper."
+    },
+    {
+      "q": "Will this information be shared with government agencies?",
+      "a": "The tool won't alert government agencies about your identity if you're exposed."
+    },
+    {
+      "q": "Why should I report my illness?",
+      "a": "If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable more effective contact tracing."
+    },
+  ]
+}
