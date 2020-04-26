@@ -85,9 +85,9 @@ class Locations extends Component {
       <>
         <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
         <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
-        {this.state.addresses.map(address => {
+        {this.state.addresses.map((address, idx) => {
           return (
-            <View style={styles.address_card}>
+            <View style={styles.address_card} key={idx}>
               <Text>{address}</Text>
             </View>
           )
