@@ -16,6 +16,9 @@ import colors from '../assets/colors';
 import Ble from '../utils/ble';
 import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
 import {UW_URL} from '../utils/constants';
+import Emergency from '../Privacy/Emergency';
+import CareTips from '../CareTips/CareTips';
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 class Report extends Component {
   constructor() {
@@ -138,6 +141,9 @@ class Report extends Component {
         </View>
         <Text style={styles.header}>Next Steps</Text>
         <PrepareInterviewComponent />
+        <Emergency />
+        <CareTips />
+        <ResourcesComponent />
       </ScrollView>
     );
   }

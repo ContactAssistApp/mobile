@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 20,
-    margin: 16,
+    marginHorizontal: 16,
+    marginVertical: 8,
   },
   header: {
     fontWeight: '600',

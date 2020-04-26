@@ -106,8 +106,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 24,
     borderRadius: 20,
-    marginTop: 20,
+    marginTop: 16,
     marginHorizontal: 16,
+    marginVertical: 8,
   },
   faq_header: {
     fontWeight: '600',
