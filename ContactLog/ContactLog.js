@@ -14,6 +14,10 @@ import Locations from './Locations';
 import People from './People';
 import {Agenda} from 'react-native-calendars';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import {updateDate} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 class ContactLog extends Component {
   constructor() {
@@ -111,8 +115,11 @@ class ContactLog extends Component {
           markedDates={this.state.markedDates}
           onDayPress={day => {
             this.setState({
-              date: new Date(day.dateString),
               calendarExpand: false,
+            });
+            this.props.updateDate({
+              field: 'date',
+              value: new Date(day.dateString),
             });
           }}
           renderEmptyData={() => {
@@ -177,4 +184,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContactLog;
+ContactLog.propTypes = {
+  updateDate: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateDate
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ContactLog);

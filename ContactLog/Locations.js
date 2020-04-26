@@ -9,6 +9,8 @@ import {
 import colors from '../assets/colors';
 import {NativeModules} from 'react-native';
 import {GetStoreData} from '../utils/asyncStorage';
+import {connect} from 'react-redux';
+import DateConverter from '../utils/date';
 
 class Locations extends Component {
   constructor() {
@@ -23,9 +25,8 @@ class Locations extends Component {
       if (locations && locations.length > 0) {
         let locationList = locations;
         if (locations.length > 5) {
-          locationList = locations.slice(5);
+          locationList = locations.slice(0, 5);
         }
-
         NativeModules.Locations.reverseGeoCode(locationList, addresses => {
           this.setState({
             addresses,
@@ -76,23 +77,21 @@ class Locations extends Component {
   // }
 
   render() {
+    const {
+      contactLogData: {date}
+    } = this.props;
+
     return (
       <>
-        <Text style={styles.date}>
-          Wednesday, April 15
-        </Text>
-        <Text style={styles.sub_header}>
-          RECENT LOCATIONS
-        </Text>
-        {
-          this.state.addresses.map((address) => {
-            return(
-              <View style={styles.address_card}>
-                <Text>{address}</Text>
-              </View>
-            )
-          })
-        }
+        <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
+        <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
+        {this.state.addresses.map(address => {
+          return (
+            <View style={styles.address_card}>
+              <Text>{address}</Text>
+            </View>
+          )
+        })}
       </>
     );
   }
@@ -125,4 +124,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Locations;
+const mapStateToProps = state => {
+  return {
+    contactLogData: state.contactLogReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Locations);
