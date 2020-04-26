@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 import colors from '../assets/colors';
+import {NativeModules} from 'react-native';
 
 class Locations extends Component {
   componentDidMount() {
@@ -34,7 +35,16 @@ class Locations extends Component {
 
       // TODO: call get address method
   }
+
+  blah = () => {
+    NativeModules.Locations.getCount(value => {
+      console.log("count is blah:" + value);
+    });
+  }
+
   render() {
+    // console.log(NativeModules.Locations.increment());
+    this.blah();
     return (
       <>
         <Text>location</Text>
