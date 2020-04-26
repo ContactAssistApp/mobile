@@ -18,7 +18,7 @@
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
     "react": "16.9.0",
-    "react-native": "0.61.5",
+    "react-native": "^0.62.0",
     "react-native-app-intro-slider": "^4.0.0",
     "react-native-background-fetch": "^3.0.4",
     "react-native-calendars": "^1.265.0",
