@@ -6,24 +6,25 @@ import Notification from './Notification';
 import Toggle from '../views/Toggle';
 import colors from '../assets/colors';
 import {
-  FlatList,
   RefreshControl,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Image,
   ScrollView,
+  Linking,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import Ble from '../utils/ble';
-import CustomIcon from '../assets/icons/CustomIcon.js';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import SettingsModal from '../Settings/SettingsModal';
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
+import {UW_URL} from '../utils/constants';
+import Privacy from '../Privacy/Privacy';
 
 class Home extends Component {
   constructor() {
@@ -38,34 +39,34 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.processQueries();
-    BackgroundFetch.configure(
-      {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
-      async taskId => {
-        console.log('[js] Received background-fetch event: ', taskId);
-        this.processQueries();
-        BackgroundFetch.finish(taskId);
-      },
-      error => {
-        console.log('[js] RNBackgroundFetch failed to start');
-        console.log(error);
-      },
-    );
+    // this.processQueries();
+    // BackgroundFetch.configure(
+    //   {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
+    //   async taskId => {
+    //     console.log('[js] Received background-fetch event: ', taskId);
+    //     this.processQueries();
+    //     BackgroundFetch.finish(taskId);
+    //   },
+    //   error => {
+    //     console.log('[js] RNBackgroundFetch failed to start');
+    //     console.log(error);
+    //   },
+    // );
 
     // Optional: Query the authorization status.
-    BackgroundFetch.status(status => {
-      switch (status) {
-        case BackgroundFetch.STATUS_RESTRICTED:
-          console.log('BackgroundFetch restricted');
-          break;
-        case BackgroundFetch.STATUS_DENIED:
-          console.log('BackgroundFetch denied');
-          break;
-        case BackgroundFetch.STATUS_AVAILABLE:
-          console.log('BackgroundFetch is enabled');
-          break;
-      }
-    });
+    // BackgroundFetch.status(status => {
+    //   switch (status) {
+    //     case BackgroundFetch.STATUS_RESTRICTED:
+    //       console.log('BackgroundFetch restricted');
+    //       break;
+    //     case BackgroundFetch.STATUS_DENIED:
+    //       console.log('BackgroundFetch denied');
+    //       break;
+    //     case BackgroundFetch.STATUS_AVAILABLE:
+    //       console.log('BackgroundFetch is enabled');
+    //       break;
+    //   }
+    // });
 
     this.getSetting('ENABLE_LOCATION').then(data => {
       this.setState({
@@ -227,17 +228,19 @@ class Home extends Component {
   };
 
   handleOnRefresh = () => {
-    this.setState({
-      refreshing: true,
-    });
-
-    this.processQueries().then(() => this.setState({refreshing: false}));
+    // this.setState({
+    //   refreshing: true,
+    // });
+    // this.processQueries().then(() => this.setState({refreshing: false}));
   };
 
   render() {
     const {location, ble} = this.state;
     const isBroadcasting = location || ble;
     const broadcastStatus = isBroadcasting ? 'On' : 'Off';
+    const broadcastBg = isBroadcasting
+      ? styles.broadcast_on
+      : styles.broadcast_off;
 
     return (
       <>
@@ -261,7 +264,7 @@ class Home extends Component {
               </View>
               <SettingsModal />
             </View>
-            <View style={styles.broadcast_container}>
+            <View style={[styles.broadcast_container, broadcastBg]}>
               <View style={styles.broadcast}>
                 <View style={styles.broadcast_content}>
                   <Text style={styles.broadcast_title}>
@@ -274,9 +277,7 @@ class Home extends Component {
                     }
                     <Text
                       style={styles.lear_more_link}
-                      onPress={() => {
-                        this.props.navigation.replace('Preferences');
-                      }}>
+                      onPress={() => Linking.openURL(UW_URL)}>
                       Learn More
                     </Text>
                   </Text>
@@ -302,40 +303,8 @@ class Home extends Component {
             date={new Date()}
           />
 
-          <View style={styles.resources_container}>
-            <Text style={styles.resources_header}>Resources</Text>
-            <FlatList
-              scrollEnabled={'false'}
-              data={[
-                {
-                  key: 'cdc',
-                  title: 'CDC Guidance',
-                  description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-                },
-                {
-                  key: 'nyc',
-                  title: 'NYC Health Guidance',
-                  description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-                },
-              ]}
-              renderItem={({item}) => {
-                return (
-                  <View style={styles.resource}>
-                    <Image
-                      style={styles.resource_logo}
-                      source={require('../assets/resources/logo_cdc.png')}
-                    />
-                    <View>
-                      <Text style={styles.resource_title}>{item.title}</Text>
-                      <Text style={styles.resource_description}>
-                        {item.description}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              }}
-            />
-          </View>
+          <ResourcesComponent />
+          <Privacy />
         </ScrollView>
       </>
     );
@@ -371,13 +340,18 @@ const styles = StyleSheet.create({
   },
   broadcast_container: {
     marginVertical: 10,
-    backgroundColor: colors.fill_on,
     borderRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+  },
+  broadcast_on: {
+    backgroundColor: colors.fill_on,
+  },
+  broadcast_off: {
+    backgroundColor: colors.fill_off,
   },
   broadcast: {
     flexDirection: 'row',

@@ -49,27 +49,38 @@ class SymptomTracker extends Component {
 
   render() {
     let dateString = DateConverter.dateString(this.props.date);
+    const {
+      symptoms: {
+        ts,
+        timeOfDay,
+      }
+    } = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
-          <Text style={styles.header}>Symptom Tracker</Text>
+          <Text style={styles.header}>Symptom Tracker[DEMO]</Text>
           <Text style={styles.description}>{dateString}</Text>
         </View>
         <Record
           timeOfDay={'AM'}
           logTime={
-            this.state.amLog
-              ? DateConverter.timeString(this.state.amLog.ts)
-              : ''
+            timeOfDay === 'AM' && ts
+              ? DateConverter.timeString(ts)
+              : this.state.amLog
+                ? DateConverter.timeString(this.state.amLog.ts)
+                : ''
           }
           navigate={this.props.navigate}
         />
         <Record
           timeOfDay={'PM'}
           logTime={
-            this.state.pmLog
-              ? DateConverter.timeString(this.state.pmLog.ts)
-              : ''
+            timeOfDay === 'PM' && ts
+              ? DateConverter.timeString(ts)
+              : this.state.pmLog
+                ? DateConverter.timeString(this.state.pmLog.ts)
+                : ''
           }
           navigate={this.props.navigate}
         />
@@ -84,8 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginTop: 20,
-    marginHorizontal: 10,
+    margin: 16,
   },
   header_container: {
     marginBottom: 20,

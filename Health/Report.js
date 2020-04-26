@@ -16,6 +16,9 @@ import colors from '../assets/colors';
 import Ble from '../utils/ble';
 import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
 import {UW_URL} from '../utils/constants';
+import Emergency from '../Privacy/Emergency';
+import CareTips from '../CareTips/CareTips';
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 class Report extends Component {
   constructor() {
@@ -94,7 +97,20 @@ class Report extends Component {
           source={require('../assets/health/report_bg.png')}
         />
         <View style={styles.result_container}>
-          <TouchableOpacity style={styles.button} onPress={this.uploadBLE}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              Alert.alert(
+                'Alert',
+                'This feature is disabled for demo.',
+                [
+                  {
+                    text: 'Got it',
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+              )}>
             <Text style={styles.button_text}>Upload Your Trace Data</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -125,6 +141,9 @@ class Report extends Component {
         </View>
         <Text style={styles.header}>Next Steps</Text>
         <PrepareInterviewComponent />
+        <Emergency />
+        <CareTips />
+        <ResourcesComponent />
       </ScrollView>
     );
   }

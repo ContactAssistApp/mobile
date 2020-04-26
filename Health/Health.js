@@ -54,7 +54,7 @@ class Health extends Component {
             style={styles.logo}
             source={require('../assets/home/logo.png')}
           />
-          <Text style={styles.title}>Health Report</Text>
+          <Text style={styles.title}>Health Report[DEMO]</Text>
         </View>
         <TabView
           navigationState={this.state}

@@ -29,7 +29,7 @@ class PrepareInterviewComponent extends Component {
         <Modal
           visible={this.state.modalOn}
           handleModalClose={this.handleModalClose}
-          title={'Interview Preparation'}>
+          title={'Interview Preparation [DEMO]'}>
           {
             {
               0: <InterviewPrepIntro />,
@@ -43,7 +43,7 @@ class PrepareInterviewComponent extends Component {
             source={require('../assets/health/clipboard.png')}
           />
           <Text style={styles.title}>
-            Your public health Agency will be contacting you For an Interview
+            Your public health Agency{'\n'}will be contacting you For{'\n'}an Interview
           </Text>
         </View>
         <Text style={styles.description}>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 8,
-    margin: 10,
+    margin: 16,
     paddingVertical: 20,
     paddingHorizontal: 15,
   },

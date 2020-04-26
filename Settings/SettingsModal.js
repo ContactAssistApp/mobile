@@ -56,14 +56,6 @@ class SettingsModal extends Component {
               url={UW_URL}
             />
           </>
-
-          <>
-            <Text style={styles.section_title}>Legal</Text>
-            <SettingLink
-              title={'Privacy'}
-              url={UW_URL}
-            />
-          </>
         </Modal>
 
         <TouchableOpacity onPress={() => this.setState({modalOn: true})}>

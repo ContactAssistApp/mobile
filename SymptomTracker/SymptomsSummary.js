@@ -31,7 +31,7 @@ class SymptomsSummary extends Component {
     return (
       <>
         <Text style={styles.symptom_header}>SYMPTOMS</Text>
-        <View>
+        <View style={styles.container}>
           {Object.entries(symptoms).map(([key, val]) => {
             if (val === 1) {
               if (key === 'fever') {
@@ -123,6 +123,9 @@ class SymptomsSummary extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 20,
+  },
   symptom_header: {
     fontWeight: '500',
     fontSize: 14,

@@ -1,29 +1,27 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
   View,
+  ScrollView,
+  SafeAreaView,
+  Text,
+  StyleSheet,
   Image,
+  TouchableOpacity,
 } from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import data from './faq.json';
 import colors from '../assets/colors';
-import BottomSheet from 'reanimated-bottom-sheet';
+import Question from './Question';
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 class Resources extends Component {
-  renderHeader = () => (
-    <Text>
-      What is the purpose of this app?
-    </Text>
-  )
-
-  renderContent = () => (
-    <Text>
-      CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it — public health authorities and their contact tracing teams.
-    </Text>
-  )
-
+  constructor() {
+    super();
+    this.state = {
+      selectedQ: '',
+      selectedA: '',
+    };
+  }
   render() {
     return (
       <>
@@ -39,15 +37,45 @@ class Resources extends Component {
           <View style={styles.faq_container}>
             <Text style={styles.faq_header}>Frequently Asked Questions</Text>
             <Text style={styles.faq_section_header}>About CovidSafe</Text>
-            <View style={styles.container}>
-              <BottomSheet
-                snapPoints={[450, 300, 0]}
-                renderContent={this.renderContent}
-                renderHeader={this.renderHeader}
-              />
-            </View>
+            {data.faqs.map(faq => {
+              return (
+                <Question
+                  key={faq.a}
+                  question={faq.q}
+                  handleOnPress={() => {
+                    this.Scrollable.open();
+                    this.setState({
+                      selectedQ: faq.q,
+                      selectedA: faq.a,
+                    });
+                  }}
+                />
+              );
+            })}
           </View>
+          <ResourcesComponent />
         </ScrollView>
+        <RBSheet
+          ref={ref => {
+            this.Scrollable = ref;
+          }}
+          closeOnDragDown
+          customStyles={{
+            container: {
+              borderTopLeftRadius: 14,
+              borderTopRightRadius: 14,
+              height: 360,
+            },
+          }}>
+          <ScrollView>
+            <TouchableOpacity style={styles.sheet_container}>
+              <View style={styles.question_container}>
+                <Text style={styles.question}>{this.state.selectedQ}</Text>
+              </View>
+              <Text style={styles.answer}>{this.state.selectedA}</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </RBSheet>
       </>
     );
   }
@@ -75,12 +103,12 @@ const styles = StyleSheet.create({
   },
   faq_container: {
     backgroundColor: 'white',
-    height: '100%',
     paddingVertical: 20,
-    paddingHorizontal: 15,
+    paddingHorizontal: 24,
     borderRadius: 20,
-    marginTop: 20,
-    marginHorizontal: 10,
+    marginTop: 16,
+    marginHorizontal: 16,
+    marginVertical: 8,
   },
   faq_header: {
     fontWeight: '600',
@@ -88,6 +116,7 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     letterSpacing: 0.35,
     color: colors.module_title,
+    paddingBottom: 12,
   },
   faq_section_header: {
     fontWeight: '600',
@@ -95,13 +124,36 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: -0.408,
     color: colors.section_title,
-    paddingVertical: 20,
+    paddingVertical: 12,
   },
   faq_content: {
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
     paddingVertical: 20,
+  },
+  question_container: {
+    paddingTop: 28,
+    paddingHorizontal: 29,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.card_border,
+  },
+  question: {
+    fontSize: 15,
+    lineHeight: 20,
+    textAlign: 'center',
+    letterSpacing: -0.24,
+    color: colors.secondary_body_copy,
+  },
+  answer: {
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
+    color: '#141414',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 66,
   },
 });
 
