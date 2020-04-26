@@ -24,6 +24,7 @@ import Ble from '../utils/ble';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import SettingsModal from '../Settings/SettingsModal';
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 class Home extends Component {
   constructor() {
@@ -302,40 +303,7 @@ class Home extends Component {
             date={new Date()}
           />
 
-          <View style={styles.resources_container}>
-            <Text style={styles.resources_header}>Resources</Text>
-            <FlatList
-              scrollEnabled={'false'}
-              data={[
-                {
-                  key: 'cdc',
-                  title: 'CDC Guidance',
-                  description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-                },
-                {
-                  key: 'nyc',
-                  title: 'NYC Health Guidance',
-                  description: 'Odio tempor orci dapibus ultrices in iaculis nanc sed monsd',
-                },
-              ]}
-              renderItem={({item}) => {
-                return (
-                  <View style={styles.resource}>
-                    <Image
-                      style={styles.resource_logo}
-                      source={require('../assets/resources/logo_cdc.png')}
-                    />
-                    <View>
-                      <Text style={styles.resource_title}>{item.title}</Text>
-                      <Text style={styles.resource_description}>
-                        {item.description}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              }}
-            />
-          </View>
+          <ResourcesComponent />
         </ScrollView>
       </>
     );

@@ -12,6 +12,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import data from './faq.json';
 import colors from '../assets/colors';
 import Question from './Question';
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 class Resources extends Component {
   constructor() {
@@ -39,6 +40,7 @@ class Resources extends Component {
             {data.faqs.map(faq => {
               return (
                 <Question
+                  key={faq.a}
                   question={faq.q}
                   handleOnPress={() => {
                     this.Scrollable.open();
@@ -51,6 +53,7 @@ class Resources extends Component {
               );
             })}
           </View>
+          <ResourcesComponent />
         </ScrollView>
         <RBSheet
           ref={ref => {
