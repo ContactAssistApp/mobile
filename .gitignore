@@ -20,6 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*.xcodeproj/
+DerivedData/
 
 # Android/IntelliJ
 #
