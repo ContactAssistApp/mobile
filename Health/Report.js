@@ -94,7 +94,20 @@ class Report extends Component {
           source={require('../assets/health/report_bg.png')}
         />
         <View style={styles.result_container}>
-          <TouchableOpacity style={styles.button} onPress={this.uploadBLE}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              Alert.alert(
+                'Alert',
+                'This feature is disabled for demo.',
+                [
+                  {
+                    text: 'Got it',
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+              )}>
             <Text style={styles.button_text}>Upload Your Trace Data</Text>
           </TouchableOpacity>
           <TouchableOpacity
