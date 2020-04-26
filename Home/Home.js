@@ -239,6 +239,9 @@ class Home extends Component {
     const {location, ble} = this.state;
     const isBroadcasting = location || ble;
     const broadcastStatus = isBroadcasting ? 'On' : 'Off';
+    const broadcastBg = isBroadcasting
+      ? styles.broadcast_on
+      : styles.broadcast_off;
 
     return (
       <>
@@ -262,7 +265,7 @@ class Home extends Component {
               </View>
               <SettingsModal />
             </View>
-            <View style={styles.broadcast_container}>
+            <View style={[styles.broadcast_container, broadcastBg]}>
               <View style={styles.broadcast}>
                 <View style={styles.broadcast_content}>
                   <Text style={styles.broadcast_title}>
@@ -338,13 +341,18 @@ const styles = StyleSheet.create({
   },
   broadcast_container: {
     marginVertical: 10,
-    backgroundColor: colors.fill_on,
     borderRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+  },
+  broadcast_on: {
+    backgroundColor: colors.fill_on,
+  },
+  broadcast_off: {
+    backgroundColor: colors.fill_off,
   },
   broadcast: {
     flexDirection: 'row',
