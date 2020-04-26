@@ -52,7 +52,7 @@ class InterviewPrepIntro extends Component {
             <View style={styles.row}>
               <View style={styles.icon_wrapper}>
                 <CustomIcon
-                  name={'accessibility24'}
+                  name={'community24'}
                   color={colors.primary_theme}
                   size={24}
                 />
