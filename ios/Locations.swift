@@ -6,34 +6,40 @@ import class Contacts.CNPostalAddressFormatter
 @objc(Locations)
 class Locations: NSObject {
   private var count = 0
-  
+
   @objc
   func increment() {
     count += 1
     print("count is \(count)")
   }
-  
+
   @objc
   func getCount(_ callback: RCTResponseSenderBlock) {
     callback([count])
   }
 
-  struct AddressTS: Codable {
+  struct AddressTS {
+    let name: String
     let address: String
+    /// Expect in milliseconds
     let timestamp: Double
+
+    static let invalid = AddressTS(name: "", address: "", timestamp: 0)
   }
 
-  struct AddressPeriod: Codable {
+  struct AddressPeriod {
+    let name: String
     let address: String
-    let period: String
+    let start: Double
+    let end: Double
   }
-  
+
   @objc
   func reverseGeoCode(_ geoList: [NSDictionary], callback: @escaping RCTResponseSenderBlock) {
     // Fire an asynchronous callback when all your requests finish in synchronous.
     let asyncGroup = DispatchGroup()
     // List of AddressTS
-    var placeList = [AddressTS](repeating: AddressTS(address: "", timestamp: 0), count: geoList.count)
+    var placeList = [AddressTS](repeating: .invalid, count: geoList.count)
     for (index, geo) in geoList.enumerated() {
       let lat = geo.value(forKey: "latitude") as! Double
       let lon = geo.value(forKey: "longitude") as! Double
@@ -50,6 +56,7 @@ class Locations: NSObject {
           if #available(iOS 11.0, *) {
             addressString = CNPostalAddressFormatter
               .string(from: address.postalAddress!, style: .mailingAddress)
+              .replacingOccurrences(of: "\n", with: ", ")
           } else {
             if let lines = address.addressDictionary?["FormattedAddressLines"] as? [String] {
               addressString = lines.joined(separator: ", ")
@@ -57,7 +64,11 @@ class Locations: NSObject {
           }
 
           // async - sequential reserved - fixed size
-          placeList[index] = AddressTS(address: addressString, timestamp: timestamp)
+          placeList[index] = AddressTS(
+            name: address.name ?? "",
+            address: addressString,
+            timestamp: timestamp
+          )
           asyncGroup.leave()
         }
       }
@@ -70,111 +81,86 @@ class Locations: NSObject {
     }
   }
 
-  // MARK: - Formatting Time
-
-  /// UTC time converter
-  func UTC_Converter(unixtime1: Double, unixtime2: Double, timezone: String? = nil) -> String {
-    let date1 = Date(timeIntervalSince1970: unixtime1)
-    let date2 = Date(timeIntervalSince1970: unixtime2)
-    // Localization
-    let dateFormatter = makeDateFormatter(inTimezone: timezone)
-    let strDate1 = dateFormatter.string(from: date1)
-    let strDate2 = dateFormatter.string(from: date2)
-    return (strDate1 + "~" + strDate2)
-  }
-
-  /// It's actually an expensive operation to create date formatters.
-  private func makeDateFormatter(inTimezone timezone: String?) -> DateFormatter {
-    guard let timezone = timezone else { return formatter }
-    let dateFormatter = DateFormatter()
-    // Set timezone that you want: i.e. New York is "UTC-4"
-    dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-    dateFormatter.locale = NSLocale.current
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Specify format that you want
-    return dateFormatter
-  }
-
-  /// Therefore caches the formatter for default (current) timezone
-  private lazy var formatter: DateFormatter = {
-    return makeDateFormatter(inTimezone: localTimeZoneAbbreviation)
-  }()
-
-  @objc
-  private func updateDefaultFormatter() {
-    formatter = makeDateFormatter(inTimezone: localTimeZoneAbbreviation)
-  }
-
-  /// e.g. "UTC-4"
-  private var localTimeZoneAbbreviation: String {
-    return TimeZone.current.abbreviation() ?? ""
-  }
-
-  override init() {
-    super.init()
-    /// Updates date formatter when timezone changes
-    NotificationCenter.default
-      .addObserver(self, selector: #selector(updateDefaultFormatter),
-                   name: .NSSystemTimeZoneDidChange, object: nil)
-  }
-
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-
   //---------------------------------------------------------------------------------
   // MARK: - Step2: aggregate address result - from timestamp to period
   //---------------------------------------------------------------------------------
-  func aggregateAddressList(addressTSList: [AddressTS]) -> [String] {
+  func aggregateAddressList(addressTSList: [AddressTS]) -> [[String]] {
     guard let first = addressTSList.first else { return [] }
 
     var AddressPeriodList: [AddressPeriod] = []  // List of AddressPeriod
     var start: Double = first.timestamp // UTC start
     var end: Double = first.timestamp // UTC end
-    var address = first.address // address pointer
+    var previous = first // address pointer
+
+    let TEN_MINUTES_IN_MS: Double = 6 * 100 * 1000
 
     /// Add an adress and the stay interval to adress list. `end` defaults to start + 10 minutes.
-    func appendAddress(_ address: String, startingAt start: Double, to end: Double? = nil) {
-      let end = end ?? start + 600
+    func appendAddress(_ address: AddressTS, startingAt start: Double, to end: Double? = nil) {
+      let end = end ?? start + TEN_MINUTES_IN_MS
       AddressPeriodList.append(AddressPeriod(
-        address: address,
-        period: UTC_Converter(unixtime1: start, unixtime2: end)
+        name: address.name, address: address.address, start: start, end: end
       ))
     }
 
     for (index, address_ts) in addressTSList.enumerated().dropFirst() {
-      if address_ts.address != address {
+      if address_ts.address != previous.address {
         // append - dynamic size
         if start == end {
           // logic: same location + 10min
-          appendAddress(address, startingAt: start)
+          appendAddress(previous, startingAt: start)
         } else {
-          appendAddress(address, startingAt: start, to: end)
+          appendAddress(previous, startingAt: start, to: end)
         }
         // update
         start = address_ts.timestamp
         end = address_ts.timestamp
-        address = address_ts.address
+        previous = address_ts
         if index == addressTSList.indices.last { // last one - unique, add extra
           // logic: same location + 10min
-          appendAddress(address_ts.address, startingAt: start)
+          appendAddress(address_ts, startingAt: start)
         }
       } else { // move on
         end = address_ts.timestamp
         if index == addressTSList.indices.last { // last one - same, add extra
           if start == end {
             // logic: same location + 10min
-            appendAddress(address, startingAt: start)
+            appendAddress(address_ts, startingAt: start)
           } else {
-            appendAddress(address, startingAt: start, to: end)
+            appendAddress(address_ts, startingAt: start, to: end)
           }
         }
       }
     }
 
-    let addresses = Set(AddressPeriodList.lazy // include unique
-      .map { $0.address }
-      .filter { !$0.isEmpty } // where it's not equal to ""
-    )
-    return Array(addresses)
+    return condensed(AddressPeriodList)
   }
+
+  func condensed(_ AddressPeriodList: [AddressPeriod]) -> [[String]] {
+    return Dictionary(grouping: AddressPeriodList, by: { $0.address })
+      .map { (address, info) -> (end: Double, [String]) in
+        // Sort all periods of stay at same location
+        let sorted = info.sorted { $0.end < $1.end }
+        // Get the latest time stayed
+        let end = sorted.last!.end
+        // Join all the periods together with format start - end[, start - end]
+        let period = sorted
+          .map { "\(format($0.start)) - \(format($0.end))" }
+          .joined(separator: ", ")
+        return (end: end, [info[0].name, address, period])
+    } .sorted { $0.end > $1.end } // sort all location by last time present
+      .map { $0.1 }
+  }
+  
+  func format(_ double: Double) -> String {
+    return NumberFormatter.noDecimal
+      .string(from: double as NSNumber) ?? "\(double)"
+  }
+}
+
+extension NumberFormatter {
+  static let noDecimal: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 0
+    return formatter
+  }()
 }
