@@ -70,19 +70,16 @@ class Locations: NSObject {
   }
 
   /// UTC time converter
-  func UTC_Converter(unixtime1:Double, unixtime2:Double, timezone:String?=nil) -> String{
+  func UTC_Converter(unixtime1: Double, unixtime2: Double, timezone: String? = nil) -> String {
     // Localization
     var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" } // "UTC-4"
     let date1 = Date(timeIntervalSince1970: unixtime1)
     let date2 = Date(timeIntervalSince1970: unixtime2)
     let dateFormatter = DateFormatter()
-    dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation) //Set timezone that you want: i.e. New York is "UTC-4"
-    // Overwrite
-    if (timezone != nil) {
-      dateFormatter.timeZone = TimeZone(abbreviation: timezone ?? "")
-    }
+    // Set timezone that you want: i.e. New York is "UTC-4"
+    dateFormatter.timeZone = TimeZone(abbreviation: timezone ?? localTimeZoneAbbreviation)
     dateFormatter.locale = NSLocale.current
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" //Specify your format that you want
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Specify format that you want
     let strDate1 = dateFormatter.string(from: date1)
     let strDate2 = dateFormatter.string(from: date2)
     return (strDate1 + "~" + strDate2)
