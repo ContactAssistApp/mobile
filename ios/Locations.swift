@@ -132,13 +132,10 @@ class Locations: NSObject {
       }
     }
 
-    var addresses = [String]()
-    for addressPeriod in AddressPeriodList {
-      if (addressPeriod.address != "" && !addresses.contains(addressPeriod.address)) {
-        addresses.append(addressPeriod.address)
-      }
-    }
-    
-    return addresses
+    let addresses = Set(AddressPeriodList.lazy // include unique
+      .map { $0.address }
+      .filter { !$0.isEmpty } // where it's not equal to ""
+    )
+    return Array(addresses)
   }
 }
