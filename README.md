@@ -1,6 +1,6 @@
 # tracedefense
 
-To run code:
+## To run code:
 Run `pod install` under the `ios` directory
 
 Open the `.xcworkspace` project file.
@@ -20,3 +20,6 @@ Install the Pod package manager with
 May need to run certain commands to get unstuck
 
 `npm install`
+
+## Demo
+- Demo for symptom tracker https://www.youtube.com/watch?v=sylLsCnO8ZE&feature=youtu.be
