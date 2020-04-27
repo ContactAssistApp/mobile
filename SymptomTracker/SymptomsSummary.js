@@ -39,7 +39,7 @@ class SymptomsSummary extends Component {
                 return (
                   <View style={styles.symptom_card} key={key}>
                     <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                    {feverOnsetDate && (
+                    {feverOnsetDate !== '' && (
                       <View style={styles.row}>
                         <Text style={styles.label}>
                           {symptomMap.feverOnsetDate}
@@ -49,7 +49,7 @@ class SymptomsSummary extends Component {
                         </Text>
                       </View>
                     )}
-                    {feverTemperature && (
+                    {feverTemperature !== '' && (
                       <View style={styles.row}>
                         <Text style={styles.label}>
                           {symptomMap.feverTemperature}
@@ -59,7 +59,7 @@ class SymptomsSummary extends Component {
                         </Text>
                       </View>
                     )}
-                    {feverDays && (
+                    {feverDays !== '' && (
                       <View style={styles.row}>
                         <Text style={styles.label}>{symptomMap.feverDays}</Text>
                         <Text style={styles.value}>{symptoms.feverDays}</Text>
