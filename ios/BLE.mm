@@ -567,13 +567,13 @@ RCT_EXPORT_METHOD(stop_ble)
 
 -(void) logCritical: (id)payload {
   [self sendEventWithName:@"onLifecycleEvent" body:payload ];
-  NSLog(@"TraceDefense::CRIT:: %@", payload);
+  NSLog(@"CovidSafe::CRIT:: %@", payload);
 }
 
 -(void) logDebug: (id)payload {
   if(DebugLogEnabled) {
     [self sendEventWithName:@"onLifecycleEvent" body:payload ];
-    NSLog(@"TraceDefense::INFO:: %@", payload);
+    NSLog(@"CovidSafe::INFO:: %@", payload);
   }
 }
 

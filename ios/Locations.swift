@@ -74,9 +74,9 @@ class Locations: NSObject {
 
   /// UTC time converter
   func UTC_Converter(unixtime1: Double, unixtime2: Double, timezone: String? = nil) -> String {
-    // Localization
     let date1 = Date(timeIntervalSince1970: unixtime1)
     let date2 = Date(timeIntervalSince1970: unixtime2)
+    // Localization
     let dateFormatter = makeDateFormatter(inTimezone: timezone)
     let strDate1 = dateFormatter.string(from: date1)
     let strDate2 = dateFormatter.string(from: date2)
@@ -96,7 +96,6 @@ class Locations: NSObject {
 
   /// Therefore caches the formatter for default (current) timezone
   private lazy var formatter: DateFormatter = {
-    // e.g. "UTC-4"
     return makeDateFormatter(inTimezone: localTimeZoneAbbreviation)
   }()
 
@@ -105,6 +104,7 @@ class Locations: NSObject {
     formatter = makeDateFormatter(inTimezone: localTimeZoneAbbreviation)
   }
 
+  /// e.g. "UTC-4"
   private var localTimeZoneAbbreviation: String {
     return TimeZone.current.abbreviation() ?? ""
   }

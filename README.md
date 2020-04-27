@@ -1,4 +1,4 @@
-# tracedefense
+# CovidSafe
 
 To run code:
 Run `pod install` under the `ios` directory
