@@ -91,22 +91,30 @@ class Locations: NSObject {
   // MARK: - Step2: aggregate address result - from timestamp to period
   //---------------------------------------------------------------------------------
   func aggregateAddressList(addressTSList: [AddressTS]) -> [String] {
+    guard let first = addressTSList.first else { return [] }
+
     var AddressPeriodList: [AddressPeriod] = []  // List of AddressPeriod
-    var start: Double = 0 // UTC start
-    var end: Double = 0 // UTC end
-    var address = "" // address pointer
-    for (index, address_ts) in addressTSList.enumerated() {
-      if index == 0 { // first one
-        start = address_ts.timestamp
-        end = address_ts.timestamp
-        address = address_ts.address
-      } else if address_ts.address != address {
+    var start: Double = first.timestamp // UTC start
+    var end: Double = first.timestamp // UTC end
+    var address = first.address // address pointer
+
+    /// Add an adress and the stay interval to adress list. `end` defaults to start + 10 minutes.
+    func appendAddress(_ address: String, startingAt start: Double, to end: Double? = nil) {
+      let end = end ?? start + 600
+      AddressPeriodList.append(AddressPeriod(
+        address: address,
+        period: UTC_Converter(unixtime1: start, unixtime2: end)
+      ))
+    }
+
+    for (index, address_ts) in addressTSList.enumerated().dropFirst() {
+      if address_ts.address != address {
         // append - dynamic size
-        // logic: same location + 10min
         if start == end {
-          AddressPeriodList.append(AddressPeriod(address:address,period: UTC_Converter(unixtime1:start,unixtime2:(start+600))))
+          // logic: same location + 10min
+          appendAddress(address, startingAt: start)
         } else {
-          AddressPeriodList.append(AddressPeriod(address:address,period: UTC_Converter(unixtime1:start,unixtime2:end)))
+          appendAddress(address, startingAt: start, to: end)
         }
         // update
         start = address_ts.timestamp
@@ -114,16 +122,16 @@ class Locations: NSObject {
         address = address_ts.address
         if index == addressTSList.indices.last { // last one - unique, add extra
           // logic: same location + 10min
-          AddressPeriodList.append(AddressPeriod(address:address_ts.address, period: UTC_Converter(unixtime1:start,unixtime2:(start+600))))
+          appendAddress(address_ts.address, startingAt: start)
         }
       } else { // move on
         end = address_ts.timestamp
         if index == addressTSList.indices.last { // last one - same, add extra
-          // logic: same location + 10min
           if start == end {
-            AddressPeriodList.append(AddressPeriod(address:address, period: UTC_Converter(unixtime1:start,unixtime2:(start+600))))
+            // logic: same location + 10min
+            appendAddress(address, startingAt: start)
           } else {
-            AddressPeriodList.append(AddressPeriod(address:address, period: UTC_Converter(unixtime1:start,unixtime2:end)))
+            appendAddress(address, startingAt: start, to: end)
           }
         }
       }
