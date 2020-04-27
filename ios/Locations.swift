@@ -1,6 +1,7 @@
 import Foundation
 import CoreLocation
-import Contacts
+// Limit use of Contacts framework
+import class Contacts.CNPostalAddressFormatter
 
 @objc(Locations)
 class Locations: NSObject {
@@ -17,47 +18,47 @@ class Locations: NSObject {
     callback([count])
   }
 
-  struct AddressTS : Codable {
-    let address : String
+  struct AddressTS: Codable {
+    let address: String
     let timestamp: Double
   }
 
-  struct AddressPeriod : Codable {
+  struct AddressPeriod: Codable {
     let address: String
     let period: String
   }
   
   @objc
-  func reverseGeoCode(_ geoList:[NSDictionary], callback: @escaping RCTResponseSenderBlock) {
+  func reverseGeoCode(_ geoList: [NSDictionary], callback: @escaping RCTResponseSenderBlock) {
     // Fire an asynchronous callback when all your requests finish in synchronous.
     let asyncGroup = DispatchGroup()
-    var placeList: [AddressTS] = [AddressTS](repeating: AddressTS(address:"",timestamp:0), count: geoList.count)  //List of AddressTS
+    // List of AddressTS
+    var placeList = [AddressTS](repeating: AddressTS(address: "", timestamp: 0), count: geoList.count)
     for (index, geo) in geoList.enumerated() {
       let lat = geo.value(forKey: "latitude") as! Double
       let lon = geo.value(forKey: "longitude") as! Double
       let timestamp = geo.value(forKey: "time") as! Double
 
       asyncGroup.enter()
-      // Reverse Geocoding With Clgeocoder
-      let gecoder = CLGeocoder.init()
+      // Reverse Geocoding With CLGeocoder
+      let gecoder = CLGeocoder()
 
-      gecoder.reverseGeocodeLocation(CLLocation.init(latitude:lat,longitude:lon)) {(addresses, error) in
-        if error == nil {
-          if let address = addresses{
-            //Async: Here you can get all the info by combining that you can make address!
-            var addressString = ""
-            if #available(iOS 11.0, *) {
-              addressString = CNPostalAddressFormatter.string(from:address[0].postalAddress!, style: .mailingAddress)
-            } else {
-              if let lines = address[0].addressDictionary?["FormattedAddressLines"] as? [String] {
-                addressString = lines.joined(separator: ", ")
-              }
+      gecoder.reverseGeocodeLocation(CLLocation(latitude: lat, longitude: lon)) { (addresses, error) in
+        if error == nil, let address = addresses?.first {
+          // Async: Here you can get all the info by combining that you can make address!
+          var addressString = ""
+          if #available(iOS 11.0, *) {
+            addressString = CNPostalAddressFormatter
+              .string(from: address.postalAddress!, style: .mailingAddress)
+          } else {
+            if let lines = address.addressDictionary?["FormattedAddressLines"] as? [String] {
+              addressString = lines.joined(separator: ", ")
             }
-
-            //async - sequential reserved - fixed size
-            placeList[index] = AddressTS(address: addressString, timestamp: timestamp)
-            asyncGroup.leave()
           }
+
+          // async - sequential reserved - fixed size
+          placeList[index] = AddressTS(address: addressString, timestamp: timestamp)
+          asyncGroup.leave()
         }
       }
     }
