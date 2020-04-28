@@ -113,24 +113,30 @@ class Home extends Component {
       let msgs = [];
       messages.forEach(messageObj => {
         const {bluetoothMatches} = messageObj;
+
         bluetoothMatches.forEach(match => {
           const {userMessage, seeds} = match;
-          if (userMessage) {
-            msgs.push(userMessage);
-          } else {
-            msgs.push(DEFAULT_NOTIFICATION);
-          }
           let timestamps = [];
           let seedsArray = [];
           seeds.forEach(seedObj => {
-            if (seedObj && seedObj.seed) {
+            if (seedObj
+              && seedObj.seed
+              && seedObj.seed !== '00000000-0000-0000-0000-000000000000') {
               timestamps.push(seedObj.sequenceStartTime);
               seedsArray.push(seedObj.seed);
             }
           });
 
-          args.push(seedsArray);
-          args.push(timestamps);
+          if (seedsArray && seedsArray.length > 0) {
+            args.push(seedsArray);
+            args.push(timestamps);
+
+            if (userMessage) {
+              msgs.push(userMessage);
+            } else {
+              msgs.push(DEFAULT_NOTIFICATION);
+            }
+          }
         });
       });
 
@@ -142,8 +148,15 @@ class Home extends Component {
   };
 
   searchQuery = async (args, msgs) => {
+    console.log("===args===");
+    console.log(args);
+    console.log("===msgs===");
+    console.log(msgs);
+
     return Ble.runBleQuery(args).then(
       results => {
+        console.log("==results===")
+        console.log(results);
         let notifications = [];
         results.forEach((result, index) => {
           if (result === 1) {
