@@ -14,7 +14,14 @@ import PropTypes from 'prop-types';
 
 class Modal extends Component {
   render() {
-    const {visible, title} = this.props;
+    const {visible, title, useScrollView} = this.props;
+
+    let content;
+    if (useScrollView) {
+      content = <ScrollView>{this.props.children}</ScrollView>;
+    } else {
+      content = this.props.children;
+    }
 
     return (
       <NativeModal
@@ -28,7 +35,7 @@ class Modal extends Component {
           </TouchableOpacity>
           <Text style={styles.title}>{title}</Text>
         </View>
-        <ScrollView>{this.props.children}</ScrollView>
+        {content}
       </NativeModal>
     );
   }
@@ -36,6 +43,9 @@ class Modal extends Component {
 
 Modal.propTypes = {
   visible: PropTypes.bool.isRequired,
+};
+Modal.defaultProps = {
+  useScrollView: true,
 };
 
 const styles = StyleSheet.create({

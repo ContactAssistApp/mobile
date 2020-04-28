@@ -1,26 +1,54 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import Modal from '../views/Modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../assets/colors';
+import LocationHistoryImportView from './LocationHistoryImportView.js';
 
 class ImportGoogleTimeline extends Component {
+  constructor() {
+    super();
+    this.state = {
+      googleSignInVisible: false,
+    };
+  }
+
+  handleModalClose = () => {
+    this.setState({googleSignInVisible: false});
+  };
+
   render() {
     return (
-      <View style={styles.row}>
-        <Icon
-          name={'logo-google'}
-          color={colors.gray_icon}
-          size={24}
-          style={styles.icon}
-        />
-        <View style={styles.content}>
-          <Text style={styles.title}>Import Location History</Text>
-        </View>
+      <>
+        <Modal
+          visible={this.state.googleSignInVisible}
+          handleModalClose={this.handleModalClose}
+          useScrollView={false}
+          title={'Sign-in to Google'}>
+          <LocationHistoryImportView
+            style={styles.wrapper}
+            // TODO: logWindow={getLogWindow()}
+            // now defaults to 14
+            onReceivingPlacemarks={console.log}
+          />
+        </Modal>
+        <View style={styles.row}>
+          <Icon
+            name={'logo-google'}
+            color={colors.gray_icon}
+            size={24}
+            style={styles.icon}
+          />
+          <View style={styles.content}>
+            <Text style={styles.title}>Import Location History</Text>
+          </View>
 
-        <TouchableOpacity onPress={() => console.log('hi')}>
-          <Text style={styles.button}>Import</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={() => this.setState({googleSignInVisible: true})}>
+            <Text style={styles.button}>Import</Text>
+          </TouchableOpacity>
+        </View>
+      </>
     );
   }
 }
@@ -54,6 +82,9 @@ const styles = StyleSheet.create({
     padding: 8,
     color: colors.icon_on,
     fontWeight: 'bold',
+  },
+  wrapper: {
+    flex: 1,
   },
 });
 

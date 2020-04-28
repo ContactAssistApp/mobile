@@ -10,7 +10,6 @@ import colors from '../assets/colors';
 import Modal from '../views/Modal';
 import SettingLink from './SettingLink';
 import {UW_URL} from '../utils/constants.js';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 class SettingsModal extends Component {
   constructor() {
