@@ -7,10 +7,9 @@ class LocationHistoryImportView extends Component {
     if (!this.props.onReceivingPlacemarks) {
       return;
     }
-
-    // process raw event...
     this.props.onReceivingPlacemarks(event.nativeEvent);
   };
+
   render() {
     return (
       <GoogleTimelineImportView
@@ -20,7 +19,9 @@ class LocationHistoryImportView extends Component {
     );
   }
 }
+
 LocationHistoryImportView.propTypes = {
+  isVisible: PropTypes.bool,
   logWindow: PropTypes.number,
   onReceivingPlacemarks: PropTypes.func,
 };

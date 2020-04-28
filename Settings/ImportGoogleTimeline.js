@@ -26,10 +26,15 @@ class ImportGoogleTimeline extends Component {
           useScrollView={false}
           title={'Sign-in to Google'}>
           <LocationHistoryImportView
+            isVisible={this.state.googleSignInVisible}
             style={styles.wrapper}
             // TODO: logWindow={getLogWindow()}
-            // now defaults to 14
-            onReceivingPlacemarks={console.log}
+            // or better, sync that to native side
+            // For now, defaults to 14
+            onReceivingPlacemarks={dict => {
+              console.log(dict);
+              this.handleModalClose();
+            }}
           />
         </Modal>
         <View style={styles.row}>
