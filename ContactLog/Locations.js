@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-} from 'react-native';
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import colors from '../assets/colors';
 import {NativeModules} from 'react-native';
 import {GetStoreData} from '../utils/asyncStorage';
@@ -74,11 +68,11 @@ class Locations extends Component {
 
   render() {
     const {
-      contactLogData: {date}
+      contactLogData: {date},
     } = this.props;
 
     return (
-      <>
+      <ScrollView>
         <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
         <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
         {this.state.addresses.map((address, idx) => {
@@ -102,7 +96,7 @@ class Locations extends Component {
             </View>
           )
         })}
-      </>
+      </ScrollView>
     );
   }
 }
@@ -131,7 +125,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 5,
     paddingVertical: 17,
-    paddingRight: 11,
+    paddingHorizontal: 11,
   },
   name: {
     fontWeight: '500',
