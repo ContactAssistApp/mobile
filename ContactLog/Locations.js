@@ -21,7 +21,6 @@ class Locations extends Component {
 
     this.getLocationData().then(locations => {
       if (locations && locations.length > 0) {
-        console.log(locations);
         const filteredLog = locations.filter(location => {
           return new Date(location.time).getDate() === selectedDate.getDate();
         });
