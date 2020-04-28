@@ -49,8 +49,9 @@ class ImportGoogleTimeline extends Component {
           </View>
 
           <TouchableOpacity
+            style={styles.button}
             onPress={() => this.setState({googleSignInVisible: true})}>
-            <Text style={styles.button}>Import</Text>
+            <Text style={styles.buttonTitle}>Import</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -83,9 +84,12 @@ const styles = StyleSheet.create({
     color: colors.body_copy,
   },
   button: {
-    flex: 1,
     padding: 8,
-    color: colors.icon_on,
+    borderRadius: 8,
+    backgroundColor: colors.primary_theme,
+  },
+  buttonTitle: {
+    color: 'white',
     fontWeight: 'bold',
   },
   wrapper: {

@@ -6,7 +6,6 @@
 //  Copyright © 2020 CovidSafe. All rights reserved.
 //
 
-
 #import "React/RCTViewManager.h"
 
 @interface RCT_EXTERN_MODULE(GoogleTimelineImportViewManager, RCTViewManager)
