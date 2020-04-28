@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {GetStoreData} from '../utils/asyncStorage';
+import {DEFAULT_LOG_WINDOW} from '../utils/constants';
 import Modal from '../views/Modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../assets/colors';
@@ -10,7 +12,16 @@ class ImportGoogleTimeline extends Component {
     super();
     this.state = {
       googleSignInVisible: false,
+      // TODO: Sync this with the DataStorage.js state
+      log_window: parseInt(DEFAULT_LOG_WINDOW, 10),
     };
+  }
+
+  componentDidMount() {
+    GetStoreData('LOG_WINDOW')
+      .then(parseInt)
+      .then(days => this.setState({log_window: days}))
+      .catch(ignored => {});
   }
 
   handleModalClose = () => {
@@ -28,9 +39,7 @@ class ImportGoogleTimeline extends Component {
           <LocationHistoryImportView
             isVisible={this.state.googleSignInVisible}
             style={styles.wrapper}
-            // TODO: logWindow={getLogWindow()}
-            // or better, sync that to native side
-            // For now, defaults to 14
+            logWindow={this.state.log_window}
             onReceivingPlacemarks={dict => {
               console.log(dict);
               this.handleModalClose();
