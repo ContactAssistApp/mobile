@@ -21,13 +21,17 @@ class Locations extends Component {
   }
 
   componentDidMount() {
+    const {
+      contactLogData: {date: selectedDate},
+    } = this.props;
+
     this.getLocationData().then(locations => {
       if (locations && locations.length > 0) {
-        let locationList = locations;
-        if (locations.length > 5) {
-          locationList = locations.slice(0, 5);
-        }
-        NativeModules.Locations.reverseGeoCode(locationList, addresses => {
+        console.log(locations);
+        const filteredLog = locations.filter(location => {
+          return new Date(location.time).getDate() === selectedDate.getDate();
+        });
+        NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
           this.setState({
             addresses,
           });
@@ -37,6 +41,28 @@ class Locations extends Component {
   }
 
   getLocationData = () => {
+    //   const locations = [
+    //   {
+    //     latitude: 50.934430,
+    //     longitude: -102.816690,
+    //     time: 1587843741483,
+    //   },
+    //   {
+    //     latitude: 50.934430,
+    //     longitude: -102.816690,
+    //     time: 1587843793871,
+    //   },
+    //   {
+    //     latitude: 50.934430,
+    //     longitude: -102.816690,
+    //     time: 1587843806886,
+    //   },
+    //   {
+    //     latitude: 40.742050,
+    //     longitude: -73.993851,
+    //     time: 1587843813376,
+    //   }];
+    // }
     return GetStoreData('LOCATION_DATA').then(locationArrayString => {
       let locationArray = [];
       if (locationArrayString !== null) {
@@ -45,36 +71,6 @@ class Locations extends Component {
       return locationArray;
     });
   };
-
-  // fetchAddresses = () => {
-  //   const locations = [
-  //   {
-  //     latitude: 50.934430,
-  //     longitude: -102.816690,
-  //     time: 1587843741483,
-  //   },
-  //   {
-  //     latitude: 50.934430,
-  //     longitude: -102.816690,
-  //     time: 1587843793871,
-  //   },
-  //   {
-  //     latitude: 50.934430,
-  //     longitude: -102.816690,
-  //     time: 1587843806886,
-  //   },
-  //   {
-  //     latitude: 40.742050,
-  //     longitude: -73.993851,
-  //     time: 1587843813376,
-  //   }];
-  //
-  //   NativeModules.Locations.reverseGeoCode(locations, addresses => {
-  //     this.setState({
-  //       addresses,
-  //     });
-  //   });
-  // }
 
   render() {
     const {
@@ -86,9 +82,23 @@ class Locations extends Component {
         <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
         <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
         {this.state.addresses.map((address, idx) => {
+          const name = address[0] === '' ? 'Unknown Location' : address[0];
+          const timePeriods = address[2].split(',');
+          const tsStringList = timePeriods.map(timePeriod => {
+            const tsList = timePeriod.split('-');
+            const start = DateConverter.timeString(parseInt(tsList[0].trim()));
+            const end = DateConverter.timeString(parseInt(tsList[1].trim()));
+            return `${start}-${end}`;
+          });
           return (
             <View style={styles.address_card} key={idx}>
-              <Text>{address}</Text>
+              {address[0] && (
+                <Text style={styles.name}>{name}</Text>
+              )}
+              {address[1] && (
+                <Text style={styles.address}>{address[1]}</Text>
+              )}
+              <Text style={styles.time}>{tsStringList}</Text>
             </View>
           )
         })}
@@ -120,8 +130,26 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 20,
     marginVertical: 5,
-    padding: 15,
-  }
+    paddingVertical: 17,
+    paddingRight: 11,
+  },
+  name: {
+    fontWeight: '500',
+    fontSize: 16,
+    lineHeight: 23,
+  },
+  address: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.body_copy,
+    paddingVertical: 6,
+  },
+  time: {
+    fontSize: 12,
+    lineHeight: 15,
+    color: colors.body_copy,
+    paddingVertical: 6,
+  },
 });
 
 const mapStateToProps = state => {
