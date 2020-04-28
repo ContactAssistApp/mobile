@@ -3,12 +3,14 @@ import Notification from './Notification';
 import Location from './Location';
 import Bluetooth from './Bluetooth';
 import DataStorage from './DataStorage';
+import ImportGoogleTimeline from './ImportGoogleTimeline';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import Modal from '../views/Modal';
 import SettingLink from './SettingLink';
 import {UW_URL} from '../utils/constants.js';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 class SettingsModal extends Component {
   constructor() {
@@ -41,10 +43,8 @@ class SettingsModal extends Component {
 
           <>
             <Text style={styles.section_title}>More</Text>
-            <SettingLink
-              iconName={'share24'}
-              title={'Share'}
-            />
+            <ImportGoogleTimeline />
+            <SettingLink iconName={'share24'} title={'Share'} />
             <SettingLink
               iconName={'logo24'}
               title={'About CovidSafe'}
@@ -57,13 +57,8 @@ class SettingsModal extends Component {
             />
           </>
         </Modal>
-
         <TouchableOpacity onPress={() => this.setState({modalOn: true})}>
-          <CustomIcon
-            name={'settings24'}
-            color={colors.gray_icon}
-            size={24}
-          />
+          <CustomIcon name={'settings24'} color={colors.gray_icon} size={24} />
         </TouchableOpacity>
       </>
     );
