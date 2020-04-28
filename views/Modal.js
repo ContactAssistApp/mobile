@@ -17,7 +17,10 @@ class Modal extends Component {
     const {visible, title} = this.props;
 
     return (
-      <NativeModal presentationStyle="pageSheet" visible={visible}>
+      <NativeModal
+        presentationStyle="pageSheet"
+        visible={visible}
+        animationType="slide">
         <SafeAreaView style={styles.status_bar} />
         <View style={styles.header}>
           <TouchableOpacity onPress={this.props.handleModalClose}>
