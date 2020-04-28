@@ -1,5 +1,5 @@
 /**
- * Copyright (c) CovidSafe, Inc. and its affiliates.
+ * Copyright (c) CovidSafe.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,6 +10,6 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate>
 
-@property (nonatomic, strong) UIWindow *window;
+@property(nonatomic, strong) UIWindow *window;
 
 @end
