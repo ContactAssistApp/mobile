@@ -99,18 +99,7 @@ class Report extends Component {
         <View style={styles.result_container}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() =>
-              Alert.alert(
-                'Alert',
-                'This feature is disabled for demo.',
-                [
-                  {
-                    text: 'Got it',
-                    style: 'cancel',
-                  },
-                ],
-                {cancelable: false},
-              )}>
+            onPress={() => this.uploadBLE()}>
             <Text style={styles.button_text}>Upload Your Trace Data</Text>
           </TouchableOpacity>
           <TouchableOpacity
