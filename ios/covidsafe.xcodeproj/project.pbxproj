@@ -30,7 +30,7 @@
 		A5EEA9B0243E332300DDC471 /* contact.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9AC243E332300DDC471 /* contact.cc */; };
 		A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9B1243E33A800DDC471 /* contact-model.cc */; };
 		B537F701AA40882F8AA59C69 /* libPods-covidsafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */; };
-		D26183182457ECBA006B4478 /* GoogleSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26183172457ECBA006B4478 /* GoogleSignIn.swift */; };
+		D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */; };
 		D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */; };
 		FA99A7DD6E78E064A6B9F89F /* libPods-covidsafeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-covidsafeTests.a */; };
 		FBDFC5F03DC4A9AA826A92E4 /* libPods-covidsafe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C959DDA6D810F94A4A1ECC56 /* libPods-covidsafe-tvOSTests.a */; };
@@ -122,7 +122,7 @@
 		C7F87A4AC1994270AC1163B9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		C959DDA6D810F94A4A1ECC56 /* libPods-covidsafe-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9938D4C0F65454AA656A943 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		D26183172457ECBA006B4478 /* GoogleSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignIn.swift; sourceTree = "<group>"; };
+		D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGoogleTimeline.swift; sourceTree = "<group>"; };
 		D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleTimelineImportViewManager.m; sourceTree = "<group>"; };
 		E2E049DD21E04D6DAADB789A /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		E777A0CCD25544E896DEB60F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -342,7 +342,7 @@
 		D26183132457EC45006B4478 /* ImportGoogleTimeline */ = {
 			isa = PBXGroup;
 			children = (
-				D26183172457ECBA006B4478 /* GoogleSignIn.swift */,
+				D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */,
 				D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */,
 			);
 			name = ImportGoogleTimeline;
@@ -752,7 +752,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D26183182457ECBA006B4478 /* GoogleSignIn.swift in Sources */,
+				D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  GoogleSignIn.swift
+//  ImportGoogleTimeline.swift
 //  covidsafe
 //
 //  Created by Apollo Zhu on 4/28/20.
