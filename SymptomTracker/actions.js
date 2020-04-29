@@ -4,3 +4,9 @@ export function updateSymptom(payload) {
     payload,
   };
 }
+
+export function clearSymptoms() {
+  return {
+    type: 'CLEAR_SYMPTOMS',
+  };
+}

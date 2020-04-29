@@ -12,7 +12,7 @@ import Accordion from '../views/Accordion';
 import Checkbox from '../views/Checkbox';
 import Fever from './Fever';
 import Cough from './Cough';
-import {updateSymptom} from './actions.js';
+import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
@@ -35,16 +35,21 @@ class SymptomForm extends Component {
     this.setState({
       modalOn: false,
     });
+    this.props.clearSymptoms();
     this.props.navigation.navigate('BottomNav');
   };
 
   fetchLog = async () => {
     const {
-      symptoms: {date, timeOfDay},
+      symptoms: {date, timeOfDay, amTs, pmTs},
     } = this.props;
+
     let log = await GetStoreData(`SYMPTOM_${date}_${timeOfDay}`);
     if (log) {
       log = JSON.parse(log);
+      log.date = date;
+      log.amTs = amTs;
+      log.pmTs = pmTs;
       this.props.updateSymptom(log);
     }
   };
@@ -62,11 +67,18 @@ class SymptomForm extends Component {
     } = this.props;
     const currentTime = new Date().getTime();
 
-    this.props.updateSymptom({
-      ts: currentTime,
-    });
+    if (timeOfDay === 'AM') {
+      this.props.updateSymptom({
+        amTs: currentTime,
+      });
+      symptoms.amTs = currentTime;
+    } else if (timeOfDay === 'PM') {
+      this.props.updateSymptom({
+        pmTs: currentTime,
+      });
+      symptoms.pmTs = currentTime;
+    }
 
-    symptoms.ts = currentTime;
     SetStoreData(`SYMPTOM_${date}_${timeOfDay}`, symptoms);
     this.setState({
       modalOn: true,
@@ -254,6 +266,7 @@ const styles = StyleSheet.create({
 
 SymptomForm.propTypes = {
   updateSymptom: PropTypes.func.isRequired,
+  clearSymptoms: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -263,7 +276,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateSymptom
+  updateSymptom,
+  clearSymptoms,
 }, dispatch);
 
 export default connect(
