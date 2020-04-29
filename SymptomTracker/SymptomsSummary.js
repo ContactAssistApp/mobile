@@ -80,7 +80,7 @@ class SymptomsSummary extends Component {
                 return (
                   <View style={styles.symptom_card} key={key}>
                     <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                    {coughOnsetDate && (
+                    {coughOnsetDate !== '' && (
                       <View style={styles.row}>
                         <Text style={styles.label}>
                           {symptomMap.coughOnsetDate}
@@ -90,7 +90,7 @@ class SymptomsSummary extends Component {
                         </Text>
                       </View>
                     )}
-                    {coughDays && (
+                    {coughDays !== '' && (
                       <View style={styles.row}>
                         <Text style={styles.label}>{symptomMap.coughDays}</Text>
                         <Text style={styles.value}>{symptoms.coughDays}</Text>

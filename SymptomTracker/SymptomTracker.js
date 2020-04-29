@@ -33,17 +33,16 @@ class SymptomTracker extends Component {
   fetchLog = async d => {
     let amLog = await GetStoreData(`SYMPTOM_${d}_AM`);
     let pmLog = await GetStoreData(`SYMPTOM_${d}_PM`);
+
     if (amLog) {
       amLog = JSON.parse(amLog);
-      this.updateSymptom({
-        amHasLog: true,
+      this.props.updateSymptom({
         amTs: amLog.amTs,
       });
     }
     if (pmLog) {
       pmLog = JSON.parse(pmLog);
-      this.updateSymptom({
-        pmHasLog: true,
+      this.props.updateSymptom({
         pmTs: pmLog.pmTs,
       });
     }

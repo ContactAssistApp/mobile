@@ -41,11 +41,15 @@ class SymptomForm extends Component {
 
   fetchLog = async () => {
     const {
-      symptoms: {date, timeOfDay},
+      symptoms: {date, timeOfDay, amTs, pmTs},
     } = this.props;
+
     let log = await GetStoreData(`SYMPTOM_${date}_${timeOfDay}`);
     if (log) {
       log = JSON.parse(log);
+      log.date = date;
+      log.amTs = amTs;
+      log.pmTs = pmTs;
       this.props.updateSymptom(log);
     }
   };
@@ -273,7 +277,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateSymptom,
-  clearSymptoms
+  clearSymptoms,
 }, dispatch);
 
 export default connect(
