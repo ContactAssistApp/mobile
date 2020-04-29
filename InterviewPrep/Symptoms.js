@@ -2,9 +2,37 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
-import SymptomsSummary from '../SymptomTracker/SymptomsSummary';
+import SymptomsHalfDay from '../SymptomTracker/SymptomsHalfDay';
+import {GetKeys, GetMulti} from '../utils/asyncStorage';
+import SectionHeader from './SectionHeader';
+import DateHeader from './DateHeader';
 
 class Symptoms extends Component {
+  constructor() {
+    super();
+    this.state = {
+      logs: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchSymptomsLog();
+  }
+
+  fetchSymptomsLog = async () => {
+    const keys = await GetKeys('SYMPTOM_');
+    let date = new Date();
+    date.setDate(date.getDate() - 14);
+    const keysInTwoWeeks = keys.filter(key => {
+      const d = key.split('_')[1];
+      return new Date(d) > date;
+    });
+    const logs = await GetMulti(keysInTwoWeeks);
+    this.setState({
+      logs,
+    });
+  };
+
   render() {
     return (
       <>
@@ -22,7 +50,20 @@ class Symptoms extends Component {
             We’ve detected severe symptoms in your recent reports, and collected them below.
           </Text>
         </View>
-        <SymptomsSummary />
+        <SectionHeader header={'Symptoms'} />
+        {this.state.logs.map((log, index) => {
+          const key = Object.keys(log)[0];
+          const keyArr = key.split('_');
+
+          return (
+            <>
+              <View>
+                <DateHeader date={keyArr[1]} timeOfDay={keyArr[2]}/>
+              </View>
+              <SymptomsHalfDay symptoms={log[key]} />
+            </>
+          )
+        })}
       </>
     );
   }
