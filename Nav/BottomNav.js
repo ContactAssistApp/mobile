@@ -7,9 +7,6 @@ import HealthNav from '../Health/HealthNav';
 import Resources from '../Resources/Resources';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ContactLog from '../ContactLog/ContactLog';
-import HomeContainer from '../Home/HomeContainer';
-
-const ADD_DEBUG_SCREEN = false;
 
 const Tab = createBottomTabNavigator();
 
@@ -61,18 +58,6 @@ export default function BottomNav() {
           ),
         }}
       />
-      {ADD_DEBUG_SCREEN && (
-        <Tab.Screen
-          name="Debug"
-          component={HomeContainer}
-          options={{
-            tabBarLabel: 'Debug',
-            tabBarIcon: ({color}) => (
-              <Icon name="iframe-outline" color={color} size={28} />
-            ),
-          }}
-        />
-      )}
     </Tab.Navigator>
   );
 }
