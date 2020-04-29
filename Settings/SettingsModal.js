@@ -3,7 +3,7 @@ import Notification from './Notification';
 import Location from './Location';
 import Bluetooth from './Bluetooth';
 import DataStorage from './DataStorage';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import Modal from '../views/Modal';
@@ -31,31 +31,33 @@ class SettingsModal extends Component {
           visible={this.state.modalOn}
           handleModalClose={this.handleModalClose}
           title={'Settings'}>
-          <>
-            <Text style={styles.section_title}>Tracing</Text>
-            <Notification />
-            <Location />
-            <Bluetooth />
-            <DataStorage />
-          </>
+          <ScrollView>
+            <>
+              <Text style={styles.section_title}>Tracing</Text>
+              <Notification />
+              <Location />
+              <Bluetooth />
+              <DataStorage />
+            </>
 
-          <>
-            <Text style={styles.section_title}>More</Text>
-            <SettingLink
-              iconName={'share24'}
-              title={'Share'}
-            />
-            <SettingLink
-              iconName={'logo24'}
-              title={'About CovidSafe'}
-              url={UW_URL}
-            />
-            <SettingLink
-              iconName={'readingMode24'}
-              title={'FAQ'}
-              url={UW_URL}
-            />
-          </>
+            <>
+              <Text style={styles.section_title}>More</Text>
+              <SettingLink
+                iconName={'share24'}
+                title={'Share'}
+              />
+              <SettingLink
+                iconName={'logo24'}
+                title={'About CovidSafe'}
+                url={UW_URL}
+              />
+              <SettingLink
+                iconName={'readingMode24'}
+                title={'FAQ'}
+                url={UW_URL}
+              />
+            </>
+          </ScrollView>
         </Modal>
 
         <TouchableOpacity onPress={() => this.setState({modalOn: true})}>

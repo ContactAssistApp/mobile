@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import Privacy from '../Privacy/Privacy';
@@ -12,7 +19,7 @@ class InterviewPrepIntro extends Component {
   render() {
     const {pageIndex} = this.props.prepData;
     return (
-      <>
+      <ScrollView>
         <Image
           style={styles.hero}
           source={require('../assets/health/interview_prep_bg.png')}
@@ -74,7 +81,7 @@ class InterviewPrepIntro extends Component {
           </TouchableOpacity>
         </View>
         <Privacy />
-      </>
+      </ScrollView>
     );
   }
 }

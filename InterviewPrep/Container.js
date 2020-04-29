@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import colors from '../assets/colors';
 import Symptoms from './Symptoms';
 import Locations from './Locations';
@@ -23,7 +29,7 @@ class InterviewPrepContainer extends Component {
     const {pageIndex} = this.props.prepData;
 
     return (
-      <>
+      <ScrollView>
         <StepIndicatorContainer index={this.state.index} />
         {
           {
@@ -73,7 +79,7 @@ class InterviewPrepContainer extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-      </>
+      </ScrollView>
     );
   }
 }
