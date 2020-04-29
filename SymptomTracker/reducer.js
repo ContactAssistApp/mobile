@@ -36,6 +36,18 @@ const symptomReducer = (state = initialState, action) => {
         };
       });
       return state;
+
+    case 'CLEAR_SYMPTOMS':
+      Object.entries(state).forEach(([key, val]) => {
+        if (!['date','amHasLog', 'pmHasLog', 'amTs', 'pmTs'].includes(key)) {
+          state = {
+            ...state,
+            [key]: initialState[key],
+          };
+        }
+      });
+      return state;
+
     default:
       return state;
   }

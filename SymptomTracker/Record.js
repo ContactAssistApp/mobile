@@ -9,7 +9,7 @@ import {
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
-import {updateSymptom} from './actions.js';
+import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {DeleteStoreData} from '../utils/asyncStorage';
 import {connect} from 'react-redux';
@@ -53,6 +53,7 @@ class Record extends Component {
               pmTs: '',
             });
           }
+          this.props.clearSymptoms();
           DeleteStoreData(`SYMPTOM_${date}_${timeOfDay}`);
         }
       },
@@ -174,7 +175,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateSymptom
+  updateSymptom,
+  clearSymptoms,
 }, dispatch);
 
 export default connect(
