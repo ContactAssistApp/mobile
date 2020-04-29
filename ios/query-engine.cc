@@ -2,26 +2,31 @@
 #include <sys/time.h>
 #include "util.h"
 #include "query-engine.h"
-
-#define TEST_CODE
+#include "contact.h"
 
 namespace td {
 
-bool BluetoothMatch::hasMatch(int64_t up_to, const std::vector<Id> &localIds) const
+bool BluetoothMatch::hasMatch(int64_t up_to, const std::unordered_map<Id, int> &localIds) const
 {
-  std::vector<Id> allIds = expand_seeds(up_to);
+  int64_t add_from = up_to - _lookBackWindow;
 
-  auto l1_cur = allIds.cbegin();
-  auto l1_end = allIds.cend();
-  auto l2_cur = localIds.cbegin();
-  auto l2_end = localIds.cend();
-  while (l1_cur != l1_end && l2_cur != l2_end) {
-    if (*l1_cur < *l2_cur) {
-      ++l1_cur;
-    } else if(*l2_cur < *l1_cur) {
-      ++l2_cur;
-    } else {
-      return true;
+  for(auto seed: seeds) { //we make a copy cuz we mutate it in place
+    Id id;
+    int positive = 0;
+    while(seed.ts() < up_to) {
+      seed.stepInPlace(id, _seedStepSize);
+      if(seed.ts() >= add_from) {
+        const auto &contact = localIds.find(id);
+        if(contact == localIds.end()) {
+          positive = 0;
+        } else {
+          positive += contact->second;
+          if(positive > ContactLogEntry::MinContactsForPositiveSeed) {
+            //found a positive contact!
+            return true;
+          }
+        }
+      }
     }
   }
 
@@ -53,12 +58,9 @@ std::vector<Id> BluetoothMatch::expand_seeds(int64_t up_to) const
   return allIds;
 }
 
-std::vector<bool> performBleMatching(std::vector<BluetoothMatch> &matches, std::vector<Id> &localIds)
+std::vector<bool> performBleMatching(std::vector<BluetoothMatch> &matches, std::unordered_map<Id, int> &localIds)
 {
     int64_t now = get_timestamp();
-    //xxx load ids
-    std::sort(localIds.begin(), localIds.end());
-    localIds.erase( std::unique( localIds.begin(), localIds.end() ), localIds.end() );
 
     std::vector<bool> matchResults;
     matchResults.reserve(matches.size());

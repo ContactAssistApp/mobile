@@ -3,10 +3,10 @@
 
 #include <vector>
 #include <array>
+#include <unordered_map>
 #include "contact-model.h"
 
 namespace td {
-
 
 
 class BluetoothMatch
@@ -22,12 +22,11 @@ public:
 
   Seed at(int i) { return seeds[i]; }
 
-  bool hasMatch(int64_t up_to, const std::vector<Id> &localIds) const;
+  bool hasMatch(int64_t up_to, const std::unordered_map<Id, int> &localIds) const;
   std::vector<Id> expand_seeds(int64_t up_to) const;
 };
 
-
-std::vector<bool> performBleMatching(std::vector<BluetoothMatch> &matches, std::vector<Id> &localIds);
+std::vector<bool> performBleMatching(std::vector<BluetoothMatch> &matches, std::unordered_map<Id, int> &localIds);
 
 }
 #endif

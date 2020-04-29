@@ -49,11 +49,16 @@ struct PerIdContact
 
   bool is_significant()
   {
-    return active_contacts + passive_contacts > 8; //simple heusristics for determining whether a given Id could have caused exposure
+    return active_contacts + passive_contacts > 2; //simple heusristics for determining whether a given Id could have caused exposure
+  }
+
+  int contact_count()
+  {
+    return active_contacts + passive_contacts;
   }
 };
 
-std::vector<Id> ContactStore::findContactsSince(int64_t initialTime)
+std::unordered_map<Id, int> ContactStore::findContactsSince(int64_t initialTime)
 {
   /*Algo is the following, keep a window of time and count the number of entries. We consider a contact if we detect  */
   std::ifstream infile(_logFileName);
@@ -86,11 +91,10 @@ std::vector<Id> ContactStore::findContactsSince(int64_t initialTime)
       ptr->passive_contacts++;
   }
 
-  printf("candidates %lu\n", id_agg.size());
-  std::vector<Id> res;
+  std::unordered_map<Id, int> res;
   for(auto &kv : id_agg) {
     if(kv.second->is_significant())
-      res.push_back(kv.first);
+      res.insert({ kv.first, kv.second->contact_count() });
   }
   return res;
 }

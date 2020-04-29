@@ -12,7 +12,8 @@ const Ble = {
     }
 
     let config_opts = {
-      "DebugQueryEngine": "low" //produces short summary of query engine values
+      "DebugQueryEngine": "low", //produces short summary of query engine values
+      "DebugLog": "yes"
     };
     if (__DEV__ && 0) {
       config_opts = {

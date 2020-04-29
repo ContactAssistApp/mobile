@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "contact-model.h"
 
@@ -20,8 +21,11 @@ class ContactLogEntry
   ContactKind _kind;
 public:
   //how long to keep sensing an active contact before flushing a record
-  static const int ActiveContactDurationInSecs = 60;
   static const int MinRssiForContact = -82;
+  //how many entries to see to consider an ID as possibly positive
+  static const int MinEntriesForPositiveID = 3; //with current params, this is 3 samples over 15 minutes
+  //how many successive possibly positive IDs to see to consider a seed as positive
+  static const int MinContactsForPositiveSeed = 8;
 
   ContactLogEntry(const Id &id, int64_t ts, int rssi, ContactKind k): _id(id), _timestamp(ts), _rssi(rssi), _kind(k) {}
 
@@ -42,7 +46,7 @@ class ContactStore
 public:
   explicit ContactStore(std::string logFileName): _logFileName(logFileName) { }
   void log(const ContactLogEntry &c);
-  std::vector<Id> findContactsSince(int64_t initialTime);
+  std::unordered_map<Id, int> findContactsSince(int64_t initialTime);
   void purgeOldRecords(int64_t age);
 };
 

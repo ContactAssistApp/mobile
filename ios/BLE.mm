@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <sys/time.h>
-
+#include <unordered_set>
 #include <Foundation/Foundation.h>
 #include <CoreBluetooth/CoreBluetooth.h>
 #import <React/RCTConvert.h>
@@ -25,6 +25,9 @@
   handle restore events
   add delay to write from read
   add networking retries for read/write
+  debug why in some cases phones only get passive contacts while never scanning for positive ones
+  handle reads with offsets
+  https://stackoverflow.com/questions/15143453/what-is-the-correct-way-to-respond-to-peripheralmanagerdidreceivewriterequests
  */
 
 //set this to enable high volume logging disable for release!
@@ -818,6 +821,7 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
     try {
       @try {
         std::vector<td::BluetoothMatch> matches;
+        std::unordered_set<std::string> uuids_found;
         matches.reserve(arr.count / 2);
         for(int i = 0; i < arr.count / 2; ++i) {
           matches.emplace_back(contact_matching_lookback_window_in_secs, crypto_id_update_schedule_in_secs);
@@ -827,9 +831,14 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
           NSArray *timestamps = arr[i * 2 + 1];
 
           for(int j = 0; j < seeds.count; ++j) {
-            NSString *s = seeds[j];
-            NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:s];
+            NSString *s = ((NSString*)seeds[j]).lowercaseString;
 
+            auto str = std::string(s.UTF8String);
+            if(uuids_found.find(str) != uuids_found.end())
+              continue;
+            uuids_found.insert(str);
+
+            NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:s];
             NSNumber *ts = nil;
             if(j < timestamps.count)
               ts = timestamps[j];
@@ -871,7 +880,7 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
           }
         }
 
-        std::vector<td::Id> localIds;
+        std::unordered_map<td::Id, int> localIds;
         {
           BLE * ble = _w_ble;
           if(ble)
@@ -881,8 +890,8 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
         if(DebugQueryEngineEnabled) {
           [self logCritical: [NSString stringWithFormat: @"QE:: found %ld local contacts", localIds.size()]];
           if(VerboseQueryEngineEnabled) {
-            for(int i = 0; i < localIds.size(); ++i) {
-              [self logCritical: [NSString stringWithFormat: @"\t%s", localIds[i].serialize().c_str()]];
+            for(auto &_id: localIds) {
+              [self logCritical: [NSString stringWithFormat: @"\t%s -> %d", _id.first.serialize().c_str(), _id.second]];
             }
           }
         }
