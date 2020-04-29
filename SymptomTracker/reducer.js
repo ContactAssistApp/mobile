@@ -1,7 +1,5 @@
 const initialState = {
   date: '',
-  amHasLog: false,
-  pmHasLog: false,
   amTs: '',
   pmTs: '',
   timeOfDay: '',
@@ -39,7 +37,7 @@ const symptomReducer = (state = initialState, action) => {
 
     case 'CLEAR_SYMPTOMS':
       Object.entries(state).forEach(([key, val]) => {
-        if (!['date','amHasLog', 'pmHasLog', 'amTs', 'pmTs'].includes(key)) {
+        if (!['date', 'amTs', 'pmTs', 'timeOfDay'].includes(key)) {
           state = {
             ...state,
             [key]: initialState[key],

@@ -12,7 +12,7 @@ import Accordion from '../views/Accordion';
 import Checkbox from '../views/Checkbox';
 import Fever from './Fever';
 import Cough from './Cough';
-import {updateSymptom} from './actions.js';
+import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
@@ -35,6 +35,7 @@ class SymptomForm extends Component {
     this.setState({
       modalOn: false,
     });
+    this.props.clearSymptoms();
     this.props.navigation.navigate('BottomNav');
   };
 
@@ -261,6 +262,7 @@ const styles = StyleSheet.create({
 
 SymptomForm.propTypes = {
   updateSymptom: PropTypes.func.isRequired,
+  clearSymptoms: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -270,7 +272,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateSymptom
+  updateSymptom,
+  clearSymptoms
 }, dispatch);
 
 export default connect(

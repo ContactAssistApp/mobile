@@ -10,8 +10,10 @@ import DateConverter from '../utils/date';
 class Confirmation extends Component {
   render() {
     const {
-      symptoms: {timeOfDay, ts},
+      symptoms: {timeOfDay, amTs, pmTs},
     } = this.props;
+
+    let ts = timeOfDay === 'AM' ? amTs : pmTs;
 
     return (
       <ScrollView>
