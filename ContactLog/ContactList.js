@@ -15,21 +15,22 @@ import PropTypes from 'prop-types';
 import {SetStoreData} from '../utils/asyncStorage';
 
 class ContactList extends Component {
-  selectContact = contactID => {
+  selectContact = contact => {
     let {
       contactLogData: {selectedContacts},
     } = this.props;
 
-    const index = selectedContacts.indexOf(contactID);
+    const index = selectedContacts.findIndex(item => item.id === contact.id);
     if (index !== -1) {
       selectedContacts.splice(index, 1);
       this.props.updateContactLog({
-        selectedContacts,
+        field: 'selectedContacts',
+        value: selectedContacts,
       });
     } else {
       this.props.updateContactLog({
         field: 'selectedContacts',
-        value: [...selectedContacts, contactID],
+        value: [...selectedContacts, contact],
       });
     }
   };
@@ -46,9 +47,9 @@ class ContactList extends Component {
               <TouchableOpacity
                 key={contact.id}
                 style={styles.contact}
-                onPress={() => this.selectContact(contact.id)}>
+                onPress={() => this.selectContact(contact)}>
                 <Text style={styles.name}>{contact.name}</Text>
-                {selectedContacts.includes(contact.id) && (
+                {selectedContacts.find(item => item.id === contact.id) && (
                   <CustomIcon
                     name={'checkmark24'}
                     color={colors.gray_icon}

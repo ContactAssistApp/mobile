@@ -72,7 +72,7 @@ class People extends Component {
                 {selectedContacts.map(contact => {
                   return (
                     <View style={styles.contact_wrapper}>
-                      <Text style={styles.contact}>{contact}</Text>
+                      <Text style={styles.contact}>{contact.name}</Text>
                     </View>
                   )
                 })}
