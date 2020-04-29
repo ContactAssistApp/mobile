@@ -62,11 +62,18 @@ class SymptomForm extends Component {
     } = this.props;
     const currentTime = new Date().getTime();
 
-    this.props.updateSymptom({
-      ts: currentTime,
-    });
+    if (timeOfDay === 'AM') {
+      this.props.updateSymptom({
+        amTs: currentTime,
+      });
+      symptoms.amTs = currentTime;
+    } else if (timeOfDay === 'PM') {
+      this.props.updateSymptom({
+        pmTs: currentTime,
+      });
+      symptoms.pmTs = currentTime;
+    }
 
-    symptoms.ts = currentTime;
     SetStoreData(`SYMPTOM_${date}_${timeOfDay}`, symptoms);
     this.setState({
       modalOn: true,

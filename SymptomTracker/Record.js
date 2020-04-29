@@ -37,11 +37,22 @@ class Record extends Component {
       buttonIndex => {
         if (buttonIndex === 1) {
           this.props.updateSymptom({
-            timeOfDay: this.props.timeOfDay,
+            timeOfDay
           });
 
           this.props.navigate('SymptomForm');
         } else if (buttonIndex === 2) {
+          if (timeOfDay === 'AM') {
+            this.props.updateSymptom({
+              timeOfDay: '',
+              amTs: '',
+            });
+          } else if (timeOfDay === 'PM') {
+            this.props.updateSymptom({
+              timeOfDay: '',
+              pmTs: '',
+            });
+          }
           DeleteStoreData(`SYMPTOM_${date}_${timeOfDay}`);
         }
       },

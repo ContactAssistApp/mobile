@@ -1,7 +1,10 @@
 const initialState = {
   date: '',
+  amHasLog: false,
+  pmHasLog: false,
+  amTs: '',
+  pmTs: '',
   timeOfDay: '',
-  ts: '',
   fever: 0,
   feverOnsetDate: '',
   feverTemperature: '',
