@@ -10,6 +10,7 @@ import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {GetStoreData} from '../utils/asyncStorage';
 
 class People extends Component {
   constructor() {
@@ -37,6 +38,19 @@ class People extends Component {
         value: contactList,
       });
     });
+
+    this.fetchSelectedContacts();
+  }
+
+  fetchSelectedContacts = () => {
+    return GetStoreData('CONTACTS').then(selectedContacts => {
+      if (selectedContacts) {
+        this.props.updateContactLog({
+          field: 'selectedContacts',
+          value: JSON.parse(selectedContacts),
+        });
+      }
+    });
   }
 
   openModal = () => {
@@ -55,8 +69,7 @@ class People extends Component {
     const {
       contactLogData: {selectedContacts},
     } = this.props;
-    console.log("==people");
-    console.log(selectedContacts.length);
+
     return (
       <>
         <Modal
@@ -68,17 +81,17 @@ class People extends Component {
         <ScrollView>
           <Text style={styles.header}>Social Interactions</Text>
           {selectedContacts && selectedContacts.length > 0
-            ? (<View>
+            ? <View>
                 {selectedContacts.map(contact => {
                   return (
-                    <View style={styles.contact_wrapper}>
+                    <View style={styles.contact_wrapper} key={contact.id}>
                       <Text style={styles.contact}>{contact.name}</Text>
                     </View>
                   )
                 })}
-              </View>)
+              </View>
             : <Text style={styles.description}>
-              Safely add people you’ve been in contact with directly from your contacts list, or one at a time.
+                Safely add people you’ve been in contact with directly from your contacts list, or one at a time.
               </Text>
           }
         </ScrollView>

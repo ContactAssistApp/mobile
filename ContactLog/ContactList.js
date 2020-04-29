@@ -49,7 +49,7 @@ class ContactList extends Component {
                 style={styles.contact}
                 onPress={() => this.selectContact(contact)}>
                 <Text style={styles.name}>{contact.name}</Text>
-                {selectedContacts.find(item => item.id === contact.id) && (
+                {selectedContacts && selectedContacts.find(item => item.id === contact.id) && (
                   <CustomIcon
                     name={'checkmark24'}
                     color={colors.gray_icon}
