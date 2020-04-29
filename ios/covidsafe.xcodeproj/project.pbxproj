@@ -14,7 +14,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */; };
-		14431C2E242D842600DEFBBE /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C2D242D842600DEFBBE /* Device.m */; };
 		14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */; };
 		14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7CF2454B5FE00937BF4 /* Locations.swift */; };
 		14CCE7ED24550F0200937BF4 /* Locations.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7EC24550F0200937BF4 /* Locations.m */; };
@@ -74,8 +73,6 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = covidsafe/main.m; sourceTree = "<group>"; };
 		140F6FCA242B9AE6005BE5B9 /* covidsafe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "covidsafe-Bridging-Header.h"; sourceTree = "<group>"; };
 		1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
-		14431C2B242D82AA00DEFBBE /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
-		14431C2D242D842600DEFBBE /* Device.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconBroadcast.m; sourceTree = "<group>"; };
 		14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconBroadcast.h; sourceTree = "<group>"; };
 		14431C432431186F00DEFBBE /* RCTBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBackgroundGeolocation.xcodeproj; path = "../node_modules/@mauron85/react-native-background-geolocation/ios/RCTBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
@@ -196,7 +193,6 @@
 				A5117594243BCAD500BCD5AA /* util.h */,
 				1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */,
 				14431C2F242D8B4300DEFBBE /* BLE */,
-				14431C2C242D83DF00DEFBBE /* Device */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -206,15 +202,6 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = covidsafe;
-			sourceTree = "<group>";
-		};
-		14431C2C242D83DF00DEFBBE /* Device */ = {
-			isa = PBXGroup;
-			children = (
-				14431C2B242D82AA00DEFBBE /* Device.h */,
-				14431C2D242D842600DEFBBE /* Device.m */,
-			);
-			name = Device;
 			sourceTree = "<group>";
 		};
 		14431C2F242D8B4300DEFBBE /* BLE */ = {
@@ -749,7 +736,6 @@
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
 				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
 				14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */,
-				14431C2E242D842600DEFBBE /* Device.m in Sources */,
 				14CCE7ED24550F0200937BF4 /* Locations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
