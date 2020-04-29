@@ -18,10 +18,12 @@ public:
   BluetoothMatch(int64_t lookBackWindow, int64_t seedStepSize): _lookBackWindow(lookBackWindow), _seedStepSize(seedStepSize) {}
 
   void addSeed(const Seed &s) { seeds.push_back(s); }
+  size_t seed_count() const { return seeds.size(); }
 
   Seed at(int i) { return seeds[i]; }
 
-  bool hasMatch(int64_t up_to, const std::vector<Id> &localIds);
+  bool hasMatch(int64_t up_to, const std::vector<Id> &localIds) const;
+  std::vector<Id> expand_seeds(int64_t up_to) const;
 };
 
 
