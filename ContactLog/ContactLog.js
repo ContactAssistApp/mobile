@@ -14,7 +14,7 @@ import Locations from './Locations';
 import People from './People';
 import {Agenda} from 'react-native-calendars';
 import CustomIcon from '../assets/icons/CustomIcon.js';
-import {updateDate} from './actions.js';
+import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -117,7 +117,7 @@ class ContactLog extends Component {
             this.setState({
               calendarExpand: false,
             });
-            this.props.updateDate({
+            this.props.updateContactLog({
               field: 'date',
               value: new Date(day.dateString),
             });
@@ -185,11 +185,11 @@ const styles = StyleSheet.create({
 });
 
 ContactLog.propTypes = {
-  updateDate: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateDate
+  updateContactLog
 }, dispatch);
 
 export default connect(

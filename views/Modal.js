@@ -25,7 +25,7 @@ class Modal extends Component {
           </TouchableOpacity>
           <Text style={styles.title}>{title}</Text>
         </View>
-        <ScrollView>{this.props.children}</ScrollView>
+        {this.props.children}
       </NativeModal>
     );
   }

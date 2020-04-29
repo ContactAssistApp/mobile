@@ -85,15 +85,11 @@ class Locations extends Component {
           });
           return (
             <View style={styles.address_card} key={idx}>
-              {address[0] && (
-                <Text style={styles.name}>{name}</Text>
-              )}
-              {address[1] && (
-                <Text style={styles.address}>{address[1]}</Text>
-              )}
+              {address[0] && <Text style={styles.name}>{name}</Text>}
+              {address[1] && <Text style={styles.address}>{address[1]}</Text>}
               <Text style={styles.time}>{tsStringList}</Text>
             </View>
-          )
+          );
         })}
       </ScrollView>
     );
