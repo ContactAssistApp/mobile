@@ -56,13 +56,11 @@ class Symptoms extends Component {
           const keyArr = key.split('_');
 
           return (
-            <>
-              <View>
-                <DateHeader date={keyArr[1]} timeOfDay={keyArr[2]}/>
-              </View>
+            <View key={key}>
+              <DateHeader date={keyArr[1]} timeOfDay={keyArr[2]} />
               <SymptomsHalfDay symptoms={log[key]} />
-            </>
-          )
+            </View>
+          );
         })}
       </>
     );
