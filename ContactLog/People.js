@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, ScrollView} from 'react-native';
 import colors from '../assets/colors';
 import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
@@ -10,7 +10,7 @@ import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GetStoreData} from '../utils/asyncStorage';
+import SelectedContacts from './SelectedContacts';
 
 class People extends Component {
   constructor() {
@@ -38,19 +38,6 @@ class People extends Component {
         value: contactList,
       });
     });
-
-    this.fetchSelectedContacts();
-  }
-
-  fetchSelectedContacts = () => {
-    return GetStoreData('CONTACTS').then(selectedContacts => {
-      if (selectedContacts) {
-        this.props.updateContactLog({
-          field: 'selectedContacts',
-          value: JSON.parse(selectedContacts),
-        });
-      }
-    });
   }
 
   openModal = () => {
@@ -66,34 +53,17 @@ class People extends Component {
   };
 
   render() {
-    const {
-      contactLogData: {selectedContacts},
-    } = this.props;
-
     return (
       <>
         <Modal
           visible={this.state.modalOn}
           handleModalClose={this.closeModal}
           title={'Contacts'}>
-          <ContactList handleModalClose={this.closeModal}/>
+          <ContactList handleModalClose={this.closeModal} />
         </Modal>
         <ScrollView>
           <Text style={styles.header}>Social Interactions</Text>
-          {selectedContacts && selectedContacts.length > 0
-            ? <View>
-                {selectedContacts.map(contact => {
-                  return (
-                    <View style={styles.contact_wrapper} key={contact.id}>
-                      <Text style={styles.contact}>{contact.name}</Text>
-                    </View>
-                  )
-                })}
-              </View>
-            : <Text style={styles.description}>
-                Safely add people you’ve been in contact with directly from your contacts list, or one at a time.
-              </Text>
-          }
+          <SelectedContacts />
         </ScrollView>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
@@ -139,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#212121',
-  }
+  },
 });
 
 ContactList.propTypes = {
