@@ -4,6 +4,7 @@ import colors from '../assets/colors';
 import SymptomsList from './SymptomsList';
 import SelectedContacts from '../ContactLog/SelectedContacts';
 import SectionHeader from './SectionHeader';
+import LocationsList from './LocationsList';
 
 class Summary extends Component {
   render() {
@@ -27,6 +28,7 @@ class Summary extends Component {
           <Text style={styles.section_title}>Summary</Text>
         </View>
         <SymptomsList />
+        <LocationsList />
         <SectionHeader header={'people'} />
         <SelectedContacts />
       </ScrollView>
