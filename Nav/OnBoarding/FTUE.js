@@ -14,7 +14,6 @@ import colors from '../../assets/colors.js';
 
 class FTUE extends Component {
   renderItem = ({item}) => {
-    const {navigate} = this.props.navigation;
     if (item.key === 'ftue_5') {
       return (
         <View style={styles.ftue_container}>

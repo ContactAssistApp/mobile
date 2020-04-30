@@ -51,7 +51,7 @@ class Locations extends Component {
     } = this.props;
 
     return (
-      <ScrollView>
+      <>
         <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
         <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
         {this.state.addresses.map((address, idx) => {
@@ -71,7 +71,7 @@ class Locations extends Component {
             </View>
           );
         })}
-      </ScrollView>
+      </>
     );
   }
 }

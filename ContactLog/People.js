@@ -63,10 +63,10 @@ class People extends Component {
           title={'Contacts'}>
           <ContactList handleModalClose={this.closeModal} />
         </Modal>
-        <ScrollView>
+        <>
           <Text style={styles.header}>Social Interactions</Text>
           <SelectedContacts />
-        </ScrollView>
+        </>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
         </TouchableOpacity>

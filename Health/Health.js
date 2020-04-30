@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,13 +6,14 @@ import {
   Dimensions,
   Text,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import Symptoms from '../Symptoms/Symptoms';
 import Report from './Report';
 import colors from '../assets/colors';
 
-class Health extends Component {
+class Health extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -64,6 +65,7 @@ class Health extends Component {
             this.setState({index: idx});
           }}
           initialLayout={initialLayout}
+          lazy={true}
         />
       </>
     );

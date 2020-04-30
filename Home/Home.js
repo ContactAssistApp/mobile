@@ -106,57 +106,52 @@ class Home extends Component {
 
   processQueries = async () => {
     let location = await getLatestCoarseLocation();
-    const messageIDs = await this.fetchMessageID(location);
-    if (messageIDs && messageIDs.length > 0) {
-      const messages = await this.fetchMessages(messageIDs);
-      let args = [];
-      let msgs = [];
-      messages.forEach(messageObj => {
-        const {bluetoothMatches} = messageObj;
+    if (location) {
+      const messageIDs = await this.fetchMessageID(location);
+      if (messageIDs && messageIDs.length > 0) {
+        const messages = await this.fetchMessages(messageIDs);
+        let args = [];
+        let msgs = [];
+        messages.forEach(messageObj => {
+          const {bluetoothMatches} = messageObj;
 
-        bluetoothMatches.forEach(match => {
-          const {userMessage, seeds} = match;
-          let timestamps = [];
-          let seedsArray = [];
-          seeds.forEach(seedObj => {
-            if (seedObj
-              && seedObj.seed
-              && seedObj.seed !== '00000000-0000-0000-0000-000000000000') {
-              timestamps.push(seedObj.sequenceStartTime);
-              seedsArray.push(seedObj.seed);
+          bluetoothMatches.forEach(match => {
+            const {userMessage, seeds} = match;
+            let timestamps = [];
+            let seedsArray = [];
+            seeds.forEach(seedObj => {
+              if (seedObj
+                && seedObj.seed
+                && seedObj.seed !== '00000000-0000-0000-0000-000000000000') {
+                timestamps.push(seedObj.sequenceStartTime);
+                seedsArray.push(seedObj.seed);
+              }
+            });
+
+            if (seedsArray && seedsArray.length > 0) {
+              args.push(seedsArray);
+              args.push(timestamps);
+
+              if (userMessage) {
+                msgs.push(userMessage);
+              } else {
+                msgs.push(DEFAULT_NOTIFICATION);
+              }
             }
           });
-
-          if (seedsArray && seedsArray.length > 0) {
-            args.push(seedsArray);
-            args.push(timestamps);
-
-            if (userMessage) {
-              msgs.push(userMessage);
-            } else {
-              msgs.push(DEFAULT_NOTIFICATION);
-            }
-          }
         });
-      });
 
-      let notifications = await this.searchQuery(args, msgs);
-      if (notifications && notifications.length > 0) {
-        SetStoreData('NOTIFICATIONS', notifications);
+        let notifications = await this.searchQuery(args, msgs);
+        if (notifications && notifications.length > 0) {
+          SetStoreData('NOTIFICATIONS', notifications);
+        }
       }
     }
   };
 
   searchQuery = async (args, msgs) => {
-    console.log("===args===");
-    console.log(args);
-    console.log("===msgs===");
-    console.log(msgs);
-
     return Ble.runBleQuery(args).then(
       results => {
-        console.log("==results===")
-        console.log(results);
         let notifications = [];
         results.forEach((result, index) => {
           if (result === 1) {
@@ -241,10 +236,11 @@ class Home extends Component {
   };
 
   handleOnRefresh = () => {
-    // this.setState({
-    //   refreshing: true,
-    // });
-    // this.processQueries().then(() => this.setState({refreshing: false}));
+    this.setState({
+      refreshing: true,
+    });
+
+    this.processQueries().then(() => this.setState({refreshing: false}));
   };
 
   render() {

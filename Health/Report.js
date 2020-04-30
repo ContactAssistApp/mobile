@@ -1,5 +1,4 @@
-import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {REPORT_BLE_URL} from '../utils/endpoints';
 import {
   ScrollView,
@@ -20,7 +19,7 @@ import Emergency from '../Privacy/Emergency';
 import CareTips from '../CareTips/CareTips';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
-class Report extends Component {
+class Report extends PureComponent {
   constructor() {
     super();
     this.state = {
