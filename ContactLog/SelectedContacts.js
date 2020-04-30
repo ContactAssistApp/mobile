@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GetStoreData} from '../utils/asyncStorage';
+import SectionHeader from '../InterviewPrep/SectionHeader';
 
 class SelectedContacts extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class SelectedContacts extends Component {
 
     return (
       <>
+        <SectionHeader header={'people'} />
         {selectedContacts && selectedContacts.length > 0
           ? <View>
             {selectedContacts.map(contact => {

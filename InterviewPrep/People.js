@@ -2,7 +2,6 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
-import SectionHeader from './SectionHeader';
 import SelectedContacts from '../ContactLog/SelectedContacts';
 
 class People extends Component {
@@ -23,7 +22,6 @@ class People extends Component {
             Below are locations you’ve recently visited for 10 minutes or more.
           </Text>
         </View>
-        <SectionHeader header={'people'} />
         <SelectedContacts />
       </>
     );
