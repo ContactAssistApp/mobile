@@ -49,7 +49,7 @@ class Locations extends Component {
     } = this.props;
 
     return (
-      <>
+      <ScrollView>
         <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
         <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
         {this.state.addresses.map((address, idx) => {
@@ -62,14 +62,14 @@ class Locations extends Component {
             return `${start}-${end}`;
           });
           return (
-            <ScrollView style={styles.address_card} key={idx}>
+            <View style={styles.address_card} key={idx}>
               {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
               {address[1] !== '' && <Text style={styles.address}>{address[1]}</Text>}
               <Text style={styles.time}>{tsStringList}</Text>
-            </ScrollView>
+            </View>
           );
         })}
-      </>
+      </ScrollView>
     );
   }
 }
