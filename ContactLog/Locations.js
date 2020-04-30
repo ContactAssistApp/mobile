@@ -5,7 +5,6 @@ import {NativeModules} from 'react-native';
 import {GetStoreData} from '../utils/asyncStorage';
 import {connect} from 'react-redux';
 import DateConverter from '../utils/date';
-import data from './static.json';
 
 class Locations extends Component {
   constructor() {
@@ -20,19 +19,18 @@ class Locations extends Component {
       contactLogData: {date: selectedDate},
     } = this.props;
 
-    const locations = data.locations;
-    // this.getLocationData().then(locations => {
-    if (locations && locations.length > 0) {
-      const filteredLog = locations.filter(location => {
-        return new Date(location.time).getDate() === selectedDate.getDate();
-      });
-      NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
-        this.setState({
-          addresses,
+    this.getLocationData().then(locations => {
+      if (locations && locations.length > 0) {
+        const filteredLog = locations.filter(location => {
+          return new Date(location.time).getDate() === selectedDate.getDate();
         });
-      });
-    }
-    // });
+        NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
+          this.setState({
+            addresses,
+          });
+        });
+      }
+    });
   }
 
   getLocationData = () => {
@@ -64,11 +62,11 @@ class Locations extends Component {
             return `${start}-${end}`;
           });
           return (
-            <View style={styles.address_card} key={idx}>
+            <ScrollView style={styles.address_card} key={idx}>
               {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
               {address[1] !== '' && <Text style={styles.address}>{address[1]}</Text>}
               <Text style={styles.time}>{tsStringList}</Text>
-            </View>
+            </ScrollView>
           );
         })}
       </>
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 25,
     textTransform: 'capitalize',
-    color: '#333333',
+    color: colors.module_title,
     padding: 20,
   },
   sub_header: {

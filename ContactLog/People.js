@@ -11,7 +11,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
-import data from './static.json';
 
 class People extends Component {
   constructor() {
@@ -22,12 +21,10 @@ class People extends Component {
   }
 
   componentDidMount() {
-    // Contacts.getAll((err, contacts) => {
-    //   if (err) {
-    //     throw err;
-    //   }
-    //   console.log(contacts);
-    const contacts = data.contacts;
+    Contacts.getAll((err, contacts) => {
+      if (err) {
+        throw err;
+      }
       const contactList = contacts.map(contact => {
         return {
           id: contact.recordID,
@@ -39,7 +36,7 @@ class People extends Component {
         field: 'allContacts',
         value: contactList,
       });
-    // });
+    });
   }
 
   openModal = () => {
@@ -63,10 +60,10 @@ class People extends Component {
           title={'Contacts'}>
           <ContactList handleModalClose={this.closeModal} />
         </Modal>
-        <>
+        <ScrollView>
           <Text style={styles.header}>Social Interactions</Text>
           <SelectedContacts />
-        </>
+        </ScrollView>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
         </TouchableOpacity>
