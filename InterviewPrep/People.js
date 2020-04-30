@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import SelectedContacts from '../ContactLog/SelectedContacts';
+import SectionHeader from './SectionHeader';
 
 class People extends Component {
   render() {
@@ -22,6 +23,7 @@ class People extends Component {
             Below are locations you’ve recently visited for 10 minutes or more.
           </Text>
         </View>
+        <SectionHeader header={'people'} />
         <SelectedContacts />
       </>
     );

@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import colors from '../assets/colors';
 import SymptomsList from './SymptomsList';
 import SelectedContacts from '../ContactLog/SelectedContacts';
+import SectionHeader from './SectionHeader';
 
 class Summary extends Component {
   render() {
@@ -26,6 +27,7 @@ class Summary extends Component {
           <Text style={styles.section_title}>Summary</Text>
         </View>
         <SymptomsList />
+        <SectionHeader header={'people'} />
         <SelectedContacts />
       </ScrollView>
     );
