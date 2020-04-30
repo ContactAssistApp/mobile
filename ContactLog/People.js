@@ -25,7 +25,6 @@ class People extends Component {
       if (err) {
         throw err;
       }
-
       const contactList = contacts.map(contact => {
         return {
           id: contact.recordID,

@@ -1,5 +1,5 @@
 export const SYMPTOM_MAP = {
-  fever: 'Fever:',
+  fever: 'Fever',
   feverOnsetDate: 'Onset date:',
   feverTemperature: 'Highest temp:',
   feverDays: 'Duration (days):',

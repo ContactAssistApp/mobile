@@ -34,28 +34,6 @@ class Locations extends Component {
   }
 
   getLocationData = () => {
-    //   const locations = [
-    //   {
-    //     latitude: 50.934430,
-    //     longitude: -102.816690,
-    //     time: 1587843741483,
-    //   },
-    //   {
-    //     latitude: 50.934430,
-    //     longitude: -102.816690,
-    //     time: 1587843793871,
-    //   },
-    //   {
-    //     latitude: 50.934430,
-    //     longitude: -102.816690,
-    //     time: 1587843806886,
-    //   },
-    //   {
-    //     latitude: 40.742050,
-    //     longitude: -73.993851,
-    //     time: 1587843813376,
-    //   }];
-    // }
     return GetStoreData('LOCATION_DATA').then(locationArrayString => {
       let locationArray = [];
       if (locationArrayString !== null) {
@@ -85,8 +63,8 @@ class Locations extends Component {
           });
           return (
             <View style={styles.address_card} key={idx}>
-              {address[0] && <Text style={styles.name}>{name}</Text>}
-              {address[1] && <Text style={styles.address}>{address[1]}</Text>}
+              {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
+              {address[1] !== '' && <Text style={styles.address}>{address[1]}</Text>}
               <Text style={styles.time}>{tsStringList}</Text>
             </View>
           );
@@ -101,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 25,
     textTransform: 'capitalize',
-    color: '#333333',
+    color: colors.module_title,
     padding: 20,
   },
   sub_header: {

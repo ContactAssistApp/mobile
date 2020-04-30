@@ -1,5 +1,4 @@
-import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -14,7 +13,7 @@ import CustomIcon from '../assets/icons/CustomIcon.js';
 import DateConverter from '../utils/date';
 import {GetKeys} from '../utils/asyncStorage';
 
-class Symptoms extends Component {
+class Symptoms extends PureComponent {
   constructor() {
     super();
     this.agendaRef = React.createRef();
