@@ -1,52 +1,12 @@
 import React, {PureComponent} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Dimensions,
-  Text,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {SafeAreaView, View, StyleSheet, Text, Image} from 'react-native';
 import Symptoms from '../Symptoms/Symptoms';
 import Report from './Report';
 import colors from '../assets/colors';
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 
 class Health extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      index: 0,
-      routes: [
-        {key: 'symptoms', title: 'symptoms'},
-        {key: 'diagnosis', title: 'diagnosis'},
-      ],
-    };
-  }
-
   render() {
-    const symptomsRoute = () => {
-      return <Symptoms navigate={this.props.navigation.navigate} />;
-    };
-    const diagnosisRoute = () => <Report />;
-    const initialLayout = {width: Dimensions.get('window').width};
-
-    const renderScene = SceneMap({
-      symptoms: symptomsRoute,
-      diagnosis: diagnosisRoute,
-    });
-
-    const renderTabBar = props => (
-      <TabBar
-        {...props}
-        indicatorStyle={{backgroundColor: colors.primary_theme}}
-        style={styles.tab_bar}
-        activeColor={colors.section_title}
-        inactiveColor={colors.gray_icon}
-      />
-    );
-
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
@@ -57,16 +17,28 @@ class Health extends PureComponent {
           />
           <Text style={styles.title}>Health Report[DEMO]</Text>
         </View>
-        <TabView
-          navigationState={this.state}
-          renderTabBar={renderTabBar}
-          renderScene={renderScene}
-          onIndexChange={idx => {
-            this.setState({index: idx});
-          }}
-          initialLayout={initialLayout}
-          lazy={true}
-        />
+        <ScrollableTabView
+          initialPage={1}
+          renderTabBar={() => {
+            return (
+              <DefaultTabBar
+                backgroundColor={'white'}
+                activeTextColor={colors.section_title}
+                inactiveTextColor={colors.gray_icon}
+                textStyle={{fontWeight: '500', textTransform: 'uppercase'}}
+                underlineStyle={{
+                  height: 2,
+                  backgroundColor: colors.primary_theme
+                }}
+                tabStyle={{paddingTop: 10}}
+              />
+            );
+          }}>
+          <Symptoms
+            tabLabel={'symptoms'}
+            navigate={this.props.navigation.navigate} />
+          <Report tabLabel={'diagnosis'} />
+        </ScrollableTabView>
       </>
     );
   }
@@ -75,9 +47,6 @@ class Health extends PureComponent {
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
-  },
-  tab_bar: {
-    backgroundColor: 'white',
   },
   status_bar: {
     backgroundColor: 'white',
