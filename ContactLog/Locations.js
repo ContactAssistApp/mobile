@@ -5,6 +5,7 @@ import {NativeModules} from 'react-native';
 import {GetStoreData} from '../utils/asyncStorage';
 import {connect} from 'react-redux';
 import DateConverter from '../utils/date';
+import data from './static.json';
 
 class Locations extends Component {
   constructor() {
@@ -19,43 +20,23 @@ class Locations extends Component {
       contactLogData: {date: selectedDate},
     } = this.props;
 
-    this.getLocationData().then(locations => {
-      if (locations && locations.length > 0) {
-        const filteredLog = locations.filter(location => {
-          return new Date(location.time).getDate() === selectedDate.getDate();
+    const locations = data.locations;
+    // this.getLocationData().then(locations => {
+    if (locations && locations.length > 0) {
+      const filteredLog = locations.filter(location => {
+        return new Date(location.time).getDate() === selectedDate.getDate();
+      });
+      NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
+        console.log(addresses);
+        this.setState({
+          addresses,
         });
-        NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
-          this.setState({
-            addresses,
-          });
-        });
-      }
-    });
+      });
+    }
+    // });
   }
 
   getLocationData = () => {
-    //   const locations = [
-    //   {
-    //     latitude: 50.934430,
-    //     longitude: -102.816690,
-    //     time: 1587843741483,
-    //   },
-    //   {
-    //     latitude: 50.934430,
-    //     longitude: -102.816690,
-    //     time: 1587843793871,
-    //   },
-    //   {
-    //     latitude: 50.934430,
-    //     longitude: -102.816690,
-    //     time: 1587843806886,
-    //   },
-    //   {
-    //     latitude: 40.742050,
-    //     longitude: -73.993851,
-    //     time: 1587843813376,
-    //   }];
-    // }
     return GetStoreData('LOCATION_DATA').then(locationArrayString => {
       let locationArray = [];
       if (locationArrayString !== null) {
@@ -85,8 +66,8 @@ class Locations extends Component {
           });
           return (
             <View style={styles.address_card} key={idx}>
-              {address[0] && <Text style={styles.name}>{name}</Text>}
-              {address[1] && <Text style={styles.address}>{address[1]}</Text>}
+              {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
+              {address[1] !== '' && <Text style={styles.address}>{address[1]}</Text>}
               <Text style={styles.time}>{tsStringList}</Text>
             </View>
           );

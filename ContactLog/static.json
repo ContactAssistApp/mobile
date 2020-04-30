@@ -1,0 +1,61 @@
+{
+  locations: [
+  {
+    latitude: 40.748440,
+    longitude: -73.985664,
+    time: 1588023884000,
+  },
+  {
+    latitude: 40.742050,
+    longitude: -73.993851,
+    time: 1587980865000,
+  },
+  {
+    latitude: 40.738480,
+    longitude: -73.989929,
+    time: 1587843741483,
+  },
+  {
+    latitude: 40.689247,
+    longitude: -74.044502,
+    time: 1587843806886,
+  },
+  {
+    latitude: 40.7828640,
+    longitude: -73.965355,
+    time: 1588112674000,
+  },
+  {
+    latitude: 40.742050,
+    longitude: -73.993851,
+    time: 1588118321000,
+  }
+  ],
+  contacts: [
+  {
+    recordID: "29406806-0403-422C-B7BF-8D18DE7A3BA9",
+    givenName: "Carole",
+    familyName: "Poland"
+  },
+  {
+    recordID: "656521CC-C51B-4589-825D-BF4590CBA112",
+    givenName: "Kat",
+    familyName: "Larsson"
+  },
+  {
+    recordID: "7669827A-4587-4785-9D17-DF293C8E705E",
+    givenName: "Erik",
+    familyName: "Nason"
+  },
+  {
+    recordID: "A1A02647-A2A6-4F1B-B89B-15551056D9D4",
+    givenName: "Kristin",
+    familyName: "Patterson"
+  },
+  {
+    recordID: "D173539E-5C91-47DA-A7C2-32D66BA04714",
+    givenName: "Cameron",
+    familyName: "Evans"
+  },
+  ]
+}
