@@ -5,19 +5,12 @@ import class Contacts.CNPostalAddressFormatter
 
 @objc(Locations)
 class Locations: NSObject {
-  private var count = 0
   
   @objc
-  func increment() {
-    count += 1
-    print("count is \(count)")
+  static func requiresMainQueueSetup() -> Bool {
+    return true
   }
-  
-  @objc
-  func getCount(_ callback: RCTResponseSenderBlock) {
-    callback([count])
-  }
-  
+
   struct AddressTS {
     let name: String
     let address: String

@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {connect} from 'react-redux';
@@ -10,11 +10,13 @@ import DateConverter from '../utils/date';
 class Confirmation extends Component {
   render() {
     const {
-      symptoms: {timeOfDay, ts},
+      symptoms: {timeOfDay, amTs, pmTs},
     } = this.props;
 
+    let ts = timeOfDay === 'AM' ? amTs : pmTs;
+
     return (
-      <>
+      <ScrollView>
         <Image
           style={styles.hero}
           source={require('../assets/health/symptom_confirmation_bg.png')}
@@ -41,7 +43,7 @@ class Confirmation extends Component {
         </View>
 
         <SymptomsSummary />
-      </>
+      </ScrollView>
     );
   }
 }

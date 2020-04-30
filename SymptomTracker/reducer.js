@@ -1,7 +1,8 @@
 const initialState = {
   date: '',
+  amTs: '',
+  pmTs: '',
   timeOfDay: '',
-  ts: '',
   fever: 0,
   feverOnsetDate: '',
   feverTemperature: '',
@@ -33,6 +34,18 @@ const symptomReducer = (state = initialState, action) => {
         };
       });
       return state;
+
+    case 'CLEAR_SYMPTOMS':
+      Object.entries(state).forEach(([key, val]) => {
+        if (!['date', 'amTs', 'pmTs', 'timeOfDay'].includes(key)) {
+          state = {
+            ...state,
+            [key]: initialState[key],
+          };
+        }
+      });
+      return state;
+
     default:
       return state;
   }

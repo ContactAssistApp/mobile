@@ -11,11 +11,15 @@ const Ble = {
       );
     }
 
-    let config_opts = {};
-    if (__DEV__) {
+    let config_opts = {
+      "DebugQueryEngine": "low", //produces short summary of query engine values
+      "DebugLog": "yes"
+    };
+    if (__DEV__ && 0) {
       config_opts = {
-        "DebugLog": "yes",
-        "FastDevScan": "yes"
+        "DebugLog": "yes", //lots of logging output, bad for perf
+        "FastDevScan": "yes", //reduce contact tracing period to seconds instead of minutes
+        "DebugQueryEngine": "high" //produces a LOT of log output when running the query engine
       };
     }
 

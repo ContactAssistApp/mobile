@@ -1,25 +1,37 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import colors from '../assets/colors';
+import SymptomsList from './SymptomsList';
+import SelectedContacts from '../ContactLog/SelectedContacts';
+import SectionHeader from './SectionHeader';
+import LocationsList from './LocationsList';
 
 class Summary extends Component {
   render() {
     return (
-      <View style={styles.intro_container}>
-        <View style={styles.header}>
-          <Image
-            style={styles.icon}
-            source={require('../assets/health/summary.png')}
-          />
-          <Text style={styles.title}>
-            Save this list for reference{'\n'}during your interview.
+      <ScrollView>
+        <View style={styles.intro_container}>
+          <View style={styles.header}>
+            <Image
+              style={styles.icon}
+              source={require('../assets/health/summary.png')}
+            />
+            <Text style={styles.title}>
+              Save this list for reference{'\n'}during your interview.
+            </Text>
+          </View>
+          <Text style={styles.description}>
+            Please review the information below and save your list. Don’t worry, you can always come back to edit this list later.
           </Text>
         </View>
-        <Text style={styles.description}>
-          Please review the information below and save your list. Don’t worry, you can always come back to edit this list later.
-        </Text>
-      </View>
+        <View style={styles.section_title_container}>
+          <Text style={styles.section_title}>Summary</Text>
+        </View>
+        <SymptomsList />
+        <LocationsList />
+        <SectionHeader header={'people'} />
+        <SelectedContacts />
+      </ScrollView>
     );
   }
 }
@@ -53,13 +65,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   section_title: {
-    fontWeight: '500',
-    fontSize: 14,
-    lineHeight: 18,
-    textTransform: 'uppercase',
-    color: colors.secondary_body_copy,
-    padding: 20,
+    fontSize: 18,
+    lineHeight: 25,
+    textTransform: 'capitalize',
+    color: colors.section_title,
+  },
+  section_title_container: {
     backgroundColor: colors.card_border,
+    padding: 20,
   },
 });
 

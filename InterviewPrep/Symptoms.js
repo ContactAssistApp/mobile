@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
-import SymptomsSummary from '../SymptomTracker/SymptomsSummary';
+import SymptomsList from './SymptomsList';
 
 class Symptoms extends Component {
   render() {
@@ -22,7 +22,7 @@ class Symptoms extends Component {
             We’ve detected severe symptoms in your recent reports, and collected them below.
           </Text>
         </View>
-        <SymptomsSummary />
+        <SymptomsList />
       </>
     );
   }

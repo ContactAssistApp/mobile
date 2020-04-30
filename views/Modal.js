@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  ScrollView,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -14,14 +13,7 @@ import PropTypes from 'prop-types';
 
 class Modal extends Component {
   render() {
-    const {visible, title, useScrollView} = this.props;
-
-    let content;
-    if (useScrollView) {
-      content = <ScrollView>{this.props.children}</ScrollView>;
-    } else {
-      content = this.props.children;
-    }
+    const {visible, title} = this.props;
 
     return (
       <NativeModal
@@ -35,7 +27,7 @@ class Modal extends Component {
           </TouchableOpacity>
           <Text style={styles.title}>{title}</Text>
         </View>
-        {content}
+        {this.props.children}
       </NativeModal>
     );
   }
@@ -43,9 +35,6 @@ class Modal extends Component {
 
 Modal.propTypes = {
   visible: PropTypes.bool.isRequired,
-};
-Modal.defaultProps = {
-  useScrollView: true,
 };
 
 const styles = StyleSheet.create({

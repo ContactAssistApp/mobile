@@ -4,118 +4,17 @@ import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import {connect} from 'react-redux';
 import Privacy from '../Privacy/Privacy';
+import {SYMPTOM_MAP} from '../utils/symptoms';
+import SymptomsHalfDay from './SymptomsHalfDay';
 
 class SymptomsSummary extends Component {
   render() {
     const {symptoms} = this.props;
-    const symptomMap = {
-      fever: 'Fever:',
-      feverOnsetDate: 'Onset date:',
-      feverTemperature: 'Highest temp:',
-      feverDays: 'Duration (days):',
-      abdominalPain: 'Abdominal pain',
-      chills: 'Chills',
-      cough: 'Cough',
-      coughOnsetDate: 'Onset date:',
-      coughDays: 'Duration (days):',
-      coughSeverity: 'Severity:',
-      diarrhea: 'Diarrhea',
-      difficultyBreathing: 'Difficulty breathing',
-      headache: 'Headache',
-      muscleAches: 'Muscle aches / pain',
-      soreThroat: 'Sore throat',
-      vomiting: 'Vomiting',
-      other: 'Other',
-    };
 
     return (
       <>
         <Text style={styles.symptom_header}>SYMPTOMS</Text>
-        <View style={styles.container}>
-          {Object.entries(symptoms).map(([key, val]) => {
-            if (val === 1) {
-              if (key === 'fever') {
-                const {feverOnsetDate, feverTemperature, feverDays} = symptoms;
-                return (
-                  <View style={styles.symptom_card} key={key}>
-                    <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                    {feverOnsetDate !== '' && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.feverOnsetDate}
-                        </Text>
-                        <Text style={styles.value}>
-                          {symptoms.feverOnsetDate}
-                        </Text>
-                      </View>
-                    )}
-                    {feverTemperature !== '' && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.feverTemperature}
-                        </Text>
-                        <Text style={styles.value}>
-                          {symptoms.feverTemperature}
-                        </Text>
-                      </View>
-                    )}
-                    {feverDays !== '' && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>{symptomMap.feverDays}</Text>
-                        <Text style={styles.value}>{symptoms.feverDays}</Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              } else if (key === 'cough') {
-                const {coughOnsetDate, coughDays, coughSeverity} = symptoms;
-                let coughSeverityString = '';
-                if (coughSeverity === 1) {
-                  coughSeverityString = 'Mild';
-                } else if (coughSeverity === 2) {
-                  coughSeverityString = 'Moderate';
-                } else if (coughSeverity === 3) {
-                  coughSeverityString = 'Severe';
-                }
-                return (
-                  <View style={styles.symptom_card} key={key}>
-                    <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                    {coughOnsetDate && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.coughOnsetDate}
-                        </Text>
-                        <Text style={styles.value}>
-                          {symptoms.coughOnsetDate}
-                        </Text>
-                      </View>
-                    )}
-                    {coughDays && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>{symptomMap.coughDays}</Text>
-                        <Text style={styles.value}>{symptoms.coughDays}</Text>
-                      </View>
-                    )}
-                    {coughSeverity > 0 && (
-                      <View style={styles.row}>
-                        <Text style={styles.label}>
-                          {symptomMap.coughSeverity}
-                        </Text>
-                        <Text style={styles.value}>{coughSeverityString}</Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              } else {
-                return (
-                  <View style={styles.symptom_card} key={key}>
-                    <Text style={styles.symptom_name}>{symptomMap[key]}</Text>
-                  </View>
-                );
-              }
-            }
-          })}
-        </View>
+        <SymptomsHalfDay symptoms={symptoms} />
         <Privacy />
       </>
     );

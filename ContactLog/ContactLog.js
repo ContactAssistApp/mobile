@@ -3,18 +3,17 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
-  Dimensions,
   Text,
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import colors from '../assets/colors';
 import Locations from './Locations';
 import People from './People';
 import {Agenda} from 'react-native-calendars';
 import CustomIcon from '../assets/icons/CustomIcon.js';
-import {updateDate} from './actions.js';
+import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -24,11 +23,6 @@ class ContactLog extends Component {
     super();
     this.contactAgendaRef = React.createRef();
     this.state = {
-      index: 0,
-      routes: [
-        {key: 'locations', title: 'locations'},
-        {key: 'people', title: 'people'},
-      ],
       calendarExpand: false,
       markedDates: {},
     };
@@ -61,27 +55,6 @@ class ContactLog extends Component {
   };
 
   render() {
-    const locationsRoute = () => {
-      return <Locations />;
-    };
-    const peopleRoute = () => <People />;
-    const initialLayout = {width: Dimensions.get('window').width};
-
-    const renderScene = SceneMap({
-      locations: locationsRoute,
-      people: peopleRoute,
-    });
-
-    const renderTabBar = props => (
-      <TabBar
-        {...props}
-        indicatorStyle={{backgroundColor: colors.primary_theme}}
-        style={styles.tab_bar}
-        activeColor={colors.section_title}
-        inactiveColor={colors.gray_icon}
-      />
-    );
-
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
@@ -117,22 +90,36 @@ class ContactLog extends Component {
             this.setState({
               calendarExpand: false,
             });
-            this.props.updateDate({
+            this.props.updateContactLog({
               field: 'date',
               value: new Date(day.dateString),
             });
           }}
           renderEmptyData={() => {
             return (
-              <TabView
-                navigationState={this.state}
-                renderTabBar={renderTabBar}
-                renderScene={renderScene}
-                onIndexChange={idx => {
-                  this.setState({index: idx});
-                }}
-                initialLayout={initialLayout}
-              />
+              <ScrollableTabView
+                initialPage={1}
+                renderTabBar={() => {
+                  return (
+                    <DefaultTabBar
+                      backgroundColor={'white'}
+                      activeTextColor={colors.section_title}
+                      inactiveTextColor={colors.gray_icon}
+                      textStyle={{
+                        fontWeight: '500',
+                        textTransform: 'uppercase'
+                      }}
+                      underlineStyle={{
+                        height: 2,
+                        backgroundColor: colors.primary_theme
+                      }}
+                      tabStyle={{paddingTop: 10}}
+                    />
+                  );
+                }}>
+                <Locations tabLabel={'Locations'} />
+                <People tabLabel={'people'} />
+              </ScrollableTabView>
             );
           }}
           theme={{
@@ -151,12 +138,6 @@ class ContactLog extends Component {
 }
 
 const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
-  tab_bar: {
-    backgroundColor: 'white',
-  },
   status_bar: {
     backgroundColor: 'white',
   },
@@ -185,11 +166,11 @@ const styles = StyleSheet.create({
 });
 
 ContactLog.propTypes = {
-  updateDate: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateDate
+  updateContactLog
 }, dispatch);
 
 export default connect(

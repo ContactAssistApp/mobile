@@ -1,5 +1,4 @@
-import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {REPORT_BLE_URL} from '../utils/endpoints';
 import {
   ScrollView,
@@ -20,7 +19,7 @@ import Emergency from '../Privacy/Emergency';
 import CareTips from '../CareTips/CareTips';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
-class Report extends Component {
+class Report extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -99,18 +98,7 @@ class Report extends Component {
         <View style={styles.result_container}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() =>
-              Alert.alert(
-                'Alert',
-                'This feature is disabled for demo.',
-                [
-                  {
-                    text: 'Got it',
-                    style: 'cancel',
-                  },
-                ],
-                {cancelable: false},
-              )}>
+            onPress={() => this.uploadBLE()}>
             <Text style={styles.button_text}>Upload Your Trace Data</Text>
           </TouchableOpacity>
           <TouchableOpacity

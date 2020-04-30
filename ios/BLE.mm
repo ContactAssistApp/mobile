@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <sys/time.h>
-
+#include <unordered_set>
 #include <Foundation/Foundation.h>
 #include <CoreBluetooth/CoreBluetooth.h>
 #import <React/RCTConvert.h>
@@ -25,12 +25,18 @@
   handle restore events
   add delay to write from read
   add networking retries for read/write
+  debug why in some cases phones only get passive contacts while never scanning for positive ones
+  handle reads with offsets
+  https://stackoverflow.com/questions/15143453/what-is-the-correct-way-to-respond-to-peripheralmanagerdidreceivewriterequests
  */
 
 //set this to enable high volume logging disable for release!
 static bool DebugLogEnabled = false;
 //set this to make the protocol to act in non-conforming, but extremely fast. good for developing.
 static bool UseFastDevValues = false;
+static bool DebugQueryEngineEnabled = false;
+//set this to enable highly detailed query engine logging
+static bool VerboseQueryEngineEnabled = false;
 
 //we let up to this many times of leeway for the timer subsystem to delay execution
 #define TIMER_LEEWAY 5
@@ -43,6 +49,7 @@ static int64_t remote_id_read_interval_in_secs; //read remote id
 static int64_t device_cache_ttl_in_secs; //drop local cache on remote device
 static int64_t crypto_id_update_schedule_in_secs;
 static int64_t key_rotation_window_in_secs;
+static int64_t contact_matching_lookback_window_in_secs; //how far to look back when executing matches
 
 static int64_t conn_start_timeout_in_seconds = 5;
 static NSString *_serviceUUID;
@@ -429,7 +436,6 @@ RCT_EXPORT_MODULE();
  * Exported API
  */
 
-
 RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characteristicUUID options:(NSDictionary*)options)
 {
   if(_serviceUUID != nil)
@@ -447,6 +453,12 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
       DebugLogEnabled = true;
     if([@"yes" isEqual:[options objectForKey:@"FastDevScan"]])
       UseFastDevValues = true;
+    if([@"high" isEqual:[options objectForKey:@"DebugQueryEngine"]]) {
+      DebugQueryEngineEnabled = true;
+      VerboseQueryEngineEnabled = true;
+    }
+    if([@"low" isEqual:[options objectForKey:@"DebugQueryEngine"]])
+      DebugQueryEngineEnabled = true;
     if([options objectForKey:@"RetentionWindow"] != nil) {
       int64_t val = [RCTConvert NSNumber:options[@"RetentionWindow"]].longLongValue;
       if(val > 0)
@@ -460,14 +472,15 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
     remote_id_read_interval_in_secs = 20;
     device_cache_ttl_in_secs = 1 * 60;
     crypto_id_update_schedule_in_secs = 5 * 60;
+    contact_matching_lookback_window_in_secs = 5 * 60; //only trace back 5 minutes
   } else {
     contact_log_interval_in_secs = 1 * 60;
     local_id_write_interval_in_secs = 5 * 60;
     remote_id_read_interval_in_secs = 10 * 60;
     device_cache_ttl_in_secs = 30 * 60;
     crypto_id_update_schedule_in_secs = 15 * 60;
+    contact_matching_lookback_window_in_secs = CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS;
   }
-
 
   NSURL *docs_url = [[NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
   NSURL *contact_url = [docs_url URLByAppendingPathComponent:@"contacts.txt"];
@@ -499,7 +512,7 @@ RCT_EXPORT_METHOD(start_ble)
   }
 
   NSDictionary *cbc_options = @{
-  CBCentralManagerOptionRestoreIdentifierKey: @"tracedefense.scanner."
+  CBCentralManagerOptionRestoreIdentifierKey: @"covidsafe.scanner."
   };
 
   cbCentralManager = [[CBCentralManager alloc]
@@ -508,7 +521,7 @@ RCT_EXPORT_METHOD(start_ble)
                     options: cbc_options];
 
   NSDictionary *cbp_options = @{
-  CBPeripheralManagerOptionRestoreIdentifierKey: @"tracedefense.peripheral."
+  CBPeripheralManagerOptionRestoreIdentifierKey: @"covidsafe.peripheral."
   };
 
   cbPeripheralManager = [[CBPeripheralManager alloc]
@@ -701,7 +714,7 @@ RCT_EXPORT_METHOD(stop_ble)
   else
   {
     [cbPeripheralManager startAdvertising:@{
-      CBAdvertisementDataLocalNameKey: @"tracedefense.app.",
+      CBAdvertisementDataLocalNameKey: @"covidsafe.app.",
       CBAdvertisementDataServiceUUIDsKey: @[ [CBUUID UUIDWithString:_serviceUUID] ]
     }];
     [self logCritical:@"CBP service advertising started"];
@@ -781,9 +794,11 @@ RCT_EXPORT_METHOD(getDeviceSeedAndRotate:(nonnull NSNumber *)interval resolver:(
 
 RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
 {
-  //FIXME TODO
+  int64_t lookback_period = intervalToKeep.longLongValue;
+  if(lookback_period <= 0)
+    lookback_period = contact_matching_lookback_window_in_secs;
   [self logDebug:@"purging records!"];
-  int64_t how_old = td::get_timestamp() - CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS;
+  int64_t how_old = td::get_timestamp() - lookback_period;
   try {
     if(_seeds)
       _seeds->makeSeedCurrent();
@@ -795,49 +810,114 @@ RCT_EXPORT_METHOD(purgeOldRecords:(nonnull NSNumber *)intervalToKeep)
   }
 }
 
+
 RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
+  [self logCritical: [NSString stringWithFormat: @"QE:: begin execution--- %lu", arr.count]];
+
   __weak BLE *_w_ble = self;
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
+    const int64_t now = td::get_timestamp();
     try {
-      std::vector<td::BluetoothMatch> matches;
-      matches.resize(arr.count, td::BluetoothMatch(CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS, crypto_id_update_schedule_in_secs));
-      for(int i = 0; i < arr.count / 2; ++i) {
-        auto &bm = matches[i];
-        NSArray *seeds = arr[i * 2];
-        NSArray *timestamps = arr[i * 2 + 1];
-        for(int j = 0; j < seeds.count; ++j) {
-          NSString *s = seeds[j];
-          NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:s];
+      @try {
+        std::vector<td::BluetoothMatch> matches;
+        std::unordered_set<std::string> uuids_found;
+        matches.reserve(arr.count / 2);
+        for(int i = 0; i < arr.count / 2; ++i) {
+          matches.emplace_back(contact_matching_lookback_window_in_secs, crypto_id_update_schedule_in_secs);
+          auto &bm = matches[i];
 
-          NSNumber *ts = nil;
-          if(j < timestamps.count)
-            ts = timestamps[j];
+          NSArray *seeds = arr[i * 2];
+          NSArray *timestamps = arr[i * 2 + 1];
 
-          if(uuid && ts) {
-            uint8_t tmp[16];
-            [uuid getUUIDBytes:tmp];
-            bm.addSeed(td::Seed(tmp, [ts longLongValue]));
+          for(int j = 0; j < seeds.count; ++j) {
+            NSString *s = ((NSString*)seeds[j]).lowercaseString;
+
+            auto str = std::string(s.UTF8String);
+            if(uuids_found.find(str) != uuids_found.end())
+              continue;
+            uuids_found.insert(str);
+
+            NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:s];
+            NSNumber *ts = nil;
+            if(j < timestamps.count)
+              ts = timestamps[j];
+
+            if(uuid && ts) {
+              int64_t how_old = now - ts.longLongValue;
+              //the assumption here is that seeds older than 2x the window are irrelevant as there won't be any overlap
+              if(how_old > contact_matching_lookback_window_in_secs * 2) {
+                if(VerboseQueryEngineEnabled)
+                  [_w_ble logCritical: [NSString stringWithFormat: @"QE:: [%d] seed:%@ timestamp:%@ (IGNORING - TOO OLD)", i, s, ts]];
+                continue;
+              }
+              if(ts.longLongValue > now) {
+                int64_t maybe_ms = (now * 1000) - ts.longLongValue;
+                if(VerboseQueryEngineEnabled)
+                  [_w_ble logCritical: [NSString stringWithFormat: @"QE:: [%d] seed:%@ timestamp:%@ (IGNORING - FROM FUTURE) ms:%lld", i, s, ts, maybe_ms]];
+                continue;
+              }
+
+              uint8_t tmp[16];
+              [uuid getUUIDBytes:tmp];
+              bm.addSeed(td::Seed(tmp, [ts longLongValue]));
+              if(VerboseQueryEngineEnabled)
+                [_w_ble logCritical: [NSString stringWithFormat: @"QE:: [%d] seed:%@ timestamp:%@ age:%lld", i, s, ts, how_old]];
+            }
+          }
+          if(VerboseQueryEngineEnabled) {
+            auto ids = bm.expand_seeds(now);
+            if(ids.size() > 0) {
+              [_w_ble logCritical: [NSString stringWithFormat: @"QE:: Expanded to %ld IDs", ids.size()]];
+              for(auto &_id: ids)
+                [_w_ble logCritical: [NSString stringWithFormat: @"\t%s", _id.serialize().c_str()]];
+            }
+          }
+
+          if(DebugQueryEngineEnabled) {
+            if(bm.seed_count() > 0)
+              [_w_ble logCritical: [NSString stringWithFormat: @"QE:: [%d] has %lu seeds", i, bm.seed_count()]];
           }
         }
+
+        std::unordered_map<td::Id, int> localIds;
+        {
+          BLE * ble = _w_ble;
+          if(ble)
+            localIds = ble->_contacts->findContactsSince( - contact_matching_lookback_window_in_secs);
+        }
+
+        if(DebugQueryEngineEnabled) {
+          [self logCritical: [NSString stringWithFormat: @"QE:: found %ld local contacts", localIds.size()]];
+          if(VerboseQueryEngineEnabled) {
+            for(auto &_id: localIds) {
+              [self logCritical: [NSString stringWithFormat: @"\t%s -> %d", _id.first.serialize().c_str(), _id.second]];
+            }
+          }
+        }
+
+        auto boolRes = performBleMatching(matches, localIds);
+        if(DebugQueryEngineEnabled) {
+          [self logCritical: @"QE:: query results:"];
+          for(int i = 0; i < boolRes.size(); ++i) {
+            if(boolRes[i])
+              [self logCritical: [NSString stringWithFormat: @"\t[%d] positive", i]];
+          }
+        }
+
+        NSMutableArray *res = [NSMutableArray arrayWithCapacity: boolRes.size()];
+        for(auto r : boolRes)
+          [res addObject: [NSNumber numberWithInt: r ? 1 : 0]];
+
+        resolve(res);
+        if(DebugQueryEngineEnabled)
+          [self logCritical:[NSString stringWithFormat:@"Query done!!!"]];
+      } @catch(NSException *exception) {
+        [self logCritical:[NSString stringWithFormat:@"Failed3 to run query engine due to %@", exception]];
+         reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %@", exception.description], nil);
       }
-
-      
-      std::vector<td::Id> localIds;
-      {
-        BLE * ble = _w_ble;
-        if(ble)
-          localIds = ble->_contacts->findContactsSince(td::get_timestamp() - CONTACT_QUERY_LOOKBACK_PERIOD_IN_SECS);
-      }
-
-      auto boolRes = performBleMatching(matches, localIds);
-
-      NSMutableArray *res = [NSMutableArray arrayWithCapacity: boolRes.size()];
-      for(auto r : boolRes)
-        [res addObject: [NSNumber numberWithInt: r ? 1 : 0]];
-
-      resolve(res);
-    } catch(std::exception e) {
+    } catch(std::exception &e) {
+      [self logCritical:[NSString stringWithFormat:@"Failed2 to run query engine due to %s", e.what()]];
       reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %s", e.what()], nil);
     }
   });

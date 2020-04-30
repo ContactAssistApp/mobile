@@ -39,34 +39,34 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // this.processQueries();
-    // BackgroundFetch.configure(
-    //   {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
-    //   async taskId => {
-    //     console.log('[js] Received background-fetch event: ', taskId);
-    //     this.processQueries();
-    //     BackgroundFetch.finish(taskId);
-    //   },
-    //   error => {
-    //     console.log('[js] RNBackgroundFetch failed to start');
-    //     console.log(error);
-    //   },
-    // );
+    this.processQueries();
+    BackgroundFetch.configure(
+      {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
+      async taskId => {
+        console.log('[js] Received background-fetch event: ', taskId);
+        this.processQueries();
+        BackgroundFetch.finish(taskId);
+      },
+      error => {
+        console.log('[js] RNBackgroundFetch failed to start');
+        console.log(error);
+      },
+    );
 
     // Optional: Query the authorization status.
-    // BackgroundFetch.status(status => {
-    //   switch (status) {
-    //     case BackgroundFetch.STATUS_RESTRICTED:
-    //       console.log('BackgroundFetch restricted');
-    //       break;
-    //     case BackgroundFetch.STATUS_DENIED:
-    //       console.log('BackgroundFetch denied');
-    //       break;
-    //     case BackgroundFetch.STATUS_AVAILABLE:
-    //       console.log('BackgroundFetch is enabled');
-    //       break;
-    //   }
-    // });
+    BackgroundFetch.status(status => {
+      switch (status) {
+        case BackgroundFetch.STATUS_RESTRICTED:
+          console.log('BackgroundFetch restricted');
+          break;
+        case BackgroundFetch.STATUS_DENIED:
+          console.log('BackgroundFetch denied');
+          break;
+        case BackgroundFetch.STATUS_AVAILABLE:
+          console.log('BackgroundFetch is enabled');
+          break;
+      }
+    });
 
     this.getSetting('ENABLE_LOCATION').then(data => {
       this.setState({
@@ -106,37 +106,45 @@ class Home extends Component {
 
   processQueries = async () => {
     let location = await getLatestCoarseLocation();
-    const messageIDs = await this.fetchMessageID(location);
-    if (messageIDs && messageIDs.length > 0) {
-      const messages = await this.fetchMessages(messageIDs);
-      let args = [];
-      let msgs = [];
-      messages.forEach(messageObj => {
-        const {bluetoothMatches} = messageObj;
-        bluetoothMatches.forEach(match => {
-          const {userMessage, seeds} = match;
-          if (userMessage) {
-            msgs.push(userMessage);
-          } else {
-            msgs.push(DEFAULT_NOTIFICATION);
-          }
-          let timestamps = [];
-          let seedsArray = [];
-          seeds.forEach(seedObj => {
-            if (seedObj && seedObj.seed) {
-              timestamps.push(seedObj.sequenceStartTime);
-              seedsArray.push(seedObj.seed);
+    if (location) {
+      const messageIDs = await this.fetchMessageID(location);
+      if (messageIDs && messageIDs.length > 0) {
+        const messages = await this.fetchMessages(messageIDs);
+        let args = [];
+        let msgs = [];
+        messages.forEach(messageObj => {
+          const {bluetoothMatches} = messageObj;
+
+          bluetoothMatches.forEach(match => {
+            const {userMessage, seeds} = match;
+            let timestamps = [];
+            let seedsArray = [];
+            seeds.forEach(seedObj => {
+              if (seedObj
+                && seedObj.seed
+                && seedObj.seed !== '00000000-0000-0000-0000-000000000000') {
+                timestamps.push(seedObj.sequenceStartTime);
+                seedsArray.push(seedObj.seed);
+              }
+            });
+
+            if (seedsArray && seedsArray.length > 0) {
+              args.push(seedsArray);
+              args.push(timestamps);
+
+              if (userMessage) {
+                msgs.push(userMessage);
+              } else {
+                msgs.push(DEFAULT_NOTIFICATION);
+              }
             }
           });
-
-          args.push(seedsArray);
-          args.push(timestamps);
         });
-      });
 
-      let notifications = await this.searchQuery(args, msgs);
-      if (notifications && notifications.length > 0) {
-        SetStoreData('NOTIFICATIONS', notifications);
+        let notifications = await this.searchQuery(args, msgs);
+        if (notifications && notifications.length > 0) {
+          SetStoreData('NOTIFICATIONS', notifications);
+        }
       }
     }
   };
@@ -228,10 +236,11 @@ class Home extends Component {
   };
 
   handleOnRefresh = () => {
-    // this.setState({
-    //   refreshing: true,
-    // });
-    // this.processQueries().then(() => this.setState({refreshing: false}));
+    this.setState({
+      refreshing: true,
+    });
+
+    this.processQueries().then(() => this.setState({refreshing: false}));
   };
 
   render() {
