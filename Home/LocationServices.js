@@ -24,7 +24,7 @@ export class LocationData {
     });
   };
 
-/*
+  /*
   async getPointStats() {
     const locationData = await this.getLocationData();
 
@@ -59,7 +59,8 @@ export class LocationData {
       // Always work in UTC, not the local time in the locationData
       let nowUTC = new Date().toISOString();
       let unixtimeUTC = Date.parse(nowUTC);
-      let unixtimeUTC_14daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * parseInt(logWindow, 10);
+      let unixtimeUTC_14daysAgo =
+        unixtimeUTC - 60 * 60 * 24 * 1000 * parseInt(logWindow, 10);
 
       // Curate the list of points, only keep the last 14 days
       let curated = [];
@@ -176,7 +177,7 @@ export default class LocationServices {
     }
 
     BackgroundGeolocation.on('stationary', stationaryLocation => {
-      console.log("stationary");
+      console.log('stationary');
       // handle stationary locations here
       // Actions.sendLocation(stationaryLocation);
       BackgroundGeolocation.startTask(taskKey => {
@@ -298,8 +299,9 @@ export default class LocationServices {
                 {
                   text: 'Yes',
                   onPress: () => {
-                    if (Platform.OS === 'android'){ // showLocationSettings() only works for android
-                    BackgroundGeolocation.showLocationSettings();
+                    if (Platform.OS === 'android') {
+                      // showLocationSettings() only works for android
+                      BackgroundGeolocation.showLocationSettings();
                     } else {
                       Linking.openURL('App-Prefs:Privacy'); // Deeplinking method for iOS
                     }
