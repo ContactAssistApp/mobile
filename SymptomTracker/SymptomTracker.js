@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import Record from './Record';
 import PropTypes from 'prop-types';
-import {updateSymptom} from './actions.js';
+import {updateSymptom, resetSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData} from '../utils/asyncStorage';
@@ -21,6 +21,7 @@ class SymptomTracker extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.date.getTime() !== this.props.date.getTime()) {
+      this.props.resetSymptoms();
       const d = DateConverter.calendarFormat(this.props.date);
       this.props.updateSymptom({
         date: d,
@@ -33,7 +34,6 @@ class SymptomTracker extends Component {
   fetchLog = async d => {
     let amLog = await GetStoreData(`SYMPTOM_${d}_AM`);
     let pmLog = await GetStoreData(`SYMPTOM_${d}_PM`);
-
     if (amLog) {
       amLog = JSON.parse(amLog);
       this.props.updateSymptom({
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
 SymptomTracker.propTypes = {
   navigate: PropTypes.func.isRequired,
   updateSymptom: PropTypes.func.isRequired,
+  resetSymptoms: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -111,7 +112,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateSymptom
+  updateSymptom,
+  resetSymptoms
 }, dispatch);
 
 export default connect(
