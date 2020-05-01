@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import WebKit
 
+public let LOG_WINDOW = 14
+
 @objc(GoogleTimelineImportViewManager)
 class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
 
@@ -40,7 +42,7 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
         .hasPrefix(GoogleTimelineImportViewManager.SIGNED_IN_HOST) == true {
 
       func handle(withCookie cookies: [HTTPCookie]) {
-        request(url(forPreviousDays: view.logWindow), withCookies: cookies, then: callback)
+        request(urlForPreviousDays(), withCookies: cookies, then: callback)
       }
 
       if #available(iOS 11.0, *) {
@@ -58,13 +60,13 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     let task = URLSession.shared.dataTask(with: request) { (dat, res, err) in
       if let data = dat {
         handle([
-          "data": String(data: data, encoding: .utf8) ?? "no data",
-          "response": res?.description ?? "no response"
+          "data": String(data: data, encoding: .utf8) ?? "",
+          "response": res?.description ?? ""
         ])
       } else {
         handle([
-          "error": err?.localizedDescription ?? "Whatever",
-          "response": res?.description ?? "no response"
+          "error": err?.localizedDescription ?? "",
+          "response": res?.description ?? ""
         ])
       }
     }
@@ -73,7 +75,7 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
 
   // MARK: - Date Helpers
 
-  func url(forPreviousDays logWindow: Int) -> URL {
+  func urlForPreviousDays(_ logWindow: Int = LOG_WINDOW) -> URL {
     let now = Date()
     let earlier = Calendar.gregorian.date(byAdding: .day, value: -logWindow, to: now)!
     let componentsNow = Calendar.gregorian.dateComponents([.year, .month, .day], from: now)
@@ -100,12 +102,6 @@ extension Calendar {
 private class GoogleTimelineImportView: WKWebView {
   @objc
   var onReceivingPlacemarks: RCTBubblingEventBlock?
-
-  @objc
-  var logWindow: Int = {
-    UserDefaults.standard.register(defaults: ["LOG_WINDOW": 14])
-    return UserDefaults.standard.integer(forKey: "LOG_WINDOW")
-  }()
 
   @objc
   var isVisible: Bool = false {
