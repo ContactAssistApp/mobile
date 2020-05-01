@@ -41,32 +41,41 @@ export class LocationData {
     }
   */
 
-  async saveLocation(location) {
-    // Persist this location data in our local storage of time/lat/lon values
-    let locationArray = await this.getLocationData();
+  static getUTCUnixTime = () => {
     // Always work in UTC, not the local time in the locationData
     let nowUTC = new Date().toISOString();
-    let unixtimeUTC = Date.parse(nowUTC);
+    return Date.parse(nowUTC);
+  };
+
+  async getCuratedLocations() {
+    // Persist this location data in our local storage of time/lat/lon values
+    let locationArray = await this.getLocationData();
+    let unixtimeUTC = this.getUTCUnixTime();
     let unixtimeUTC_14daysAgo = unixtimeUTC - this.logWindow;
 
     // Curate the list of points, only keep the last 14 days
     let curated = [];
     for (let i = 0; i < locationArray.length; i++) {
-      if (locationArray[i]['time'] > unixtimeUTC_14daysAgo) {
+      if (locationArray[i].time > unixtimeUTC_14daysAgo) {
         curated.push(locationArray[i]);
       }
     }
+    return curated;
+  }
 
+  async saveLocation(location) {
+    let curated = this.getCuratedLocations();
+    let unixtimeUTC = this.getUTCUnixTime();
     // Backfill the stationary points, if available
     if (curated.length >= 1) {
-      let lastLocationArray = curated[curated.length - 1];
-      let lastTS = lastLocationArray['time'];
+      let lastLocation = curated[curated.length - 1];
+      let stopTS = unixtimeUTC - this.locationInterval;
       for (
-        ;
-        lastTS < unixtimeUTC - this.locationInterval;
+        let lastTS = lastLocation.time;
+        lastTS < stopTS;
         lastTS += this.locationInterval
       ) {
-        curated.push(JSON.parse(JSON.stringify(lastLocationArray)));
+        curated.push(JSON.parse(JSON.stringify(lastLocation)));
       }
     }
 
@@ -74,13 +83,17 @@ export class LocationData {
     // calculated UTC time (maybe a few milliseconds off from
     // when the GPS data was collected, but that's unimportant
     // for what we are doing.)
-    console.log('[GPS] Saving point:', locationArray.length);
+    console.log('[GPS] Saving point:', curated.length);
     let lat_lon_time = {
-      latitude: location['latitude'],
-      longitude: location['longitude'],
+      latitude: location.latitude,
+      longitude: location.longitude,
       time: unixtimeUTC,
     };
     curated.push(lat_lon_time);
+    this.saveCuratedLocations(curated);
+  }
+
+  static saveCuratedLocations(curated) {
     console.log(curated);
     SetStoreData('LOCATION_DATA', curated);
   }
