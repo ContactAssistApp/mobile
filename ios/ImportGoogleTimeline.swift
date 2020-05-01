@@ -34,8 +34,18 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     process(webView: webView, atURL: webView.url)
   }
 
+  func webView(_ webView: WKWebView,
+               didFailProvisionalNavigation navigation: WKNavigation!,
+               withError error: Error) {
+    process(webView: webView, didFailWithError: error)
+  }
+
   func webView(_ webView: WKWebView, didFail navigation: WKNavigation!,
                withError error: Error) {
+    process(webView: webView, didFailWithError: error)
+  }
+
+  private func process(webView: WKWebView, didFailWithError error: Error) {
     if let view = webView as? GoogleTimelineImportView {
      view.onReceivingPlacemarks?(["error": error.localizedDescription])
     }
