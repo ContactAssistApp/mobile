@@ -1,6 +1,7 @@
 import {GetStoreData} from './asyncStorage';
 import {GET_MESSAGE_LIST_URL} from './endpoints';
 import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
+import {LocationData} from './LocationData';
 
 export function getLatestCoarseLocation(isReporting = false) {
   return getLatestLocation().then(location => {
@@ -14,8 +15,7 @@ export function getLatestCoarseLocation(isReporting = false) {
 }
 
 function getLatestLocation() {
-  return GetStoreData('LOCATION_DATA').then(data => {
-    const locations = JSON.parse(data);
+  return LocationData.getLocationData().then(locations => {
     if (locations && locations.length > 0) {
       return locations[locations.length - 1];
     }

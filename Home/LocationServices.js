@@ -1,104 +1,10 @@
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import {PERMISSIONS, check, RESULTS, request} from 'react-native-permissions';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
-import {DEFAULT_LOG_WINDOW} from '../utils/constants';
+import {LocationData} from '../utils/LocationData';
 
 let instanceCount = 0;
-
-export class LocationData {
-  constructor() {
-    this.locationInterval = 60000 * 10; // Time (in milliseconds) between location information polls.  E.g. 60000*10 = 10 minutes
-  }
-
-  getLocationData = () => {
-    return GetStoreData('LOCATION_DATA').then(locationArrayString => {
-      let locationArray = [];
-      if (locationArrayString !== null) {
-        locationArray = JSON.parse(locationArrayString);
-      }
-
-      return locationArray;
-    });
-  };
-
-  /*
-  async getPointStats() {
-    const locationData = await this.getLocationData();
-
-    let lastPoint = null;
-    let firstPoint = null;
-    let pointCount = 0;
-
-    if (locationData.length) {
-      lastPoint = locationData.slice(-1)[0];
-      firstPoint = locationData[0];
-      pointCount = locationData.length;
-    }
-
-    return {
-      lastPoint,
-      firstPoint,
-      pointCount,
-    };
-  }
-*/
-  getLogWindow = () => {
-    return GetStoreData('LOG_WINDOW').then(data => {
-      return data;
-    });
-  };
-
-  async saveLocation(location) {
-    let logWindow = await this.getLogWindow();
-    logWindow = logWindow ? logWindow : DEFAULT_LOG_WINDOW;
-    // Persist this location data in our local storage of time/lat/lon values
-    this.getLocationData().then(locationArray => {
-      // Always work in UTC, not the local time in the locationData
-      let nowUTC = new Date().toISOString();
-      let unixtimeUTC = Date.parse(nowUTC);
-      let unixtimeUTC_14daysAgo =
-        unixtimeUTC - 60 * 60 * 24 * 1000 * parseInt(logWindow, 10);
-
-      // Curate the list of points, only keep the last 14 days
-      let curated = [];
-      for (let i = 0; i < locationArray.length; i++) {
-        if (locationArray[i]['time'] > unixtimeUTC_14daysAgo) {
-          curated.push(locationArray[i]);
-        }
-      }
-
-      // Backfill the stationary points, if available
-      if (curated.length >= 1) {
-        let lastLocationArray = curated[curated.length - 1];
-        let lastTS = lastLocationArray['time'];
-        for (
-          ;
-          lastTS < unixtimeUTC - this.locationInterval;
-          lastTS += this.locationInterval
-        ) {
-          curated.push(JSON.parse(JSON.stringify(lastLocationArray)));
-        }
-      }
-
-      // Save the location using the current lat-lon and the
-      // calculated UTC time (maybe a few milliseconds off from
-      // when the GPS data was collected, but that's unimportant
-      // for what we are doing.)
-      console.log('[GPS] Saving point:', locationArray.length);
-      let lat_lon_time = {
-        latitude: location['latitude'],
-        longitude: location['longitude'],
-        time: unixtimeUTC,
-      };
-      curated.push(lat_lon_time);
-      console.log(curated);
-      SetStoreData('LOCATION_DATA', curated);
-    });
-  }
-}
 
 export default class LocationServices {
   static start() {

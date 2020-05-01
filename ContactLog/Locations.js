@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import colors from '../assets/colors';
 import {NativeModules} from 'react-native';
-import {GetStoreData} from '../utils/asyncStorage';
 import {connect} from 'react-redux';
 import DateConverter from '../utils/date';
+import {LocationData} from '../utils/LocationData';
 
 class Locations extends Component {
   constructor() {
@@ -19,7 +19,7 @@ class Locations extends Component {
       contactLogData: {date: selectedDate},
     } = this.props;
 
-    this.getLocationData().then(locations => {
+    LocationData.getLocationData().then(locations => {
       if (locations && locations.length > 0) {
         const filteredLog = locations.filter(location => {
           return new Date(location.time).getDate() === selectedDate.getDate();
@@ -32,16 +32,6 @@ class Locations extends Component {
       }
     });
   }
-
-  getLocationData = () => {
-    return GetStoreData('LOCATION_DATA').then(locationArrayString => {
-      let locationArray = [];
-      if (locationArrayString !== null) {
-        locationArray = JSON.parse(locationArrayString);
-      }
-      return locationArray;
-    });
-  };
 
   render() {
     const {
@@ -64,7 +54,9 @@ class Locations extends Component {
           return (
             <View style={styles.address_card} key={idx}>
               {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
-              {address[1] !== '' && <Text style={styles.address}>{address[1]}</Text>}
+              {address[1] !== '' && (
+                <Text style={styles.address}>{address[1]}</Text>
+              )}
               <Text style={styles.time}>{tsStringList}</Text>
             </View>
           );
