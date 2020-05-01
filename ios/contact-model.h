@@ -27,7 +27,7 @@ public:
   }
 
   bool operator==(const Id& other) const {
-    return data == other.data;
+    return memcmp(&data[0], &other.data[0], 16) == 0;
   }
 
   std::size_t get_hash() const {

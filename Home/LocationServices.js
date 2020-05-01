@@ -93,7 +93,7 @@ export class LocationData {
         time: unixtimeUTC,
       };
       curated.push(lat_lon_time);
-      console.log(curated);
+      // console.log(curated);
       SetStoreData('LOCATION_DATA', curated);
     });
   }
