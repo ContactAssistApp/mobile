@@ -10,12 +10,16 @@ export class LocationData {
     this.logWindow = parseInt(DEFAULT_LOG_WINDOW, 10) * 24 * 60 * 60 * 1000;
   }
 
+  /** 14 days in milliseconds. */
+  static LOG_WINDOW = parseInt(DEFAULT_LOG_WINDOW, 10) * 24 * 60 * 60 * 1000;
+
   static getLocationData = async () => {
     const locationArrayString = await GetStoreData('LOCATION_DATA');
     let locationArray = [];
     if (locationArrayString) {
       locationArray = JSON.parse(locationArrayString);
     }
+    console.log(`[GPS] Loaded ${locationArray.length} location points`);
     return locationArray;
   };
 
@@ -47,11 +51,11 @@ export class LocationData {
     return Date.parse(nowUTC);
   };
 
-  async getCuratedLocations() {
+  static getCuratedLocations = async () => {
     // Persist this location data in our local storage of time/lat/lon values
     let locationArray = await this.getLocationData();
     let unixtimeUTC = this.getUTCUnixTime();
-    let unixtimeUTC_14daysAgo = unixtimeUTC - this.logWindow;
+    let unixtimeUTC_14daysAgo = unixtimeUTC - this.LOG_WINDOW;
 
     // Curate the list of points, only keep the last 14 days
     let curated = [];
@@ -61,10 +65,10 @@ export class LocationData {
       }
     }
     return curated;
-  }
+  };
 
-  async saveLocation(location) {
-    let curated = this.getCuratedLocations();
+  async pushLocation(location) {
+    let curated = await this.getCuratedLocations();
     let unixtimeUTC = this.getUTCUnixTime();
     // Backfill the stationary points, if available
     if (curated.length >= 1) {
@@ -83,7 +87,6 @@ export class LocationData {
     // calculated UTC time (maybe a few milliseconds off from
     // when the GPS data was collected, but that's unimportant
     // for what we are doing.)
-    console.log('[GPS] Saving point:', curated.length);
     let lat_lon_time = {
       latitude: location.latitude,
       longitude: location.longitude,
@@ -94,7 +97,16 @@ export class LocationData {
   }
 
   static saveCuratedLocations(curated) {
+    console.log(`[GPS] Saving ${curated.length} location points`);
     console.log(curated);
     SetStoreData('LOCATION_DATA', curated);
   }
+
+  static mergeInLocations = async locations => {
+    let curated = await this.getCuratedLocations();
+    let combined = [...curated, ...locations].sort(
+      (lhs, rhs) => lhs.time < rhs.time,
+    );
+    this.saveCuratedLocations(combined);
+  };
 }

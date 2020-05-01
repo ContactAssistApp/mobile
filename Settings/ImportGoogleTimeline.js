@@ -5,6 +5,7 @@ import Modal from '../views/Modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../assets/colors';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
+import {LocationData} from '../utils/LocationData';
 
 class ImportGoogleTimeline extends Component {
   constructor() {
@@ -39,8 +40,8 @@ class ImportGoogleTimeline extends Component {
     function push(coordinates, time) {
       let [long, lat] = coordinates.split(',');
       results.push({
-        latitude: lat,
-        longitude: long,
+        latitude: parseFloat(lat),
+        longitude: parseFloat(long),
         time: time,
       });
     }
@@ -64,7 +65,15 @@ class ImportGoogleTimeline extends Component {
         }
       }
     }
-    console.log(results);
+    console.log(
+      `Imported ${results.length} location points ` +
+        `from ${placemarks.length} placemarks`,
+    );
+    LocationData.mergeInLocations(results);
+    this.importFinished(
+      'Successfully Imported Location History from Google',
+      true,
+    );
   };
 
   processKMLResponse = dict => {
