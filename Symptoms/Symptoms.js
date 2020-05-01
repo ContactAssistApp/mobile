@@ -97,7 +97,7 @@ class Symptoms extends PureComponent {
           markedDates={this.state.markedDates}
           onDayPress={day => {
             this.setState({
-              date: new Date(day.dateString),
+              date: new Date(day.dateString.replace(/-/g, '/')),
               calendarExpand: false,
             });
           }}

@@ -90,7 +90,7 @@ class ContactLog extends Component {
             });
             this.props.updateContactLog({
               field: 'date',
-              value: new Date(day.dateString),
+              value: new Date(day.dateString.replace(/-/g, '/')),
             });
           }}
           renderEmptyData={() => {
