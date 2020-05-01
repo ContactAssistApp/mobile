@@ -55,12 +55,16 @@ class Locations extends Component {
         {this.state.addresses.map((address, idx) => {
           const name = address[0] === '' ? 'Unknown Location' : address[0];
           const timePeriods = address[2].split(',');
-          const tsStringList = timePeriods.map(timePeriod => {
-            const tsList = timePeriod.split('-');
-            const start = DateConverter.timeString(parseInt(tsList[0].trim()));
-            const end = DateConverter.timeString(parseInt(tsList[1].trim()));
-            return `${start}-${end}`;
-          });
+          const format = time =>
+            DateConverter.timeString(parseInt(time.trim(), 10));
+          const tsStringList = timePeriods
+            .map(timePeriod => {
+              const tsList = timePeriod.split('-');
+              const start = format(tsList[0]);
+              const end = format(tsList[1]);
+              return `${start}-${end}`;
+            })
+            .join('  ');
           return (
             <View style={styles.address_card} key={idx}>
               {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
