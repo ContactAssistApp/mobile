@@ -30,10 +30,21 @@ class ImportGoogleTimeline extends Component {
             style={styles.wrapper}
             onReceivingPlacemarks={dict => {
               console.log(dict);
-              /*
+              if (dict.data) {
+                /*
               And the parser extracts the start and end location, timestamp, and mode of transportation of every entry
               */
-              this.handleModalClose();
+              } else {
+                Alert.alert(
+                  'Failed to Import Location from Google',
+                  dict.error,
+                  [
+                    {
+                      onPress: this.handleModalClose,
+                    },
+                  ],
+                );
+              }
             }}
           />
         </Modal>

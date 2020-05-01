@@ -34,6 +34,13 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     process(webView: webView, atURL: webView.url)
   }
 
+  func webView(_ webView: WKWebView, didFail navigation: WKNavigation!,
+               withError error: Error) {
+    if let view = webView as? GoogleTimelineImportView {
+     view.onReceivingPlacemarks?(["error": error.localizedDescription])
+    }
+  }
+
   private func process(webView: WKWebView, atURL currentURL: URL?) {
     guard let view = webView as? GoogleTimelineImportView else { return }
     view.activityIndictor.stopAnimating()
@@ -61,15 +68,9 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     request.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
     let task = URLSession.shared.dataTask(with: request) { (dat, res, err) in
       if let data = dat {
-        handle([
-          "data": String(data: data, encoding: .utf8) ?? "",
-          "response": res?.description ?? ""
-        ])
+        handle(["data": String(data: data, encoding: .utf8) ?? ""])
       } else {
-        handle([
-          "error": err?.localizedDescription ?? "",
-          "response": res?.description ?? ""
-        ])
+        handle(["error": err?.localizedDescription ?? ""])
       }
     }
     task.resume()
