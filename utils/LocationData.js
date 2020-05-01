@@ -10,14 +10,13 @@ export class LocationData {
     this.logWindow = parseInt(DEFAULT_LOG_WINDOW, 10) * 24 * 60 * 60 * 1000;
   }
 
-  static getLocationData = () => {
-    return GetStoreData('LOCATION_DATA').then(locationArrayString => {
-      let locationArray = [];
-      if (locationArrayString) {
-        locationArray = JSON.parse(locationArrayString);
-      }
-      return locationArray;
-    });
+  static getLocationData = async () => {
+    const locationArrayString = await GetStoreData('LOCATION_DATA');
+    let locationArray = [];
+    if (locationArrayString) {
+      locationArray = JSON.parse(locationArrayString);
+    }
+    return locationArray;
   };
 
   /*
