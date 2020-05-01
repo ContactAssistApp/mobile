@@ -1,14 +1,19 @@
 function dateSuffix(date) {
-  let dateObj = date;
-  if (/1/.test(parseInt((dateObj + '').charAt(0), 10))) {
+  let day = date.getDate() + '';
+  if (day.length < 2) {
+    day = '0' + day;
+  }
+
+  if (/1/.test(parseInt(day.charAt(0), 10))) {
     return 'th';
   }
-  dateObj = parseInt((dateObj + '').charAt(1), 10);
-  return dateObj === 1
+
+  const singleDay = parseInt(day.charAt(1), 10);
+  return singleDay === 1
     ? 'st'
-    : dateObj === 2
+    : singleDay === 2
     ? 'nd'
-    : dateObj === 3
+    : singleDay === 3
     ? 'rd'
     : 'th';
 }
