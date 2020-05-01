@@ -91,13 +91,11 @@ class Symptoms extends PureComponent {
         </View>
         <Agenda
           ref={this.agendaRef}
-          pastScrollRange={1}
-          futureScrollRange={1}
           hideKnob={true}
           markedDates={this.state.markedDates}
           onDayPress={day => {
             this.setState({
-              date: new Date(day.dateString),
+              date: new Date(day.dateString.replace(/-/g, '/')),
               calendarExpand: false,
             });
           }}
