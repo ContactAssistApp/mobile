@@ -19,6 +19,20 @@ class Locations extends Component {
       contactLogData: {date: selectedDate},
     } = this.props;
 
+    this.fetchAddresses(selectedDate);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      contactLogData: {date: selectedDate},
+    } = this.props;
+
+    if (prevProps.contactLogData.date.getTime() !== selectedDate.getTime()) {
+      this.fetchAddresses(selectedDate);
+    }
+  }
+
+  fetchAddresses = selectedDate => {
     this.getLocationData().then(locations => {
       if (locations && locations.length > 0) {
         const filteredLog = locations.filter(location => {
@@ -31,7 +45,7 @@ class Locations extends Component {
         });
       }
     });
-  }
+  };
 
   getLocationData = () => {
     return GetStoreData('LOCATION_DATA').then(locationArrayString => {
