@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import {GetStoreData} from '../utils/asyncStorage';
 import Modal from '../views/Modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../assets/colors';
-import LocationHistoryImportView from './LocationHistoryImportView.js';
+import GoogleTimelineImportView from './GoogleTimelineImportView.js';
 
 class ImportGoogleTimeline extends Component {
   constructor() {
@@ -26,11 +26,13 @@ class ImportGoogleTimeline extends Component {
           handleModalClose={this.handleModalClose}
           useScrollView={false}
           title={'Sign-in to Google'}>
-          <LocationHistoryImportView
-            isVisible={this.state.googleSignInVisible}
+          <GoogleTimelineImportView
             style={styles.wrapper}
             onReceivingPlacemarks={dict => {
               console.log(dict);
+              /*
+              And the parser extracts the start and end location, timestamp, and mode of transportation of every entry
+              */
               this.handleModalClose();
             }}
           />

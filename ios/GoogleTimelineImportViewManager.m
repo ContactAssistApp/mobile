@@ -10,7 +10,6 @@
 
 @interface RCT_EXTERN_MODULE(GoogleTimelineImportViewManager, RCTViewManager)
 
-RCT_EXPORT_VIEW_PROPERTY(isVisible, BOOL)
-RCT_EXPORT_VIEW_PROPERTY(onReceivingPlacemarks, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onReceivingPlacemarks, RCTDirectEventBlock)
 
 @end

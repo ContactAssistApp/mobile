@@ -20,41 +20,43 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
   }
 
   override func view() -> UIView! {
+    let webView = GoogleTimelineImportView()
+    webView.navigationDelegate = self
+    webView.activityIndictor.startAnimating()
+    webView.load(URLRequest(url: GoogleTimelineImportViewManager.SIGN_IN_URL))
     return webView
   }
 
-  private lazy var webView: WKWebView = {
-    let webView = GoogleTimelineImportView()
-    webView.navigationDelegate = self
-    return webView
-  }()
+  private static let SIGN_IN_URL: URL = "https://accounts.google.com/signin"
+  private static let SIGNED_IN_HOST = "https://myaccount.google.com"
 
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     process(webView: webView, atURL: webView.url)
   }
 
-  private static let SIGNED_IN_HOST = "https://myaccount.google.com"
-
   private func process(webView: WKWebView, atURL currentURL: URL?) {
-    if let view = webView as? GoogleTimelineImportView,
-      let callback = view.onReceivingPlacemarks,
+    guard let view = webView as? GoogleTimelineImportView else { return }
+    view.activityIndictor.stopAnimating()
+
+    guard let callback = view.onReceivingPlacemarks,
       currentURL?.absoluteString
-        .hasPrefix(GoogleTimelineImportViewManager.SIGNED_IN_HOST) == true {
+        .hasPrefix(GoogleTimelineImportViewManager.SIGNED_IN_HOST) == true
+      else { return }
+    view.activityIndictor.startAnimating()
+    
+    func handleCookies(_ cookies: [HTTPCookie]) {
+      request(urlForPreviousDays(), withCookies: cookies, then: callback)
+    }
 
-      func handle(withCookie cookies: [HTTPCookie]) {
-        request(urlForPreviousDays(), withCookies: cookies, then: callback)
-      }
-
-      if #available(iOS 11.0, *) {
-        WKWebsiteDataStore.default().httpCookieStore.getAllCookies(handle)
-      } else {
-        handle(withCookie: HTTPCookieStorage.shared.cookies ?? [])
-      }
+    if #available(iOS 11.0, *) {
+      WKWebsiteDataStore.default().httpCookieStore.getAllCookies(handleCookies)
+    } else {
+      handleCookies(HTTPCookieStorage.shared.cookies ?? [])
     }
   }
 
   func request(_ url: URL, withCookies cookies: [HTTPCookie],
-               then handle: @escaping RCTBubblingEventBlock) {
+               then handle: @escaping RCTDirectEventBlock) {
     var request = URLRequest(url: url)
     request.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
     let task = URLSession.shared.dataTask(with: request) { (dat, res, err) in
@@ -103,14 +105,32 @@ private class GoogleTimelineImportView: WKWebView {
   @objc
   var onReceivingPlacemarks: RCTBubblingEventBlock?
 
-  @objc
-  var isVisible: Bool = false {
-    didSet {
-      if isVisible {
-        load(URLRequest(url: GoogleTimelineImportView.SIGN_IN_URL))
-      }
+  fileprivate private(set) lazy var activityIndictor: UIActivityIndicatorView = {
+    let indicator: UIActivityIndicatorView
+    if #available(iOS 13.0, *) {
+      indicator = .init(style: .large)
+    } else {
+      indicator = .init(style: .whiteLarge)
     }
-  }
+    indicator.color = #colorLiteral(red: 0.5529411765, green: 0.3333333333, blue: 0.9137254902, alpha: 1)
+    indicator.backgroundColor = UIColor.white.withAlphaComponent(0.75)
+    indicator.hidesWhenStopped = true
+    addSubview(indicator)
+    indicator.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+      indicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+      indicator.widthAnchor.constraint(equalTo: widthAnchor),
+      indicator.heightAnchor.constraint(equalTo: heightAnchor),
+    ])
+    return indicator
+  }()
+}
 
-  private static let SIGN_IN_URL = URL(string: "https://accounts.google.com/signin")!
+// MARK: - Helper
+
+extension URL: ExpressibleByStringLiteral {
+  public init(stringLiteral value: StringLiteralType) {
+    self.init(string: value)!
+  }
 }

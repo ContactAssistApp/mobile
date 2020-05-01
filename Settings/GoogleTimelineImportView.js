@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {requireNativeComponent} from 'react-native';
 
-class LocationHistoryImportView extends Component {
+class GoogleTimelineImportView extends Component {
   _onReceivingPlacemarks = event => {
     if (!this.props.onReceivingPlacemarks) {
       return;
@@ -12,7 +12,7 @@ class LocationHistoryImportView extends Component {
 
   render() {
     return (
-      <GoogleTimelineImportView
+      <NativeGoogleTimelineImportView
         {...this.props}
         onReceivingPlacemarks={this._onReceivingPlacemarks}
       />
@@ -20,15 +20,15 @@ class LocationHistoryImportView extends Component {
   }
 }
 
-LocationHistoryImportView.propTypes = {
+GoogleTimelineImportView.propTypes = {
   isVisible: PropTypes.bool,
   logWindow: PropTypes.number,
   onReceivingPlacemarks: PropTypes.func,
 };
 
-module.exports = LocationHistoryImportView;
+module.exports = GoogleTimelineImportView;
 
-var GoogleTimelineImportView = requireNativeComponent(
+var NativeGoogleTimelineImportView = requireNativeComponent(
   'GoogleTimelineImportView',
-  LocationHistoryImportView,
+  GoogleTimelineImportView,
 );
