@@ -6,8 +6,6 @@ export class LocationData {
     // Time (in milliseconds) between location information polls.
     // E.g. 10 minutes
     this.locationInterval = 10 * 60 * 1000;
-    // 14 days in milliseconds.
-    this.logWindow = parseInt(DEFAULT_LOG_WINDOW, 10) * 24 * 60 * 60 * 1000;
   }
 
   /** 14 days in milliseconds. */
