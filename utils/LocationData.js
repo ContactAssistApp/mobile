@@ -96,7 +96,7 @@ export class LocationData {
 
   static saveCuratedLocations(curated) {
     console.log(`[GPS] Saving ${curated.length} location points`);
-    console.log(curated);
+    // console.log(curated);
     SetStoreData('LOCATION_DATA', curated);
   }
 
