@@ -23,9 +23,9 @@ public:
   //how long to keep sensing an active contact before flushing a record
   static const int MinRssiForContact = -82;
   //how many entries to see to consider an ID as possibly positive
-  static const int MinEntriesForPositiveID = 3; //with current params, this is 3 samples over 15 minutes
+  static const int MinEntriesForPositiveID = 1; //with current params, this is 3 samples over 15 minutes
   //how many successive possibly positive IDs to see to consider a seed as positive
-  static const int MinContactsForPositiveSeed = 8;
+  static const int MinContactsForPositiveSeed = 1;
 
   ContactLogEntry(const Id &id, int64_t ts, int rssi, ContactKind k): _id(id), _timestamp(ts), _rssi(rssi), _kind(k) {}
 

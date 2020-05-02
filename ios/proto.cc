@@ -12,6 +12,7 @@
 #include "proto.h"
 #include "util.h"
 
+//#define EXTRA_DEBUG
 namespace td {
 
 class SeedDiskData {
@@ -132,6 +133,15 @@ Id SeedStore::getCurrentId()
     _currentId = sdd.stepTo(now, _stepSize);
     _timestamp = now;
     sdd.saveTo(_fileName);
+
+#ifdef EXTRA_DEBUG
+    //dump all ids we shown, must not do in prod code.
+    std::string tmpfile = _fileName + ".ids";
+    std::ofstream outfile;
+    outfile.open( tmpfile.c_str(), std::ios::out | std::ios::app );
+    outfile << now << " " << _currentId.serialize() << std::endl;
+    outfile.close();
+#endif
     return _currentId;
 }
 
@@ -147,19 +157,13 @@ void SeedStore::changeWindow(int64_t newWindow)
 
 Seed SeedStore::getSeedAndRotate()
 {
-    int64_t now = get_rounded_timestamp();
-    Seed seed;
-    //if there's not data, still report something
     if(access(_fileName.c_str(), F_OK) == -1)
-    {
-        seed = Seed::safeRandomSeed(now - _window);
-    }
-    else
-    {
-        SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
-        sdd.stepTo(now, _stepSize);
-        seed = sdd.sstar();
-    }
+        throw new std::runtime_error("Could not load seed file");
+
+    int64_t now = get_rounded_timestamp();
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    sdd.stepTo(now, _stepSize);
+    Seed seed = sdd.sstar();
 
     SeedDiskData newData = SeedDiskData::createNew(now, _stepSize, _window);
     newData.saveTo(_fileName);

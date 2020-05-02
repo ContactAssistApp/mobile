@@ -10,6 +10,7 @@
 -(void) logDebug: (id)payload;
 -(void) logCritical: (id)payload;
 -(NSMutableData*)currentDeviceId;
+-(NSString*)currentIdStr;
 -(CBCentralManager *) cbc;
 -(void) flushCache: (CBPeripheral*)peripheral;
 -(void)logContact: (NSData *)device_id at:(int64_t)at rssi:(int)rssi kind:(td::ContactKind)kind;

@@ -46,6 +46,9 @@ const symptomReducer = (state = initialState, action) => {
       });
       return state;
 
+    case 'RESET_SYMPTOMS':
+      return initialState;
+
     default:
       return state;
   }

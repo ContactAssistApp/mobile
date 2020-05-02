@@ -82,8 +82,6 @@ class ContactLog extends Component {
         </View>
         <Agenda
           ref={this.contactAgendaRef}
-          pastScrollRange={1}
-          futureScrollRange={1}
           hideKnob={true}
           markedDates={this.state.markedDates}
           onDayPress={day => {
@@ -92,7 +90,7 @@ class ContactLog extends Component {
             });
             this.props.updateContactLog({
               field: 'date',
-              value: new Date(day.dateString),
+              value: new Date(day.dateString.replace(/-/g, '/')),
             });
           }}
           renderEmptyData={() => {
@@ -117,7 +115,7 @@ class ContactLog extends Component {
                     />
                   );
                 }}>
-                <Locations tabLabel={'Locations'} />
+                <Locations tabLabel={'locations'} />
                 <People tabLabel={'people'} />
               </ScrollableTabView>
             );

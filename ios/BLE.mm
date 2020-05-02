@@ -28,6 +28,7 @@
   debug why in some cases phones only get passive contacts while never scanning for positive ones
   handle reads with offsets
   https://stackoverflow.com/questions/15143453/what-is-the-correct-way-to-respond-to-peripheralmanagerdidreceivewriterequests
+  I got a lot passive traces with rssi 0, that should not be possible since we discover it (and get rssi) before writing to.
  */
 
 //set this to enable high volume logging disable for release!
@@ -501,6 +502,7 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   }
 
   [self logCritical: [NSString stringWithFormat:@"BLE backend inited contacts %@ and ids %@", contact_url.path, ids_url.path]];
+  [self logCritical: [NSString stringWithFormat:@"FS:%d DL:%d DQE:%d VQE:%d", UseFastDevValues, DebugLogEnabled, DebugQueryEngineEnabled, VerboseQueryEngineEnabled]];
 }
 
 RCT_EXPORT_METHOD(start_ble)
@@ -573,8 +575,9 @@ RCT_EXPORT_METHOD(stop_ble)
 -(void) logContact: (NSData *)deviceId at:(int64_t)at rssi:(int)rssi kind:(td::ContactKind)kind {
   if(_contacts) {
     NSString *uuid_str = [[NSUUID alloc] initWithUUIDBytes:(uint8_t*)deviceId.bytes ].UUIDString;
-    [self logDebug:[NSString stringWithFormat:@"new contact to %@ at %lld rssi %d kind %d", uuid_str, at, rssi, (int)kind]];
-    _contacts->log(td::ContactLogEntry(td::Id((uint8_t *)deviceId.bytes), at, rssi, kind));
+    td::Id _id((uint8_t *)deviceId.bytes);
+    [self logDebug:[NSString stringWithFormat:@"new contact to %@ (%s) at %lld rssi %d kind %d", uuid_str, _id.serialize().c_str(), at, rssi, (int)kind]];
+    _contacts->log(td::ContactLogEntry(_id, at, rssi, kind));
   }
 }
 
@@ -656,7 +659,21 @@ RCT_EXPORT_METHOD(stop_ble)
   [self logCritical:@"restoring CBPeripheralManager state"];
 }
 
+-(NSString*) currentIdStr
+{
+  if(!_seeds)
+    return @"<n/a>";
 
+  try
+  {
+    td::Id cur = _seeds->getCurrentId();
+    return [NSString stringWithFormat: @"\t%s", cur.serialize().c_str()];
+  } catch(std::exception * e)
+  {
+    return @"<EH>";
+  }
+
+}
 
 -(NSMutableData*) currentDeviceId
 {
@@ -861,7 +878,7 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
               uint8_t tmp[16];
               [uuid getUUIDBytes:tmp];
               bm.addSeed(td::Seed(tmp, [ts longLongValue]));
-              if(VerboseQueryEngineEnabled)
+              if(DebugQueryEngineEnabled)
                 [_w_ble logCritical: [NSString stringWithFormat: @"QE:: [%d] seed:%@ timestamp:%@ age:%lld", i, s, ts, how_old]];
             }
           }
@@ -872,11 +889,6 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
               for(auto &_id: ids)
                 [_w_ble logCritical: [NSString stringWithFormat: @"\t%s", _id.serialize().c_str()]];
             }
-          }
-
-          if(DebugQueryEngineEnabled) {
-            if(bm.seed_count() > 0)
-              [_w_ble logCritical: [NSString stringWithFormat: @"QE:: [%d] has %lu seeds", i, bm.seed_count()]];
           }
         }
 
@@ -889,10 +901,8 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
 
         if(DebugQueryEngineEnabled) {
           [self logCritical: [NSString stringWithFormat: @"QE:: found %ld local contacts", localIds.size()]];
-          if(VerboseQueryEngineEnabled) {
-            for(auto &_id: localIds) {
-              [self logCritical: [NSString stringWithFormat: @"\t%s -> %d", _id.first.serialize().c_str(), _id.second]];
-            }
+          for(auto &_id: localIds) {
+            [self logCritical: [NSString stringWithFormat: @"\t%s -> %d", _id.first.serialize().c_str(), _id.second]];
           }
         }
 
@@ -901,7 +911,7 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
           [self logCritical: @"QE:: query results:"];
           for(int i = 0; i < boolRes.size(); ++i) {
             if(boolRes[i])
-              [self logCritical: [NSString stringWithFormat: @"\t[%d] positive", i]];
+              [self logCritical: [NSString stringWithFormat: @"\t[%d] positive.", i]];
           }
         }
 
@@ -909,9 +919,10 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
         for(auto r : boolRes)
           [res addObject: [NSNumber numberWithInt: r ? 1 : 0]];
 
-        resolve(res);
         if(DebugQueryEngineEnabled)
-          [self logCritical:[NSString stringWithFormat:@"Query done!!!"]];
+          [self logCritical:[NSString stringWithFormat:@"QE:: Done."]];
+
+        resolve(res);
       } @catch(NSException *exception) {
         [self logCritical:[NSString stringWithFormat:@"Failed3 to run query engine due to %@", exception]];
          reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %@", exception.description], nil);
