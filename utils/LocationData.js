@@ -66,8 +66,8 @@ export class LocationData {
   };
 
   async pushLocation(location) {
-    let curated = await this.getCuratedLocations();
-    let unixtimeUTC = this.getUTCUnixTime();
+    let curated = await this.constructor.getCuratedLocations();
+    let unixtimeUTC = this.constructor.getUTCUnixTime();
     // Backfill the stationary points, if available
     if (curated.length >= 1) {
       let lastLocation = curated[curated.length - 1];
@@ -91,7 +91,7 @@ export class LocationData {
       time: unixtimeUTC,
     };
     curated.push(lat_lon_time);
-    this.saveCuratedLocations(curated);
+    this.constructor.saveCuratedLocations(curated);
   }
 
   static saveCuratedLocations(curated) {
