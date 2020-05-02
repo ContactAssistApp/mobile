@@ -65,7 +65,7 @@ export class LocationData {
     return curated;
   };
 
-  async pushLocation(location) {
+  async appendCurrentLocation(location) {
     let curated = await this.constructor.getCuratedLocations();
     let unixtimeUTC = this.constructor.getUTCUnixTime();
     // Backfill the stationary points, if available

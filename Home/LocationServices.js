@@ -66,7 +66,7 @@ export default class LocationServices {
         // execute long running task
         // eg. ajax post location
         // IMPORTANT: task has to be ended by endTask
-        locationData.pushLocation(location);
+        locationData.appendCurrentLocation(location);
         BackgroundGeolocation.endTask(taskKey);
       });
     });
@@ -77,7 +77,7 @@ export default class LocationServices {
         // Application was shutdown, but the headless mechanism allows us
         // to capture events in the background.  (On Android, at least)
         if (event.name === 'location' || event.name === 'stationary') {
-          locationData.pushLocation(event.params);
+          locationData.appendCurrentLocation(event.params);
         }
       });
     }
@@ -95,7 +95,7 @@ export default class LocationServices {
         // tested as I couldn't produce stationaryLocation callback in emulator
         // but since the plugin documentation mentions it, no reason to keep
         // it empty I believe.
-        locationData.pushLocation(stationaryLocation);
+        locationData.appendCurrentLocation(stationaryLocation);
         BackgroundGeolocation.endTask(taskKey);
       });
       console.log('[INFO] stationaryLocation:', stationaryLocation);
