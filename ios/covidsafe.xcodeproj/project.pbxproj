@@ -791,11 +791,8 @@
 				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
 				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
-<<<<<<< HEAD
 				D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */,
-=======
 				14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */,
->>>>>>> crypto
 				14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */,
 				14CCE7ED24550F0200937BF4 /* Locations.m in Sources */,
 				14CCE83924606D3300937BF4 /* AES.swift in Sources */,
