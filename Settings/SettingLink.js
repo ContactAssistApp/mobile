@@ -61,13 +61,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: -0.408,
     color: colors.body_copy,
-    paddingBottom: 5,
-  },
-  description: {
-    fontSize: 15,
-    lineHeight: 20,
-    letterSpacing: -0.24,
-    color: colors.secondary_body_copy,
   },
 });
 

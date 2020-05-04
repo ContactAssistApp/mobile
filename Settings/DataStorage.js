@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderWidth: 1,
     textAlign: 'center',
+    color: colors.body_copy,
   },
   title: {
     fontSize: 17,

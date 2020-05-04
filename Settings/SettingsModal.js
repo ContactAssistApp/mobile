@@ -3,6 +3,7 @@ import Notification from './Notification';
 import Location from './Location';
 import Bluetooth from './Bluetooth';
 import DataStorage from './DataStorage';
+import ImportGoogleTimeline from './ImportGoogleTimeline';
 import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
@@ -42,10 +43,8 @@ class SettingsModal extends Component {
 
             <>
               <Text style={styles.section_title}>More</Text>
-              <SettingLink
-                iconName={'share24'}
-                title={'Share'}
-              />
+              <ImportGoogleTimeline />
+              <SettingLink iconName={'share24'} title={'Share'} />
               <SettingLink
                 iconName={'logo24'}
                 title={'About CovidSafe'}
@@ -59,13 +58,8 @@ class SettingsModal extends Component {
             </>
           </ScrollView>
         </Modal>
-
         <TouchableOpacity onPress={() => this.setState({modalOn: true})}>
-          <CustomIcon
-            name={'settings24'}
-            color={colors.gray_icon}
-            size={24}
-          />
+          <CustomIcon name={'settings24'} color={colors.gray_icon} size={24} />
         </TouchableOpacity>
       </>
     );
