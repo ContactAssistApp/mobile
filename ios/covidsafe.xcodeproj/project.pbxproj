@@ -22,6 +22,7 @@
 		14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83C24606DD800937BF4 /* HMAC.swift */; };
 		14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83E24606DFB00937BF4 /* KeyChain.swift */; };
 		14CCE84424606EEB00937BF4 /* EncryptionUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */; };
+		14CCE87F2460A34F00937BF4 /* EncryptionUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE87E2460A34F00937BF4 /* EncryptionUtil.m */; };
 		17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35472C232F804031A439818A /* icomoon.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -92,6 +93,8 @@
 		14CCE83C24606DD800937BF4 /* HMAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		14CCE83E24606DFB00937BF4 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionUnitTest.swift; sourceTree = "<group>"; };
+		14CCE87D2460A34F00937BF4 /* EncryptionUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EncryptionUtil.h; sourceTree = "<group>"; };
+		14CCE87E2460A34F00937BF4 /* EncryptionUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EncryptionUtil.m; sourceTree = "<group>"; };
 		1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -262,6 +265,8 @@
 				14CCE83A24606D9400937BF4 /* EncryptionUtil.swift */,
 				14CCE83C24606DD800937BF4 /* HMAC.swift */,
 				14CCE83E24606DFB00937BF4 /* KeyChain.swift */,
+				14CCE87D2460A34F00937BF4 /* EncryptionUtil.h */,
+				14CCE87E2460A34F00937BF4 /* EncryptionUtil.m */,
 			);
 			name = Encryption;
 			sourceTree = "<group>";
@@ -782,6 +787,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
+				14CCE87F2460A34F00937BF4 /* EncryptionUtil.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				14CCE83B24606D9400937BF4 /* EncryptionUtil.swift in Sources */,
 				14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */,

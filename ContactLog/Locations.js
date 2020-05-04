@@ -38,6 +38,7 @@ class Locations extends Component {
         const filteredLog = locations.filter(location => {
           return new Date(location.time).getDate() === selectedDate.getDate();
         });
+
         NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
           this.setState({
             addresses,

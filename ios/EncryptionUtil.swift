@@ -1,7 +1,8 @@
 import Foundation
 import CommonCrypto
 
-class EncryptionUtil {
+@objc(EncryptionUtil)
+class EncryptionUtil: NSObject {
     enum Error: Swift.Error {
       case generateRandomFailed
       case getKeyFailed
@@ -14,33 +15,42 @@ class EncryptionUtil {
     static let AES_KEY_TAG = "covidsafe.keys.aes_key"
     static let HMAC_KEY_TAG = "covidsafe.keys.hmac_key"
 
-    static func encrypt(plainText: String) -> String {
+    @objc
+    func encryptWrapper(_ plainText: String, callback: @escaping RCTResponseSenderBlock) {
+        let encryptedText = encrypt(plainText: plainText);
+        callback([encryptedText])
+    }
+  
+    @objc
+    func decryptWrapper(_ encryptedString: String, callback: @escaping RCTResponseSenderBlock) {
+        let origin = decrypt(encryptedString: encryptedString)
+        callback([origin])
+    }
+    
+    func encrypt(plainText: String) -> String {
         do {
-            let aesKey = try KeyChain.get(tag: AES_KEY_TAG) ?? createKey(tag: AES_KEY_TAG)
-            print("AES key: \(aesKey.base64EncodedString())")
-      
+            let aesKey = try KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) ?? createKey(tag: EncryptionUtil.AES_KEY_TAG)
             let aes = try AES(key: aesKey)
             var encryptedData: Data = try aes.encrypt(plainText)
-            print("String encrypted (base64): \(encryptedData.base64EncodedString())")
-
-            let hmacKey = try KeyChain.get(tag: HMAC_KEY_TAG) ?? createKey(tag: HMAC_KEY_TAG)
-            print("HMAC key: \(hmacKey.base64EncodedString())")
+            
+            let hmacKey = try KeyChain.get(tag: EncryptionUtil.HMAC_KEY_TAG) ?? createKey(tag: EncryptionUtil.HMAC_KEY_TAG)
             let hmac = try HMAC(key: hmacKey)
             let hmacVal: Data = try hmac.getHMAC(encryptedData)
             encryptedData.append(hmacVal)
-            print(encryptedData)
             return encryptedData.base64EncodedString()
         } catch {
-          print("Error: \(error)")
-          return ""
+            print("Error: \(error)")
+            return ""
         }
     }
 
-    static func decrypt(encryptedString: String) throws -> String {
-        guard let aesKey = KeyChain.get(tag: AES_KEY_TAG) else {
-            throw Error.getKeyFailed
+    @objc
+    func decrypt(encryptedString: String) -> String {
+        do {
+            guard let aesKey = KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) else {
+              throw Error.getKeyFailed
         }
-        guard let hmacKey = KeyChain.get(tag: HMAC_KEY_TAG) else {
+        guard let hmacKey = KeyChain.get(tag: EncryptionUtil.HMAC_KEY_TAG) else {
             throw Error.getKeyFailed
         }
         
@@ -49,8 +59,8 @@ class EncryptionUtil {
         
         let data = Data(base64Encoded: encryptedString, options: .ignoreUnknownCharacters)!
         
-        let encryptedData = data.prefix(upTo: data.count - HMAC_SIZE)
-        let hmacVal = data.suffix(from: data.count - HMAC_SIZE)
+        let encryptedData = data.prefix(upTo: data.count - EncryptionUtil.HMAC_SIZE)
+        let hmacVal = data.suffix(from: data.count - EncryptionUtil.HMAC_SIZE)
         
         let expectedHmacVal = try hmac.getHMAC(encryptedData)
         
@@ -60,6 +70,10 @@ class EncryptionUtil {
         } else {
             throw Error.decryptionFailed
         }
+      } catch {
+        print("Error: \(error)")
+        return ""
+      }
     }
 
     static func randomData(length: Int, for data: inout Data) throws {
@@ -80,9 +94,9 @@ class EncryptionUtil {
         }
     }
   
-    static func createKey(tag: String) throws -> Data {
-        var newKey = Data(count: KEY_SIZE)
-        try randomData(length: KEY_SIZE, for: &newKey)
+    func createKey(tag: String) throws -> Data {
+        var newKey = Data(count: EncryptionUtil.KEY_SIZE)
+        try EncryptionUtil.randomData(length: EncryptionUtil.KEY_SIZE, for: &newKey)
         try KeyChain.add(tag: tag, data: newKey)
         return newKey
     }

@@ -1,5 +1,6 @@
 import {GetStoreData, SetStoreData} from './asyncStorage';
 import {DEFAULT_LOG_WINDOW} from './constants';
+import {NativeModules} from 'react-native';
 
 export class LocationData {
   constructor() {
@@ -15,7 +16,12 @@ export class LocationData {
     const locationArrayString = await GetStoreData('LOCATION_DATA');
     let locationArray = [];
     if (locationArrayString) {
-      locationArray = JSON.parse(locationArrayString);
+      NativeModules.EncryptionUtil.decryptWrapper(
+        locationArrayString,
+        plainText => {
+          locationArray = JSON.parse(plainText);
+        },
+      );
     }
     console.log(`[GPS] Loaded ${locationArray.length} location points`);
     return locationArray;
@@ -96,8 +102,12 @@ export class LocationData {
 
   static saveCuratedLocations(curated) {
     console.log(`[GPS] Saving ${curated.length} location points`);
-    // console.log(curated);
-    SetStoreData('LOCATION_DATA', curated);
+    NativeModules.EncryptionUtil.encryptWrapper(
+      JSON.stringify(curated),
+      encryptedText => {
+        SetStoreData('LOCATION_DATA', encryptedText);
+      },
+    );
   }
 
   static mergeInLocations = async locations => {
