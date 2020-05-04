@@ -17,6 +17,11 @@
 		14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */; };
 		14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7CF2454B5FE00937BF4 /* Locations.swift */; };
 		14CCE7ED24550F0200937BF4 /* Locations.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7EC24550F0200937BF4 /* Locations.m */; };
+		14CCE83924606D3300937BF4 /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83824606D3300937BF4 /* AES.swift */; };
+		14CCE83B24606D9400937BF4 /* EncryptionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83A24606D9400937BF4 /* EncryptionUtil.swift */; };
+		14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83C24606DD800937BF4 /* HMAC.swift */; };
+		14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83E24606DFB00937BF4 /* KeyChain.swift */; };
+		14CCE84424606EEB00937BF4 /* EncryptionUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */; };
 		17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35472C232F804031A439818A /* icomoon.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -82,6 +87,11 @@
 		14CCE7CF2454B5FE00937BF4 /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		14CCE7EB24550F0200937BF4 /* Locations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Locations.h; sourceTree = "<group>"; };
 		14CCE7EC24550F0200937BF4 /* Locations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Locations.m; sourceTree = "<group>"; };
+		14CCE83824606D3300937BF4 /* AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
+		14CCE83A24606D9400937BF4 /* EncryptionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionUtil.swift; sourceTree = "<group>"; };
+		14CCE83C24606DD800937BF4 /* HMAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
+		14CCE83E24606DFB00937BF4 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionUnitTest.swift; sourceTree = "<group>"; };
 		1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -170,6 +180,7 @@
 		00E356EF1AD99517003FC87E /* covidsafeTests */ = {
 			isa = PBXGroup;
 			children = (
+				14CCE84224606E6F00937BF4 /* Encryption */,
 				00E356F21AD99517003FC87E /* covidsafeTests.m */,
 				D2C9FCB5245D9D59002C7EA6 /* LocationsTests.swift */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
@@ -190,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				D26183132457EC45006B4478 /* ImportGoogleTimeline */,
+				14CCE83624606D0E00937BF4 /* Encryption */,
 				14CCE7CB2454B58A00937BF4 /* ContactLog */,
 				A5EEA9B1243E33A800DDC471 /* contact-model.cc */,
 				A5EEA9AF243E332300DDC471 /* contact-model.h */,
@@ -241,6 +253,25 @@
 				14CCE7EC24550F0200937BF4 /* Locations.m */,
 			);
 			name = ContactLog;
+			sourceTree = "<group>";
+		};
+		14CCE83624606D0E00937BF4 /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				14CCE83824606D3300937BF4 /* AES.swift */,
+				14CCE83A24606D9400937BF4 /* EncryptionUtil.swift */,
+				14CCE83C24606DD800937BF4 /* HMAC.swift */,
+				14CCE83E24606DFB00937BF4 /* KeyChain.swift */,
+			);
+			name = Encryption;
+			sourceTree = "<group>";
+		};
+		14CCE84224606E6F00937BF4 /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */,
+			);
+			name = Encryption;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -739,6 +770,7 @@
 			files = (
 				D2C9FCB6245D9D59002C7EA6 /* LocationsTests.swift in Sources */,
 				00E356F31AD99517003FC87E /* covidsafeTests.m in Sources */,
+				14CCE84424606EEB00937BF4 /* EncryptionUnitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,15 +783,22 @@
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				14CCE83B24606D9400937BF4 /* EncryptionUtil.swift in Sources */,
+				14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */,
 				A5EEA9B0243E332300DDC471 /* contact.cc in Sources */,
 				A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */,
 				A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */,
 				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
 				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
 				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
+<<<<<<< HEAD
 				D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */,
+=======
+				14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */,
+>>>>>>> crypto
 				14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */,
 				14CCE7ED24550F0200937BF4 /* Locations.m in Sources */,
+				14CCE83924606D3300937BF4 /* AES.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
