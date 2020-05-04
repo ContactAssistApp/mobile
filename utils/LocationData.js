@@ -19,7 +19,9 @@ export class LocationData {
       let plainText = await NativeModules.EncryptionUtil.decryptWrapper(
         locationArrayString,
       );
-      locationArray = JSON.parse(plainText);
+      if (plainText) {
+        locationArray = JSON.parse(plainText);
+      }
     }
     console.log(`[GPS] Loaded ${locationArray.length} location points`);
     return locationArray;
