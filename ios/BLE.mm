@@ -57,6 +57,7 @@ static NSString *_serviceUUID;
 static NSString *_characteristicUUID;
 
 
+
 static int sanitize_rssi(int rssi)
 {
   if(rssi == INT_MIN)
@@ -488,14 +489,14 @@ RCT_EXPORT_METHOD(init_module: (NSString *)serviceUUID :(NSString *)characterist
   NSURL *ids_url = [docs_url URLByAppendingPathComponent:@"ids.txt"];
 
   try {
-    _contacts = new td::ContactStore(contact_url.path.UTF8String);
+    _contacts = new td::ContactStore(contact_url.path.UTF8String, true);
   } catch(std::exception *e) {
     NSLog(@"Error opening contacts store %@ due to %s", contact_url.path, e->what());
     [NSException raise:NSInvalidArgumentException format:@"Error opening contacts fileat %@ reason: %s", contact_url.path, e->what()];
   }
   
   try {
-    _seeds = new td::SeedStore(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs, key_rotation_window_in_secs);
+    _seeds = new td::SeedStore(ids_url.path.UTF8String, crypto_id_update_schedule_in_secs, key_rotation_window_in_secs, true);
   } catch(std::exception *e) {
     NSLog(@"Error opening crypto id database: %s at %@", e->what(), ids_url.path);
     [NSException raise:NSInvalidArgumentException format:@"Error opening crypto id database: %s at %@", e->what(), ids_url.path];

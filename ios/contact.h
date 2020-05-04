@@ -43,8 +43,9 @@ public:
 class ContactStore
 {
   std::string _logFileName;
+  bool _crypto;
 public:
-  explicit ContactStore(std::string logFileName): _logFileName(logFileName) { }
+  explicit ContactStore(std::string logFileName, bool useCrypto): _logFileName(logFileName), _crypto(useCrypto) { }
   void log(const ContactLogEntry &c);
   std::unordered_map<Id, int> findContactsSince(int64_t initialTime);
   void purgeOldRecords(int64_t age);

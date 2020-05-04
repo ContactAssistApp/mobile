@@ -6,10 +6,10 @@
 #include <unordered_map>
 #include <memory> 
 #include <sstream>
-#include <fstream>
 
 #include "contact.h"
 #include "util.h"
+#include "crypto.h"
 
 namespace td
 {
@@ -33,13 +33,8 @@ ContactLogEntry ContactLogEntry::parse(std::string line)
 
 void ContactStore::log(const ContactLogEntry &c)
 {
-  int fd = open(_logFileName.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR );
-  if(!fd)
-    throw new std::runtime_error("Could not append to contact logs");
-  std::string str = c.serialize();
-  write(fd, str.c_str(), str.size());
-  fsync(fd);
-  close(fd);
+  ProtectedFile pf(_logFileName, _crypto, FileMode::Append);
+  pf.append(c.serialize());
 }
 
 struct PerIdContact
@@ -61,13 +56,13 @@ struct PerIdContact
 std::unordered_map<Id, int> ContactStore::findContactsSince(int64_t initialTime)
 {
   /*Algo is the following, keep a window of time and count the number of entries. We consider a contact if we detect  */
-  std::ifstream infile(_logFileName);
+  ProtectedFile pf(_logFileName, _crypto, FileMode::Read);
 
   //step one, aggregate logs
   std::unordered_map<Id, std::unique_ptr<PerIdContact> > id_agg;
 
   std::string line;
-  while (std::getline(infile, line))
+  while (pf.getline(line))
   {
     ContactLogEntry log = ContactLogEntry::parse(line);
 
@@ -101,27 +96,20 @@ std::unordered_map<Id, int> ContactStore::findContactsSince(int64_t initialTime)
 
 void ContactStore::purgeOldRecords(int64_t age)
 {
-    std::string tmp_file = _logFileName + ".tmp";
-    std::ifstream infile;
-    std::ofstream outfile;
-    
-    infile.exceptions(std::ifstream::badbit);
-    outfile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+    std::string tmp_file = _logFileName + ".purge";
+    //Ensure files closed before we rename
+    {
+      ProtectedFile pfin(_logFileName, _crypto, FileMode::Read);
+      ProtectedFile pfout(tmp_file , _crypto, FileMode::Append);
 
-    infile.open(_logFileName);
-    outfile.open(tmp_file);
-
-    std::string line;
-    while (std::getline(infile, line)) {
-      ContactLogEntry log = ContactLogEntry::parse(line);
-      if(log.ts() >= age) {
-        outfile.write(line.c_str(), line.size());
-        outfile.put('\n');
-        }
+      std::string line;
+      while (pfin.getline(line)) {
+        ContactLogEntry log = ContactLogEntry::parse(line);
+        if(log.ts() >= age)
+          pfout.append(line);
+      }
     }
-    infile.close();
-    outfile.flush();
-    outfile.close();
+
     rename(tmp_file.c_str(), _logFileName.c_str());
 }
 }

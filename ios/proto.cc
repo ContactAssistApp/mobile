@@ -6,11 +6,11 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <fstream>
 #include <sstream>
 
 #include "proto.h"
 #include "util.h"
+#include "crypto.h"
 
 //#define EXTRA_DEBUG
 namespace td {
@@ -36,43 +36,37 @@ public:
         return res;
     }
 
-    static SeedDiskData loadFrom(const std::string &location)
+    static SeedDiskData loadFrom(const std::string &location, bool useCrypto)
     {
         SeedDiskData res;
 
-        std::ifstream infile(location);
+        ProtectedFile pf(location, useCrypto, FileMode::Read);
 
         std::string line;
-        if (!std::getline(infile, line))
+        if (!pf.getline(line))
             throw new std::runtime_error("Could not read from seed file");
         res._window = std::stoll(line);
 
-        if (!std::getline(infile, line))
+        if (!pf.getline(line))
             throw new std::runtime_error("Could not read from seed file");
         res._s_star = Seed::parse(line);
 
-        if (!std::getline(infile, line))
+        if (!pf.getline(line))
             throw new std::runtime_error("Could not read from seed file");
         res._s_current = Seed::parse(line);
 
         return res;
     }
 
-    void saveTo(const std::string &location)
+    void saveTo(const std::string &location, bool useCrypto)
     {
-        auto tmp_file = location + ".tmp";
-        std::ofstream outfile;
-        outfile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-        
-        outfile.open(tmp_file);
+        std::ostringstream outfile;
 
         outfile << _window << std::endl;
         outfile << _s_star.serialize() << std::endl;
         outfile << _s_current.serialize() << std::endl;
 
-        outfile.flush();
-        outfile.close();
-        rename(tmp_file.c_str(), location.c_str());
+        ProtectedFile::setContent(location, useCrypto, outfile.str());
     }
 
     Id stepTo(int64_t now, int64_t stepSize)
@@ -112,14 +106,14 @@ int64_t SeedStore::get_rounded_timestamp()
     return round_down_timestamp(get_timestamp(), _stepSize);
 }
 
-SeedStore::SeedStore(const std::string &storageLocation, int64_t step_size, int64_t initialWindow): _fileName(storageLocation), _stepSize(step_size), _window(initialWindow), _timestamp(0)
+SeedStore::SeedStore(const std::string &storageLocation, int64_t step_size, int64_t initialWindow, bool useCrypto): _fileName(storageLocation), _stepSize(step_size), _window(initialWindow), _timestamp(0), _crypto(useCrypto)
 {
     try {
-        SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+        SeedDiskData sdd = SeedDiskData::loadFrom(_fileName, useCrypto);
     } catch(std::exception *e) {
         //TODO report that somehow
         SeedDiskData sdd = SeedDiskData::createNew(get_rounded_timestamp(), _stepSize, _window);
-        sdd.saveTo(_fileName);
+        sdd.saveTo(_fileName, useCrypto);
     }
 }
 
@@ -129,10 +123,10 @@ Id SeedStore::getCurrentId()
     if(now == _timestamp)
         return _currentId;
 
-    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName, _crypto);
     _currentId = sdd.stepTo(now, _stepSize);
     _timestamp = now;
-    sdd.saveTo(_fileName);
+    sdd.saveTo(_fileName, _crypto);
 
 #ifdef EXTRA_DEBUG
     //dump all ids we shown, must not do in prod code.
@@ -149,10 +143,10 @@ void SeedStore::changeWindow(int64_t newWindow)
 {
     if(newWindow == _window)
         return;
-    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName, _crypto);
 
     sdd.changeWindow(newWindow, _stepSize);
-    sdd.saveTo(_fileName);
+    sdd.saveTo(_fileName, _crypto);
 }
 
 Seed SeedStore::getSeedAndRotate()
@@ -161,12 +155,12 @@ Seed SeedStore::getSeedAndRotate()
         throw new std::runtime_error("Could not load seed file");
 
     int64_t now = get_rounded_timestamp();
-    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName, _crypto);
     sdd.stepTo(now, _stepSize);
     Seed seed = sdd.sstar();
 
     SeedDiskData newData = SeedDiskData::createNew(now, _stepSize, _window);
-    newData.saveTo(_fileName);
+    newData.saveTo(_fileName, _crypto);
     _timestamp = 0; //force a refresh
 
     return seed;
@@ -175,7 +169,7 @@ Seed SeedStore::getSeedAndRotate()
 Seed SeedStore::unsafeGetSeedAndNotRotate()
 {
     int64_t now = get_rounded_timestamp();
-    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName);
+    SeedDiskData sdd = SeedDiskData::loadFrom(_fileName, _crypto);
     sdd.stepTo(now, _stepSize);
     return sdd.sstar();
 }

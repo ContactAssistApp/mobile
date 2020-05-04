@@ -12,13 +12,14 @@ namespace td {
 class SeedStore {
   std::string _fileName;
   int64_t _stepSize, _window, _timestamp;
+  bool _crypto;
   Id _currentId;
 
   int64_t get_rounded_timestamp();
 
 public:
   //initialWindow only matters if there's no existing seed data.
-  explicit SeedStore(const std::string &storageLocation, int64_t step_size, int64_t initialWindow);
+  explicit SeedStore(const std::string &storageLocation, int64_t step_size, int64_t initialWindow, bool useCrypto);
 
   Id getCurrentId();
 
