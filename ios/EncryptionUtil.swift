@@ -32,6 +32,7 @@ class EncryptionUtil: NSObject {
         resolve(origin)
     }
     
+    @objc
     func encrypt(plainText: String) -> String {
         do {
             let aesKey = try KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) ?? createKey(tag: EncryptionUtil.AES_KEY_TAG)

@@ -3,18 +3,25 @@
 #include <sstream>
 
 #include <Foundation/Foundation.h>
+#include <WebKit/WebKit.h>
+
+#import "covidsafe-Swift.h"
 
 NSString* td_encrypt(NSString *str)
 {
-    NSData *data = [str dataUsingEncoding: NSUTF8StringEncoding];
-    return [data base64EncodedStringWithOptions: 0];
+  EncryptionUtil *util  = [EncryptionUtil alloc];
+  return [util encryptWithPlainText:str];
+//  NSData *data = [str dataUsingEncoding: NSUTF8StringEncoding];
+//  return [data base64EncodedStringWithOptions: 0];
 }
 
 NSString* td_decrypt(NSString *str)
 {
-    NSData *data = [[NSData alloc]initWithBase64EncodedString: str options: NSDataBase64DecodingIgnoreUnknownCharacters];
-    NSString *res = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    return res;
+  EncryptionUtil *util  = [EncryptionUtil alloc];
+  return [util decryptWithEncryptedString:str];
+//    NSData *data = [[NSData alloc]initWithBase64EncodedString: str options: NSDataBase64DecodingIgnoreUnknownCharacters];
+//    NSString *res = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//    return res;
 }
 
 namespace td 

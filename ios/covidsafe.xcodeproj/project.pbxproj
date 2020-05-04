@@ -31,6 +31,7 @@
 		A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117593243BCAD500BCD5AA /* query-engine.cc */; };
 		A511759A243BCAD500BCD5AA /* proto.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117595243BCAD500BCD5AA /* proto.cc */; };
 		A511759B243BCAD500BCD5AA /* util.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117596243BCAD500BCD5AA /* util.cc */; };
+		A58968B42460DA3B00117C67 /* crypto.mm in Sources */ = {isa = PBXBuildFile; fileRef = A58968B32460DA3B00117C67 /* crypto.mm */; };
 		A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.mm */; };
 		A5EEA9B0243E332300DDC471 /* contact.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9AC243E332300DDC471 /* contact.cc */; };
 		A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9B1243E33A800DDC471 /* contact-model.cc */; };
@@ -122,6 +123,8 @@
 		A5117596243BCAD500BCD5AA /* util.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cc; sourceTree = "<group>"; };
 		A5117597243BCAD500BCD5AA /* query-engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "query-engine.h"; sourceTree = "<group>"; };
 		A5117598243BCAD500BCD5AA /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
+		A58968B12460DA3B00117C67 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
+		A58968B32460DA3B00117C67 /* crypto.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = crypto.mm; sourceTree = "<group>"; };
 		A5E323C2242E6FE00066AB83 /* BLE.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BLE.mm; sourceTree = "<group>"; };
 		A5E323C3242E6FE00066AB83 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		A5EEA9AC243E332300DDC471 /* contact.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = contact.cc; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 		13B07FAE1A68108700A75B9A /* covidsafe */ = {
 			isa = PBXGroup;
 			children = (
+				A58968B12460DA3B00117C67 /* crypto.h */,
+				A58968B32460DA3B00117C67 /* crypto.mm */,
 				D26183132457EC45006B4478 /* ImportGoogleTimeline */,
 				14CCE83624606D0E00937BF4 /* Encryption */,
 				14CCE7CB2454B58A00937BF4 /* ContactLog */,
@@ -801,6 +806,7 @@
 				14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */,
 				14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */,
 				14CCE7ED24550F0200937BF4 /* Locations.m in Sources */,
+				A58968B42460DA3B00117C67 /* crypto.mm in Sources */,
 				14CCE83924606D3300937BF4 /* AES.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
