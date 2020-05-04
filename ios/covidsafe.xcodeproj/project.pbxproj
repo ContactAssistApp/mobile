@@ -31,6 +31,7 @@
 		B537F701AA40882F8AA59C69 /* libPods-covidsafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */; };
 		D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */; };
 		D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */; };
+		D2C9FCB6245D9D59002C7EA6 /* LocationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9FCB5245D9D59002C7EA6 /* LocationsTests.swift */; };
 		FA99A7DD6E78E064A6B9F89F /* libPods-covidsafeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-covidsafeTests.a */; };
 		FBDFC5F03DC4A9AA826A92E4 /* libPods-covidsafe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C959DDA6D810F94A4A1ECC56 /* libPods-covidsafe-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -121,6 +122,8 @@
 		C9938D4C0F65454AA656A943 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGoogleTimeline.swift; sourceTree = "<group>"; };
 		D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleTimelineImportViewManager.m; sourceTree = "<group>"; };
+		D2C9FCB1245D9D17002C7EA6 /* covidsafeTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "covidsafeTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D2C9FCB5245D9D59002C7EA6 /* LocationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTests.swift; sourceTree = "<group>"; };
 		E2E049DD21E04D6DAADB789A /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		E777A0CCD25544E896DEB60F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -168,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				00E356F21AD99517003FC87E /* covidsafeTests.m */,
+				D2C9FCB5245D9D59002C7EA6 /* LocationsTests.swift */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
 			path = covidsafeTests;
@@ -176,6 +180,7 @@
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D2C9FCB1245D9D17002C7EA6 /* covidsafeTests-Bridging-Header.h */,
 				00E356F11AD99517003FC87E /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -429,6 +434,7 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = THEWY9596Q;
+						LastSwiftMigration = 1150;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -731,6 +737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2C9FCB6245D9D59002C7EA6 /* LocationsTests.swift in Sources */,
 				00E356F31AD99517003FC87E /* covidsafeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -807,6 +814,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -822,6 +830,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "covidsafeTests/covidsafeTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/covidsafe.app/covidsafe";
 			};
 			name = Debug;
@@ -832,6 +843,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				INFOPLIST_FILE = covidsafeTests/Info.plist;
@@ -844,6 +856,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "covidsafeTests/covidsafeTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/covidsafe.app/covidsafe";
 			};
 			name = Release;
