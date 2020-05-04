@@ -16,38 +16,14 @@ export class LocationData {
     const locationArrayString = await GetStoreData('LOCATION_DATA');
     let locationArray = [];
     if (locationArrayString) {
-      NativeModules.EncryptionUtil.decryptWrapper(
+      let plainText = await NativeModules.EncryptionUtil.decryptWrapper(
         locationArrayString,
-        plainText => {
-          locationArray = JSON.parse(plainText);
-        },
       );
+      locationArray = JSON.parse(plainText);
     }
     console.log(`[GPS] Loaded ${locationArray.length} location points`);
     return locationArray;
   };
-
-  /*
-    async getPointStats() {
-      const locationData = await this.getLocationData();
-
-      let lastPoint = null;
-      let firstPoint = null;
-      let pointCount = 0;
-
-      if (locationData.length) {
-        lastPoint = locationData.slice(-1)[0];
-        firstPoint = locationData[0];
-        pointCount = locationData.length;
-      }
-
-      return {
-        lastPoint,
-        firstPoint,
-        pointCount,
-      };
-    }
-  */
 
   static getUTCUnixTime = () => {
     // Always work in UTC, not the local time in the locationData
@@ -63,9 +39,11 @@ export class LocationData {
 
     // Curate the list of points, only keep the last 14 days
     let curated = [];
-    for (let i = 0; i < locationArray.length; i++) {
-      if (locationArray[i].time > unixtimeUTC_14daysAgo) {
-        curated.push(locationArray[i]);
+    if (locationArray) {
+      for (let i = 0; i < locationArray.length; i++) {
+        if (locationArray[i].time > unixtimeUTC_14daysAgo) {
+          curated.push(locationArray[i]);
+        }
       }
     }
     return curated;
@@ -97,17 +75,15 @@ export class LocationData {
       time: unixtimeUTC,
     };
     curated.push(lat_lon_time);
-    this.constructor.saveCuratedLocations(curated);
+    await this.constructor.saveCuratedLocations(curated);
   }
 
-  static saveCuratedLocations(curated) {
+  static async saveCuratedLocations(curated) {
     console.log(`[GPS] Saving ${curated.length} location points`);
-    NativeModules.EncryptionUtil.encryptWrapper(
+    let encryptedText = await NativeModules.EncryptionUtil.encryptWrapper(
       JSON.stringify(curated),
-      encryptedText => {
-        SetStoreData('LOCATION_DATA', encryptedText);
-      },
     );
+    SetStoreData('LOCATION_DATA', encryptedText);
   }
 
   static mergeInLocations = async locations => {
