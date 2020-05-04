@@ -87,44 +87,27 @@ class Locations: NSObject {
     
     let TEN_MINUTES_IN_MS: Double = 10 * 60 * 1000
     
-    /// Add an adress and the stay interval to adress list. `end` defaults to start + 10 minutes.
-    func appendAddress(_ address: AddressTS, startingAt start: Double, to end: Double? = nil) {
-      let end = end ?? start + TEN_MINUTES_IN_MS
+    /// Add an adress and the stay interval to adress list. If end time is same as start time, +10 minutes.
+    func appendAddress(_ address: AddressTS) {
       AddressPeriodList.append(AddressPeriod(
-        name: address.name, address: address.address, start: start, end: end
+        name: address.name, address: address.address, start: start,
+        end: start == end ? start + TEN_MINUTES_IN_MS : end
       ))
     }
     
-    for (index, address_ts) in addressTSList.enumerated().dropFirst() {
+    for address_ts in addressTSList.dropFirst() {
       if address_ts.address != previous.address {
-        // append - dynamic size
-        if start == end {
-          // logic: same location + 10min
-          appendAddress(previous, startingAt: start)
-        } else {
-          appendAddress(previous, startingAt: start, to: end)
-        }
-        // update
+        appendAddress(previous)
+        // update to current location
         start = address_ts.timestamp
         end = address_ts.timestamp
         previous = address_ts
-        if index == addressTSList.indices.last { // last one - unique, add extra
-          // logic: same location + 10min
-          appendAddress(address_ts, startingAt: start)
-        }
-      } else { // move on
+      } else { // same location, update end time
         end = address_ts.timestamp
-        if index == addressTSList.indices.last { // last one - same, add extra
-          if start == end {
-            // logic: same location + 10min
-            appendAddress(address_ts, startingAt: start)
-          } else {
-            appendAddress(address_ts, startingAt: start, to: end)
-          }
-        }
       }
     }
-    
+    appendAddress(previous)
+
     return condensed(AddressPeriodList)
   }
   
