@@ -16,6 +16,11 @@ class EncryptionUtil: NSObject {
     static let HMAC_KEY_TAG = "covidsafe.keys.hmac_key"
 
     @objc
+    static func requiresMainQueueSetup() -> Bool {
+      return true
+    }
+
+    @objc
     func encryptWrapper(_ plainText: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
         let encryptedText = encrypt(plainText: plainText);
         resolve(encryptedText)
