@@ -1,7 +1,5 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification from 'react-native-push-notification';
 import {LocationData} from '../utils/LocationData';
 
 let instanceCount = 0;
@@ -17,24 +15,13 @@ export default class LocationServices {
       return;
     }
 
-    PushNotification.configure({
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function(notification) {
-        console.log('NOTIFICATION:', notification);
-        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-        notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
-      requestPermissions: true,
-    });
-
-    // PushNotificationIOS.requestPermissions();
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 5,
       distanceFilter: 500,
       notificationTitle: 'CovidSafe Enabled',
       notificationText:
-        'CovidSafe is securely storing your GPS coordinates once every five minutes on this device.',
+        'CovidSafe is securely storing your GPS coordinates once every ten minutes on this device.',
       debug: false, // when true, it beeps every time a loc is read
       startOnBoot: true,
       stopOnTerminate: false,
@@ -53,13 +40,13 @@ export default class LocationServices {
     BackgroundGeolocation.on('location', location => {
       // handle your locations here
       /* SAMPLE OF LOCATION DATA OBJECT
-                {
-                  "accuracy": 20, "altitude": 5, "id": 114, "isFromMockProvider": false,
-                  "latitude": 37.4219983, "locationProvider": 1, "longitude": -122.084,
-                  "mockLocationsEnabled": false, "provider": "fused", "speed": 0,
-                  "time": 1583696413000
-                }
-            */
+        {
+          "accuracy": 20, "altitude": 5, "id": 114, "isFromMockProvider": false,
+          "latitude": 37.4219983, "locationProvider": 1, "longitude": -122.084,
+          "mockLocationsEnabled": false, "provider": "fused", "speed": 0,
+          "time": 1583696413000
+        }
+      */
       // to perform long running operation on iOS
       // you need to create background task
       BackgroundGeolocation.startTask(taskKey => {
@@ -83,7 +70,6 @@ export default class LocationServices {
     }
 
     BackgroundGeolocation.on('stationary', stationaryLocation => {
-      console.log('stationary');
       // handle stationary locations here
       // Actions.sendLocation(stationaryLocation);
       BackgroundGeolocation.startTask(taskKey => {
@@ -168,10 +154,6 @@ export default class LocationServices {
     });
 
     BackgroundGeolocation.on('stop', () => {
-      PushNotification.localNotification({
-        title: 'Location Tracking Was Disabled',
-        message: 'CovidSafe requires location services.',
-      });
       console.log('[INFO] stop');
     });
 
@@ -254,15 +236,8 @@ export default class LocationServices {
 
   static stop(nav) {
     // unregister all event listeners
-    PushNotification.localNotification({
-      title: 'Location Tracking Was Disabled',
-      message: 'CovidSafe requires location services.',
-    });
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
     instanceCount -= 1;
-    // SetStoreData('PARTICIPATE', 'false').then(() =>
-    //   nav.navigate('LocationTrackingScreen', {}),
-    // );
   }
 }
