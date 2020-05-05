@@ -74,12 +74,16 @@ class Home extends Component {
       this.setState({
         location: data,
       });
+      if(data)
+        LocationServices.start();
     });
 
     this.getSetting('ENABLE_BLE').then(data => {
       this.setState({
         ble: data,
       });
+      if(data)
+        Ble.start();
     });
 
     this.getSetting('ENABLE_NOTIFICATION').then(data => {
