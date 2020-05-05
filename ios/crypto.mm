@@ -9,16 +9,32 @@
 
 NSString* td_encrypt(NSString *str)
 {
-  EncryptionUtil *util  = [EncryptionUtil alloc];
-  return [util encryptWithPlainText:str];
+  @try {
+    EncryptionUtil *util  = [EncryptionUtil alloc];
+    NSError *err = nil;
+    NSString *res = [util encryptWithPlainText:str error:&err];
+    if(err != nil)
+      throw new std::runtime_error(std::string("Failed to decrypt due to ") + err.description.UTF8String);
+    return res;
+  } @catch(NSException *exception) {
+    throw new std::runtime_error(std::string("Failed to decrypt due to ") + exception.description.UTF8String);
+  }
 //  NSData *data = [str dataUsingEncoding: NSUTF8StringEncoding];
 //  return [data base64EncodedStringWithOptions: 0];
 }
 
 NSString* td_decrypt(NSString *str)
 {
-  EncryptionUtil *util  = [EncryptionUtil alloc];
-  return [util decryptWithEncryptedString:str];
+  @try {
+    EncryptionUtil *util  = [EncryptionUtil alloc];
+    NSError *err = nil;
+    NSString *res = [util decryptWithEncryptedString:str error:&err];
+    if(err != nil)
+      throw new std::runtime_error(std::string("Failed to decrypt due to ") + err.description.UTF8String);
+    return res;
+  } @catch(NSException *exception) {
+    throw new std::runtime_error(std::string("Failed to decrypt due to ") + exception.description.UTF8String);
+  }
 //    NSData *data = [[NSData alloc]initWithBase64EncodedString: str options: NSDataBase64DecodingIgnoreUnknownCharacters];
 //    NSString *res = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 //    return res;

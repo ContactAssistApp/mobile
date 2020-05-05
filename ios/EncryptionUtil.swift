@@ -7,6 +7,7 @@ class EncryptionUtil: NSObject {
       case generateRandomFailed
       case getKeyFailed
       case decryptionFailed
+      case dataDecodeFail
     }
 
     static let KEY_SIZE = kCCKeySizeAES256
@@ -22,63 +23,63 @@ class EncryptionUtil: NSObject {
 
     @objc
     func encryptWrapper(_ plainText: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
-        let encryptedText = encrypt(plainText: plainText);
-        resolve(encryptedText)
+      do {
+        let encryptedText = try encrypt(plainText: plainText);
+        resolve(encryptedText);
+      } catch {
+        reject("InternalStateError", "Encryption error: \(error)", nil);
+      }
     }
   
     @objc
     func decryptWrapper(_ encryptedString: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
-        let origin = decrypt(encryptedString: encryptedString)
-        resolve(origin)
+        do {
+          let origin = try decrypt(encryptedString: encryptedString)
+          resolve(origin)
+        } catch {
+          reject("InternalStateError", "Decryption error: \(error)", nil);
+        }
     }
     
     @objc
-    func encrypt(plainText: String) -> String {
-        do {
-            let aesKey = try KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) ?? createKey(tag: EncryptionUtil.AES_KEY_TAG)
-            let aes = try AES(key: aesKey)
-            var encryptedData: Data = try aes.encrypt(plainText)
-            
-            let hmacKey = try KeyChain.get(tag: EncryptionUtil.HMAC_KEY_TAG) ?? createKey(tag: EncryptionUtil.HMAC_KEY_TAG)
-            let hmac = try HMAC(key: hmacKey)
-            let hmacVal: Data = try hmac.getHMAC(encryptedData)
-            encryptedData.append(hmacVal)
-            return encryptedData.base64EncodedString()
-        } catch {
-            print("Error: \(error)")
-            return ""
-        }
+    func encrypt(plainText: String) throws -> String {
+      let aesKey = try KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) ?? createKey(tag: EncryptionUtil.AES_KEY_TAG)
+      let aes = try AES(key: aesKey)
+      var encryptedData: Data = try aes.encrypt(plainText)
+      
+      let hmacKey = try KeyChain.get(tag: EncryptionUtil.HMAC_KEY_TAG) ?? createKey(tag: EncryptionUtil.HMAC_KEY_TAG)
+      let hmac = try HMAC(key: hmacKey)
+      let hmacVal: Data = try hmac.getHMAC(encryptedData)
+      encryptedData.append(hmacVal)
+      return encryptedData.base64EncodedString()
     }
 
     @objc
-    func decrypt(encryptedString: String) -> String {
-        do {
-            guard let aesKey = KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) else {
-              throw Error.getKeyFailed
-        }
-        guard let hmacKey = KeyChain.get(tag: EncryptionUtil.HMAC_KEY_TAG) else {
-            throw Error.getKeyFailed
-        }
-        
-        let aes = try AES(key: aesKey)
-        let hmac = try HMAC(key: hmacKey)
-        
-        let data = Data(base64Encoded: encryptedString, options: .ignoreUnknownCharacters)!
-        
-        let encryptedData = data.prefix(upTo: data.count - EncryptionUtil.HMAC_SIZE)
-        let hmacVal = data.suffix(from: data.count - EncryptionUtil.HMAC_SIZE)
-        
-        let expectedHmacVal = try hmac.getHMAC(encryptedData)
-        
-        if (hmacVal.elementsEqual(expectedHmacVal)) {
-            let decryptedString: String = try aes.decrypt(encryptedData)
-            return decryptedString
-        } else {
-            throw Error.decryptionFailed
-        }
-      } catch {
-        print("Error: \(error)")
-        return ""
+    func decrypt(encryptedString: String) throws -> String {
+      guard let aesKey = KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) else {
+        throw Error.getKeyFailed
+      }
+      guard let hmacKey = KeyChain.get(tag: EncryptionUtil.HMAC_KEY_TAG) else {
+          throw Error.getKeyFailed
+      }
+      
+      let aes = try AES(key: aesKey)
+      let hmac = try HMAC(key: hmacKey)
+      
+      guard let data = Data(base64Encoded: encryptedString, options: .ignoreUnknownCharacters) else {
+        throw Error.dataDecodeFail
+      }
+      
+      let encryptedData = data.prefix(upTo: data.count - EncryptionUtil.HMAC_SIZE)
+      let hmacVal = data.suffix(from: data.count - EncryptionUtil.HMAC_SIZE)
+      
+      let expectedHmacVal = try hmac.getHMAC(encryptedData)
+      
+      if (hmacVal.elementsEqual(expectedHmacVal)) {
+          let decryptedString: String = try aes.decrypt(encryptedData)
+          return decryptedString
+      } else {
+          throw Error.decryptionFailed
       }
     }
 
