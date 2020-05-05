@@ -13,7 +13,7 @@ export class LocationData {
   static LOG_WINDOW = parseInt(DEFAULT_LOG_WINDOW, 10) * 24 * 60 * 60 * 1000;
 
   static getLocationData = async () => {
-    const locationArrayString = await GetStoreData('LOCATION_DATA');
+    const locationArrayString = await GetStoreData('LOCATION_DATA_ENCRYPT');
     let locationArray = [];
     if (locationArrayString) {
       let plainText = await NativeModules.EncryptionUtil.decryptWrapper(
@@ -83,7 +83,7 @@ export class LocationData {
     let encryptedText = await NativeModules.EncryptionUtil.encryptWrapper(
       JSON.stringify(curated),
     );
-    SetStoreData('LOCATION_DATA', encryptedText);
+    SetStoreData('LOCATION_DATA_ENCRYPT', encryptedText);
   }
 
   static mergeInLocations = async locations => {
