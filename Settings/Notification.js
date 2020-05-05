@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import TraceTool from './TraceTool';
+import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
+import NotificationServices from '../services/NotificationServices';
 
 class Notification extends Component {
   constructor(props) {
@@ -9,7 +11,27 @@ class Notification extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getSetting('ENABLE_NOTIFICATION').then(data => {
+      this.setState({
+        notification: data,
+      });
+    });
+  }
+
+  getSetting = key => {
+    return GetStoreData(key).then(data => {
+      return data === 'true' ? true : false;
+    });
+  };
+
   updateSetting = state => {
+    if (state) {
+      NotificationServices.start();
+    }
+
+    SetStoreData('ENABLE_NOTIFICATION', state);
+
     this.setState({
       notification: state,
     });

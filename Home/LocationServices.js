@@ -1,7 +1,5 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification from 'react-native-push-notification';
 import {LocationData} from '../utils/LocationData';
 
 let instanceCount = 0;
@@ -17,17 +15,6 @@ export default class LocationServices {
       return;
     }
 
-    PushNotification.configure({
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function(notification) {
-        console.log('NOTIFICATION:', notification);
-        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-        notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
-      requestPermissions: true,
-    });
-
-    // PushNotificationIOS.requestPermissions();
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 5,
@@ -167,10 +154,6 @@ export default class LocationServices {
     });
 
     BackgroundGeolocation.on('stop', () => {
-      PushNotification.localNotification({
-        title: 'Location Tracking Was Disabled',
-        message: 'CovidSafe requires location services.',
-      });
       console.log('[INFO] stop');
     });
 
@@ -253,10 +236,6 @@ export default class LocationServices {
 
   static stop(nav) {
     // unregister all event listeners
-    PushNotification.localNotification({
-      title: 'Location Tracking Was Disabled',
-      message: 'CovidSafe requires location services.',
-    });
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
     instanceCount -= 1;

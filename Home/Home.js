@@ -35,6 +35,7 @@ class Home extends Component {
       refreshing: false,
       location: false,
       ble: false,
+      enable_notification: false,
       notifications: [],
     };
   }
@@ -81,27 +82,16 @@ class Home extends Component {
       });
     });
 
-    this.getNotifications().then(data => {
-      if (data) {
-        this.setState({
-          notifications: data,
-        });
-      }
+    this.getSetting('ENABLE_NOTIFICATION').then(data => {
+      this.setState({
+        enable_notification: data,
+      });
     });
   }
 
   getSetting = key => {
     return GetStoreData(key).then(data => {
       return data === 'true' ? true : false;
-    });
-  };
-
-  getNotifications = () => {
-    return GetStoreData('NOTIFICATIONS').then(data => {
-      if (data) {
-        return JSON.parse(data);
-      }
-      return;
     });
   };
 
@@ -143,13 +133,16 @@ class Home extends Component {
         });
 
         let notifications = await this.searchQuery(args, msgs);
-
         if (notifications && notifications.length > 0) {
-          notifications.map(notification => {
-            return PushNotification.localNotification({
-              message: notification,
+          this.setState({notifications});
+
+          if (this.state.enable_notification) {
+            notifications.map(notification => {
+              return PushNotification.localNotification({
+                message: notification,
+              });
             });
-          });
+          }
         }
       }
     }
