@@ -16,11 +16,15 @@ export class LocationData {
     const locationArrayString = await GetStoreData('LOCATION_DATA_ENCRYPT');
     let locationArray = [];
     if (locationArrayString) {
-      let plainText = await NativeModules.EncryptionUtil.decryptWrapper(
-        locationArrayString,
-      );
-      if (plainText) {
-        locationArray = JSON.parse(plainText);
+      try {
+        let plainText = await NativeModules.EncryptionUtil.decryptWrapper(
+          locationArrayString,
+        );
+        if (plainText) {
+          locationArray = JSON.parse(plainText);
+        }
+      } catch(e) {
+        console.log("error loading location data due to: " + e);
       }
     }
     console.log(`[GPS] Loaded ${locationArray.length} location points`);
