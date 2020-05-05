@@ -56,6 +56,8 @@ ProtectedFile::~ProtectedFile()
         fsync(_output);
         close(_output);
     }
+    if(_input)
+        delete _input;
 }
 
 void ProtectedFile::openOut(bool append)
