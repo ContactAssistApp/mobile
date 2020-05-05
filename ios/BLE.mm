@@ -14,14 +14,6 @@
 
 /*
  BIG TODO LIST:
- 
- Implement:
-  new ID generation protocol (done)
-  token and contact logging (done)
-  connection timeout using a timer (done-ish)
-  add define based heavy debugging (done)
-  handle RSSI (done, send it with package and discard bad data).
-
   handle restore events
   add delay to write from read
   add networking retries for read/write

@@ -19,8 +19,6 @@ NSString* td_encrypt(NSString *str)
   } @catch(NSException *exception) {
     throw new std::runtime_error(std::string("Failed to decrypt due to ") + exception.description.UTF8String);
   }
-//  NSData *data = [str dataUsingEncoding: NSUTF8StringEncoding];
-//  return [data base64EncodedStringWithOptions: 0];
 }
 
 NSString* td_decrypt(NSString *str)
@@ -35,9 +33,6 @@ NSString* td_decrypt(NSString *str)
   } @catch(NSException *exception) {
     throw new std::runtime_error(std::string("Failed to decrypt due to ") + exception.description.UTF8String);
   }
-//    NSData *data = [[NSData alloc]initWithBase64EncodedString: str options: NSDataBase64DecodingIgnoreUnknownCharacters];
-//    NSString *res = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    return res;
 }
 
 namespace td 
@@ -46,6 +41,7 @@ namespace td
 ProtectedFile::ProtectedFile(const std::string &base_name, bool use_encryption):
     _fileName(base_name + (use_encryption ? ".enc" : ".txt")),
     _crypto(use_encryption),
+    _input(nullptr),
     _output(-1)
 {
 }
