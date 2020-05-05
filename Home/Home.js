@@ -25,6 +25,7 @@ import SettingsModal from '../Settings/SettingsModal';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 import {UW_URL} from '../utils/constants';
 import Privacy from '../Privacy/Privacy';
+import PushNotification from 'react-native-push-notification';
 
 class Home extends Component {
   constructor() {
@@ -142,8 +143,13 @@ class Home extends Component {
         });
 
         let notifications = await this.searchQuery(args, msgs);
+
         if (notifications && notifications.length > 0) {
-          SetStoreData('NOTIFICATIONS', notifications);
+          notifications.map(notification => {
+            return PushNotification.localNotification({
+              message: notification,
+            });
+          });
         }
       }
     }

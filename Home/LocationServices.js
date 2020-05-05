@@ -34,7 +34,7 @@ export default class LocationServices {
       distanceFilter: 500,
       notificationTitle: 'CovidSafe Enabled',
       notificationText:
-        'CovidSafe is securely storing your GPS coordinates once every five minutes on this device.',
+        'CovidSafe is securely storing your GPS coordinates once every ten minutes on this device.',
       debug: false, // when true, it beeps every time a loc is read
       startOnBoot: true,
       stopOnTerminate: false,
@@ -53,13 +53,13 @@ export default class LocationServices {
     BackgroundGeolocation.on('location', location => {
       // handle your locations here
       /* SAMPLE OF LOCATION DATA OBJECT
-                {
-                  "accuracy": 20, "altitude": 5, "id": 114, "isFromMockProvider": false,
-                  "latitude": 37.4219983, "locationProvider": 1, "longitude": -122.084,
-                  "mockLocationsEnabled": false, "provider": "fused", "speed": 0,
-                  "time": 1583696413000
-                }
-            */
+        {
+          "accuracy": 20, "altitude": 5, "id": 114, "isFromMockProvider": false,
+          "latitude": 37.4219983, "locationProvider": 1, "longitude": -122.084,
+          "mockLocationsEnabled": false, "provider": "fused", "speed": 0,
+          "time": 1583696413000
+        }
+      */
       // to perform long running operation on iOS
       // you need to create background task
       BackgroundGeolocation.startTask(taskKey => {
@@ -83,7 +83,6 @@ export default class LocationServices {
     }
 
     BackgroundGeolocation.on('stationary', stationaryLocation => {
-      console.log('stationary');
       // handle stationary locations here
       // Actions.sendLocation(stationaryLocation);
       BackgroundGeolocation.startTask(taskKey => {
@@ -261,8 +260,5 @@ export default class LocationServices {
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
     instanceCount -= 1;
-    // SetStoreData('PARTICIPATE', 'false').then(() =>
-    //   nav.navigate('LocationTrackingScreen', {}),
-    // );
   }
 }
