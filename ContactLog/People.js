@@ -16,15 +16,62 @@ class People extends Component {
   constructor() {
     super();
     this.state = {
+      permission: Contacts.PERMISSION_UNDEFINED,
       modalOn: false,
     };
   }
 
   componentDidMount() {
-    Contacts.getAll((err, contacts) => {
+    this.checkPermission()
+      .then(permission => {
+        this.setState({
+          permission,
+        });
+
+        if (permission === Contacts.PERMISSION_UNDEFINED) {
+          this.requestPermission();
+        } else if (permission === Contacts.PERMISSION_AUTHORIZED) {
+          this.loadContacts();
+        } else if (permission === Contacts.PERMISSION_DENIED) {
+          return;
+        }
+      })
+      .catch(e => {
+        console.log('error in contacts: ' + e);
+      });
+  }
+
+  checkPermission = () => {
+    return new Promise((resolve, reject) => {
+      Contacts.checkPermission((err, permission) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(permission);
+      });
+    });
+  };
+
+  requestPermission = () => {
+    Contacts.requestPermission((err, permission) => {
       if (err) {
-        throw err;
+        console.log('error in contacts: ' + err);
+        return;
       }
+
+      this.setState({
+        permission,
+      });
+    });
+  };
+
+  loadContacts = () => {
+    Contacts.getAllWithoutPhotos((err, contacts) => {
+      if (err) {
+        console.log('getting contact error: ', err);
+        return;
+      }
+
       const contactList = contacts.map(contact => {
         return {
           id: contact.recordID,
@@ -37,7 +84,7 @@ class People extends Component {
         value: contactList,
       });
     });
-  }
+  };
 
   openModal = () => {
     this.setState({
