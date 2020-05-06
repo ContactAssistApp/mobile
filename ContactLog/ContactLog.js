@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 });
 
 ContactLog.propTypes = {
-  updateContactLog: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

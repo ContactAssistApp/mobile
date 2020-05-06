@@ -2,10 +2,10 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
-import data from '../ContactLog/static.json';
 import {NativeModules} from 'react-native';
 import DateConverter from '../utils/date';
 import SectionHeader from './SectionHeader';
+import {LocationData} from '../utils/LocationData';
 
 class LocationsList extends Component {
   constructor() {
@@ -15,33 +15,47 @@ class LocationsList extends Component {
     };
   }
 
-  render() {
-    const locations = data.locations;
+  componentDidMount() {
+    this.fetchAddresses();
+  }
+
+  fetchAddresses = () => {
     let date = new Date();
     date.setDate(date.getDate() - 14);
-    if (locations && locations.length > 0) {
-      const filteredLog = locations.filter(location => {
-        return new Date(location.time) > date;
-      });
 
-      NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
-        this.setState({
-          addresses,
+    LocationData.getLocationData().then(locations => {
+      if (locations && locations.length > 0) {
+        const filteredLog = locations.filter(location => {
+          return new Date(location.time) > date;
         });
-      });
-    }
+
+        NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
+          this.setState({
+            addresses,
+          });
+        });
+      }
+    });
+  };
+
+  render() {
     return (
       <>
         <SectionHeader header={'general locations'} />
         {this.state.addresses.map((address, idx) => {
           const name = address[0] === '' ? 'Unknown Location' : address[0];
           const timePeriods = address[2].split(',');
-          const tsStringList = timePeriods.map(timePeriod => {
-            const tsList = timePeriod.split('-');
-            const start = DateConverter.timeString(parseInt(tsList[0].trim()));
-            const end = DateConverter.timeString(parseInt(tsList[1].trim()));
-            return `${start}-${end}`;
-          });
+          const format = time =>
+            DateConverter.timeString(parseInt(time.trim(), 10));
+          const tsStringList = timePeriods
+            .map(timePeriod => {
+              const tsList = timePeriod.split('-');
+              const start = format(tsList[0]);
+              const end = format(tsList[1]);
+              return `${start}-${end}`;
+            })
+            .join('  ');
+
           return (
             <View style={styles.address_card} key={idx}>
               {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
