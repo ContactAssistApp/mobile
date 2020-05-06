@@ -11,7 +11,11 @@ class SettingLink extends Component {
     return (
       <TouchableOpacity
         style={styles.row}
-        onPress={() => {Linking.openURL(url)}}>
+        onPress={() => {
+          if (url) {
+            Linking.openURL(url)
+          }
+        }}>
         {
           iconName && (
             <CustomIcon
