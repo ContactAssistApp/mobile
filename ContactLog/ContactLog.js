@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import colors from '../assets/colors';
 import Locations from './Locations';
 import People from './People';
@@ -17,6 +16,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Calendar from '../views/Calendar';
+import TabView from '../views/TabView';
 
 class ContactLog extends Component {
   constructor() {
@@ -61,29 +61,10 @@ class ContactLog extends Component {
               value: new Date(day.dateString.replace(/-/g, '/')),
             });
           }}>
-          <ScrollableTabView
-            initialPage={1}
-            renderTabBar={() => {
-              return (
-                <DefaultTabBar
-                  backgroundColor={'white'}
-                  activeTextColor={colors.section_title}
-                  inactiveTextColor={colors.gray_icon}
-                  textStyle={{
-                    fontWeight: '500',
-                    textTransform: 'uppercase'
-                  }}
-                  underlineStyle={{
-                    height: 2,
-                    backgroundColor: colors.primary_theme
-                  }}
-                  tabStyle={{paddingTop: 10}}
-                />
-              );
-            }}>
+          <TabView>
             <Locations tabLabel={'locations'} />
             <People tabLabel={'people'} />
-          </ScrollableTabView>
+          </TabView>
         </Calendar>
       </>
     );
@@ -115,6 +96,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.section_title,
     fontWeight: '500',
+  },
+  tabBarText: {
+    fontWeight: '500',
+    textTransform: 'uppercase',
+  },
+  tabBarUnderline: {
+    height: 2,
+    backgroundColor: colors.primary_theme,
+  },
+  tabBar: {
+    paddingTop: 10,
   },
 });
 
