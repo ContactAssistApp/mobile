@@ -24,7 +24,7 @@ class ContactLog extends Component {
   constructor() {
     super();
     this.state = {
-      calendarExpand: false,
+      calendarExpanded: false,
       markedDates: {},
     };
   }
@@ -32,6 +32,12 @@ class ContactLog extends Component {
   componentDidMount() {
     this.fetchGpsLog();
   }
+
+  updateCalendarState = () => {
+    this.setState({
+      calendarExpanded: !this.state.calendarExpanded,
+    });
+  };
 
   fetchGpsLog = async () => {
     const locations = await LocationData.getLocationData();
@@ -60,11 +66,13 @@ class ContactLog extends Component {
           </View>
           <TouchableOpacity
             style={styles.calendar_button}
-            onPress={this.toggleCalendar}>
+            onPress={() => {
+              this.updateCalendarState();
+            }}>
             <CustomIcon
               name={'calendar24'}
               color={
-                this.state.calendarExpand
+                this.state.calendarExpanded
                   ? colors.primary_theme
                   : colors.gray_icon
               }
@@ -79,7 +87,9 @@ class ContactLog extends Component {
               field: 'date',
               value: new Date(day.dateString.replace(/-/g, '/')),
             });
-          }}>
+            this.updateCalendarState();
+          }}
+          calendarExpanded={this.state.calendarExpanded}>
           <TabView>
             <Locations tabLabel={'locations'} />
             <People tabLabel={'people'} />

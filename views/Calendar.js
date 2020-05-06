@@ -2,20 +2,30 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import colors from '../assets/colors';
 import {Agenda} from 'react-native-calendars';
-import {StyleSheet} from 'react-native';
 
 class Calendar extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.contactAgendaRef = React.createRef();
+    this.state = {
+      calendarExpanded: props.calendarExpanded,
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    const {calendarExpanded} = this.props;
+
+    if (prevProps.calendarExpanded !== calendarExpanded) {
+      this.toggleCalendar();
+    }
   }
 
   toggleCalendar = () => {
-    if (!this.state.calendarExpand) {
+    if (!this.state.calendarExpanded) {
       this.contactAgendaRef.current.setScrollPadPosition(0, true);
       this.contactAgendaRef.current.enableCalendarScrolling();
       this.setState({
-        calendarExpand: true,
+        calendarExpanded: true,
       });
     } else {
       this.contactAgendaRef.current.setScrollPadPosition(
@@ -31,7 +41,7 @@ class Calendar extends Component {
         true,
       );
       this.setState({
-        calendarExpand: false,
+        calendarExpanded: false,
       });
     }
   };
@@ -62,12 +72,12 @@ class Calendar extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-
-});
+Calendar.defaultProps = {
+  markedDates: {},
+};
 
 Calendar.propTypes = {
-
+  markedDates: PropTypes.object,
 };
 
 export default Calendar;
