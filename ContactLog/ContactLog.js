@@ -17,6 +17,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Calendar from '../views/Calendar';
 import TabView from '../views/TabView';
+import {LocationData} from '../utils/LocationData';
+import DateConverter from '../utils/date';
 
 class ContactLog extends Component {
   constructor() {
@@ -26,6 +28,23 @@ class ContactLog extends Component {
       markedDates: {},
     };
   }
+
+  componentDidMount() {
+    this.fetchGpsLog();
+  }
+
+  fetchGpsLog = async () => {
+    const locations = await LocationData.getLocationData();
+    const tsList = locations.map(location => {
+      return DateConverter.calendarFormat(new Date(location.time));
+    });
+
+    let markedDates = {};
+    tsList.forEach(day => {
+      markedDates[day] = {marked: true};
+    });
+    this.setState({markedDates});
+  };
 
   render() {
     return (
