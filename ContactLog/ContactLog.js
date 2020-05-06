@@ -11,48 +11,21 @@ import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view
 import colors from '../assets/colors';
 import Locations from './Locations';
 import People from './People';
-import {Agenda} from 'react-native-calendars';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import Calendar from '../views/Calendar';
 
 class ContactLog extends Component {
   constructor() {
     super();
-    this.contactAgendaRef = React.createRef();
     this.state = {
       calendarExpand: false,
       markedDates: {},
     };
   }
-
-  toggleCalendar = () => {
-    if (!this.state.calendarExpand) {
-      this.contactAgendaRef.current.setScrollPadPosition(0, true);
-      this.contactAgendaRef.current.enableCalendarScrolling();
-      this.setState({
-        calendarExpand: true,
-      });
-    } else {
-      this.contactAgendaRef.current.setScrollPadPosition(
-        this.contactAgendaRef.current.initialScrollPadPosition(),
-        true,
-      );
-      this.contactAgendaRef.current.setState({
-        calendarScrollable: false,
-      });
-      this.contactAgendaRef.current.calendar.scrollToDay(
-        this.contactAgendaRef.current.state.selectedDay.clone(),
-        this.contactAgendaRef.current.calendarOffset(),
-        true,
-      );
-      this.setState({
-        calendarExpand: false,
-      });
-    }
-  };
 
   render() {
     return (
@@ -80,56 +53,38 @@ class ContactLog extends Component {
             />
           </TouchableOpacity>
         </View>
-        <Agenda
-          ref={this.contactAgendaRef}
-          hideKnob={true}
+        <Calendar
           markedDates={this.state.markedDates}
-          onDayPress={day => {
-            this.setState({
-              calendarExpand: false,
-            });
+          handleDayPress={day => {
             this.props.updateContactLog({
               field: 'date',
               value: new Date(day.dateString.replace(/-/g, '/')),
             });
-          }}
-          renderEmptyData={() => {
-            return (
-              <ScrollableTabView
-                initialPage={1}
-                renderTabBar={() => {
-                  return (
-                    <DefaultTabBar
-                      backgroundColor={'white'}
-                      activeTextColor={colors.section_title}
-                      inactiveTextColor={colors.gray_icon}
-                      textStyle={{
-                        fontWeight: '500',
-                        textTransform: 'uppercase'
-                      }}
-                      underlineStyle={{
-                        height: 2,
-                        backgroundColor: colors.primary_theme
-                      }}
-                      tabStyle={{paddingTop: 10}}
-                    />
-                  );
-                }}>
-                <Locations tabLabel={'locations'} />
-                <People tabLabel={'people'} />
-              </ScrollableTabView>
-            );
-          }}
-          theme={{
-            selectedDayTextColor: colors.primary_theme,
-            selectedDayBackgroundColor: colors.fill_on,
-            dayTextColor: colors.secondary_body_copy,
-            todayTextColor: colors.secondary_body_copy,
-            dotColor: '#ACACAC',
-            selectedDotColor: colors.primary_theme,
-          }}
-          style={styles.agenda}
-        />
+          }}>
+          <ScrollableTabView
+            initialPage={1}
+            renderTabBar={() => {
+              return (
+                <DefaultTabBar
+                  backgroundColor={'white'}
+                  activeTextColor={colors.section_title}
+                  inactiveTextColor={colors.gray_icon}
+                  textStyle={{
+                    fontWeight: '500',
+                    textTransform: 'uppercase'
+                  }}
+                  underlineStyle={{
+                    height: 2,
+                    backgroundColor: colors.primary_theme
+                  }}
+                  tabStyle={{paddingTop: 10}}
+                />
+              );
+            }}>
+            <Locations tabLabel={'locations'} />
+            <People tabLabel={'people'} />
+          </ScrollableTabView>
+        </Calendar>
       </>
     );
   }
