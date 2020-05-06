@@ -23,8 +23,8 @@ export class LocationData {
         if (plainText) {
           locationArray = JSON.parse(plainText);
         }
-      } catch(e) {
-        console.log("error loading location data due to: " + e);
+      } catch (e) {
+        console.log('error loading location data due to: ' + e);
       }
     }
     console.log(`[GPS] Loaded ${locationArray.length} location points`);
