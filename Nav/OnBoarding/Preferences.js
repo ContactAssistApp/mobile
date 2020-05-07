@@ -15,6 +15,7 @@ import colors from '../../assets/colors';
 import Notification from '../../Settings/Notification';
 import Location from '../../Settings/Location';
 import Bluetooth from '../../Settings/Bluetooth';
+import ImportGoogleTimeline from '../../Settings/ImportGoogleTimeline';
 import DataStorage from '../../Settings/DataStorage';
 
 class Preferences extends Component {
@@ -40,6 +41,7 @@ class Preferences extends Component {
             <Notification />
             <Location />
             <Bluetooth />
+            <ImportGoogleTimeline />
             <DataStorage />
           </View>
           <TouchableOpacity
