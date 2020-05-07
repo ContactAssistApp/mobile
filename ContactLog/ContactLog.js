@@ -87,7 +87,9 @@ class ContactLog extends Component {
               field: 'date',
               value: new Date(day.dateString.replace(/-/g, '/')),
             });
-            this.updateCalendarState();
+            this.setState({
+              calendarExpanded: false,
+            });
           }}
           calendarExpanded={this.state.calendarExpanded}>
           <TabView>
