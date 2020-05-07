@@ -126,17 +126,6 @@ const styles = StyleSheet.create({
     color: colors.section_title,
     fontWeight: '500',
   },
-  tabBarText: {
-    fontWeight: '500',
-    textTransform: 'uppercase',
-  },
-  tabBarUnderline: {
-    height: 2,
-    backgroundColor: colors.primary_theme,
-  },
-  tabBar: {
-    paddingTop: 10,
-  },
 });
 
 ContactLog.propTypes = {
