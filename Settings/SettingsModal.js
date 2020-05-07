@@ -38,12 +38,12 @@ class SettingsModal extends Component {
               <Notification />
               <Location />
               <Bluetooth />
+              <ImportGoogleTimeline />
               <DataStorage />
             </>
 
             <>
               <Text style={styles.section_title}>More</Text>
-              <ImportGoogleTimeline />
               <SettingLink iconName={'share24'} title={'Share'} />
               <SettingLink
                 iconName={'logo24'}

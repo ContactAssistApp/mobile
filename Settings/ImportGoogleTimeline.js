@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import {parseString} from 'react-native-xml2js';
 import Modal from '../views/Modal';
-import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../assets/colors';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
 import {LocationData} from '../utils/LocationData';
+import CustomIcon from '../assets/icons/CustomIcon.js';
 
 class ImportGoogleTimeline extends Component {
   constructor() {
     super();
     this.state = {
       googleSignInVisible: false,
-      title: 'Sign-in to Google',
     };
   }
 
@@ -106,29 +105,29 @@ class ImportGoogleTimeline extends Component {
           visible={this.state.googleSignInVisible}
           handleModalClose={this.handleModalClose}
           useScrollView={false}
-          title={this.state.title}>
+          title={'Sign-in to Google'}>
           <GoogleTimelineImportView
             style={styles.wrapper}
             onReceivingPlacemarks={this.processKMLResponse}
           />
         </Modal>
-        <View style={styles.row}>
-          <Icon
-            name={'logo-google'}
+
+        <TouchableOpacity
+          style={styles.row}
+          onPress={() => this.setState({googleSignInVisible: true})}>
+          <CustomIcon
+            name={'import24'}
             color={colors.gray_icon}
-            size={24}
+            size={16}
             style={styles.icon}
           />
           <View style={styles.content}>
             <Text style={styles.title}>Import Location History</Text>
+            <Text style={styles.description}>
+              Sync your location history directly from Google by importing your timeline data.
+            </Text>
           </View>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.setState({googleSignInVisible: true})}>
-            <Text style={styles.buttonTitle}>Import</Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </>
     );
   }
@@ -136,36 +135,29 @@ class ImportGoogleTimeline extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    paddingHorizontal: 15,
-    paddingVertical: 20,
+    paddingHorizontal: 19,
+    paddingVertical: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.card_border,
   },
   icon: {
-    flex: 1,
     paddingRight: 15,
-    paddingLeft: 3,
   },
   content: {
-    flex: 11,
+    flex: 1,
   },
   title: {
     fontSize: 17,
     lineHeight: 22,
     letterSpacing: -0.408,
     color: colors.body_copy,
+    paddingBottom: 5,
   },
-  button: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: colors.primary_theme,
-  },
-  buttonTitle: {
-    color: 'white',
-    fontWeight: 'bold',
+  description: {
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
+    color: colors.secondary_body_copy,
   },
   wrapper: {
     flex: 1,
