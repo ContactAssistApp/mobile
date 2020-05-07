@@ -1,83 +1,47 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import {WeekCalendar, CalendarList} from 'react-native-calendars';
 import colors from '../assets/colors';
-import {Agenda} from 'react-native-calendars';
 
-class Calendar extends Component {
-  constructor(props) {
-    super();
-    this.contactAgendaRef = React.createRef();
-    this.state = {
-      calendarExpanded: props.calendarExpanded,
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    const {calendarExpanded} = this.props;
-
-    if (prevProps.calendarExpanded !== calendarExpanded) {
-      this.toggleCalendar();
-    }
-  }
-
-  toggleCalendar = () => {
-    if (!this.state.calendarExpanded) {
-      this.contactAgendaRef.current.setScrollPadPosition(0, true);
-      this.contactAgendaRef.current.enableCalendarScrolling();
-      this.setState({
-        calendarExpanded: true,
-      });
-    } else {
-      this.contactAgendaRef.current.setScrollPadPosition(
-        this.contactAgendaRef.current.initialScrollPadPosition(),
-        true,
-      );
-      this.contactAgendaRef.current.setState({
-        calendarScrollable: false,
-      });
-      this.contactAgendaRef.current.calendar.scrollToDay(
-        this.contactAgendaRef.current.state.selectedDay.clone(),
-        this.contactAgendaRef.current.calendarOffset(),
-        true,
-      );
-      this.setState({
-        calendarExpanded: false,
-      });
-    }
-  };
-
+export default class Calendar extends Component {
   render() {
-    const {markedDates} = this.props;
+    const {markedDates, weekView} = this.props;
+    console.log(markedDates);
     return (
-      <Agenda
-        ref={this.contactAgendaRef}
-        hideKnob={true}
-        markedDates={markedDates}
-        onDayPress={day => {
-          this.props.handleDayPress(day);
-        }}
-        renderEmptyData={() => {
-          return this.props.children;
-        }}
-        theme={{
-          selectedDayTextColor: colors.primary_theme,
-          selectedDayBackgroundColor: colors.fill_on,
-          dayTextColor: colors.secondary_body_copy,
-          todayTextColor: colors.secondary_body_copy,
-          dotColor: '#ACACAC',
-          selectedDotColor: colors.primary_theme,
-        }}
-      />
+      <>
+        {weekView ? (
+          <WeekCalendar
+            markedDates={markedDates}
+            allowShadow={false}
+            hideDayNames={true}
+            theme={{
+              dayTextColor: colors.secondary_body_copy,
+              todayTextColor: colors.secondary_body_copy,
+              dotColor: '#ACACAC',
+            }}
+            onDayPress={day => {
+              this.props.handleDayPress(day);
+            }}
+          />
+        ) : (
+          <CalendarList
+            pastScrollRange={12}
+            markedDates={this.props.markedDates}
+            futureScrollRange={0}
+            theme={{
+              selectedDayTextColor: colors.primary_theme,
+              selectedDayBackgroundColor: colors.fill_on,
+              dayTextColor: colors.secondary_body_copy,
+              todayTextColor: colors.secondary_body_copy,
+              dotColor: '#ACACAC',
+              selectedDotColor: colors.primary_theme,
+            }}
+            onDayPress={day => {
+              this.props.handleDayPress(day);
+            }}
+          />
+        )}
+        {this.props.children}
+      </>
     );
   }
 }
-
-Calendar.defaultProps = {
-  markedDates: {},
-};
-
-Calendar.propTypes = {
-  markedDates: PropTypes.object,
-};
-
-export default Calendar;
