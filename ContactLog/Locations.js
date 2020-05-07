@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 18,
     lineHeight: 25,
-    textTransform: 'capitalize',
     color: colors.module_title,
     padding: 20,
   },
