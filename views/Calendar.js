@@ -1,28 +1,41 @@
 import React, {Component} from 'react';
 import {WeekCalendar, CalendarList} from 'react-native-calendars';
+import {View, StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
 
-export default class Calendar extends Component {
+class Calendar extends Component {
   render() {
     const {markedDates, weekView, current} = this.props;
 
     return (
       <>
         {weekView ? (
-          <WeekCalendar
-            current={current}
-            markedDates={markedDates}
-            allowShadow={false}
-            hideDayNames={true}
-            theme={{
-              dayTextColor: colors.secondary_body_copy,
-              todayTextColor: colors.secondary_body_copy,
-              dotColor: '#ACACAC',
-            }}
-            onDayPress={day => {
-              this.props.handleDayPress(day);
-            }}
-          />
+          <>
+            <View style={styles.day_container}>
+              <Text style={styles.day}>S</Text>
+              <Text style={styles.day}>M</Text>
+              <Text style={styles.day}>T</Text>
+              <Text style={styles.day}>W</Text>
+              <Text style={styles.day}>T</Text>
+              <Text style={styles.day}>F</Text>
+              <Text style={styles.day}>S</Text>
+            </View>
+            <WeekCalendar
+              current={current}
+              markedDates={markedDates}
+              allowShadow={false}
+              hideDayNames={true}
+              theme={{
+                dayTextColor: colors.secondary_body_copy,
+                todayTextColor: colors.secondary_body_copy,
+                dotColor: '#ACACAC',
+              }}
+              onDayPress={day => {
+                this.props.handleDayPress(day);
+              }}
+              style={styles.week_calendar}
+            />
+          </>
         ) : (
           <CalendarList
             pastScrollRange={12}
@@ -46,3 +59,23 @@ export default class Calendar extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  day_container: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingVertical: 5.5,
+    justifyContent: 'space-evenly',
+  },
+  day: {
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 16,
+    color: colors.body_copy,
+  },
+  week_calendar: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.card_border,
+  },
+});
+
+export default Calendar;
