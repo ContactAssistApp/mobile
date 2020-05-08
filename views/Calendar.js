@@ -9,9 +9,13 @@ class Calendar extends Component {
     let {markedDates, weekView, current} = this.props;
     const maxDate = DateConverter.calendarFormat(new Date());
 
-    Object.values(markedDates).forEach(options => {
+    Object.entries(markedDates).forEach(([key, options]) => {
       if (options.hasOwnProperty('selected')) {
         delete options.selected;
+      }
+
+      if (Object.keys(options).length === 0) {
+        delete markedDates[key];
       }
     });
 
