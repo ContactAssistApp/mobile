@@ -4,12 +4,13 @@ import colors from '../assets/colors';
 
 export default class Calendar extends Component {
   render() {
-    const {markedDates, weekView} = this.props;
-    console.log(markedDates);
+    const {markedDates, weekView, current} = this.props;
+
     return (
       <>
         {weekView ? (
           <WeekCalendar
+            current={current}
             markedDates={markedDates}
             allowShadow={false}
             hideDayNames={true}

@@ -94,6 +94,7 @@ class ContactLog extends Component {
           </TouchableOpacity>
         </View>
         <Calendar
+          current={this.state.date}
           markedDates={this.state.markedDates}
           handleDayPress={day => {
             this.setState({
@@ -103,10 +104,7 @@ class ContactLog extends Component {
           }}
           weekView={this.state.weekView}>
           <TabView>
-            <Locations
-              tabLabel={'locations'}
-              date={this.state.date}
-            />
+            <Locations tabLabel={'locations'} date={this.state.date} />
             <People tabLabel={'people'} />
           </TabView>
         </Calendar>
