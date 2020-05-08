@@ -1,25 +1,11 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, Alert} from 'react-native';
 import {parseString} from 'react-native-xml2js';
 import Modal from '../views/Modal';
-import Icon from 'react-native-vector-icons/Ionicons';
-import colors from '../assets/colors';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
 import {LocationData} from '../utils/LocationData';
 
 class ImportGoogleTimeline extends Component {
-  constructor() {
-    super();
-    this.state = {
-      googleSignInVisible: false,
-      title: 'Sign-in to Google',
-    };
-  }
-
-  handleModalClose = () => {
-    this.setState({googleSignInVisible: false});
-  };
-
   importFinished = (reason, notFailure) => {
     let title, description;
     if (notFailure) {
@@ -30,7 +16,7 @@ class ImportGoogleTimeline extends Component {
     }
     Alert.alert(title, description, [
       {
-        onPress: this.handleModalClose,
+        onPress: this.props.handleModalClose,
       },
     ]);
   };
@@ -101,72 +87,21 @@ class ImportGoogleTimeline extends Component {
 
   render() {
     return (
-      <>
-        <Modal
-          visible={this.state.googleSignInVisible}
-          handleModalClose={this.handleModalClose}
-          useScrollView={false}
-          title={this.state.title}>
-          <GoogleTimelineImportView
-            style={styles.wrapper}
-            onReceivingPlacemarks={this.processKMLResponse}
-          />
-        </Modal>
-        <View style={styles.row}>
-          <Icon
-            name={'logo-google'}
-            color={colors.gray_icon}
-            size={24}
-            style={styles.icon}
-          />
-          <View style={styles.content}>
-            <Text style={styles.title}>Import Location History</Text>
-          </View>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.setState({googleSignInVisible: true})}>
-            <Text style={styles.buttonTitle}>Import</Text>
-          </TouchableOpacity>
-        </View>
-      </>
+      <Modal
+        visible={this.props.visible}
+        handleModalClose={this.props.handleModalClose}
+        useScrollView={false}
+        title={'Sign-in to Google'}>
+        <GoogleTimelineImportView
+          style={styles.wrapper}
+          onReceivingPlacemarks={this.processKMLResponse}
+        />
+      </Modal>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  row: {
-    paddingHorizontal: 15,
-    paddingVertical: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.card_border,
-  },
-  icon: {
-    flex: 1,
-    paddingRight: 15,
-    paddingLeft: 3,
-  },
-  content: {
-    flex: 11,
-  },
-  title: {
-    fontSize: 17,
-    lineHeight: 22,
-    letterSpacing: -0.408,
-    color: colors.body_copy,
-  },
-  button: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: colors.primary_theme,
-  },
-  buttonTitle: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
   wrapper: {
     flex: 1,
   },

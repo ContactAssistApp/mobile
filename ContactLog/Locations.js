@@ -3,12 +3,16 @@ import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import colors from '../assets/colors';
 import {NativeModules} from 'react-native';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
 import DateConverter from '../utils/date';
-import {LocationData} from '../utils/LocationData';
+import {updateContactLog} from './actions.js';
+import Import from './Import';
 
 class Locations extends Component {
   constructor() {
     super();
+
     this.state = {
       addresses: [],
     };
@@ -16,70 +20,91 @@ class Locations extends Component {
 
   componentDidMount() {
     const {
-      contactLogData: {date: selectedDate},
+      date,
+      contactLogData: {allCoordinates, cachedAddresses},
     } = this.props;
 
-    this.fetchAddresses(selectedDate);
+    if (!cachedAddresses.hasOwnProperty(date) &&
+      allCoordinates[date] &&
+      allCoordinates[date].length > 0) {
+      this.fetchAddresses(allCoordinates[date]);
+    }
   }
 
   componentDidUpdate(prevProps) {
     const {
-      contactLogData: {date: selectedDate},
+      date,
+      contactLogData: {allCoordinates, cachedAddresses},
     } = this.props;
 
-    if (prevProps.contactLogData.date.getTime() !== selectedDate.getTime()) {
-      this.fetchAddresses(selectedDate);
+    if (!cachedAddresses.hasOwnProperty(date) &&
+      allCoordinates[date] &&
+      allCoordinates[date].length > 0) {
+      this.fetchAddresses(allCoordinates[date]);
     }
   }
 
-  fetchAddresses = selectedDate => {
-    LocationData.getLocationData().then(locations => {
-      if (locations && locations.length > 0) {
-        const filteredLog = locations.filter(location => {
-          return new Date(location.time).getDate() === selectedDate.getDate();
-        });
+  fetchAddresses = coordinates => {
+    let {
+      date,
+      contactLogData: {cachedAddresses},
+    } = this.props;
 
-        NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
-          this.setState({
-            addresses,
-          });
-        });
-      }
+    NativeModules.Locations.reverseGeoCode(coordinates, addresses => {
+      cachedAddresses[date] = addresses;
+      this.props.updateContactLog({
+        field: 'cachedAddresses',
+        value: cachedAddresses,
+      });
+      this.setState({
+        addresses,
+      });
     });
   };
 
   render() {
     const {
-      contactLogData: {date},
+      date,
+      contactLogData: {cachedAddresses},
     } = this.props;
+
+    const addresses = cachedAddresses.hasOwnProperty(date)
+      ? cachedAddresses[date] : this.state.address;
 
     return (
       <ScrollView>
-        <Text style={styles.date}>{DateConverter.dateString(date)}</Text>
-        <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
-        {this.state.addresses.map((address, idx) => {
-          const name = address[0] === '' ? 'Unknown Location' : address[0];
-          const timePeriods = address[2].split(',');
-          const format = time =>
-            DateConverter.timeString(parseInt(time.trim(), 10));
-          const tsStringList = timePeriods
-            .map(timePeriod => {
-              const tsList = timePeriod.split('-');
-              const start = format(tsList[0]);
-              const end = format(tsList[1]);
-              return `${start}-${end}`;
-            })
-            .join('  ');
-          return (
-            <View style={styles.address_card} key={idx}>
-              {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
-              {address[1] !== '' && (
-                <Text style={styles.address}>{address[1]}</Text>
-              )}
-              <Text style={styles.time}>{tsStringList}</Text>
-            </View>
-          );
-        })}
+        {addresses && addresses.length > 0 ?
+          <>
+            <Text style={styles.date}>
+              {DateConverter.dateString(new Date(date.replace(/-/g, '/')))}
+            </Text>
+            <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
+            {addresses.map((address, idx) => {
+              const name = address[0] === '' ? 'Unknown Location' : address[0];
+              const timePeriods = address[2].split(',');
+              const format = time =>
+                DateConverter.timeString(parseInt(time.trim(), 10));
+              const tsStringList = timePeriods
+                .map(timePeriod => {
+                  const tsList = timePeriod.split('-');
+                  const start = format(tsList[0]);
+                  const end = format(tsList[1]);
+                  return `${start}-${end}`;
+                })
+                .join(' ');
+              return (
+                <View style={styles.address_card} key={idx}>
+                  {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
+                  {address[1] !== '' && (
+                    <Text style={styles.address}>{address[1]}</Text>
+                  )}
+                  <Text style={styles.time}>{tsStringList}</Text>
+                </View>
+              );
+            })}
+          </> :
+          <Import />
+        }
       </ScrollView>
     );
   }
@@ -129,10 +154,21 @@ const styles = StyleSheet.create({
   },
 });
 
+Locations.propTypes = {
+  updateContactLog: PropTypes.func,
+};
+
 const mapStateToProps = state => {
   return {
     contactLogData: state.contactLogReducer,
   };
 };
 
-export default connect(mapStateToProps)(Locations);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateContactLog
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Locations);

@@ -24,7 +24,8 @@ class ContactLog extends Component {
   constructor() {
     super();
     this.state = {
-      calendarExpanded: false,
+      date: DateConverter.calendarFormat(new Date()),
+      weekView: true,
       markedDates: {},
     };
   }
@@ -35,21 +36,35 @@ class ContactLog extends Component {
 
   updateCalendarState = () => {
     this.setState({
-      calendarExpanded: !this.state.calendarExpanded,
+      weekView: !this.state.weekView,
     });
   };
 
   fetchGpsLog = async () => {
     const locations = await LocationData.getLocationData();
-    const tsList = locations.map(location => {
-      return DateConverter.calendarFormat(new Date(location.time));
-    });
 
     let markedDates = {};
-    tsList.forEach(day => {
-      markedDates[day] = {marked: true};
+    let coordinates = {};
+    locations.forEach(location => {
+      const date = DateConverter.calendarFormat(new Date(location.time));
+      if (!markedDates.hasOwnProperty(date)) {
+        markedDates[date] = {marked: true};
+      }
+
+      if (coordinates.hasOwnProperty(date)) {
+        coordinates[date].push(location);
+      } else {
+        coordinates[date] = [location];
+      }
     });
-    this.setState({markedDates});
+    this.setState({
+      markedDates,
+    });
+
+    this.props.updateContactLog({
+      field: 'allCoordinates',
+      value: coordinates,
+    });
   };
 
   render() {
@@ -72,26 +87,24 @@ class ContactLog extends Component {
             <CustomIcon
               name={'calendar24'}
               color={
-                this.state.calendarExpanded
-                  ? colors.primary_theme
-                  : colors.gray_icon
+                !this.state.weekView ? colors.primary_theme : colors.gray_icon
               }
               size={24}
             />
           </TouchableOpacity>
         </View>
         <Calendar
+          current={this.state.date}
           markedDates={this.state.markedDates}
           handleDayPress={day => {
-            this.props.updateContactLog({
-              field: 'date',
-              value: new Date(day.dateString.replace(/-/g, '/')),
+            this.setState({
+              date: day.dateString,
+              weekView: true,
             });
-            this.updateCalendarState();
           }}
-          calendarExpanded={this.state.calendarExpanded}>
+          weekView={this.state.weekView}>
           <TabView>
-            <Locations tabLabel={'locations'} />
+            <Locations tabLabel={'locations'} date={this.state.date} />
             <People tabLabel={'people'} />
           </TabView>
         </Calendar>

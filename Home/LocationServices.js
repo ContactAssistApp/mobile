@@ -17,8 +17,8 @@ export default class LocationServices {
 
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
-      stationaryRadius: 5,
-      distanceFilter: 500,
+      stationaryRadius: 50,
+      distanceFilter: 3500,
       notificationTitle: 'CovidSafe Enabled',
       notificationText:
         'CovidSafe is securely storing your GPS coordinates once every ten minutes on this device.',
