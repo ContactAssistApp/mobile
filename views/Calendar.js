@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import {WeekCalendar, CalendarList} from 'react-native-calendars';
 import {View, StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
+import DateConverter from '../utils/date';
 
 class Calendar extends Component {
   render() {
     let {markedDates, weekView, current} = this.props;
+    const maxDate = DateConverter.calendarFormat(new Date());
+
     Object.values(markedDates).forEach(options => {
       if (options.hasOwnProperty('selected')) {
         delete options.selected;
@@ -55,6 +58,7 @@ class Calendar extends Component {
             pastScrollRange={12}
             markedDates={this.props.markedDates}
             futureScrollRange={0}
+            maxDate={maxDate}
             theme={{
               selectedDayTextColor: colors.primary_theme,
               selectedDayBackgroundColor: colors.fill_on,
