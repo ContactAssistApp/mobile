@@ -3,7 +3,7 @@ import Notification from './Notification';
 import Location from './Location';
 import Bluetooth from './Bluetooth';
 import DataStorage from './DataStorage';
-import ImportGoogleTimeline from './ImportGoogleTimeline';
+import Import from './Import';
 import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
@@ -38,7 +38,7 @@ class SettingsModal extends Component {
               <Notification />
               <Location />
               <Bluetooth />
-              <ImportGoogleTimeline />
+              <Import />
               <DataStorage />
             </>
 
