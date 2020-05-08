@@ -5,7 +5,18 @@ import colors from '../assets/colors';
 
 class Calendar extends Component {
   render() {
-    const {markedDates, weekView, current} = this.props;
+    let {markedDates, weekView, current} = this.props;
+    Object.values(markedDates).forEach(options => {
+      if (options.hasOwnProperty('selected')) {
+        delete options.selected;
+      }
+    });
+
+    if (markedDates.hasOwnProperty(current)) {
+      markedDates[current].selected = true;
+    } else {
+      markedDates[current] = {selected: true};
+    }
 
     return (
       <>
@@ -76,6 +87,7 @@ const styles = StyleSheet.create({
     color: colors.body_copy,
   },
   week_calendar: {
+    paddingBottom: 2,
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
   },
