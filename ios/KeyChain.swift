@@ -9,13 +9,13 @@ class KeyChain {
         let query: [String: Any] = [
             String(kSecClass): kSecClassKey,
             String(kSecAttrApplicationTag): tag.data(using: String.Encoding.utf8)!,
-            String(kSecValueData): data
+            String(kSecValueData): data,
+            String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock
         ]
 
         SecItemDelete(query as CFDictionary)
         
         let status = SecItemAdd(query as CFDictionary, nil)
-        
         guard status == errSecSuccess else {
             throw Error.saveKeyFailed
         }
@@ -25,7 +25,8 @@ class KeyChain {
         let query: [String: Any] = [
             String(kSecClass): kSecClassKey,
             String(kSecAttrApplicationTag): tag.data(using: .utf8)!,
-            String(kSecReturnData): true
+            String(kSecReturnData): true,
+            String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock
         ]
       
         var data: AnyObject? = nil
