@@ -26,9 +26,12 @@ class Calendar extends Component {
               allowShadow={false}
               hideDayNames={true}
               theme={{
+                selectedDayTextColor: colors.primary_theme,
+                selectedDayBackgroundColor: colors.fill_on,
                 dayTextColor: colors.secondary_body_copy,
                 todayTextColor: colors.secondary_body_copy,
                 dotColor: '#ACACAC',
+                selectedDotColor: colors.primary_theme,
               }}
               onDayPress={day => {
                 this.props.handleDayPress(day);
