@@ -13,8 +13,8 @@ class EncryptionUtil: NSObject {
     static let KEY_SIZE = kCCKeySizeAES256
     static let HMAC_SIZE = Int(CC_SHA256_DIGEST_LENGTH)
     
-    static let AES_KEY_TAG = "covidsafe.keys.aes_key"
-    static let HMAC_KEY_TAG = "covidsafe.keys.hmac_key"
+    static let AES_KEY_TAG = "covidsafe.keys.aesKey"
+    static let HMAC_KEY_TAG = "covidsafe.keys.hmacKey"
 
     @objc
     static func requiresMainQueueSetup() -> Bool {
