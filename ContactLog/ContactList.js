@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
@@ -41,8 +35,10 @@ class ContactList extends Component {
     } = this.props;
     return (
       <>
-        <ScrollView style={styles.contacts}>
-          {allContacts.map(contact => {
+        <FlatList
+          style={styles.contacts}
+          data={allContacts}
+          renderItem={({item: contact}) => {
             return (
               <TouchableOpacity
                 key={contact.id}
@@ -57,9 +53,15 @@ class ContactList extends Component {
                   />
                 )}
               </TouchableOpacity>
-            )}
-          )}
-        </ScrollView>
+            );
+          }}
+          keyExtractor={item => item.id}
+          removeClippedSubviews={true}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
+          updateCellsBatchingPeriod={100}
+          windowSize={10}
+        />
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.save}
