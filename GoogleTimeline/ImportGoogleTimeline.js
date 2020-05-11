@@ -8,6 +8,7 @@ import {LocationData} from '../utils/LocationData';
 class ImportGoogleTimeline extends Component {
   importFinished = (reason, notFailure) => {
     let title, description;
+    reason = reason.toString();
     if (notFailure) {
       title = reason;
     } else {
@@ -77,11 +78,13 @@ class ImportGoogleTimeline extends Component {
             );
           }
         } else {
-          this.importFinished(error);
+          console.log("Failed to parse KML due to: " + JSON.stringify(error));
+          this.importFinished("Failed to load your Google location history");
         }
       });
     } else {
-      this.importFinished(dict.error);
+      console.log("No KML data found due to: " + JSON.stringify(dict.error));
+      this.importFinished("Could not load your Google location history");
     }
   };
 
