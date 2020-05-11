@@ -570,7 +570,11 @@ RCT_EXPORT_METHOD(stop_ble)
     NSString *uuid_str = [[NSUUID alloc] initWithUUIDBytes:(uint8_t*)deviceId.bytes ].UUIDString;
     td::Id _id((uint8_t *)deviceId.bytes);
     [self logDebug:[NSString stringWithFormat:@"new contact to %@ (%s) at %lld rssi %d kind %d", uuid_str, _id.serialize().c_str(), at, rssi, (int)kind]];
-    _contacts->log(td::ContactLogEntry(_id, at, rssi, kind));
+    try {
+      _contacts->log(td::ContactLogEntry(_id, at, rssi, kind));
+    } catch(std::exception *e) {
+      [self logCritical:[NSString stringWithFormat: @"Error logging contact due to: %s", e->what()]];
+    }
   }
 }
 
@@ -661,7 +665,7 @@ RCT_EXPORT_METHOD(stop_ble)
   {
     td::Id cur = _seeds->getCurrentId();
     return [NSString stringWithFormat: @"\t%s", cur.serialize().c_str()];
-  } catch(std::exception * e)
+  } catch(std::exception *e)
   {
     return @"<EH>";
   }
@@ -677,10 +681,10 @@ RCT_EXPORT_METHOD(stop_ble)
   {
     td::Id cur = _seeds->getCurrentId();
     return [[NSMutableData alloc] initWithBytes:cur.bytes() length:PROTO_ID_SIZE];
-  } catch(std::exception * e)
+  } catch(std::exception *e)
   {
     [self logCritical:[NSString stringWithFormat:@"Failed to fetch from id database error: %s", e->what()]];
-    return NULL;
+    return nil;
   }
 }
 
@@ -920,9 +924,9 @@ RCT_EXPORT_METHOD(runBleQuery: (NSArray*)arr resolver:(RCTPromiseResolveBlock)re
         [self logCritical:[NSString stringWithFormat:@"Failed3 to run query engine due to %@", exception]];
          reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %@", exception.description], nil);
       }
-    } catch(std::exception &e) {
-      [self logCritical:[NSString stringWithFormat:@"Failed2 to run query engine due to %s", e.what()]];
-      reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %s", e.what()], nil);
+    } catch(std::exception *e) {
+      [self logCritical:[NSString stringWithFormat:@"Failed2 to run query engine due to %s", e->what()]];
+      reject(@"InternalStateError", [NSString stringWithFormat:@"Query engine failed: %s", e->what()], nil);
     }
   });
 
