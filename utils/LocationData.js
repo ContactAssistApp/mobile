@@ -31,12 +31,6 @@ export class LocationData {
     return locationArray;
   };
 
-  static getUTCUnixTime = () => {
-    // Always work in UTC, not the local time in the locationData
-    let nowUTC = new Date().toISOString();
-    return Date.parse(nowUTC);
-  };
-
   static getCuratedLocations = async () => {
     // Persist this location data in our local storage of time/lat/lon values
     let locationArray = await this.getLocationData();
@@ -54,35 +48,6 @@ export class LocationData {
     }
     return curated;
   };
-
-  async appendCurrentLocation(location) {
-    let curated = await this.constructor.getCuratedLocations();
-    let unixtimeUTC = this.constructor.getUTCUnixTime();
-    // Backfill the stationary points, if available
-    if (curated.length >= 1) {
-      let lastLocation = curated[curated.length - 1];
-      let stopTS = unixtimeUTC - this.locationInterval;
-      for (
-        let lastTS = lastLocation.time;
-        lastTS < stopTS;
-        lastTS += this.locationInterval
-      ) {
-        curated.push(JSON.parse(JSON.stringify(lastLocation)));
-      }
-    }
-
-    // Save the location using the current lat-lon and the
-    // calculated UTC time (maybe a few milliseconds off from
-    // when the GPS data was collected, but that's unimportant
-    // for what we are doing.)
-    let lat_lon_time = {
-      latitude: location.latitude,
-      longitude: location.longitude,
-      time: unixtimeUTC,
-    };
-    curated.push(lat_lon_time);
-    await this.constructor.saveCuratedLocations(curated);
-  }
 
   static async saveCuratedLocations(curated) {
     console.log(`[GPS] Saving ${curated.length} location points`);
