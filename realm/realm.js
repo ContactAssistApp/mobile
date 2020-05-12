@@ -10,6 +10,8 @@ Location.schema = {
     latitude: 'double',
     longitude: 'double',
     time: 'int',
+    address: 'string',
+    name: 'string',
   },
 };
 

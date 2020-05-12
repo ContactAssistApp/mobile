@@ -2,11 +2,30 @@ import BackgroundGeolocation from '@mauron85/react-native-background-geolocation
 import {Alert, Platform, Linking} from 'react-native';
 import {LocationData} from '../utils/LocationData';
 import {addLocation} from '../realm/realmLocationTasks';
+import Location from '../utils/location';
 
 let instanceCount = 0;
 
 export default class LocationServices {
   static start() {
+    const saveLocation = location => {
+      const {latitude, longitude} = location;
+      const time = LocationData.getUTCUnixTime();
+      Location.convertToAddress({latitude, longitude, time}).then(addresses => {
+        const name =
+          addresses[0][0] === '' ? 'Unknown Location' : addresses[0][0];
+        const addressString = addresses[0][1];
+
+        addLocation({
+          latitude,
+          longitude,
+          time,
+          address: addressString,
+          name,
+        });
+      });
+    };
+
     instanceCount += 1;
 
     if (instanceCount > 1) {
@@ -15,9 +34,9 @@ export default class LocationServices {
     }
 
     BackgroundGeolocation.configure({
-      desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
-      stationaryRadius: 5,
-      distanceFilter: 5,
+      desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
+      stationaryRadius: 50,
+      distanceFilter: 3500,
       debug: true, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
       locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
@@ -43,8 +62,7 @@ export default class LocationServices {
         // execute long running task
         // eg. ajax post location
         // IMPORTANT: task has to be ended by endTask
-        const {latitude, longitude} = location;
-        addLocation(latitude, longitude, LocationData.getUTCUnixTime());
+        saveLocation(location);
         BackgroundGeolocation.endTask(taskKey);
       });
     });
@@ -61,8 +79,7 @@ export default class LocationServices {
         // tested as I couldn't produce stationaryLocation callback in emulator
         // but since the plugin documentation mentions it, no reason to keep
         // it empty I believe.
-        const {latitude, longitude} = stationaryLocation;
-        addLocation(latitude, longitude, LocationData.getUTCUnixTime());
+        saveLocation(stationaryLocation);
         BackgroundGeolocation.endTask(taskKey);
       });
       console.log('[INFO] stationaryLocation:', stationaryLocation);

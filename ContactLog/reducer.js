@@ -1,8 +1,6 @@
 const initialState = {
   allContacts: [],
   selectedContacts: [],
-  allCoordinates: {},
-  cachedAddresses: {},
 };
 
 const contactLogReducer = (state = initialState, action) => {

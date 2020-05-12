@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import colors from '../assets/colors';
-import {NativeModules} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import DateConverter from '../utils/date';
 import {updateContactLog} from './actions.js';
 import Import from './Import';
+import {getLocations} from '../realm/realmLocationTasks';
 
 class Locations extends Component {
   constructor() {
@@ -19,86 +19,55 @@ class Locations extends Component {
   }
 
   componentDidMount() {
-    const {
-      date,
-      contactLogData: {allCoordinates, cachedAddresses},
-    } = this.props;
-
-    if (!cachedAddresses.hasOwnProperty(date) &&
-      allCoordinates[date] &&
-      allCoordinates[date].length > 0) {
-      this.fetchAddresses(allCoordinates[date]);
-    }
+    const {date} = this.props;
+    this.fetchAddresses(date);
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      date,
-      contactLogData: {allCoordinates, cachedAddresses},
-    } = this.props;
+    const {date} = this.props;
 
-    if (!cachedAddresses.hasOwnProperty(date) &&
-      allCoordinates[date] &&
-      allCoordinates[date].length > 0) {
-      this.fetchAddresses(allCoordinates[date]);
+    if (prevProps.date !== date) {
+      this.fetchAddresses(date);
     }
   }
 
-  fetchAddresses = coordinates => {
-    let {
-      date,
-      contactLogData: {cachedAddresses},
-    } = this.props;
+  fetchAddresses = date => {
+    const locations = getLocations(new Date(date.replace(/-/g, '/')), 0);
 
-    NativeModules.Locations.reverseGeoCode(coordinates, addresses => {
-      cachedAddresses[date] = addresses;
-      this.props.updateContactLog({
-        field: 'cachedAddresses',
-        value: cachedAddresses,
-      });
-      this.setState({
-        addresses,
-      });
+    const addresses = locations.filter((location, index, self) => {
+      return index === self.findIndex(t => t.address === location.address);
+    })
+    .map(location => {
+      return {
+        name: location.name,
+        address: location.address,
+      }
+    });
+
+    this.setState({
+      addresses,
     });
   };
 
   render() {
-    const {
-      date,
-      contactLogData: {cachedAddresses},
-    } = this.props;
-
-    const addresses = cachedAddresses.hasOwnProperty(date)
-      ? cachedAddresses[date] : this.state.address;
+    const {date} = this.props;
 
     return (
       <ScrollView>
-        {addresses && addresses.length > 0 ?
+        {this.state.addresses && this.state.addresses.length > 0 ?
           <>
             <Text style={styles.date}>
               {DateConverter.dateString(new Date(date.replace(/-/g, '/')))}
             </Text>
             <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
-            {addresses.map((address, idx) => {
-              const name = address[0] === '' ? 'Unknown Location' : address[0];
-              const timePeriods = address[2].split(',');
-              const format = time =>
-                DateConverter.timeString(parseInt(time.trim(), 10));
-              const tsStringList = timePeriods
-                .map(timePeriod => {
-                  const tsList = timePeriod.split('-');
-                  const start = format(tsList[0]);
-                  const end = format(tsList[1]);
-                  return `${start}-${end}`;
-                })
-                .join(' ');
+            {this.state.addresses.map((item, idx) => {
+              const {name, address} = item;
               return (
                 <View style={styles.address_card} key={idx}>
-                  {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
-                  {address[1] !== '' && (
-                    <Text style={styles.address}>{address[1]}</Text>
+                  <Text style={styles.name}>{name}</Text>
+                  {address !== '' && (
+                    <Text style={styles.address}>{address}</Text>
                   )}
-                  <Text style={styles.time}>{tsStringList}</Text>
                 </View>
               );
             })}
