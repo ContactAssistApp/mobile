@@ -55,11 +55,17 @@ const Ble = {
     // here logWindow is a string, e.g. '15'
   },
 
-  purgeOldRecords: function(retentionWindowInSeconds) {
+  purgeOldRecords: function() {
     Ble.bleInit();
-    return NativeModules.BLE.purgeOldRecords(retentionWindowInSeconds);
+    NativeModules.BLE.purgeOldRecords(14 * 24 * 3600);
   },
 
+  deleteAllData: async function() {
+    Ble.bleInit();
+    NativeModules.BLE.purgeOldRecords(14 * 24 * 3600);
+    await NativeModules.BLE.getDeviceSeedAndRotate(0);
+    return true;
+  },
 };
 
 export default Ble;
