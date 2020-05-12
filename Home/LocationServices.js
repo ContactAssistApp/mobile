@@ -99,32 +99,51 @@ export default class LocationServices {
       console.log('[INFO] BackgroundGeolocation service has been stopped');
     });
 
+    var alertOnTheWay = false;
+    var showLocationAlert = function() {
+      if(alertOnTheWay)
+        return;
+      alertOnTheWay = true;
+        // we need to set delay or otherwise alert may not be shown
+      setTimeout(
+        () =>
+          Alert.alert(
+            'CovidSafe requires access to location information',
+            'Would you like to open app settings?',
+            [
+              {
+                text: 'Yes',
+                onPress: () => {
+                  if (Platform.OS === 'android') {
+                    // showLocationSettings() only works for android
+                    BackgroundGeolocation.showLocationSettings();
+                  } else {
+                    Linking.openURL('App-Prefs:Privacy'); // Deeplinking method for iOS
+                  }
+                  alertOnTheWay = false;
+                },
+              },
+              {
+                text: 'No',
+                onPress: () => {
+                  console.log('No Pressed');
+                  alertOnTheWay = false;
+                },
+                style: 'cancel',
+              },
+            ],
+          ),
+        1000,
+      );
+    }
+
     BackgroundGeolocation.on('authorization', status => {
       console.log(
         '[INFO] BackgroundGeolocation authorization status: ' + status,
       );
 
       if (status !== BackgroundGeolocation.AUTHORIZED) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(
-          () =>
-            Alert.alert(
-              'CovidSafe requires access to location information',
-              'Would you like to open app settings?',
-              [
-                {
-                  text: 'Yes',
-                  onPress: () => BackgroundGeolocation.showAppSettings(),
-                },
-                {
-                  text: 'No',
-                  onPress: () => console.log('No Pressed'),
-                  style: 'cancel',
-                },
-              ],
-            ),
-          1000,
-        );
+        showLocationAlert();
       } else {
         BackgroundGeolocation.start(); //triggers start on start event
 
@@ -177,54 +196,9 @@ export default class LocationServices {
       BackgroundGeolocation.start(); //triggers start on start event
 
       if (!status.locationServicesEnabled) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(
-          () =>
-            Alert.alert(
-              'CovidSafe requires location services to be enabled',
-              'Would you like to open location settings?',
-              [
-                {
-                  text: 'Yes',
-                  onPress: () => {
-                    if (Platform.OS === 'android') {
-                      // showLocationSettings() only works for android
-                      BackgroundGeolocation.showLocationSettings();
-                    } else {
-                      Linking.openURL('App-Prefs:Privacy'); // Deeplinking method for iOS
-                    }
-                  },
-                },
-                {
-                  text: 'No',
-                  onPress: () => console.log('No Pressed'),
-                  style: 'cancel',
-                },
-              ],
-            ),
-          1000,
-        );
+        showLocationAlert();
       } else if (!status.authorization) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(
-          () =>
-            Alert.alert(
-              'CovidSafe requires access to location information',
-              'Would you like to open app settings?',
-              [
-                {
-                  text: 'Yes',
-                  onPress: () => BackgroundGeolocation.showAppSettings(),
-                },
-                {
-                  text: 'No',
-                  onPress: () => console.log('No Pressed'),
-                  style: 'cancel',
-                },
-              ],
-            ),
-          1000,
-        );
+        showLocationAlert();
       }
       // else if (!status.isRunning) {
       // } // commented as it was not being used

@@ -42,7 +42,7 @@ class Notification extends Component {
       <TraceTool
         iconName={'alert24'}
         title={'Notifications'}
-        description={'Recieve notifications for local alerts and updates.'}
+        description={'Receive notifications for local alerts and updates.'}
         toggleValue={this.state.notification}
         handleToggle={this.updateSetting}
       />
