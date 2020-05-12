@@ -54,6 +54,12 @@ const Ble = {
     //TODO: write logWindow value to native side storage
     // here logWindow is a string, e.g. '15'
   },
+
+  purgeOldRecords: function(retentionWindowInSeconds) {
+    Ble.bleInit();
+    return NativeModules.BLE.purgeOldRecords(retentionWindowInSeconds);
+  },
+
 };
 
 export default Ble;
