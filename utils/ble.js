@@ -62,7 +62,7 @@ const Ble = {
 
   deleteAllData: async function() {
     Ble.bleInit();
-    NativeModules.BLE.purgeOldRecords(14 * 24 * 3600);
+    NativeModules.BLE.purgeOldRecords(0);
     await NativeModules.BLE.getDeviceSeedAndRotate(0);
     return true;
   },
