@@ -1,8 +1,8 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import {LocationData} from '../utils/LocationData';
 import {addLocation} from '../realm/realmLocationTasks';
 import Location from '../utils/location';
+import DateConverter from '../utils/date';
 
 let instanceCount = 0;
 
@@ -10,7 +10,8 @@ export default class LocationServices {
   static start() {
     const saveLocation = location => {
       const {latitude, longitude} = location;
-      const time = LocationData.getUTCUnixTime();
+      const time = DateConverter.getUTCUnixTime();
+
       Location.convertToAddress({latitude, longitude, time}).then(addresses => {
         const name =
           addresses[0][0] === '' ? 'Unknown Location' : addresses[0][0];
