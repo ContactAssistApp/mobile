@@ -1,0 +1,592 @@
+{
+    "app": {
+        "name": "Covid\nSafe",
+        "name_one_line": "CovidSafe"
+    },
+    "main": {
+        "header_text": "Covid\nSafe"
+    },
+    "history": {
+        "header_text": "History"
+    },
+    "permissions": {
+        "header_text": "Select your preferences"
+    },
+    "health": {
+        "header_text": "Health",
+        "header_text_demo": "Health [DEMO]"
+    },
+    "contact": {
+        "header_text": "Interview Preparation",
+        "header_text_demo": "Interview Preparation [DEMO]",
+        "log_header_text": "Contact Log",
+        "log_header_text_demo": "Contact Log [DEMO]",
+        "logs": "Contact logs",
+        "title_1": "\n        Review which symptoms you would like to include.\n    ",
+        "title_2": "\n        Review your location history from the last 14 days.\n    ",
+        "title_3": "\n        Review the people you\u2019ve been in contact with recently.\n    ",
+        "title_4": "\n        Save this list for reference during your interview.\n    ",
+        "desc_1": "\n        We\u2019ve detected severe symptoms in your recent reports, and collected them below.\n    ",
+        "desc_2": "\n        Below are locations you\u2019ve recently visited for 10 minutes or more. This helps us track locations that might be high-risk for exposure.\n    ",
+        "desc_3": "\n        Below you can add a list of people you\u2019ve been in close contact with (6m) for 10 or more minutes in the last 14 days.\n    ",
+        "desc_4": "\n        Don\u2019t worry, you can always come back to edit this list later. You can export this information into an email record for yourself.\n    ",
+        "healthcare_professional": "Please contact your healthcare professional."
+    },
+    "add": {
+        "symptoms_header_text": "Create New Log"
+    },
+    "settings": {
+        "header_text": "Settings",
+        "help_text": "You can use this panel to create a 1 mile radius around locations you don't want to be tracked. You can add up to %1$d locations.",
+        "text": "Settings"
+    },
+    "help": {
+        "header_text": "Resources",
+        "header_text_demo": "Resources [DEMO]",
+        "your_community_by_reporting": "Help your community by reporting your diagnosis"
+    },
+    "warning": {
+        "header_text": "Diagnosis Report",
+        "help_text": "You've received a positive diagnosis from your healthcare provider. To confirm your diagnosis, please provider your credentials below."
+    },
+    "symptom": {
+        "help_text": "Use this form to provide a daily report of any symptoms you have. You may submit this form once a day.",
+        "logs": "Symptom logs",
+        "submission_date_pkey": "symptom_submission_date_pkey",
+        "tracker_text": "Symptom Tracker"
+    },
+    "notif": {
+        "message": "We are currently logging your location.",
+        "id_pkey": "notif_id_pkey"
+    },
+    "default": {
+        "exposed_notif": "Based on your location history, we believe you might have been in the same place as people infected with COVID-19."
+    },
+    "exposed": {
+        "notif2": "Please contact your healthcare professional."
+    },
+    "select": {
+        "contact": "Select Contacts",
+        "share": "Select a sharing option"
+    },
+    "global": {
+        "warning": "Warning",
+        "q1": "\n        What is the purpose of this app?\n    ",
+        "a1": "\n        CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it \u2014 public health authorities and their contact tracing teams.\n    ",
+        "q2": "\n        How does this app benefit me?\n    ",
+        "a2": "\n        CovidSafe offers several features to protect both you and your community:\n\n        \u2022\tGet notified about possible exposure. You may be notified if someone who was near you within the last two weeks has come down with symptoms of COVID-19. The measure of \u2018near\u2019 is not as precise as the medical definition (within 6 feet for more than 10 minutes), but it is accurate up to a few meters.\n\n        \u2022\tTrack your symptoms. The symptoms you track may be useful to assist public health teams if you are confirmed positive, and for having this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.\n    ",
+        "q3": "\n        Who can use CovidSafe?\n    ",
+        "a3": "\n        When it becomes available for use, CovidSafe is free, and anyone can use it.\n    ",
+        "q4": "\n        Who else benefits from my participation with this app?\n    ",
+        "a4": "\n        CovidSafe is capable of alerting people who have been in areas where coronavirus is active. If you test positive for coronavirus, you'll also be able to anonymously notify others you may have been in contact with over the past two weeks to alert them that they may have been exposed, and to prepare them for potential contact tracing interviews.\n    ",
+        "q5": "\n        How does CovidSafe help public health officials?\n    ",
+        "a5": "\n        Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CovidSafe helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.\n    ",
+        "pq1": "\n        If I test positive and I disclose it via CovidSafe, what information is revealed to others?\n    ",
+        "pa1": "\n        Other people with the application, who have been exposed may be notified, along with the time the exposure occurred. No other information will be revealed.\n    ",
+        "pq2": "\n        If I test negative, can a malicious person get access to my phone\u2019s broadcasts and report me as being positive?\n    ",
+        "pa2": "\n        No, this isn\u2019t possible. The app is encrypted to prevent it from happening using similar security technology used for other purposes, such as online banking.\n    ",
+        "pq3": "\n        If someone else obtains data used to alert people who have been exposed, what can they learn?\n    ",
+        "pa3": "\n        They'll see a sequence of random identifiers that have been broadcast over time near people who have tested positive for coronavirus. They could assume the location of the person who tested positive if the random identifiers were collected at specific locations. Otherwise, the person remains anonymous. The security of the system relies on the fact this data can be made public without compromising privacy.\n    ",
+        "pq4": "\n        If I receive a message that I have been exposed, what is disclosed to the public?\n    ",
+        "pa4": "\n        Nothing about your identity will be disclosed to the public.\n    ",
+        "pq5": "\n        Can the identity of a person who chooses to report they\u2019ve tested positive be guessed by others?\n    ",
+        "pa5": "\n        Possibly. A person who was near someone who has tested positive may be able to guess the infected person's identity. If there are two or more people who were near someone who has tested positive, the process of identifying the infected person may be easier. However, the person's identity will never be broadcast directly. People\u2019s identities aren\u2019t stored in the data. Only the infected person\u2019s random broadcast is stored.\n    ",
+        "pq6": "\n        What data is stored on my phone? What data about me is stored publicly?\n    ",
+        "pa6": "\n        Each phone broadcasts a random signal (using Bluetooth) to other nearby phones. All phones remember the signals they send and receive for two weeks. These broadcast signals can be thought of as non-identifying random numbers. The signal each phone broadcasts changes, so the signals remain anonymous and can\u2019t be linked to a specific person. If someone tests positive and chooses to disclose this information to help others, they would be disclosing only their phone's broadcasts for the past two weeks. This lets other people using CovidSafe check if they were near the infected person to determine if they were exposed, based on their own phones' broadcasts.\n    ",
+        "pq7": "\n        How does location tracking work?\n    ",
+        "pa7": "\n        See the Bluetooth section in the PACT white paper on our website.\n    ",
+        "pq8": "\n        Will this information be shared with government agencies?\n    ",
+        "pa8": "\n        The tool won't alert government agencies about your identity if you're exposed.\n    ",
+        "pq9": "\n        Why should I report my illness?\n    ",
+        "pa9": "\n        If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable more effective contact tracing.\n    ",
+        "aq1": "\n        What is contact tracing?\n    ",
+        "aa1": "\nContact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they\u2019ve been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. With CovidSafe, tracing is done through the app instead of in person.\n    ",
+        "aq2": "\n        Why should I report my illness?\n    ",
+        "aa2": "\n        If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable contact tracing.\n    ",
+        "certError": "Please check the box to certify that all the information in this form is correct.",
+        "noneCheckedError": "Please check at least one symptom.",
+        "addressError": "The address you have entered is invalid. Please try again.",
+        "maxBlacklistSizeError": "Maximum blacklist size reached.",
+        "downloading": "Downloading file...",
+        "phone": "911",
+        "privacyDisclaimer": "Any information collected on CovidSafe is stored securely and locally in your app, and remain private to you.",
+        "privacyDisclaimer2": "This information is stored securely and locally on your app, and remains private to you.",
+        "start": "Start logging",
+        "stop": "Stop logging",
+        "ok": "Ok",
+        "yes": "Yes",
+        "no": "No",
+        "retry": "Retry",
+        "sure": "I'm sure",
+        "logging": "<br/><b><a href=\"https://covidsafe.cs.washington.edu/\">Learn More</a></b>",
+        "stopping": "<br/><b><a href=\"https://covidsafe.cs.washington.edu/\">Learn More</a></b>",
+        "faq": "FAQ",
+        "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
+        "covidSiteLink": "https://covidsafe.cs.washington.edu/",
+        "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
+        "privacyLink1": "<a href=\"https://covidsafe.cs.washington.edu/\">Learn more.</a>",
+        "lipsum": "Egestas tellus rutrum tellus pellentesque eu tincidun. Odio tempor orci dapibus ultrices in iaculis nunc sed augue suspendisse.",
+        "lipsum2": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.",
+        "lipsum3": "Odio tempor orci dapibus ultrices in iaculis nunc sed",
+        "lipsum4": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.",
+        "lipsum5": "Egestas tellus rutrum tellus ultrices in iaculis pellentesque eu tincidunt?",
+        "lipsum6": "Odio tempor orci dapibus ultrices in iaculis ",
+        "privacyText": "\n        Learn more\n    ",
+        "permissionsHeader": "\n        Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nCovidSafe reveals no information about you without your consent.\n    ",
+        "cancel": "Cancel",
+        "duration": "Duration (days)",
+        "perm1": "Notifications",
+        "perm2": "Location Logging",
+        "perm3": "Bluetooth Tracing",
+        "perm1desc": "\n        Receive notifications for exposure risks in your area.\n    ",
+        "perm2desc": "\n        Receive announcements and notifications relevant to your neighborhood. All location information is stored locally.\n    ",
+        "perm3desc": "\n        Emit and detect random numbers by Bluetooth to later discover exposure risks.\n    ",
+        "setting1": "Length of data storage",
+        "setting1desc": "Number of days until local logs are automatically deleted.",
+        "storyTitle1": "\n        Welcome to CovidSafe\n    ",
+        "storyTitle2": "\n        Exposure Notifications\n    ",
+        "storyTitle3": "\n        Self-Care Tips\n    ",
+        "storyTitle4": "\n        Your Privacy\n    ",
+        "exposed": "You may have been exposed",
+        "story1": "\n        CovidSafe notifies you if you may have been exposed to coronavirus and helps keep you and your community safer.\n    ",
+        "story2": "\n        Learn if you might have been exposed. If you've recently been in close contact with someone recently diagnosed with COVID-19. You'll get a notification.\n    ",
+        "story3": "\n        Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms. And log locations you recently visited to protect others.\n    ",
+        "story4": "\n        Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.\n    ",
+        "startText": "\n        Let\\s slow the spread of COVID-19 together.\n    ",
+        "certText": "I certify that the information submitted in this report is true and correct to the best of my knowledge.",
+        "certDiagnosisText": "I certify that I have been officially diagnosed with COVID-19",
+        "severity": "Severity",
+        "confirm": "I confirm",
+        "edit": "Edit",
+        "delete": "Delete",
+        "isolation1": "Everyone who has tested positive for COVID-19 shall remain in isolation until no longer infectious.",
+        "isolation2": "Do not leave your home or recovery facility, except to receive medical care.",
+        "monitor1": "If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first.",
+        "monitor2": "Do not go to the emergency room.",
+        "monitor3": "Emergency rooms need to be able to serve those with the most critical needs. If you have difficulty breathing, it doesn\u2019t mean you have novel coronavirus, but you should call 911.",
+        "language": "Language",
+        "english": "English",
+        "spanish": "Spanish"
+    },
+    "logging": {
+        "now_off": "Logging is now turned off."
+    },
+    "inter": {
+        "prep": "Interview Preparation"
+    },
+    "email": {
+        "subject": "CovidSafe Contact Tracer Interview Information Packet"
+    },
+    "location": {
+        "logs": "Location logs",
+        "text": "Location",
+        "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days"
+    },
+    "send": {
+        "email": "Send email"
+    },
+    "perm": {
+        "error": "Location access must be enabled at all times for tracking to take place. Please try again.",
+        "gps_rationale": "Without this permission, we will be unable to capture location information. Are you sure you want to deny this permission?",
+        "gps_ask": "We require access to location information when the app is closed. Would you like to open app settings to enable this?",
+        "write_ask": "We require access to location information to import your history. Would you like to open app settings to enable this?",
+        "ble_rationale": "Without this permission, we will be unable to capture Bluetooth information of users around you. Are you sure you want to deny this permission?",
+        "write_rationale": "Without this permission, we will be unable to import your location history. Are you sure you want to deny this permission?",
+        "ble_ask": "We require access to Bluetooth information when the app is closed. Would you like to open app settings to enable this?",
+        "contacts_rationale": "Without this permission, we will be unable to add contacts to the app. Are you sure you want to deny this permission?",
+        "notifs_rationale": "Without this permission, we will be unable to send you notifications. Are you sure you want to deny this permission?",
+        "notifs_ask": "We require push notifications to be enabled. Would you like to open app settings to enable this?",
+        "loc_rationale": "Without this permission, we will be unable to track your location when the app is closed. Are you sure you want to deny this permission?",
+        "loc_ask": "We require access to location information when the app is closed. Would you like to open app settings to enable this?",
+        "denied": "Permission denied"
+    },
+    "min": {
+        "api_error": "Your smartphone's operating system version is not supported. The minimum operating system version we support is Android version ",
+        "api_check_pkey": "min_api_check_pkey"
+    },
+    "dont": {
+        "show_this_again": "Don't show this again"
+    },
+    "prompt": {
+        "to_enable_error": "Enable Bluetooth and GPS in settings to start logging."
+    },
+    "bluetooth": {
+        "is_off": "Bluetooth is currently turned off.",
+        "is_disabled_on_this_device": "Bluetooth is disabled on this device"
+    },
+    "pos": {
+        "text": "Positive COVID-19 Diagnosis Reported"
+    },
+    "lang": {
+        "pkey": "lang_pkey"
+    },
+    "public": {
+        "key_pkey": "public_key_pkey",
+        "health": "Public Health - Seattle & King County"
+    },
+    "last": {
+        "refresh_date_pkey": "last_refresh_date_pkey",
+        "submission_date_pkey": "last_submission_date",
+        "symptom_update_pkey": "last_symptom_update_pkey",
+        "submitted": "Last submitted",
+        "updated_text": "Last updated"
+    },
+    "broadcasting": {
+        "enabled_pkey": "broadcasting",
+        "on_text": "Broadcasting on",
+        "off_text": "Broadcasting off",
+        "description_text": "Limited trace data is being collected. We keep your identity anonymous. Learn More."
+    },
+    "gps": {
+        "enabled_pkey": "gpsEnabled"
+    },
+    "ble": {
+        "enabled_pkey": "bleEnabled"
+    },
+    "onboard": {
+        "enabled_pkey": "prefs_onboard"
+    },
+    "notifs": {
+        "enabled_pkey": "prefs_notifs"
+    },
+    "most": {
+        "recent_seed_pkey": "most_recent_seed_pkey",
+        "recent_seed_timestamp_pkey": "most_recent_seed_timestamp_pkey"
+    },
+    "diagnosis": {
+        "pkey": "prefs_diagnosis_date",
+        "text": "Diagnosis"
+    },
+    "time": {
+        "of_last_query_pkey": "time_of_last_query_pkey",
+        "am": "AM",
+        "pm": "PM"
+    },
+    "init": {
+        "key_exists_pkey": "init_key_exists_pkey"
+    },
+    "aes": {
+        "key_pkey": "aes_key_pkey",
+        "iv_pkey": "aes_iv_pkey"
+    },
+    "infection": {
+        "window_in_days_pkeys": "infection_window_in_days_pkeys"
+    },
+    "quarantine": {
+        "end_time_pkey": "quarantine_end_time_pkey",
+        "desc": "Everyone with COVID-19 symptoms who has a test result pending shall remain in quarantine while waiting for the test results.",
+        "directive": "Quarantine directive"
+    },
+    "download": {
+        "complete": "Download complete!"
+    },
+    "tip": {
+        "desc_1": "\n        Everyone with COVID-19 symptoms (fever, cough, and/or difficulty breathing) who has a test result pending, shall stay in an quarantine location (your home if you have one or in a government directed or publicly provided location if one is available) in accordance with CDC and Public Health guidance.\n\n\n        If your test result is positive, you must then remain in isolation.\n    ",
+        "desc_2": "\n        Not everybody who feels ill needs to be tested, particularly if you have mild illness. Healthcare providers determine who should be tested. While testing is becoming more available, there are still limitations in the ability to quickly collect and process tests.\n\n        If you are sick with fever, cough or shortness of breath and are in a high risk group, call your healthcare provider to discuss whether you should be tested for COVID-19.\n    ",
+        "desc_3": "\n        If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first. "
+    },
+    "risk": {
+        "low": "No known transmission vectors",
+        "high": "Risk of transmission"
+    },
+    "error": {
+        "submitting_data": "There was an error with submitting your traces. Please try again later."
+    },
+    "confirm": {
+        "info": "Please confirm this information is accurate",
+        "diagnosis_sure": "Reporting a positive diagnosis cannot be undone. Please be certain. Please enter the phrase \"I confirm\" in the box below to confirm that you have been officially diagnosed with COVID-19",
+        "diagnosis": "If you upload this diagnosis report, people you've recently been in contact with will be notified that they might have been exposed. Your identity will not be revealed."
+    },
+    "gen": {
+        "error": "An error occurred. Please try again later."
+    },
+    "turn": {
+        "loc_on": "We need location services enabled to send your infection report. Please enable location services permission.",
+        "loc_on2": "We need location services enabled to check for announcements. Please enable location services permission."
+    },
+    "learn": {
+        "about_us": "Download and learn more about the CovidSafe app at ",
+        "more_link_text": "Learn More",
+        "how_we_protect_your_privacy": "Learn about how we protect your privacy"
+    },
+    "privacy": {
+        "link": "<a href=\"http://www.uw.edu\">Privacy  |  </a>",
+        "text": "Privacy",
+        "and_security": "Privacy and Security"
+    },
+    "terms": {
+        "link": "<a href=\"http://www.uw.edu\">Terms and Conditions</a>",
+        "text": "Terms and Conditions"
+    },
+    "onset": {
+        "date": "Onset date"
+    },
+    "symp": {
+        "updated": "Symptom log updated"
+    },
+    "this": {
+        "was_during": "This was during"
+    },
+    "sure": {
+        "delete": "Are you sure you want to delete?"
+    },
+    "emergency": {
+        "text": "\n        Stop and call 911 if you are experiencing:\n\n        \u2022 Severe, constant chest pain or pressure\n\n        \u2022 Extreme difficulty breathing\n\n        \u2022 Severe, constant lightheadedness\n\n        \u2022 Serious disorientation or unresponsiveness\n    ",
+        "call_text": "Call 911 immediately if you are having a medical emergency."
+    },
+    "fever": {
+        "txt": "Fever",
+        "desc": "A high temperature of over 100\u00b0F - you feel hot to touch on your chest or back."
+    },
+    "cough": {
+        "txt": "Cough",
+        "desc": "A sudden, forceful hacking sound to release air and clear an irritation in the throat or airway.",
+        "text": "Cough",
+        "symptoms_text": "A new, continuous cough - this means you've started coughing repeatedly"
+    },
+    "shortness": {
+        "of_breath_txt": "Shortness of breath"
+    },
+    "trouble": {
+        "breathing_txt": "Trouble breathing"
+    },
+    "persistent": {
+        "pain_or_pressure_in_chest": "Persistent pain or pressure in the chest"
+    },
+    "new": {
+        "confusion_inability_to_arouse": "New confusion or inability to arouse",
+        "report_text": "New Report"
+    },
+    "bluish": {
+        "lips_or_face": "Bluish lips or face"
+    },
+    "bottom": {
+        "sheet_menu_item_home": "Home",
+        "sheet_menu_item_contact_log": "Contact Log",
+        "sheet_menu_item_health_report": "Health Report",
+        "sheet_menu_item_resources": "Resources"
+    },
+    "self": {
+        "quarantine_for_14_days": "Self-quarantine For 14 Days"
+    },
+    "card": {
+        "onset_date_hint": "Onset Date (MM/DD)",
+        "onset_days_experienced": "Days experienced",
+        "symptom_severity_mild": "Mild",
+        "symptom_severity_moderate": "Moderate",
+        "symptom_severity_severe": "Severe",
+        "data_storage_local": "Local Data Storage",
+        "data_storage_local_expiration": "Your data will expire on %1$s\nOn this date your symptom logs and location data will be removed from the app. This action cannot be undone.\n"
+    },
+    "change": {
+        "in_settings_text": "Change in Settings"
+    },
+    "highest": {
+        "temperature_text": "Highest temperature"
+    },
+    "legal": {
+        "text": "Legal"
+    },
+    "release": {
+        "text": "Release information"
+    },
+    "import": {
+        "text": "Import location history"
+    },
+    "share": {
+        "text": "Share"
+    },
+    "you": {
+        "might_have_exposed": "You might have been exposed"
+    },
+    "exposure": {
+        "notification_description_text": "Based on your location history, we believe you might have been in the same place as people infected with COVID-19",
+        "history": "Exposure history"
+    },
+    "dismiss": {
+        "text": "Dismiss"
+    },
+    "disclaimer": {
+        "text": "Disclaimer"
+    },
+    "cdc": {
+        "guidance_text": "CDC Guidance"
+    },
+    "saved": {
+        "text": "Saved"
+    },
+    "not": {
+        "logged_text": "Not Logged",
+        "logged_txt": "Not logged"
+    },
+    "prepare": {
+        "for_contact_tracer_interview": "Prepare for your contact tracer interview",
+        "for_interview_btn_text": "Prepare for your interview",
+        "for_contact_tracer_description_text": "During an interview, a public health official will collect a list of critical information to help identify those around you who may have been exposed."
+    },
+    "positive": {
+        "covid_report": "Positive COVID-19 Diagnosis Reported"
+    },
+    "reported": {
+        "text": "Reported"
+    },
+    "submit": {
+        "your_report_button_text": "Submit your report"
+    },
+    "what": {
+        "happen_when_i_submit_report": "What happens when I submit my report?",
+        "to_do_if_you_are_sick": "What to do if you are sick"
+    },
+    "symptoms": {
+        "text": "Symptoms",
+        "experienced_last_14_days": "Symptoms you\u2019ve experienced in the last 14 days"
+    },
+    "locations": {
+        "text": "Locations"
+    },
+    "people": {
+        "text": "People",
+        "you_have_been_in_contact_last_14_days": "People you\u2019ve been in direct contact with over the last 14 days",
+        "txt": "People"
+    },
+    "socialize": {
+        "text": "Safely add people you\u2019ve been in contact with directly from your contacts list, or one at a time. "
+    },
+    "summary": {
+        "text": "Summary"
+    },
+    "review": {
+        "which_symptoms_to_include": "Review which symptoms you would like to include."
+    },
+    "we": {
+        "have_detected_severe_symptoms_in_your_report": "We\u2019ve detected severe symptoms in your recent reports, and collected them below. We use this to determine lorem ipsum dolor consect. Learn More"
+    },
+    "diag": {
+        "not_submitted": "Diagnosis not submitted."
+    },
+    "ab": {
+        "pain_desc": "Pain from inside the abdomen or the outer muscle wall, ranging from mild and temporary to severe."
+    },
+    "chills": {
+        "desc": "The feeling of being cold, though not necessarily in a cold environment, often accompanied by shivering or shaking.",
+        "txt": "Chills"
+    },
+    "diarrhea": {
+        "desc": "Loose, watery bowel movements that may occur frequently and with a sense of urgency.",
+        "txt": "Diarrhea"
+    },
+    "breathing": {
+        "desc": "Shortness of breath, or dyspnea, is an uncomfortable condition that makes it difficult to fully get air into your lungs."
+    },
+    "headache": {
+        "desc": "A painful sensation in any part of the head, ranging from sharp to dull, that may occur with other symptoms.",
+        "txt": "Headache"
+    },
+    "sore": {
+        "throat_desc": "Pain or irritation in the throat that can occur with or without swallowing, often accompanies infections.",
+        "throat_txt": "Sore throat"
+    },
+    "vomiting": {
+        "desc": "Forcefully expelling the stomach's contents out of the mouth.",
+        "txt": "Vomtting"
+    },
+    "next": {
+        "btn_text": "Next",
+        "steps_text": "Next Steps"
+    },
+    "previous": {
+        "btn_text": "Previous"
+    },
+    "how": {
+        "to_prepare_for_your_interview": "How to prepare for your interview"
+    },
+    "interview": {
+        "preparation_description_text": "During your interview, a healthcare nurse will be collecting a list of critical information to help identify those who may have been exposed.\nYou can prepare a list of informaton they will ask about based on information collected through CovidSafe. This information includes:"
+    },
+    "get": {
+        "started_text": "Get started"
+    },
+    "frequently": {
+        "asked_questions": "Frequently Asked Questions"
+    },
+    "about": {
+        "covidsafe": "About CovidSafe"
+    },
+    "tracing": {
+        "tools": "Tracing tools"
+    },
+    "more": {
+        "text": "More"
+    },
+    "your": {
+        "log_have_been_saved_text": "Your log has been saved",
+        "report_will_be_anonymous_text": "Your report will be anonymous and your identity will be protected"
+    },
+    "report": {
+        "has_been_submitted": "Your report has been submitted."
+    },
+    "recent": {
+        "logs": "Recent logs"
+    },
+    "welcome": {
+        "to_covidsafe_text": "Welcome to CovidSafe"
+    },
+    "covidsafe": {
+        "notifies_you": "CovidSafe notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you're having."
+    },
+    "clear": {
+        "all_text": "Clear all"
+    },
+    "save": {
+        "text": "Save"
+    },
+    "abdominal": {
+        "pain_txt": "Abdominal pain"
+    },
+    "difficult": {
+        "in_breathing": "Difficulty breathing",
+        "in_breathing_not_severe": "Difficulty breathing (not severe)"
+    },
+    "chest": {
+        "pain_txt": "Chest pains"
+    },
+    "announcement": {
+        "txt": "Announcement"
+    },
+    "logged": {
+        "txt": "Logged"
+    },
+    "unknown": {
+        "address_txt": "Unknown address"
+    },
+    "general": {
+        "locations_txt": "General Locations"
+    },
+    "done": {
+        "txt": "Done"
+    },
+    "export": {
+        "as_email_txt": "Export as email"
+    },
+    "check": {
+        "box": "Please check the box to confirm this information is accurate."
+    },
+    "network": {
+        "down": "Network not available. Please try again."
+    },
+    "demo": {
+        "disabled": "This function is disabled in the demo version of the app."
+    },
+    "monitor": {
+        "your_symptoms": "Monitor Your Symptoms"
+    },
+    "isolation": {
+        "order": "Isolation order"
+    },
+    "request": {
+        "test": "Request a test"
+    },
+    "call": {
+        "911": "Call 911 immediately if you are having a medical emergency."
+    }
+}
