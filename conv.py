@@ -36,7 +36,7 @@ def translate_file(in_file, out_file):
             root_trans[ns] = dict()
         root_trans[ns][key] = text
     with open(out_file, 'w+') as res:
-        json.dump(root_trans, res, indent=4)
+        json.dump(root_trans, res, indent=2)
 
 base_dir = sys.argv[1]
 
