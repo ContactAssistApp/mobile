@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import DateConverter from '../utils/date';
 import {updateContactLog} from './actions.js';
 import Import from './Import';
-import {getLocations} from '../realm/realmLocationTasks';
+import Location from '../utils/location';
 
 class Locations extends Component {
   constructor() {
@@ -32,17 +32,9 @@ class Locations extends Component {
   }
 
   fetchAddresses = date => {
-    const locations = getLocations(new Date(date.replace(/-/g, '/')), 0);
-
-    const addresses = locations.filter((location, index, self) => {
-      return index === self.findIndex(t => t.address === location.address);
-    })
-    .map(location => {
-      return {
-        name: location.name,
-        address: location.address,
-      }
-    });
+    const addresses = Location.fetchAddresses(
+      new Date(date.replace(/-/g, '/')),
+    );
 
     this.setState({
       addresses,

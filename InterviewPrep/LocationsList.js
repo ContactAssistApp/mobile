@@ -2,10 +2,8 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
-import {NativeModules} from 'react-native';
-import DateConverter from '../utils/date';
 import SectionHeader from './SectionHeader';
-import {LocationData} from '../utils/LocationData';
+import Location from '../utils/location';
 
 class LocationsList extends Component {
   constructor() {
@@ -20,21 +18,9 @@ class LocationsList extends Component {
   }
 
   fetchAddresses = () => {
-    let date = new Date();
-    date.setDate(date.getDate() - 14);
-
-    LocationData.getLocationData().then(locations => {
-      if (locations && locations.length > 0) {
-        const filteredLog = locations.filter(location => {
-          return new Date(location.time) > date;
-        });
-
-        NativeModules.Locations.reverseGeoCode(filteredLog, addresses => {
-          this.setState({
-            addresses,
-          });
-        });
-      }
+    const addresses = Location.fetchAddresses(new Date(), 14);
+    this.setState({
+      addresses,
     });
   };
 
@@ -42,25 +28,12 @@ class LocationsList extends Component {
     return (
       <>
         <SectionHeader header={'general locations'} />
-        {this.state.addresses.map((address, idx) => {
-          const name = address[0] === '' ? 'Unknown Location' : address[0];
-          const timePeriods = address[2].split(',');
-          const format = time =>
-            DateConverter.timeString(parseInt(time.trim(), 10));
-          const tsStringList = timePeriods
-            .map(timePeriod => {
-              const tsList = timePeriod.split('-');
-              const start = format(tsList[0]);
-              const end = format(tsList[1]);
-              return `${start}-${end}`;
-            })
-            .join('  ');
-
+        {this.state.addresses.map((item, idx) => {
+          const {name, address} = item;
           return (
             <View style={styles.address_card} key={idx}>
-              {address[0] !== '' && <Text style={styles.name}>{name}</Text>}
-              {address[1] !== '' && <Text style={styles.address}>{address[1]}</Text>}
-              <Text style={styles.time}>{tsStringList}</Text>
+              <Text style={styles.name}>{name}</Text>
+              {address !== '' && <Text style={styles.address}>{address}</Text>}
             </View>
           );
         })}
