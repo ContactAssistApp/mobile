@@ -13,7 +13,7 @@ def translate_file(in_file, out_file):
 
         #cleanup2
         if "<" in text:
-            text = text[text.index('>') + 1 : text.rfind('<')]
+            text = text[0 : text.index('<')]
         ns = 'global'
         key = attr
 
