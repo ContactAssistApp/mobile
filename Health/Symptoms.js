@@ -1,22 +1,13 @@
 import React, {PureComponent} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import colors from '../assets/colors';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
-import {Agenda} from 'react-native-calendars';
-import CustomIcon from '../assets/icons/CustomIcon.js';
 import DateConverter from '../utils/date';
 import {GetKeys} from '../utils/asyncStorage';
+import CareTips from '../CareTips/CareTips';
 
 class Symptoms extends PureComponent {
   constructor() {
     super();
-    this.agendaRef = React.createRef();
     this.state = {
       date: new Date(),
       calendarExpand: false,
@@ -42,32 +33,6 @@ class Symptoms extends PureComponent {
     }
   };
 
-  toggleCalendar = () => {
-    if (!this.state.calendarExpand) {
-      this.agendaRef.current.setScrollPadPosition(0, true);
-      this.agendaRef.current.enableCalendarScrolling();
-      this.setState({
-        calendarExpand: true,
-      });
-    } else {
-      this.agendaRef.current.setScrollPadPosition(
-        this.agendaRef.current.initialScrollPadPosition(),
-        true,
-      );
-      this.agendaRef.current.setState({
-        calendarScrollable: false,
-      });
-      this.agendaRef.current.calendar.scrollToDay(
-        this.agendaRef.current.state.selectedDay.clone(),
-        this.agendaRef.current.calendarOffset(),
-        true,
-      );
-      this.setState({
-        calendarExpand: false,
-      });
-    }
-  };
-
   render() {
     return (
       <ScrollView>
@@ -75,47 +40,9 @@ class Symptoms extends PureComponent {
           <Text style={styles.date}>
             {DateConverter.dateString(this.state.date)}
           </Text>
-          <TouchableOpacity
-            style={styles.calendar_button}
-            onPress={this.toggleCalendar}>
-            <CustomIcon
-              name={'calendar24'}
-              color={
-                this.state.calendarExpand
-                  ? colors.primary_theme
-                  : colors.gray_icon
-              }
-              size={24}
-            />
-          </TouchableOpacity>
         </View>
-        <Agenda
-          ref={this.agendaRef}
-          hideKnob={true}
-          markedDates={this.state.markedDates}
-          onDayPress={day => {
-            this.setState({
-              date: new Date(day.dateString.replace(/-/g, '/')),
-              calendarExpand: false,
-            });
-          }}
-          renderEmptyData={() => {
-            return (
-              <SymptomTracker
-                date={this.state.date}
-                navigate={this.props.navigate}
-              />
-            );
-          }}
-          theme={{
-            selectedDayTextColor: colors.primary_theme,
-            selectedDayBackgroundColor: colors.fill_on,
-            dayTextColor: colors.secondary_body_copy,
-            todayTextColor: colors.secondary_body_copy,
-            dotColor: '#ACACAC',
-            selectedDotColor: colors.primary_theme,
-          }}
-        />
+        <SymptomTracker date={this.state.date} navigate={this.props.navigate} />
+        <CareTips />
       </ScrollView>
     );
   }
@@ -125,16 +52,13 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     padding: 20,
+    paddingBottom: 0,
     justifyContent: 'space-between',
   },
   date: {
     fontSize: 16,
     lineHeight: 24,
     color: '#212121',
-  },
-  calendar_button: {
-    width: 35,
-    alignItems: 'center',
   },
 });
 

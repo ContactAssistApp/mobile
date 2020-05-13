@@ -1,53 +1,80 @@
 import React, {PureComponent} from 'react';
-import {SafeAreaView, View, StyleSheet, Text, Image} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Symptoms from './Symptoms';
 import Report from './Report';
 import colors from '../assets/colors';
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import CustomIcon from '../assets/icons/CustomIcon.js';
+import Calendar from '../views/Calendar';
+import TabView from '../views/TabView';
+import DateConverter from '../utils/date';
 
 class Health extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      date: DateConverter.calendarFormat(new Date()),
+      weekView: true,
+      markedDates: {},
+    };
+  }
+
   render() {
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
         <View style={styles.header}>
-          <Image
-            style={styles.logo}
-            source={require('../assets/home/logo.png')}
-          />
-          <Text style={styles.title}>Health Report[DEMO]</Text>
+          <View style={styles.title_container}>
+            <Image
+              style={styles.logo}
+              source={require('../assets/home/logo.png')}
+            />
+            <Text style={styles.title}>Health Report[DEMO]</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.calendar_button}
+            onPress={() => {
+              this.updateCalendarState();
+            }}>
+            <CustomIcon
+              name={'calendar24'}
+              color={
+                !this.state.weekView ? colors.primary_theme : colors.gray_icon
+              }
+              size={24}
+            />
+          </TouchableOpacity>
         </View>
-        <ScrollableTabView
-          initialPage={1}
-          renderTabBar={() => {
-            return (
-              <DefaultTabBar
-                backgroundColor={'white'}
-                activeTextColor={colors.section_title}
-                inactiveTextColor={colors.gray_icon}
-                textStyle={{fontWeight: '500', textTransform: 'uppercase'}}
-                underlineStyle={{
-                  height: 2,
-                  backgroundColor: colors.primary_theme
-                }}
-                tabStyle={{paddingTop: 10}}
-              />
-            );
-          }}>
-          <Symptoms
-            tabLabel={'symptoms'}
-            navigate={this.props.navigation.navigate} />
-          <Report tabLabel={'diagnosis'} />
-        </ScrollableTabView>
+        <Calendar
+          current={this.state.date}
+          markedDates={this.state.markedDates}
+          handleDayPress={day => {
+            this.setState({
+              date: day.dateString,
+              weekView: true,
+            });
+          }}
+          weekView={this.state.weekView}>
+          <TabView>
+            <Symptoms
+              tabLabel={'symptoms'}
+              navigate={this.props.navigation.navigate}
+            />
+            <Report tabLabel={'diagnosis'} />
+          </TabView>
+        </Calendar>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
   status_bar: {
     backgroundColor: 'white',
   },
@@ -58,6 +85,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
+    justifyContent: 'space-between',
+  },
+  title_container: {
+    flexDirection: 'row',
   },
   logo: {
     width: 30,
