@@ -4,10 +4,38 @@ import DateConverter from '../utils/date';
 export function addLocation(location) {
   try {
     realm.write(() => {
-      realm.create('Location', location, true);
+      realm.create('Location', {...location, source: 'device'}, true);
     });
   } catch (err) {
     console.log('add location to realm error: ', err);
+  }
+}
+
+export function addGoogleLocations(locations) {
+  try {
+    realm.write(() => {
+      locations.forEach(location => {
+        const {time} = location;
+        let start = new Date(time.valueOf());
+        let end = new Date(time.valueOf());
+
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
+
+        let locationsOfDay = realm.objects('Location')
+          .filtered(
+            'time >= $0 && time <= $1 LIMIT(1)',
+            start.getTime(),
+            end.getTime(),
+          );
+
+        if (locationsOfDay.length === 0) {
+          realm.create('Location', location, true);
+        }
+      });
+    });
+  } catch (err) {
+    console.log('add google locations to realm error: ', err);
   }
 }
 

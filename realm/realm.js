@@ -12,6 +12,8 @@ Location.schema = {
     time: 'int',
     address: 'string',
     name: 'string',
+    source: 'string',
+    timespan: 'string',
   },
 };
 
