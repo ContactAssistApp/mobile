@@ -75,7 +75,6 @@ const DateConverter = {
     });
   },
   getUTCUnixTime: function() {
-    // Always work in UTC, not the local time in the locationData
     let nowUTC = new Date().toISOString();
     return Date.parse(nowUTC);
   },
