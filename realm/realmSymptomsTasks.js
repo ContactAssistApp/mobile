@@ -1,4 +1,5 @@
 import realm from './realm';
+import DateConverter from '../utils/date';
 
 export function addSymptoms(symptoms) {
   try {
@@ -35,4 +36,16 @@ export function deleteSymptom(id) {
   } catch (err) {
     console.log('delete symptom error: ', err);
   }
+}
+
+export function getDaysWithLog() {
+  const logs = realm.objects('Symptoms');
+  let dates = [];
+  logs.forEach(log => {
+    const date = DateConverter.calendarFormat(new Date(log.ts));
+    if (!dates.includes(date)) {
+      dates.push(date);
+    }
+  });
+  return dates;
 }

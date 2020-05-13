@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
 });
 
 InterviewPrepContainer.propTypes = {
-  updatePageIndex: PropTypes.func.isRequired,
+  updatePageIndex: PropTypes.func,
 };
 
 const mapStateToProps = state => {

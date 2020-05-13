@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 });
 
 InterviewPrepIntro.propTypes = {
-  updatePageIndex: PropTypes.func.isRequired,
+  updatePageIndex: PropTypes.func,
 };
 
 const mapStateToProps = state => {

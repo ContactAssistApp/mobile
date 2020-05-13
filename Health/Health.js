@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   View,
@@ -14,18 +14,31 @@ import CustomIcon from '../assets/icons/CustomIcon.js';
 import Calendar from '../views/Calendar';
 import TabView from '../views/TabView';
 import DateConverter from '../utils/date';
+import {updateHealthData} from './actions.js';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-class Health extends PureComponent {
+class Health extends Component {
   constructor() {
     super();
     this.state = {
-      date: DateConverter.calendarFormat(new Date()),
       weekView: true,
-      markedDates: {},
     };
   }
 
+  updateCalendarState = () => {
+    this.setState({
+      weekView: !this.state.weekView,
+    });
+  };
+
   render() {
+    const tabs = ['symptoms', 'report'];
+    const {
+      healthData: {symptomsDate, tabIdx, symptomsMarkedDays},
+    } = this.props;
+
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
@@ -52,11 +65,15 @@ class Health extends PureComponent {
           </TouchableOpacity>
         </View>
         <Calendar
-          current={this.state.date}
-          markedDates={this.state.markedDates}
+          current={DateConverter.calendarFormat(symptomsDate)}
+          markedDates={symptomsMarkedDays}
           handleDayPress={day => {
+            this.props.updateHealthData({
+              [`${tabs[tabIdx]}Date`]: DateConverter.calendarToDate(
+                day.dateString,
+              ),
+            });
             this.setState({
-              date: day.dateString,
               weekView: true,
             });
           }}
@@ -102,4 +119,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Health;
+Health.propTypes = {
+  updateHealthData: PropTypes.func,
+};
+
+const mapStateToProps = state => {
+  return {
+    healthData: state.healthReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateHealthData
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Health);
