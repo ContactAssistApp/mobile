@@ -13,7 +13,7 @@ class Confirmation extends Component {
       symptoms: {timeOfDay, amTs, pmTs},
     } = this.props;
 
-    let ts = timeOfDay === 'AM' ? amTs : pmTs;
+    const ts = timeOfDay.toLowerCase() === 'am' ? amTs : pmTs;
 
     return (
       <ScrollView>

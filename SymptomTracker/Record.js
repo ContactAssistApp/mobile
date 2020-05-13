@@ -11,7 +11,7 @@ import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
-import {DeleteStoreData} from '../utils/asyncStorage';
+import {deleteSymptom} from '../realm/realmSymptomsTasks';
 import {connect} from 'react-redux';
 import { strings } from '../locales/i18n';
 
@@ -38,7 +38,7 @@ class Record extends Component {
       buttonIndex => {
         if (buttonIndex === 1) {
           this.props.updateSymptom({
-            timeOfDay
+            timeOfDay,
           });
 
           this.props.navigate('SymptomForm');
@@ -55,7 +55,7 @@ class Record extends Component {
             });
           }
           this.props.clearSymptoms();
-          DeleteStoreData(`SYMPTOM_${date}_${timeOfDay}`);
+          deleteSymptom(`${date}_${timeOfDay}`);
         }
       },
     );
