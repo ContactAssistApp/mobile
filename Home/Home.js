@@ -285,7 +285,7 @@ class Home extends Component {
                   </Text>
                   <Text style={styles.broadcast_description}>
                     {isBroadcasting
-                      ? strings("broadcasting.description_text")
+                      ? strings("global.logging")
                       : strings("global.stopping")
                     }
                     <Text

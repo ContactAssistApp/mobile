@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
 import Resource from './Resource';
-import {CDC_URL, NYC_GUIDANCE_URL} from '../utils/constants';
+import {CDC_URL, KC_GUIDANCE_URL} from '../utils/constants';
 import { strings } from '../locales/i18n';
 
 class ResourcesComponent extends Component {
@@ -11,10 +11,7 @@ class ResourcesComponent extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>{strings("bottom.sheet_menu_item_resources")}</Text>
         <Resource title={strings("cdc.guidance_text")} logoName={'cdc'} url={CDC_URL} />
-        <Resource
-          title={'NYC Guidance'}
-          logoName={'nyc'}
-          url={NYC_GUIDANCE_URL}
+        <Resource title={strings('public.health')} logoName={'kc'} url={KC_GUIDANCE_URL}
         />
       </View>
     );

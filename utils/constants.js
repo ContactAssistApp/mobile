@@ -13,3 +13,4 @@ export const DEFAULT_LOG_WINDOW = '14';
 export const UW_URL = 'https://covidsafe.cs.washington.edu/';
 export const CDC_URL = 'https://www.cdc.gov/';
 export const NYC_GUIDANCE_URL = 'https://health.ny.gov/';
+export const KC_GUIDANCE_URL = 'http://www.kingcounty.gov/covid';
