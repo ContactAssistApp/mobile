@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {SafeAreaView, View, StyleSheet, Text, Image} from 'react-native';
-import Symptoms from '../Symptoms/Symptoms';
+import Symptoms from './Symptoms';
 import Report from './Report';
 import colors from '../assets/colors';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
