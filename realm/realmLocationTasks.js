@@ -4,7 +4,10 @@ import DateConverter from '../utils/date';
 export function addLocation(location) {
   try {
     realm.write(() => {
-      realm.create('Location', {...location, source: 'device'}, true);
+      realm.create('Location',
+        {...location, source: 'device', timespan: ''},
+        true,
+      );
     });
   } catch (err) {
     console.log('add location to realm error: ', err);
