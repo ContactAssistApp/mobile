@@ -3,12 +3,16 @@ import {View, StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
 import Resource from './Resource';
 import {CDC_URL, NYC_GUIDANCE_URL} from '../utils/constants';
+import {LocalizationContext} from '../components/Translations';
 
 class ResourcesComponent extends Component {
+  static contextType = LocalizationContext;
+  
   render() {
+	const {translations, initializeAppLanguage} = this.context;
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Resources</Text>
+        <Text style={styles.header}>{translations["resources_component.resource"]}</Text>
         <Resource title={'CDC Guidance'} logoName={'cdc'} url={CDC_URL} />
         <Resource
           title={'NYC Guidance'}

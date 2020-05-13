@@ -7,6 +7,8 @@ import HealthNav from '../Health/HealthNav';
 import Resources from '../Resources/Resources';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ContactLog from '../ContactLog/ContactLog';
+import Lenguajes from '../Settings/Settings';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -29,8 +31,8 @@ export default function BottomNav() {
         }}
       />
       <Tab.Screen
-        name="ContactLog"
-        component={ContactLog}
+        name="Lenguajes"
+        component={Lenguajes}
         options={{
           tabBarLabel: 'Contact Log',
           tabBarIcon: ({color}) => (

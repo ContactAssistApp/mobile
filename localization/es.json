@@ -1,0 +1,23 @@
+{
+  "shop.title": "Grocery Shop",
+  "date.title": "Today's Date",
+  "date.format": "21/11/2019",
+  "app.currency": "$",
+  "fruit.apple": "Apple",
+  "fruit.apple.price.value": 3,
+  "fruit.banana": "Banana",
+  "fruit.banana.price.value": 2,
+  "fruit.watermelon": "Watermelon",
+  "fruit.watermelon.price.value": 5,
+  "added.items.one": "Added {no} item",
+  "added.items.endingWithZero": "Added {no} items",
+  "added.items.endingWithOne": "Added {no} item",
+  "added.items.endingWithTwoToFour": "Added {no} items",
+  "added.items.endingWithOther": "Added {no} items",
+  "cart.total.title": "Total Sum",
+  "cart.total.value.currencyStart": "{currencyStart}{value}",
+  "cart.total.value.currencyEnd": "{value}{currencyEnd}",
+  "resources_component.resource": "Recursos",
+  "privacy.privacy": "This information is stored in the app on your phone and remains private to you.",
+  "settings.change_language": "Cambiar Idioma"
+}

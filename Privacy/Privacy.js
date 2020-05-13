@@ -2,13 +2,17 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
+import {LocalizationContext} from '../components/Translations';
 
 class Privacy extends Component {
+  static contextType = LocalizationContext;
+  
   render() {
+    const {translations, initializeAppLanguage} = this.context;
     return (
       <View style={styles.container}>
         <Text style={styles.text}>
-          This information is stored in the app on your phone and remains private to you.
+		{translations["privacy.privacy"]}
         </Text>
       </View>
     );
