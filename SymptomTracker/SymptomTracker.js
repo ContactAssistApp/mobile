@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData} from '../utils/asyncStorage';
 import DateConverter from '../utils/date';
-import { strings } from '../locales/i18n';
+import { strings, fmt_date } from '../locales/i18n';
 
 class SymptomTracker extends Component {
   componentDidMount() {
@@ -50,7 +50,7 @@ class SymptomTracker extends Component {
   };
 
   render() {
-    const dateString = DateConverter.dateString(this.props.date);
+    const dateString = fmt_date(this.props.date, "LL")
     const {
       symptoms: {amTs, pmTs},
     } = this.props;
