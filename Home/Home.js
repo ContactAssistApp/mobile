@@ -250,7 +250,7 @@ class Home extends Component {
   render() {
     const {location, ble} = this.state;
     const isBroadcasting = location || ble;
-    const broadcastStatus = isBroadcasting ? 'On' : 'Off';
+    const broadcastStatus = isBroadcasting ? strings("broadcasting.on_text") : strings("broadcasting.off_text");
     const broadcastBg = isBroadcasting
       ? styles.broadcast_on
       : styles.broadcast_off;
@@ -273,7 +273,7 @@ class Home extends Component {
                   style={styles.logo}
                   source={require('../assets/home/logo.png')}
                 />
-                <Text style={styles.title}>CovidSafe</Text>
+                <Text style={styles.title}>{strings("app.name_one_line")}</Text>
               </View>
               <SettingsModal />
             </View>
@@ -281,12 +281,12 @@ class Home extends Component {
               <View style={styles.broadcast}>
                 <View style={styles.broadcast_content}>
                   <Text style={styles.broadcast_title}>
-                    {`Broadcasting ${broadcastStatus}`}
+                    {`${broadcastStatus}`}
                   </Text>
                   <Text style={styles.broadcast_description}>
                     {isBroadcasting
-                      ? 'Turn broadcasting on to\nimprove the accuracy of your\nnotifications. '
-                      : 'Limited trace data is being\ncollected. We keep your identity\nanonymous. '
+                      ? strings("broadcasting.description_text")
+                      : strings("global.stopping")
                     }
                     <Text
                       style={styles.lear_more_link}

@@ -3,13 +3,14 @@ import {View, StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
 import Resource from './Resource';
 import {CDC_URL, NYC_GUIDANCE_URL} from '../utils/constants';
+import { strings } from '../locales/i18n';
 
 class ResourcesComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Resources</Text>
-        <Resource title={'CDC Guidance'} logoName={'cdc'} url={CDC_URL} />
+        <Text style={styles.header}>{strings("bottom.sheet_menu_item_resources")}</Text>
+        <Resource title={strings("cdc.guidance_text")} logoName={'cdc'} url={CDC_URL} />
         <Resource
           title={'NYC Guidance'}
           logoName={'nyc'}
