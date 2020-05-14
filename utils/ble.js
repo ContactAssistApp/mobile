@@ -54,6 +54,18 @@ const Ble = {
     //TODO: write logWindow value to native side storage
     // here logWindow is a string, e.g. '15'
   },
+
+  purgeOldRecords: function() {
+    Ble.bleInit();
+    NativeModules.BLE.purgeOldRecords(14 * 24 * 3600);
+  },
+
+  deleteAllData: async function() {
+    Ble.bleInit();
+    NativeModules.BLE.purgeOldRecords(0);
+    await NativeModules.BLE.getDeviceSeedAndRotate(0);
+    return true;
+  },
 };
 
 export default Ble;

@@ -26,6 +26,7 @@ import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 import {UW_URL} from '../utils/constants';
 import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
+import { strings } from '../locales/i18n';
 
 class Home extends Component {
   constructor() {
@@ -290,7 +291,7 @@ class Home extends Component {
                     <Text
                       style={styles.lear_more_link}
                       onPress={() => Linking.openURL(UW_URL)}>
-                      Learn More
+                      {strings('learn.more_link_text')}
                     </Text>
                   </Text>
                 </View>

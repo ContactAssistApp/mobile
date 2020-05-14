@@ -45,6 +45,8 @@ target 'covidsafe' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways.podspec"
   pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral.podspec"
 
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   target 'covidsafeTests' do
     inherit! :search_paths
     # Pods for testing
