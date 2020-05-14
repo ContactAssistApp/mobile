@@ -30,6 +30,7 @@
     "react-native-gesture-handler": "^1.6.1",
     "react-native-localization": "^2.1.6",
     "react-native-localize": "^1.4.0",
+    "react-native-i18n": "^2.0.15",
     "react-native-permissions": "^2.0.10",
     "react-native-push-notification": "^3.3.1",
     "react-native-raw-bottom-sheet": "^2.1.0",
