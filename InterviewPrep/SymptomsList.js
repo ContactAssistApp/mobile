@@ -2,9 +2,10 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import SymptomsHalfDay from '../SymptomTracker/SymptomsHalfDay';
-import {GetKeys, GetMulti} from '../utils/asyncStorage';
 import SectionHeader from './SectionHeader';
 import DateHeader from './DateHeader';
+import {getSymptoms} from '../realm/realmSymptomsTasks';
+import DateConverter from '../utils/date';
 
 class SymptomsList extends Component {
   constructor() {
@@ -15,18 +16,16 @@ class SymptomsList extends Component {
   }
 
   componentDidMount() {
-    this.fetchSymptomsLog();
+    this.fetchLog();
   }
 
-  fetchSymptomsLog = async () => {
-    const keys = await GetKeys('SYMPTOM_');
-    let date = new Date();
-    date.setDate(date.getDate() - 14);
-    const keysInTwoWeeks = keys.filter(key => {
-      const d = key.split('_')[1];
-      return new Date(d) > date;
+  fetchLog = () => {
+    const logs = getSymptoms(new Date(), 14).map(log => {
+      let logObj = JSON.parse(JSON.stringify(log));
+      logObj.date = DateConverter.calendarFormat(new Date(logObj.date));
+      return logObj;
     });
-    const logs = await GetMulti(keysInTwoWeeks);
+
     this.setState({
       logs,
     });
@@ -37,13 +36,11 @@ class SymptomsList extends Component {
       <>
         <SectionHeader header={'Symptoms'} />
         {this.state.logs.map((log, index) => {
-          const key = Object.keys(log)[0];
-          const keyArr = key.split('_');
-
+          const {date, timeOfDay} = log;
           return (
-            <View key={key}>
-              <DateHeader date={keyArr[1]} timeOfDay={keyArr[2]} />
-              <SymptomsHalfDay symptoms={log[key]} />
+            <View key={index}>
+              <DateHeader date={date} timeOfDay={timeOfDay} />
+              <SymptomsHalfDay symptoms={log} />
             </View>
           );
         })}
