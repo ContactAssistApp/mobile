@@ -9,6 +9,7 @@ import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import Modal from '../views/Modal';
 import SettingLink from './SettingLink';
+import AnalyticsOptIn from './AnalyticsOptIn';
 import {UW_URL} from '../utils/constants.js';
 
 class SettingsModal extends Component {
@@ -40,6 +41,7 @@ class SettingsModal extends Component {
               <Bluetooth />
               <Import />
               <DataStorage />
+              <AnalyticsOptIn />
             </>
 
             <>
