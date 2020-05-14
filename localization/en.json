@@ -1,23 +1,22 @@
 {
-  "shop.title": "Grocery Shop",
-  "date.title": "Today's Date",
-  "date.format": "21/11/2019",
-  "app.currency": "$",
-  "fruit.apple": "Apple",
-  "fruit.apple.price.value": 3,
-  "fruit.banana": "Banana",
-  "fruit.banana.price.value": 2,
-  "fruit.watermelon": "Watermelon",
-  "fruit.watermelon.price.value": 5,
-  "added.items.one": "Added {no} item",
-  "added.items.endingWithZero": "Added {no} items",
-  "added.items.endingWithOne": "Added {no} item",
-  "added.items.endingWithTwoToFour": "Added {no} items",
-  "added.items.endingWithOther": "Added {no} items",
-  "cart.total.title": "Total Sum",
-  "cart.total.value.currencyStart": "{currencyStart}{value}",
-  "cart.total.value.currencyEnd": "{value}{currencyEnd}",
-  "resources_component.resource": "Resource",
-  "privacy.privacy": "This information is stored in the app on your phone and remains private to you.",
+  "app.name": "Covid\nSafe",
+  "app.name_one_line": "CovidSafe",
+  
+  
+  
+  
+  
+  
+  "broadcasting.description_text": "Limited trace data is being\ncollected. We keep your identity\nanonymous. ",
+  
+  "more_link_text": "Learn More",
+  
+  
+    
+  "symptom.tracker_text": "Symptom Tracker",
+  "logged_text": "Not Logged",
+  "resources_component.resource": "Resources",
+  "privacyDisclaimer2": "This information is stored securely and locally on your app, and remains private to you.",
+  
   "settings.change_language": "Change Language"
 }

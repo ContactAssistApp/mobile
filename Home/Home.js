@@ -27,8 +27,11 @@ import {UW_URL} from '../utils/constants';
 import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
 import { strings } from '../locales/i18n';
+import {LocalizationContext} from '../components/Translations';
 
 class Home extends Component {
+  static contextType = LocalizationContext;
+	
   constructor() {
     super();
 
@@ -248,6 +251,7 @@ class Home extends Component {
   };
 
   render() {
+	const {translations, initializeAppLanguage} = this.context;
     const {location, ble} = this.state;
     const isBroadcasting = location || ble;
     const broadcastStatus = isBroadcasting ? 'On' : 'Off';
@@ -284,14 +288,15 @@ class Home extends Component {
                     {`Broadcasting ${broadcastStatus}`}
                   </Text>
                   <Text style={styles.broadcast_description}>
+					{}
                     {isBroadcasting
                       ? 'Turn broadcasting on to\nimprove the accuracy of your\nnotifications. '
-                      : 'Limited trace data is being\ncollected. We keep your identity\nanonymous. '
+                      : translations["broadcasting.description_text"]
                     }
                     <Text
                       style={styles.lear_more_link}
                       onPress={() => Linking.openURL(UW_URL)}>
-                      {strings('learn.more_link_text')}
+					  {translations["more_link_text"]}
                     </Text>
                   </Text>
                 </View>

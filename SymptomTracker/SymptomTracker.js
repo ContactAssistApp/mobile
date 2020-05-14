@@ -8,8 +8,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData} from '../utils/asyncStorage';
 import DateConverter from '../utils/date';
+import {LocalizationContext} from '../components/Translations';
 
 class SymptomTracker extends Component {
+  static contextType = LocalizationContext;
+  
   componentDidMount() {
     const d = DateConverter.calendarFormat(this.props.date);
     this.props.updateSymptom({
@@ -49,6 +52,7 @@ class SymptomTracker extends Component {
   };
 
   render() {
+	const {translations, initializeAppLanguage} = this.context;
     const dateString = DateConverter.dateString(this.props.date);
     const {
       symptoms: {amTs, pmTs},
@@ -57,7 +61,7 @@ class SymptomTracker extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
-          <Text style={styles.header}>Symptom Tracker[DEMO]</Text>
+          <Text style={styles.header}>{translations["symptom.tracker_text"]}[DEMO]</Text>
           <Text style={styles.description}>{dateString}</Text>
         </View>
         <Record

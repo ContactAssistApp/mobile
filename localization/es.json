@@ -1,23 +1,21 @@
 {
-  "shop.title": "Grocery Shop",
-  "date.title": "Today's Date",
-  "date.format": "21/11/2019",
-  "app.currency": "$",
-  "fruit.apple": "Apple",
-  "fruit.apple.price.value": 3,
-  "fruit.banana": "Banana",
-  "fruit.banana.price.value": 2,
-  "fruit.watermelon": "Watermelon",
-  "fruit.watermelon.price.value": 5,
-  "added.items.one": "Added {no} item",
-  "added.items.endingWithZero": "Added {no} items",
-  "added.items.endingWithOne": "Added {no} item",
-  "added.items.endingWithTwoToFour": "Added {no} items",
-  "added.items.endingWithOther": "Added {no} items",
-  "cart.total.title": "Total Sum",
-  "cart.total.value.currencyStart": "{currencyStart}{value}",
-  "cart.total.value.currencyEnd": "{value}{currencyEnd}",
-  "resources_component.resource": "Recursos",
-  "privacy.privacy": "This information is stored in the app on your phone and remains private to you.",
+  
+    "broadcasting": {
+      "enabled_pkey": "radiodifusi\u00f3n",
+      "on_text": "Transmitiendo en",
+      "off_text": "Transmitiendo",
+      "description_text": "Se est\u00e1n recopilando datos de seguimiento limitados. Mantenemos su identidad an\u00f3nima. Aprende m\u00e1s."
+    },
+	
+	
+	"broadcasting.description_text": "Se est\u00e1n recopilando datos de seguimiento limitados. Mantenemos su identidad an\u00f3nima. ",
+	
+	"more_link_text": "Aprende m\u00e1s",
+	
+	"symptom.tracker_text": "Rastreador de s\u00edntomas",
+	"logged_text": "No registrado",
+	"resources_component.resource": "Resources",
+  "privacyDisclaimer2": "Esta informaci\u00f3n se almacena de forma segura y local en su aplicaci\u00f3n, y permanece privada para usted.",
+  
   "settings.change_language": "Cambiar Idioma"
 }

@@ -12,7 +12,7 @@ class Privacy extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>
-		{translations["privacy.privacy"]}
+		{translations["privacyDisclaimer2"]}
         </Text>
       </View>
     );

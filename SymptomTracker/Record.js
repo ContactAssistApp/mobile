@@ -13,8 +13,11 @@ import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {DeleteStoreData} from '../utils/asyncStorage';
 import {connect} from 'react-redux';
+import {LocalizationContext} from '../components/Translations';
 
 class Record extends Component {
+  static contextType = LocalizationContext;
+  
   handleAdd = () => {
     this.props.updateSymptom({
       timeOfDay: this.props.timeOfDay,
@@ -61,6 +64,7 @@ class Record extends Component {
   };
 
   render() {
+	const {translations, initializeAppLanguage} = this.context;
     const {timeOfDay, logTime} = this.props;
     return (
       <>
@@ -85,7 +89,7 @@ class Record extends Component {
           <View style={styles.record_detail}>
             <Text style={styles.title}>{timeOfDay}</Text>
             <Text style={styles.time}>
-              {logTime ? `Saved ${logTime}` : 'Not logged'}
+              {logTime ? `Saved ${logTime}` : translations["logged_text"]}
             </Text>
           </View>
           {
