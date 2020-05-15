@@ -19,6 +19,7 @@ import Calendar from '../views/Calendar';
 import TabView from '../views/TabView';
 import DateConverter from '../utils/date';
 import {getDaysWithLocations} from '../realm/realmLocationTasks';
+import { strings } from '../locales/i18n';
 
 class ContactLog extends Component {
   constructor() {
@@ -63,7 +64,7 @@ class ContactLog extends Component {
               style={styles.logo}
               source={require('../assets/home/logo.png')}
             />
-            <Text style={styles.title}>Contact Log</Text>
+            <Text style={styles.title}>{strings("bottom.sheet_menu_item_contact_log")}</Text>
           </View>
           <TouchableOpacity
             style={styles.calendar_button}
@@ -90,8 +91,8 @@ class ContactLog extends Component {
           }}
           weekView={this.state.weekView}>
           <TabView>
-            <Locations tabLabel={'locations'} date={this.state.date} />
-            <People tabLabel={'people'} />
+            <Locations tabLabel={strings('locations.text')} date={this.state.date} />
+            <People tabLabel={strings('people.text')} />
           </TabView>
         </Calendar>
       </>

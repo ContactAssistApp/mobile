@@ -21,7 +21,7 @@ I18n.translations = {
 
 I18n.defaultLocale = "en";
 //FIXME use getLanguages or something
-I18n.locale = "en"; //change it to 'es' for dev purposes
+I18n.locale = "es"; //change it to 'es' for dev purposes
 
 const currentLocale = I18n.currentLocale();
 
