@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {SetStoreData} from '../utils/asyncStorage';
+import { strings } from '../locales/i18n';
 
 class ContactList extends Component {
   selectContact = contact => {
@@ -69,7 +70,7 @@ class ContactList extends Component {
               SetStoreData('CONTACTS', selectedContacts);
               this.props.handleModalClose();
             }}>
-            <Text style={styles.save_text}>Save</Text>
+            <Text style={styles.save_text}>{strings("save.text")}</Text>
           </TouchableOpacity>
         </View>
       </>

@@ -11,6 +11,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
+import { strings } from '../locales/i18n';
+
 
 class People extends Component {
   constructor() {
@@ -104,11 +106,11 @@ class People extends Component {
         <Modal
           visible={this.state.modalOn}
           handleModalClose={this.closeModal}
-          title={'Contacts'}>
+          title={strings('select.contact')}>
           <ContactList handleModalClose={this.closeModal} />
         </Modal>
         <ScrollView>
-          <Text style={styles.header}>Social Interactions</Text>
+          <Text style={styles.header}>{strings("social.interaction_text")}</Text>
           <SelectedContacts />
         </ScrollView>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>

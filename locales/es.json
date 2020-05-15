@@ -66,7 +66,7 @@
     "notif2": "Por favor contacte a su profesional de la salud."
   },
   "select": {
-    "contact": "Select Contacts",
+    "contact": "Selecciona tus contactos",
     "share": "Selecciona una opci\u00f3n para compartir"
   },
   "global": {
@@ -433,7 +433,8 @@
     "experienced_last_14_days": "S\u00edntomas que ha experimentado en los \u00faltimos 14 d\u00edas."
   },
   "locations": {
-    "text": "Localizaciones"
+    "text": "Localizaciones",
+    "timeline_text": "Cronograma"
   },
   "people": {
     "text": "Personas",
@@ -442,6 +443,9 @@
   },
   "socialize": {
     "text": "Agregue de forma segura a las personas con las que ha estado en contacto directamente desde su lista de contactos, o una a la vez."
+  },
+  "social": {
+    "interaction_text": "Interacciones Sociales"
   },
   "summary": {
     "text": "Resumen"

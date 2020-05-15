@@ -3,6 +3,7 @@ import {WeekCalendar, CalendarList} from 'react-native-calendars';
 import {View, StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
 import DateConverter from '../utils/date';
+import moment from 'moment';
 
 class Calendar extends Component {
   render() {
@@ -30,13 +31,13 @@ class Calendar extends Component {
         {weekView ? (
           <>
             <View style={styles.day_container}>
-              <Text style={styles.day}>S</Text>
-              <Text style={styles.day}>M</Text>
-              <Text style={styles.day}>T</Text>
-              <Text style={styles.day}>W</Text>
-              <Text style={styles.day}>T</Text>
-              <Text style={styles.day}>F</Text>
-              <Text style={styles.day}>S</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[0]}</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[1]}</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[2]}</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[3]}</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[4]}</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[5]}</Text>
+              <Text style={styles.day}>{moment.weekdaysMin()[6]}</Text>
             </View>
             <WeekCalendar
               current={current}

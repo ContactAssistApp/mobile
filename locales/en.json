@@ -442,7 +442,8 @@
     "experienced_last_14_days": "Symptoms you\u2019ve experienced in the last 14 days"
   },
   "locations": {
-    "text": "Locations"
+    "text": "Locations",
+    "timeline_text": "Timeline"
   },
   "people": {
     "text": "People",
@@ -451,6 +452,9 @@
   },
   "socialize": {
     "text": "Safely add people you\u2019ve been in contact with directly from your contacts list, or one at a time. "
+  },
+  "social": {
+    "interaction_text": "Social Interactions"
   },
   "summary": {
     "text": "Summary"

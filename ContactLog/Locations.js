@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import DateConverter from '../utils/date';
 import {updateContactLog} from './actions.js';
 import Import from './Import';
+import { strings, fmt_date } from '../locales/i18n';
 
 class Locations extends Component {
   constructor() {
@@ -76,14 +77,13 @@ class Locations extends Component {
         {addresses && addresses.length > 0 ?
           <>
             <Text style={styles.date}>
-              {DateConverter.dateString(new Date(date.replace(/-/g, '/')))}
+            { fmt_date(new Date(date.replace(/-/g, '/')), "ddd, MMM Do") }
             </Text>
-            <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
+            <Text style={styles.sub_header}>{strings("locations.timeline_text")}</Text>
             {addresses.map((address, idx) => {
-              const name = address[0] === '' ? 'Unknown Location' : address[0];
+              const name = address[0] === '' ? strings('unknown.address_txt') : address[0];
               const timePeriods = address[2].split(',');
-              const format = time =>
-                DateConverter.timeString(parseInt(time.trim(), 10));
+              const format = time => fmt_date(parseInt(time), "LT")
               const tsStringList = timePeriods
                 .map(timePeriod => {
                   const tsList = timePeriod.split('-');
