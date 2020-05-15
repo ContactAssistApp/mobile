@@ -5,6 +5,11 @@ import I18n from 'react-native-i18n';
 import en from './en.json';
 import es from './es.json';
 
+import moment from 'moment';
+// XXX We MUST import all moment.js locales paired with the strings
+import moment_es from 'moment/locale/es.js';
+
+
 // Should the app fallback to English if user locale doesn't exists
 I18n.fallbacks = true;
 
@@ -16,7 +21,7 @@ I18n.translations = {
 
 I18n.defaultLocale = "en";
 //FIXME use getLanguages or something
-// I18n.locale = "es"; //uncomment that for dev purposes
+I18n.locale = "en"; //change it to 'es' for dev purposes
 
 const currentLocale = I18n.currentLocale();
 
@@ -30,5 +35,9 @@ ReactNative.I18nManager.allowRTL(isRTL);
 export function strings(name, params = {}) {
   return I18n.t(name, params);
 };
+
+export function fmt_date(date, fmt) {
+  return moment(date).locale(currentLocale).format(fmt);
+}
 
 export default I18n;

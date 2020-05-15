@@ -20,6 +20,7 @@
     "appcenter": "3.0.2",
     "appcenter-analytics": "3.0.2",
     "appcenter-crashes": "3.0.2",
+    "moment": "^2.25.3",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-app-intro-slider": "^4.0.0",
