@@ -20,7 +20,9 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
   }
 
   override func view() -> UIView! {
-    let webView = GoogleTimelineImportView()
+    let config = WKWebViewConfiguration()
+    config.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+    let webView = GoogleTimelineImportView(frame: .zero, configuration: config)
     webView.navigationDelegate = self
     webView.activityIndictor.startAnimating()
     webView.load(URLRequest(url: GoogleTimelineImportViewManager.SIGN_IN_URL))
@@ -66,7 +68,7 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     }
 
     if #available(iOS 11.0, *) {
-      WKWebsiteDataStore.default().httpCookieStore.getAllCookies(handleCookies)
+      view.configuration.websiteDataStore.httpCookieStore.getAllCookies(handleCookies)
     } else {
       handleCookies(HTTPCookieStorage.shared.cookies ?? [])
     }
