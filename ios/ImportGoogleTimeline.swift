@@ -79,10 +79,12 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     var request = URLRequest(url: url)
     request.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
     let task = URLSession.shared.dataTask(with: request) { (dat, res, err) in
-      if let data = dat {
-        handle(["data": String(data: data, encoding: .utf8) ?? ""])
+      if let response = res as? HTTPURLResponse,
+        response.statusCode < 400,
+        let string = dat.flatMap({ String(data: $0, encoding: .utf8) }) {
+        handle(["data": string])
       } else {
-        handle(["error": err?.localizedDescription ?? ""])
+        handle(["error": err?.localizedDescription ?? res?.description ?? ""])
       }
     }
     task.resume()
