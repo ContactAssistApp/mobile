@@ -10,17 +10,17 @@
     "header_text": "Historia"
   },
   "permissions": {
-    "header_text": "Selecciona tus preferencias"
+    "header_text": ""
   },
   "health": {
-    "header_text": "Salud",
-    "header_text_demo": "Salud [DEMO]"
+    "header_text": "",
+    "header_text_demo": ""
   },
   "contact": {
-    "header_text": "Preparaci\u00f3n de entrevistas",
-    "header_text_demo": "Preparaci\u00f3n de entrevistas [DEMO]",
-    "log_header_text": "Registro de contacto",
-    "log_header_text_demo": "Registro de contacto [DEMO]",
+    "header_text": "",
+    "header_text_demo": "",
+    "log_header_text": "",
+    "log_header_text_demo": "",
     "logs": "Registros de contacto",
     "title_1": "Revise qu\u00e9 s\u00edntomas le gustar\u00eda incluir.",
     "title_2": "Revise su historial de ubicaciones de los \u00faltimos 14 d\u00edas.",
@@ -33,25 +33,25 @@
     "healthcare_professional": "Por favor contacte a su profesional de la salud."
   },
   "add": {
-    "symptoms_header_text": "Crear nuevo registro"
+    "symptoms_header_text": ""
   },
   "settings": {
-    "header_text": "Configuraciones",
+    "header_text": "",
     "help_text": "Puede usar este panel para crear un radio de 1 milla alrededor de las ubicaciones que no desea que se rastreen. Puede agregar hasta %1$d ubicaciones.",
     "text": "Configuraciones"
   },
   "help": {
-    "header_text": "Recursos",
-    "header_text_demo": "Recursos [DEMO]",
+    "header_text": "",
+    "header_text_demo": "",
     "your_community_by_reporting": "Ayuda a tu comunidad informando tu diagn\u00f3stico"
   },
   "warning": {
-    "header_text": "Informe de diagn\u00f3stico",
+    "header_text": "",
     "help_text": "Recibi\u00f3 un diagn\u00f3stico positivo de su proveedor de atenci\u00f3n m\u00e9dica. Para confirmar su diagn\u00f3stico, proporcione sus credenciales a continuaci\u00f3n."
   },
   "symptom": {
     "help_text": "Use este formulario para proporcionar un informe diario de cualquier s\u00edntoma que tenga. Puede enviar este formulario una vez al d\u00eda.",
-    "logs": "Registros de s\u00edntomas",
+    "logs": "Registros de s\u00edntomas [DEMO]",
     "submission_date_pkey": "s\u00edntomas_submission_date_pkey",
     "tracker_text": "Rastreador de s\u00edntomas"
   },
@@ -117,13 +117,13 @@
     "no": "No",
     "retry": "Procesar de nuevo",
     "sure": "Estoy seguro",
-    "logging": "<br/><b><a href=\"https://covidsafe.cs.washington.edu/\">Learn More</a></b>",
-    "stopping": "<br/><b><a href=\"https://covidsafe.cs.washington.edu/\">Learn More</a></b>",
+    "logging": "Se est\u00e1n recopilando datos de seguimiento limitados. Mantenemos su identidad an\u00f3nima. Obtenga m\u00e1s informaci\u00f3n.",
+    "stopping": "Active la transmisi\u00f3n para mejorar la precisi\u00f3n de sus notificaciones. Aprende m\u00e1s",
     "faq": "Preguntas m\u00e1s frecuentes",
     "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
     "covidSiteLink": "https://covidsafe.cs.washington.edu/",
     "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
-    "privacyLink1": "<a href=\"https://covidsafe.cs.washington.edu/\">Aprende m\u00e1s.</a>",
+    "privacyLink1": "",
     "lipsum": "Egestas tellus rutrum tellus pellentesque eu tincidun. Odio tempor orci dapibus ultrices en iaculis nunc sed augue suspendisse.",
     "lipsum2": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices en iaculis nunc sed augue.",
     "lipsum3": "Odio tempor orci dapibus ultrices en iaculis nunc sed",
@@ -257,7 +257,7 @@
   "time": {
     "of_last_query_pkey": "time_of_last_query_pkey",
     "am": "A.M",
-    "pm": "PM"
+    "pm": "P.M"
   },
   "init": {
     "key_exists_pkey": "init_key_exists_pkey"
@@ -304,12 +304,12 @@
     "how_we_protect_your_privacy": "Conozca c\u00f3mo protegemos su privacidad"
   },
   "privacy": {
-    "link": "<a href=\"http://www.uw.edu\">Intimidad  |  </a>",
+    "link": "",
     "text": "Intimidad",
     "and_security": "Privacidad y seguridad"
   },
   "terms": {
-    "link": "<a href=\"http://www.uw.edu\">T\u00e9rminos y Condiciones</a>",
+    "link": "",
     "text": "T\u00e9rminos y Condiciones"
   },
   "onset": {

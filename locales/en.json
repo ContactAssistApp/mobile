@@ -10,17 +10,17 @@
     "header_text": "History"
   },
   "permissions": {
-    "header_text": "Select your preferences"
+    "header_text": ""
   },
   "health": {
-    "header_text": "Health",
-    "header_text_demo": "Health [DEMO]"
+    "header_text": "",
+    "header_text_demo": ""
   },
   "contact": {
-    "header_text": "Interview Preparation",
-    "header_text_demo": "Interview Preparation [DEMO]",
-    "log_header_text": "Contact Log",
-    "log_header_text_demo": "Contact Log [DEMO]",
+    "header_text": "",
+    "header_text_demo": "",
+    "log_header_text": "",
+    "log_header_text_demo": "",
     "logs": "Contact logs",
     "title_1": "\n        Review which symptoms you would like to include.\n    ",
     "title_2": "\n        Review your location history from the last 14 days.\n    ",
@@ -33,27 +33,27 @@
     "healthcare_professional": "Please contact your healthcare professional."
   },
   "add": {
-    "symptoms_header_text": "Create New Log"
+    "symptoms_header_text": ""
   },
   "settings": {
-    "header_text": "Settings",
+    "header_text": "",
     "help_text": "You can use this panel to create a 1 mile radius around locations you don't want to be tracked. You can add up to %1$d locations.",
     "text": "Settings"
   },
   "help": {
-    "header_text": "Resources",
-    "header_text_demo": "Resources [DEMO]",
+    "header_text": "",
+    "header_text_demo": "",
     "your_community_by_reporting": "Help your community by reporting your diagnosis"
   },
   "warning": {
-    "header_text": "Diagnosis Report",
+    "header_text": "",
     "help_text": "You've received a positive diagnosis from your healthcare provider. To confirm your diagnosis, please provider your credentials below."
   },
   "symptom": {
     "help_text": "Use this form to provide a daily report of any symptoms you have. You may submit this form once a day.",
     "logs": "Symptom logs",
     "submission_date_pkey": "symptom_submission_date_pkey",
-    "tracker_text": "Symptom Tracker"
+    "tracker_text": "Symptom Tracker [DEMO]"
   },
   "notif": {
     "message": "We are currently logging your location.",
@@ -118,13 +118,13 @@
     "no": "No",
     "retry": "Retry",
     "sure": "I'm sure",
-    "logging": "<br/><b><a href=\"https://covidsafe.cs.washington.edu/\">Learn More</a></b>",
-    "stopping": "<br/><b><a href=\"https://covidsafe.cs.washington.edu/\">Learn More</a></b>",
+    "logging": "Limited trace data is being collected. We keep your identity anonymous.",
+    "stopping": "Turn broadcasting on to improve the accuracy of your notifications. ",
     "faq": "FAQ",
     "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
     "covidSiteLink": "https://covidsafe.cs.washington.edu/",
     "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
-    "privacyLink1": "<a href=\"https://covidsafe.cs.washington.edu/\">Learn more.</a>",
+    "privacyLink1": "",
     "lipsum": "Egestas tellus rutrum tellus pellentesque eu tincidun. Odio tempor orci dapibus ultrices in iaculis nunc sed augue suspendisse.",
     "lipsum2": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.",
     "lipsum3": "Odio tempor orci dapibus ultrices in iaculis nunc sed",
@@ -152,7 +152,7 @@
     "story2": "\n        Learn if you might have been exposed. If you've recently been in close contact with someone recently diagnosed with COVID-19. You'll get a notification.\n    ",
     "story3": "\n        Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms. And log locations you recently visited to protect others.\n    ",
     "story4": "\n        Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.\n    ",
-    "startText": "\n        Let\\s slow the spread of COVID-19 together.\n    ",
+    "startText": "\n        Let's slow the spread of COVID-19 together.\n    ",
     "certText": "I certify that the information submitted in this report is true and correct to the best of my knowledge.",
     "certDiagnosisText": "I certify that I have been officially diagnosed with COVID-19",
     "severity": "Severity",
@@ -310,12 +310,12 @@
     "how_we_protect_your_privacy": "Learn about how we protect your privacy"
   },
   "privacy": {
-    "link": "<a href=\"http://www.uw.edu\">Privacy  |  </a>",
+    "link": "",
     "text": "Privacy",
     "and_security": "Privacy and Security"
   },
   "terms": {
-    "link": "<a href=\"http://www.uw.edu\">Terms and Conditions</a>",
+    "link": "",
     "text": "Terms and Conditions"
   },
   "onset": {

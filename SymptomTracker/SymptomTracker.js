@@ -8,6 +8,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {GetStoreData} from '../utils/asyncStorage';
 import DateConverter from '../utils/date';
+import { strings, fmt_date } from '../locales/i18n';
 
 class SymptomTracker extends Component {
   componentDidMount() {
@@ -49,7 +50,7 @@ class SymptomTracker extends Component {
   };
 
   render() {
-    const dateString = DateConverter.dateString(this.props.date);
+    const dateString = fmt_date(this.props.date, "LL")
     const {
       symptoms: {amTs, pmTs},
     } = this.props;
@@ -57,16 +58,16 @@ class SymptomTracker extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
-          <Text style={styles.header}>Symptom Tracker[DEMO]</Text>
+          <Text style={styles.header}>{strings("symptom.tracker_text")}</Text>
           <Text style={styles.description}>{dateString}</Text>
         </View>
         <Record
-          timeOfDay={'AM'}
+          timeOfDay={strings("time.am")}
           logTime={amTs ? DateConverter.timeString(amTs) : ''}
           navigate={this.props.navigate}
         />
         <Record
-          timeOfDay={'PM'}
+          timeOfDay={strings("time.pm")}
           logTime={pmTs ? DateConverter.timeString(pmTs) : ''}
           navigate={this.props.navigate}
         />

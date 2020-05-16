@@ -7,6 +7,7 @@ class Resource extends Component {
     const logos = {
       cdc: require('../assets/resources/cdc.png'),
       nyc: require('../assets/resources/nyc.png'),
+      kc:  require('../assets/resources/kclogo.png'),
     };
     const {logoName, title, url} = this.props;
 

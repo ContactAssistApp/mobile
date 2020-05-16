@@ -17,6 +17,7 @@ import Location from '../../Settings/Location';
 import Bluetooth from '../../Settings/Bluetooth';
 import Import from '../../Settings/Import';
 import DataStorage from '../../Settings/DataStorage';
+import AnalyticsOptIn from '../../Settings/AnalyticsOptIn';
 
 class Preferences extends Component {
   completeFTUE = () => {
@@ -43,6 +44,7 @@ class Preferences extends Component {
             <Bluetooth />
             <Import />
             <DataStorage />
+            <AnalyticsOptIn />
           </View>
           <TouchableOpacity
             style={styles.next_button}

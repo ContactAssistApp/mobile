@@ -44,10 +44,13 @@
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
 
-  // Enable crash reporting and analytics.
-  [AppCenterReactNative register];
-  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
-  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
+  // Enable crash reporting and analytics if opted-in.
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([defaults boolForKey:@"analyticsOptIn"]) {
+    [AppCenterReactNative register];
+    [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+    [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
+  }
 
   return YES;
 }
