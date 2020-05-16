@@ -283,28 +283,36 @@ class Home extends Component {
                   <Text style={styles.broadcast_title}>
                     {`${broadcastStatus}`}
                   </Text>
-                  <Text style={styles.broadcast_description}>
-                    {isBroadcasting
-                      ? strings("global.logging")
-                      : strings("global.stopping")
-                    }
-                    <Text
-                      style={styles.lear_more_link}
-                      onPress={() => Linking.openURL(UW_URL)}>
-                      {strings('learn.more_link_text')}
-                    </Text>
-                  </Text>
+        
+                </View>
+                <View>
+                  <Toggle
+                    handleToggle={selectedState => {
+                      this.updateSetting(selectedState);
+                    }}
+                    value={this.state.location || this.state.ble}
+                  />
                 </View>
               </View>
+        
               <View>
-                <Toggle
-                  handleToggle={selectedState => {
-                    this.updateSetting(selectedState);
-                  }}
-                  value={this.state.location || this.state.ble}
-                />
-              </View>
+                <Text style={styles.broadcast_description}>
+                  {isBroadcasting
+                    ? strings("global.logging")
+                    : strings("global.stopping")
+                  }
+                  <Text
+                    style={styles.lear_more_link}
+                    onPress={() => Linking.openURL(UW_URL)}>
+                    {strings('learn.more_link_text')}
+                  </Text>
+                </Text>
+              </View>  
+  
             </View>
+		  
+  
+  
           </View>
 
           {this.state.notifications && this.state.notifications.length > 0 && (
@@ -356,9 +364,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 15,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
+    
+    
   },
   broadcast_on: {
     backgroundColor: colors.fill_on,
@@ -369,6 +376,7 @@ const styles = StyleSheet.create({
   broadcast: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+	justifyContent: 'space-between',
   },
   broadcast_title: {
     color: colors.module_title,
