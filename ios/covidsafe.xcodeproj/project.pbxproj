@@ -24,6 +24,7 @@
 		14CCE84424606EEB00937BF4 /* EncryptionUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */; };
 		14CCE87F2460A34F00937BF4 /* EncryptionUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE87E2460A34F00937BF4 /* EncryptionUtil.m */; };
 		17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35472C232F804031A439818A /* icomoon.ttf */; };
+		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* covidsafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* covidsafeTests.m */; };
@@ -821,6 +822,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
+				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
