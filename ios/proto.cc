@@ -151,9 +151,6 @@ void SeedStore::changeWindow(int64_t newWindow)
 
 Seed SeedStore::getSeedAndRotate()
 {
-    if(access(_fileName.c_str(), F_OK) == -1)
-        throw new std::runtime_error("Could not load seed file");
-
     int64_t now = get_rounded_timestamp();
     SeedDiskData sdd = SeedDiskData::loadFrom(_fileName, _crypto);
     sdd.stepTo(now, _stepSize);
