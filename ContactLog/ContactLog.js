@@ -17,8 +17,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Calendar from '../views/Calendar';
 import TabView from '../views/TabView';
-import {LocationData} from '../utils/LocationData';
 import DateConverter from '../utils/date';
+import {getDaysWithLocations} from '../realm/realmLocationTasks';
 
 class ContactLog extends Component {
   constructor() {
@@ -31,39 +31,25 @@ class ContactLog extends Component {
   }
 
   componentDidMount() {
-    this.fetchGpsLog();
+    this.fetchMarkedDays();
   }
+
+  fetchMarkedDays = () => {
+    let markedDates = {};
+    const dates = getDaysWithLocations();
+
+    dates.forEach(date => {
+      markedDates[date] = {marked: true};
+    });
+
+    this.setState({
+      markedDates,
+    });
+  };
 
   updateCalendarState = () => {
     this.setState({
       weekView: !this.state.weekView,
-    });
-  };
-
-  fetchGpsLog = async () => {
-    const locations = await LocationData.getLocationData();
-
-    let markedDates = {};
-    let coordinates = {};
-    locations.forEach(location => {
-      const date = DateConverter.calendarFormat(new Date(location.time));
-      if (!markedDates.hasOwnProperty(date)) {
-        markedDates[date] = {marked: true};
-      }
-
-      if (coordinates.hasOwnProperty(date)) {
-        coordinates[date].push(location);
-      } else {
-        coordinates[date] = [location];
-      }
-    });
-    this.setState({
-      markedDates,
-    });
-
-    this.props.updateContactLog({
-      field: 'allCoordinates',
-      value: coordinates,
     });
   };
 

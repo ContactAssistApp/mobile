@@ -15,9 +15,11 @@ import Cough from './Cough';
 import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import Confirmation from './Confirmation';
 import Modal from '../views/Modal';
+import {addSymptoms} from '../realm/realmSymptomsTasks';
+import DateConverter from '../utils/date';
+import {getSymptoms} from '../realm/realmSymptomsTasks';
 
 class SymptomForm extends Component {
   constructor() {
@@ -39,18 +41,19 @@ class SymptomForm extends Component {
     this.props.navigation.navigate('BottomNav');
   };
 
-  fetchLog = async () => {
+  fetchLog = () => {
     const {
-      symptoms: {date, timeOfDay, amTs, pmTs},
+      symptoms: {date, timeOfDay},
     } = this.props;
 
-    let log = await GetStoreData(`SYMPTOM_${date}_${timeOfDay}`);
+    const log = getSymptoms(DateConverter.calendarToDate(date)).filter(
+      item => item.timeOfDay === timeOfDay,
+    )[0];
+
     if (log) {
-      log = JSON.parse(log);
-      log.date = date;
-      log.amTs = amTs;
-      log.pmTs = pmTs;
-      this.props.updateSymptom(log);
+      let logObj = JSON.parse(JSON.stringify(log));
+      logObj.date = DateConverter.calendarFormat(new Date(logObj.date));
+      this.props.updateSymptom(logObj);
     }
   };
 
@@ -67,19 +70,24 @@ class SymptomForm extends Component {
     } = this.props;
     const currentTime = new Date().getTime();
 
-    if (timeOfDay === 'AM') {
+    if (timeOfDay.toLowerCase() === 'am') {
       this.props.updateSymptom({
         amTs: currentTime,
       });
-      symptoms.amTs = currentTime;
-    } else if (timeOfDay === 'PM') {
+    } else {
       this.props.updateSymptom({
         pmTs: currentTime,
       });
-      symptoms.pmTs = currentTime;
     }
 
-    SetStoreData(`SYMPTOM_${date}_${timeOfDay}`, symptoms);
+    delete symptoms.amTs;
+    delete symptoms.pmTs;
+
+    symptoms.ts = currentTime;
+    symptoms.dateTime = `${date}_${timeOfDay}`;
+    symptoms.date = DateConverter.calendarToDate(date);
+    addSymptoms(symptoms);
+
     this.setState({
       modalOn: true,
     });

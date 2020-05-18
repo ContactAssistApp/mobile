@@ -8,7 +8,9 @@ class DateHeader extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.date}>
-          {DateConverter.dateString(new Date(this.props.date))}
+          {DateConverter.dateString(
+            DateConverter.calendarToDate(this.props.date),
+          )}
           {this.props.timeOfDay && (
             <Text style={styles.time}> {this.props.timeOfDay}</Text>
           )}

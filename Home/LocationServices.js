@@ -1,40 +1,50 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import {LocationData} from '../utils/LocationData';
+import {addLocation} from '../realm/realmLocationTasks';
+import Location from '../utils/location';
+import DateConverter from '../utils/date';
 
 let instanceCount = 0;
 
 export default class LocationServices {
   static start() {
-    const locationData = new LocationData();
+    const saveLocation = location => {
+      const {latitude, longitude} = location;
+      const time = DateConverter.getUTCUnixTime();
+
+      Location.convertToAddress({latitude, longitude, time}).then(addresses => {
+        const name =
+          addresses[0][0] === '' ? 'Unknown Location' : addresses[0][0];
+        const addressString = addresses[0][1];
+
+        addLocation({
+          latitude,
+          longitude,
+          time,
+          address: addressString,
+          name,
+        });
+      });
+    };
 
     instanceCount += 1;
-    console.log(instanceCount);
+
     if (instanceCount > 1) {
       BackgroundGeolocation.start();
       return;
     }
 
     BackgroundGeolocation.configure({
-      desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+      desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
       stationaryRadius: 50,
       distanceFilter: 3500,
-      notificationTitle: 'CovidSafe Enabled',
-      notificationText:
-        'CovidSafe is securely storing your GPS coordinates once every ten minutes on this device.',
-      debug: false, // when true, it beeps every time a loc is read
-      startOnBoot: true,
+      debug: true, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
       locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
 
-      interval: locationData.locationInterval,
-      fastestInterval: locationData.locationInterval,
-      activitiesInterval: locationData.locationInterval,
-
       activityType: 'AutomotiveNavigation',
       pauseLocationUpdates: false,
-      saveBatteryOnBackground: true,
-      stopOnStillActivity: false,
+      saveBatteryOnBackground: false,
     });
 
     BackgroundGeolocation.on('location', location => {
@@ -53,21 +63,10 @@ export default class LocationServices {
         // execute long running task
         // eg. ajax post location
         // IMPORTANT: task has to be ended by endTask
-        locationData.appendCurrentLocation(location);
+        saveLocation(location);
         BackgroundGeolocation.endTask(taskKey);
       });
     });
-
-    if (Platform.OS === 'android') {
-      // This feature only is present on Android.
-      BackgroundGeolocation.headlessTask(async event => {
-        // Application was shutdown, but the headless mechanism allows us
-        // to capture events in the background.  (On Android, at least)
-        if (event.name === 'location' || event.name === 'stationary') {
-          locationData.appendCurrentLocation(event.params);
-        }
-      });
-    }
 
     BackgroundGeolocation.on('stationary', stationaryLocation => {
       // handle stationary locations here
@@ -81,7 +80,7 @@ export default class LocationServices {
         // tested as I couldn't produce stationaryLocation callback in emulator
         // but since the plugin documentation mentions it, no reason to keep
         // it empty I believe.
-        locationData.appendCurrentLocation(stationaryLocation);
+        saveLocation(stationaryLocation);
         BackgroundGeolocation.endTask(taskKey);
       });
       console.log('[INFO] stationaryLocation:', stationaryLocation);
@@ -99,12 +98,14 @@ export default class LocationServices {
       console.log('[INFO] BackgroundGeolocation service has been stopped');
     });
 
-    var alertOnTheWay = false;
+    let alertOnTheWay = false;
     var showLocationAlert = function() {
-      if(alertOnTheWay)
+      if (alertOnTheWay) {
         return;
+      }
+
       alertOnTheWay = true;
-        // we need to set delay or otherwise alert may not be shown
+      // we need to set delay or otherwise alert may not be shown
       setTimeout(
         () =>
           Alert.alert(
@@ -126,7 +127,6 @@ export default class LocationServices {
               {
                 text: 'No',
                 onPress: () => {
-                  console.log('No Pressed');
                   alertOnTheWay = false;
                 },
                 style: 'cancel',
@@ -135,7 +135,7 @@ export default class LocationServices {
           ),
         1000,
       );
-    }
+    };
 
     BackgroundGeolocation.on('authorization', status => {
       console.log(

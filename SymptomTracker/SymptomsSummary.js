@@ -1,10 +1,9 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import colors from '../assets/colors';
 import {connect} from 'react-redux';
 import Privacy from '../Privacy/Privacy';
-import {SYMPTOM_MAP} from '../utils/symptoms';
 import SymptomsHalfDay from './SymptomsHalfDay';
 
 class SymptomsSummary extends Component {

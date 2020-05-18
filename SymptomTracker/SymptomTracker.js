@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import {updateSymptom, resetSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {GetStoreData} from '../utils/asyncStorage';
 import DateConverter from '../utils/date';
-import { strings, fmt_date } from '../locales/i18n';
+import {strings, fmt_date} from '../locales/i18n';
+import {getSymptoms} from '../realm/realmSymptomsTasks';
 
 class SymptomTracker extends Component {
   componentDidMount() {
@@ -32,42 +32,43 @@ class SymptomTracker extends Component {
     }
   }
 
-  fetchLog = async d => {
-    let amLog = await GetStoreData(`SYMPTOM_${d}_AM`);
-    let pmLog = await GetStoreData(`SYMPTOM_${d}_PM`);
-    if (amLog) {
-      amLog = JSON.parse(amLog);
-      this.props.updateSymptom({
-        amTs: amLog.amTs,
-      });
-    }
-    if (pmLog) {
-      pmLog = JSON.parse(pmLog);
-      this.props.updateSymptom({
-        pmTs: pmLog.pmTs,
+  fetchLog = d => {
+    const logs = getSymptoms(DateConverter.calendarToDate(d));
+    if (logs && logs.length > 0) {
+      logs.forEach(log => {
+        if (log.timeOfDay.toLowerCase() === 'am') {
+          this.props.updateSymptom({
+            amTs: log.ts,
+          });
+        } else if (log.timeOfDay.toLowerCase() === 'pm') {
+          this.props.updateSymptom({
+            pmTs: log.ts,
+          });
+        }
       });
     }
   };
 
   render() {
-    const dateString = fmt_date(this.props.date, "LL")
     const {
+      date,
       symptoms: {amTs, pmTs},
     } = this.props;
+    const dateString = fmt_date(date, 'LL');
 
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
-          <Text style={styles.header}>{strings("symptom.tracker_text")}</Text>
+          <Text style={styles.header}>{strings('symptom.tracker_text')}</Text>
           <Text style={styles.description}>{dateString}</Text>
         </View>
         <Record
-          timeOfDay={strings("time.am")}
+          timeOfDay={strings('time.am')}
           logTime={amTs ? DateConverter.timeString(amTs) : ''}
           navigate={this.props.navigate}
         />
         <Record
-          timeOfDay={strings("time.pm")}
+          timeOfDay={strings('time.pm')}
           logTime={pmTs ? DateConverter.timeString(pmTs) : ''}
           navigate={this.props.navigate}
         />

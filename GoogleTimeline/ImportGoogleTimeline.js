@@ -3,13 +3,14 @@ import {StyleSheet, Alert} from 'react-native';
 import {parseString} from 'react-native-xml2js';
 import Modal from '../views/Modal';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
-import {LocationData} from '../utils/LocationData';
+import {addGoogleLocations} from '../realm/realmLocationTasks';
 
 class ImportGoogleTimeline extends Component {
-  importFinished = (reason, notFailure) => {
+  importFinished = (reason, succeeded) => {
     let title, description;
     reason = reason.toString();
-    if (notFailure) {
+
+    if (succeeded) {
       title = reason;
     } else {
       title = 'Failed to Import Location from Google';
@@ -23,40 +24,43 @@ class ImportGoogleTimeline extends Component {
   };
 
   processPlacemarks = placemarks => {
-    let results = [];
-    function push(coordinates, time) {
-      let [long, lat] = coordinates.split(',');
-      results.push({
-        latitude: parseFloat(lat),
-        longitude: parseFloat(long),
-        time: time,
-      });
-    }
-    for (const placemark of placemarks) {
-      let timeStart = Date.parse(placemark.TimeSpan[0].begin[0]);
-      let timeEnd = Date.parse(placemark.TimeSpan[0].end[0]);
-      let point = placemark.Point;
-      if (point) {
-        let coordinates = point[0].coordinates[0];
-        push(coordinates, timeStart);
-        push(coordinates, timeEnd);
-      } else {
-        let allCoordinates = placemark.LineString[0].coordinates[0]
-          .trim()
-          .split(' ');
-        let timeIncrement = (timeEnd - timeStart) / (allCoordinates.length - 1);
-        let currentTime = timeStart;
-        for (let coordinates of allCoordinates) {
-          push(coordinates, Math.round(currentTime));
-          currentTime += timeIncrement;
-        }
-      }
-    }
+    const locations = placemarks.filter(placemark => {
+      return placemark.Point && placemark.Point.length > 0;
+    })
+    .map(placemark => {
+      const {
+        name: nameArr,
+        address: addressArr,
+        Point: pointArr,
+        TimeSpan,
+      } = placemark;
+
+      const {begin: beginArr, end: endArr} = TimeSpan[0];
+      const coordinates = pointArr[0].coordinates[0].split(',');
+      const lat = parseFloat(coordinates[1]);
+      const lon = parseFloat(coordinates[0]);
+      const timespan = `${beginArr[0]},${endArr[0]}`;
+
+      return {
+        name: nameArr[0],
+        address: addressArr[0],
+        latitude: lat,
+        longitude: lon,
+        source: 'google',
+        timespan,
+        time: new Date(endArr[0]).getTime(),
+      };
+    });
+
     console.log(
-      `Imported ${results.length} location points ` +
+      `Imported ${locations.length} location points ` +
         `from ${placemarks.length} placemarks`,
     );
-    LocationData.mergeInLocations(results);
+
+    if (locations && locations.length > 0) {
+      addGoogleLocations(locations);
+    }
+
     this.importFinished(
       'Successfully Imported Location History from Google',
       true,
@@ -64,7 +68,6 @@ class ImportGoogleTimeline extends Component {
   };
 
   processKMLResponse = dict => {
-    this.setState({title: 'Importing Location History'});
     if (dict.data) {
       parseString(dict.data, (error, result) => {
         if (result) {
@@ -78,13 +81,13 @@ class ImportGoogleTimeline extends Component {
             );
           }
         } else {
-          console.log("Failed to parse KML due to: " + JSON.stringify(error));
-          this.importFinished("Failed to load your Google location history");
+          console.log('Failed to parse KML due to: ' + JSON.stringify(error));
+          this.importFinished('Failed to load your Google location history');
         }
       });
     } else {
-      console.log("No KML data found due to: " + JSON.stringify(dict.error));
-      this.importFinished("Could not load your Google location history");
+      console.log('No KML data found due to: ' + JSON.stringify(dict.error));
+      this.importFinished('Could not load your Google location history');
     }
   };
 

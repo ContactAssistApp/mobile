@@ -74,6 +74,13 @@ const DateConverter = {
       minute: '2-digit',
     });
   },
+  getUTCUnixTime: function() {
+    let nowUTC = new Date().toISOString();
+    return Date.parse(nowUTC);
+  },
+  calendarToDate: function(dateString) {
+    return new Date(dateString.replace(/-/g, '/'));
+  },
 };
 
 export default DateConverter;
