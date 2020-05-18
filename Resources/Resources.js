@@ -33,11 +33,17 @@ class Resources extends Component {
               style={styles.logo}
               source={require('../assets/home/logo.png')}
             />
-            <Text style={styles.title}>{strings("bottom.sheet_menu_item_resources")}</Text>
+            <Text style={styles.title}>
+              {strings('bottom.sheet_menu_item_resources')}
+            </Text>
           </View>
           <View style={styles.faq_container}>
-            <Text style={styles.faq_header}>{strings("frequently.asked_questions")}</Text>
-            <Text style={styles.faq_section_header}>{strings("about.covidsafe")}</Text>
+            <Text style={styles.faq_header}>
+              {strings('frequently.asked_questions')}
+            </Text>
+            <Text style={styles.faq_section_header}>
+              {strings('about.covidsafe')}
+            </Text>
             {data.faqs.map(faq => {
               return (
                 <Question
