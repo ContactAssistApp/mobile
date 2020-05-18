@@ -40,8 +40,8 @@ class Locations extends Component {
     }
   }
 
-  fetchAddresses = date => {
-    const addresses = Location.fetchAddresses(
+  fetchAddresses = async date => {
+    const addresses = await Location.fetchAddresses(
       new Date(date.replace(/-/g, '/')),
     );
     this.setState({

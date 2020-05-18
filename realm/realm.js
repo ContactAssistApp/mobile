@@ -1,6 +1,7 @@
 'use strict';
-
+import {NativeModules} from 'react-native';
 import Realm from 'realm';
+const base64js = require('base64-js');
 
 class Location extends Realm.Object {}
 Location.schema = {
@@ -46,4 +47,25 @@ Symptoms.schema = {
   },
 };
 
-export default new Realm({schema: [Location.schema, Symptoms.schema]});
+const getKey = async () => {
+  try {
+    const keyString = await NativeModules.EncryptionUtil.getRealmKey();
+    if (keyString) {
+      const key = base64js.toByteArray(keyString);
+      return key;
+    }
+  } catch (e) {
+    console.log('get realm key error: ' + e);
+  }
+};
+
+class RealmObj {
+  static async init() {
+    let key = await getKey();
+    return new Realm({
+      schema: [Location.schema, Symptoms.schema],
+      encryptionKey: key,
+    });
+  }
+}
+export default RealmObj;

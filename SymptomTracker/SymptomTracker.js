@@ -32,8 +32,8 @@ class SymptomTracker extends Component {
     }
   }
 
-  fetchLog = d => {
-    const logs = getSymptoms(DateConverter.calendarToDate(d));
+  fetchLog = async d => {
+    const logs = await getSymptoms(DateConverter.calendarToDate(d));
     if (logs && logs.length > 0) {
       logs.forEach(log => {
         if (log.timeOfDay.toLowerCase() === 'am') {

@@ -1,8 +1,9 @@
-import realm from './realm';
 import DateConverter from '../utils/date';
+import RealmObj from './realm';
 
-export function addLocation(location) {
+export async function addLocation(location) {
   try {
+    const realm = await RealmObj.init();
     realm.write(() => {
       realm.create('Location',
         {...location, source: 'device', timespan: ''},
@@ -14,8 +15,9 @@ export function addLocation(location) {
   }
 }
 
-export function addGoogleLocations(locations) {
+export async function addGoogleLocations(locations) {
   try {
+    const realm = await RealmObj.init();
     realm.write(() => {
       locations.forEach(location => {
         const {time} = location;
@@ -42,7 +44,8 @@ export function addGoogleLocations(locations) {
   }
 }
 
-export function getDaysWithLocations() {
+export async function getDaysWithLocations() {
+  const realm = await RealmObj.init();
   const locations = realm.objects('Location');
   let dates = [];
   locations.forEach(location => {
@@ -54,7 +57,8 @@ export function getDaysWithLocations() {
   return dates;
 }
 
-export function getLocations(endDateTime, timeRange) {
+export async function getLocations(endDateTime, timeRange) {
+  const realm = await RealmObj.init();
   const allLocations = realm.objects('Location');
   let startDateTime = new Date(endDateTime.valueOf());
 
@@ -71,8 +75,9 @@ export function getLocations(endDateTime, timeRange) {
   return locations;
 }
 
-export function deleteLocation(address) {
+export async function deleteLocation(address) {
   try {
+    const realm = await RealmObj.init();
     const locations = realm
       .objects('Location')
       .filtered('address == $0', address);

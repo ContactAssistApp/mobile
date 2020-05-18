@@ -3,7 +3,7 @@ import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
 import {getLocations} from '../realm/realmLocationTasks';
 
 export async function getLatestCoarseLocation(isReporting = false) {
-  const location = getLatestLocation();
+  const location = await getLatestLocation();
   if (location) {
     const {latitude: lat, longitude: lon} = location;
     const coarsLocation = await getCoarseLocation(lat, lon, isReporting);
@@ -12,8 +12,8 @@ export async function getLatestCoarseLocation(isReporting = false) {
   return null;
 }
 
-function getLatestLocation() {
-  const locations = getLocations(new Date(), 0);
+async function getLatestLocation() {
+  const locations = await getLocations(new Date(), 0);
   if (locations && locations.length > 0) {
     return locations[locations.length - 1];
   }

@@ -9,8 +9,8 @@ const Location = {
       });
     });
   },
-  fetchAddresses: function(dateObj, dayRange = 0) {
-    const locations = getLocations(dateObj, dayRange);
+  fetchAddresses: async function(dateObj, dayRange = 0) {
+    const locations = await getLocations(dateObj, dayRange);
 
     const addresses = locations.filter((location, index, self) => {
       return index === self.findIndex(t => t.address === location.address);

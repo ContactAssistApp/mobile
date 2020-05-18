@@ -14,9 +14,10 @@ class EncryptionUnitTest: XCTestCase {
     }
 
     func testExample() throws {
-//      let result = EncryptionUtil.encrypt(plainText: "-40.12345")
+//      let util = EncryptionUtil();
+//      let result = try util.encrypt(plainText: "-40.12345")
 //      print("result: \(result)")
-//      let origin = try EncryptionUtil.decrypt(encryptedString: result)
+//      let origin = try util.decrypt(encryptedString: result)
 //      print("origin: \(origin)")
     }
 

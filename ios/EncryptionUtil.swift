@@ -13,6 +13,7 @@ class EncryptionUtil: NSObject {
     static let KEY_SIZE = kCCKeySizeAES256
     static let HMAC_SIZE = Int(CC_SHA256_DIGEST_LENGTH)
     
+    static let REALM_KEY_TAG = "covidsafe.keys.realmKey"
     static let AES_KEY_TAG = "covidsafe.keys.aesKey"
     static let HMAC_KEY_TAG = "covidsafe.keys.hmacKey"
 
@@ -22,25 +23,15 @@ class EncryptionUtil: NSObject {
     }
 
     @objc
-    func encryptWrapper(_ plainText: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+    func getRealmKey(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
       do {
-        let encryptedText = try encrypt(plainText: plainText);
-        resolve(encryptedText);
+        let key = try KeyChain.get(tag: EncryptionUtil.REALM_KEY_TAG) ?? createKey(tag: EncryptionUtil.REALM_KEY_TAG, size: EncryptionUtil.KEY_SIZE + EncryptionUtil.KEY_SIZE)
+        resolve(key.base64EncodedString());
       } catch {
-        reject("InternalStateError", "Encryption error: \(error)", nil);
+        reject("InternalStateError", "Get realm key error: \(error)", nil);
       }
     }
-  
-    @objc
-    func decryptWrapper(_ encryptedString: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
-        do {
-          let origin = try decrypt(encryptedString: encryptedString)
-          resolve(origin)
-        } catch {
-          reject("InternalStateError", "Decryption error: \(error)", nil);
-        }
-    }
-    
+
     @objc
     func encrypt(plainText: String) throws -> String {
       let aesKey = try KeyChain.get(tag: EncryptionUtil.AES_KEY_TAG) ?? createKey(tag: EncryptionUtil.AES_KEY_TAG)
@@ -101,9 +92,9 @@ class EncryptionUtil: NSObject {
         }
     }
   
-    func createKey(tag: String) throws -> Data {
-        var newKey = Data(count: EncryptionUtil.KEY_SIZE)
-        try EncryptionUtil.randomData(length: EncryptionUtil.KEY_SIZE, for: &newKey)
+    func createKey(tag: String, size: Int = EncryptionUtil.KEY_SIZE) throws -> Data {
+        var newKey = Data(count: size)
+        try EncryptionUtil.randomData(length: size, for: &newKey)
         try KeyChain.add(tag: tag, data: newKey)
         return newKey
     }
