@@ -7,7 +7,7 @@ class Resource extends Component {
     const logos = {
       cdc: require('../assets/resources/cdc.png'),
       nyc: require('../assets/resources/nyc.png'),
-      kc:  require('../assets/resources/kclogo.png'),
+      kc: require('../assets/resources/kclogo.png'),
     };
     const {logoName, title, url} = this.props;
 
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: -0.408,
     color: colors.section_title,
+    flex: 1,
   },
 });
 

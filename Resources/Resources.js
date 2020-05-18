@@ -13,8 +13,7 @@ import data from './faq.json';
 import colors from '../assets/colors';
 import Question from './Question';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import { strings } from '../locales/i18n';
-
+import {strings} from '../locales/i18n';
 
 class Resources extends Component {
   constructor() {
