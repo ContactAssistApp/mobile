@@ -26,7 +26,7 @@ import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 import {UW_URL} from '../utils/constants';
 import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class Home extends Component {
   constructor() {
@@ -72,19 +72,21 @@ class Home extends Component {
     });
 
     this.getSetting('ENABLE_LOCATION').then(data => {
-      this.setState({
-        location: data,
-      });
-      if(data)
+      if (data) {
+        this.setState({
+          location: data,
+        });
         LocationServices.start();
+      }
     });
 
     this.getSetting('ENABLE_BLE').then(data => {
-      this.setState({
-        ble: data,
-      });
-      if(data)
+      if (data) {
+        this.setState({
+          ble: data,
+        });
         Ble.start();
+      }
     });
 
     this.getSetting('ENABLE_NOTIFICATION').then(data => {
@@ -250,7 +252,9 @@ class Home extends Component {
   render() {
     const {location, ble} = this.state;
     const isBroadcasting = location || ble;
-    const broadcastStatus = isBroadcasting ? strings("broadcasting.on_text") : strings("broadcasting.off_text");
+    const broadcastStatus = isBroadcasting
+      ? strings('broadcasting.on_text')
+      : strings('broadcasting.off_text');
     const broadcastBg = isBroadcasting
       ? styles.broadcast_on
       : styles.broadcast_off;
@@ -273,7 +277,7 @@ class Home extends Component {
                   style={styles.logo}
                   source={require('../assets/home/logo.png')}
                 />
-                <Text style={styles.title}>{strings("app.name_one_line")}</Text>
+              <Text style={styles.title}>{strings('app.name_one_line')}</Text>
               </View>
               <SettingsModal />
             </View>
@@ -285,8 +289,8 @@ class Home extends Component {
                   </Text>
                   <Text style={styles.broadcast_description}>
                     {isBroadcasting
-                      ? strings("global.logging")
-                      : strings("global.stopping")
+                      ? strings('global.logging')
+                      : strings('global.stopping')
                     }
                     <Text
                       style={styles.lear_more_link}
@@ -296,14 +300,13 @@ class Home extends Component {
                   </Text>
                 </View>
               </View>
-              <View>
-                <Toggle
-                  handleToggle={selectedState => {
-                    this.updateSetting(selectedState);
-                  }}
-                  value={this.state.location || this.state.ble}
-                />
-              </View>
+              <Toggle
+                handleToggle={selectedState => {
+                  this.updateSetting(selectedState);
+                }}
+                value={this.state.location || this.state.ble}
+                style={styles.toggle}
+              />
             </View>
           </View>
 
@@ -365,10 +368,6 @@ const styles = StyleSheet.create({
   },
   broadcast_off: {
     backgroundColor: colors.fill_off,
-  },
-  broadcast: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
   },
   broadcast_title: {
     color: colors.module_title,
@@ -432,6 +431,9 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: -0.24,
     color: colors.secondary_body_copy,
+  },
+  broadcast: {
+    flex: 1,
   },
 });
 
