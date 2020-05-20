@@ -24,6 +24,7 @@ def translate_file(in_file, out_file):
         text = text.replace("\\’", "’")
         if text.find("\\") >= 0:
             print("Bad Escape: " + attr + ":: " + text[text.index("\\"):  text.index("\\") + 2])
+        text = text.strip()
 
         try:
             idx = attr.index('_')
