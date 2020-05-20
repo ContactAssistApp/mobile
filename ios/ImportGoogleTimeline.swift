@@ -20,7 +20,9 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
   }
 
   override func view() -> UIView! {
-    let webView = GoogleTimelineImportView()
+    let config = WKWebViewConfiguration()
+    config.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+    let webView = GoogleTimelineImportView(frame: .zero, configuration: config)
     webView.navigationDelegate = self
     webView.activityIndictor.startAnimating()
     webView.load(URLRequest(url: GoogleTimelineImportViewManager.SIGN_IN_URL))
@@ -66,7 +68,7 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     }
 
     if #available(iOS 11.0, *) {
-      WKWebsiteDataStore.default().httpCookieStore.getAllCookies(handleCookies)
+      view.configuration.websiteDataStore.httpCookieStore.getAllCookies(handleCookies)
     } else {
       handleCookies(HTTPCookieStorage.shared.cookies ?? [])
     }
@@ -77,10 +79,12 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
     var request = URLRequest(url: url)
     request.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
     let task = URLSession.shared.dataTask(with: request) { (dat, res, err) in
-      if let data = dat {
-        handle(["data": String(data: data, encoding: .utf8) ?? ""])
+      if let response = res as? HTTPURLResponse,
+        response.statusCode < 400,
+        let string = dat.flatMap({ String(data: $0, encoding: .utf8) }) {
+        handle(["data": string])
       } else {
-        handle(["error": err?.localizedDescription ?? ""])
+        handle(["error": err?.localizedDescription ?? res?.description ?? ""])
       }
     }
     task.resume()
