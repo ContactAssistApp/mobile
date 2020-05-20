@@ -16,6 +16,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updatePageIndex} from './actions.js';
+import { strings } from '../locales/i18n';
 
 class InterviewPrepContainer extends Component {
   constructor() {
@@ -48,7 +49,7 @@ class InterviewPrepContainer extends Component {
                   index: this.state.index + 1,
                 });
               }}>
-              <Text style={styles.button_text}>next</Text>
+              <Text style={styles.button_text}>{strings('next.btn_text')}</Text>
             </TouchableOpacity>
           )}
           {this.state.index === 3 && (
@@ -57,7 +58,7 @@ class InterviewPrepContainer extends Component {
               onPress={() => {
 
               }}>
-              <Text style={styles.button_text}>save</Text>
+              <Text style={styles.button_text}>{strings('save.text')}</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity
@@ -75,7 +76,7 @@ class InterviewPrepContainer extends Component {
               }
             }}>
             <Text style={[styles.button_text, styles.previous_text]}>
-              previous
+              {strings('previous.btn_text')}
             </Text>
           </TouchableOpacity>
         </View>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import LocationsList from './LocationsList';
+import { strings } from '../locales/i18n';
 
 class Locations extends Component {
   render() {
@@ -14,11 +15,11 @@ class Locations extends Component {
               source={require('../assets/health/map.png')}
             />
             <Text style={styles.title}>
-              Review your location history{'\n'}from the last 14 days.
+              {strings('contact.title_2')}
             </Text>
           </View>
           <Text style={styles.description}>
-            Below are locations you’ve recently visited for 10 minutes or more.
+            {strings('contact.desc_2')}
           </Text>
           <LocationsList />
         </View>

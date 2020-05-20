@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { strings } from '../locales/i18n';
+
 
 class Cough extends Component {
   handleEdit = (id, value) => {
@@ -40,7 +42,7 @@ class Cough extends Component {
 
     return (
       <>
-        <Text style={styles.label}>Onset Date:</Text>
+        <Text style={styles.label}>{strings('card.onset_date_hint')}:</Text>
         <TextInput
           style={styles.inputbox}
           keyboardType={'default'}
@@ -49,7 +51,7 @@ class Cough extends Component {
           }}
           value={coughOnsetDate}
         />
-        <Text style={styles.label}>Days Experienced:</Text>
+        <Text style={styles.label}>{strings('card.onset_days_experienced')}:</Text>
         <TextInput
           style={styles.inputbox}
           keyboardType={'numeric'}
@@ -69,7 +71,7 @@ class Cough extends Component {
               onPress={() => {
                 this.selectSeverity(1);
               }}>
-              <Text style={styles.button_text}>Mild</Text>
+              <Text style={styles.button_text}>{strings('card.symptom_severity_mild')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -79,7 +81,7 @@ class Cough extends Component {
               onPress={() => {
                 this.selectSeverity(2);
               }}>
-              <Text style={styles.button_text}>Moderate</Text>
+              <Text style={styles.button_text}>{strings('card.symptom_severity_moderate')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -89,7 +91,7 @@ class Cough extends Component {
               onPress={() => {
                 this.selectSeverity(3);
               }}>
-              <Text style={styles.button_text}>Severe</Text>
+              <Text style={styles.button_text}>{strings('card.symptom_severity_severe')}</Text>
             </TouchableOpacity>
           </View>
         </View>

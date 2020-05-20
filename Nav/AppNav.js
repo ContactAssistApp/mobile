@@ -13,6 +13,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updateFTUE} from './actions.js';
+import { strings } from '../locales/i18n';
+
 
 const Stack = createStackNavigator();
 
@@ -79,7 +81,7 @@ class AppNav extends Component {
                 name="BottomNav"
                 component={BottomNav}
                 options={{
-                  title: 'Home',
+                  title: strings('bottom.sheet_menu_item_home'),
                   headerStyle: {height: 0},
                   // headerBackTitle: '',
                 }}
@@ -88,7 +90,7 @@ class AppNav extends Component {
                 name="SymptomForm"
                 component={SymptomForm}
                 options={{
-                  title: 'Create New Log',
+                  title: strings('add.symptoms_header_text'),
                   // headerStyle: {height: 0},
                   // headerBackTitle: '',
                 }}

@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import {SYMPTOM_MAP} from '../utils/symptoms';
+import { strings } from '../locales/i18n';
 
 class SymptomsHalfDay extends Component {
   render() {
@@ -49,11 +50,11 @@ class SymptomsHalfDay extends Component {
               const {coughOnsetDate, coughDays, coughSeverity} = symptoms;
               let coughSeverityString = '';
               if (coughSeverity === 1) {
-                coughSeverityString = 'Mild';
+                coughSeverityString = strings('card.symptom_severity_mild');
               } else if (coughSeverity === 2) {
-                coughSeverityString = 'Moderate';
+                coughSeverityString = strings('card.symptom_severity_moderate');
               } else if (coughSeverity === 3) {
-                coughSeverityString = 'Severe';
+                coughSeverityString = strings('card.symptom_severity_severe');
               }
               return (
                 <View style={styles.symptom_card} key={key}>

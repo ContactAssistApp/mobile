@@ -20,6 +20,7 @@ import Modal from '../views/Modal';
 import {addSymptoms} from '../realm/realmSymptomsTasks';
 import DateConverter from '../utils/date';
 import {getSymptoms} from '../realm/realmSymptomsTasks';
+import { strings } from '../locales/i18n';
 
 class SymptomForm extends Component {
   constructor() {
@@ -119,7 +120,7 @@ class SymptomForm extends Component {
           <Confirmation />
         </Modal>
 
-        <Text style={styles.header}>Select Your Symptoms:</Text>
+        <Text style={styles.header}>{strings('symptoms.text')}:</Text>
         <View style={styles.symptom_list}>
           <Accordion
             onPress={() => {
@@ -127,7 +128,7 @@ class SymptomForm extends Component {
             }}
             withCheckbox={true}
             checkboxSelected={fever}
-            title={'Fever'}
+            title={strings('fever.txt')}
             style={styles.symptom}>
             <Fever />
           </Accordion>
@@ -137,7 +138,7 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('abdominalPain', abdominalPain);
               }}
               selected={abdominalPain}
-              text={'Abdominal pain'}
+              text={strings('abdominal.pain_txt')}
             />
           </View>
           <View style={styles.symptom}>
@@ -146,7 +147,7 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('chills', chills);
               }}
               selected={chills}
-              text={'Chills'}
+              text={strings('chills.txt')}
             />
           </View>
           <Accordion
@@ -155,7 +156,7 @@ class SymptomForm extends Component {
             }}
             withCheckbox={true}
             checkboxSelected={cough}
-            title={'Cough'}
+            title={strings('cough.txt')}
             style={styles.symptom}>
             <Cough />
           </Accordion>
@@ -165,7 +166,7 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('diarrhea', diarrhea);
               }}
               selected={diarrhea}
-              text={'Diarrhea'}
+              text={strings('diarrhea.txt')}
             />
           </View>
           <View style={styles.symptom}>
@@ -177,7 +178,7 @@ class SymptomForm extends Component {
                 );
               }}
               selected={difficultyBreathing}
-              text={'Difficulty breathing'}
+              text={strings('difficult.in_breathing')}
             />
           </View>
           <View style={styles.symptom}>
@@ -186,7 +187,7 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('headache', headache);
               }}
               selected={headache}
-              text={'Headache'}
+              text={strings('headache.txt')}
             />
           </View>
           <View style={styles.symptom}>
@@ -195,7 +196,7 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('muscleAches', muscleAches);
               }}
               selected={muscleAches}
-              text={'Muscle aches / pains'}
+              text={strings('ab.pain_desc')}
             />
           </View>
           <View style={styles.symptom}>
@@ -204,7 +205,7 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('soreThroat', soreThroat);
               }}
               selected={soreThroat}
-              text={'Sore throat'}
+              text={strings('sore.throat_txt')}
             />
           </View>
           <View style={styles.symptom}>
@@ -213,23 +214,14 @@ class SymptomForm extends Component {
                 this.handleCheckboxPress('vomiting', vomiting);
               }}
               selected={vomiting}
-              text={'Vomiting'}
-            />
-          </View>
-          <View style={styles.symptom}>
-            <Checkbox
-              onPress={() => {
-                this.handleCheckboxPress('other', other);
-              }}
-              selected={other}
-              text={'Other'}
+              text={strings('vomiting.txt')}
             />
           </View>
         </View>
         <TouchableOpacity
           style={styles.next_button}
           onPress={this.submitForm}>
-          <Text style={styles.next_button_text}>Next</Text>
+          <Text style={styles.next_button_text}>{strings('next.btn_text')}</Text>
         </TouchableOpacity>
       </ScrollView>
     );

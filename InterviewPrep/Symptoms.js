@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import SymptomsList from './SymptomsList';
+import { strings } from '../locales/i18n';
 
 class Symptoms extends Component {
   render() {
@@ -15,11 +16,11 @@ class Symptoms extends Component {
               source={require('../assets/health/clipboard.png')}
             />
             <Text style={styles.title}>
-              Review which symptoms you{'\n'}would like to include.
+              {strings('contact.title_1')}
             </Text>
           </View>
           <Text style={styles.description}>
-            We’ve detected severe symptoms in your recent reports, and collected them below.
+            {strings('contact.desc_1')}
           </Text>
         </View>
         <SymptomsList />

@@ -30,7 +30,7 @@ class PrepareInterviewComponent extends Component {
         <Modal
           visible={this.state.modalOn}
           handleModalClose={this.handleModalClose}
-          title={'Interview Preparation [DEMO]'}>
+          title={strings('contact.header_text_demo')}>
           {
             {
               0: <InterviewPrepIntro />,
