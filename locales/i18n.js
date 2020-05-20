@@ -1,5 +1,6 @@
 import ReactNative from 'react-native';
 import I18n from 'react-native-i18n';
+import {LocaleConfig} from 'react-native-calendars';
 
 // Import all locales
 import en from './en.json';
@@ -22,6 +23,17 @@ I18n.translations = {
 I18n.defaultLocale = "en";
 //FIXME use getLanguages or something
 I18n.locale = "es"; //change it to 'es' for dev purposes
+
+moment.locale(I18n.locale)
+
+LocaleConfig.locales[I18n.locale] = {
+  monthNames: moment.months(),
+  monthNamesShort: moment.monthsShort(),
+  dayNames: moment.weekdays(),
+  dayNamesShort:moment.weekdaysShort()
+};
+
+LocaleConfig.defaultLocale = I18n.locale;
 
 const currentLocale = I18n.currentLocale();
 
