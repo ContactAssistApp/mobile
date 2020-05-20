@@ -22,14 +22,14 @@
     "log_header_text": "",
     "log_header_text_demo": "",
     "logs": "Contact logs",
-    "title_1": "\n        Review which symptoms you would like to include.\n    ",
-    "title_2": "\n        Review your location history from the last 14 days.\n    ",
-    "title_3": "\n        Review the people you\u2019ve been in contact with recently.\n    ",
-    "title_4": "\n        Save this list for reference during your interview.\n    ",
-    "desc_1": "\n        We\u2019ve detected severe symptoms in your recent reports, and collected them below.\n    ",
-    "desc_2": "\n        Below are locations you\u2019ve recently visited for 10 minutes or more. This helps us track locations that might be high-risk for exposure.\n    ",
-    "desc_3": "\n        Below you can add a list of people you\u2019ve been in close contact with (6m) for 10 or more minutes in the last 14 days.\n    ",
-    "desc_4": "\n        Don\u2019t worry, you can always come back to edit this list later. You can export this information into an email record for yourself.\n    ",
+    "title_1": "Review which symptoms you would like to include.",
+    "title_2": "Review your location history from the last 14 days.",
+    "title_3": "Review the people you\u2019ve been in contact with recently.",
+    "title_4": "Save this list for reference during your interview.",
+    "desc_1": "We\u2019ve detected severe symptoms in your recent reports, and collected them below.",
+    "desc_2": "Below are locations you\u2019ve recently visited for 10 minutes or more. This helps us track locations that might be high-risk for exposure.",
+    "desc_3": "Below you can add a list of people you\u2019ve been in close contact with (6m) for 10 or more minutes in the last 14 days.",
+    "desc_4": "Don\u2019t worry, you can always come back to edit this list later. You can export this information into an email record for yourself.",
     "healthcare_professional": "Please contact your healthcare professional."
   },
   "add": {
@@ -71,38 +71,38 @@
   },
   "global": {
     "warning": "Warning",
-    "q1": "\n        What is the purpose of this app?\n    ",
-    "a1": "\n        CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it \u2014 public health authorities and their contact tracing teams.\n    ",
-    "q2": "\n        How does this app benefit me?\n    ",
-    "a2": "\n        CovidSafe offers several features to protect both you and your community:\n\n        \u2022\tGet notified about possible exposure. You may be notified if someone who was near you within the last two weeks has come down with symptoms of COVID-19. The measure of \u2018near\u2019 is not as precise as the medical definition (within 6 feet for more than 10 minutes), but it is accurate up to a few meters.\n\n        \u2022\tTrack your symptoms. The symptoms you track may be useful to assist public health teams if you are confirmed positive, and for having this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.\n    ",
-    "q3": "\n        Who can use CovidSafe?\n    ",
-    "a3": "\n        When it becomes available for use, CovidSafe is free, and anyone can use it.\n    ",
-    "q4": "\n        Who else benefits from my participation with this app?\n    ",
-    "a4": "\n        CovidSafe is capable of alerting people who have been in areas where coronavirus is active. If you test positive for coronavirus, you'll also be able to anonymously notify others you may have been in contact with over the past two weeks to alert them that they may have been exposed, and to prepare them for potential contact tracing interviews.\n    ",
-    "q5": "\n        How does CovidSafe help public health officials?\n    ",
-    "a5": "\n        Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CovidSafe helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.\n    ",
-    "pq1": "\n        If I test positive and I disclose it via CovidSafe, what information is revealed to others?\n    ",
-    "pa1": "\n        Other people with the application, who have been exposed may be notified, along with the time the exposure occurred. No other information will be revealed.\n    ",
-    "pq2": "\n        If I test negative, can a malicious person get access to my phone\u2019s broadcasts and report me as being positive?\n    ",
-    "pa2": "\n        No, this isn\u2019t possible. The app is encrypted to prevent it from happening using similar security technology used for other purposes, such as online banking.\n    ",
-    "pq3": "\n        If someone else obtains data used to alert people who have been exposed, what can they learn?\n    ",
-    "pa3": "\n        They'll see a sequence of random identifiers that have been broadcast over time near people who have tested positive for coronavirus. They could assume the location of the person who tested positive if the random identifiers were collected at specific locations. Otherwise, the person remains anonymous. The security of the system relies on the fact this data can be made public without compromising privacy.\n    ",
-    "pq4": "\n        If I receive a message that I have been exposed, what is disclosed to the public?\n    ",
-    "pa4": "\n        Nothing about your identity will be disclosed to the public.\n    ",
-    "pq5": "\n        Can the identity of a person who chooses to report they\u2019ve tested positive be guessed by others?\n    ",
-    "pa5": "\n        Possibly. A person who was near someone who has tested positive may be able to guess the infected person's identity. If there are two or more people who were near someone who has tested positive, the process of identifying the infected person may be easier. However, the person's identity will never be broadcast directly. People\u2019s identities aren\u2019t stored in the data. Only the infected person\u2019s random broadcast is stored.\n    ",
-    "pq6": "\n        What data is stored on my phone? What data about me is stored publicly?\n    ",
-    "pa6": "\n        Each phone broadcasts a random signal (using Bluetooth) to other nearby phones. All phones remember the signals they send and receive for two weeks. These broadcast signals can be thought of as non-identifying random numbers. The signal each phone broadcasts changes, so the signals remain anonymous and can\u2019t be linked to a specific person. If someone tests positive and chooses to disclose this information to help others, they would be disclosing only their phone's broadcasts for the past two weeks. This lets other people using CovidSafe check if they were near the infected person to determine if they were exposed, based on their own phones' broadcasts.\n    ",
-    "pq7": "\n        How does location tracking work?\n    ",
-    "pa7": "\n        See the Bluetooth section in the PACT white paper on our website.\n    ",
-    "pq8": "\n        Will this information be shared with government agencies?\n    ",
-    "pa8": "\n        The tool won't alert government agencies about your identity if you're exposed.\n    ",
-    "pq9": "\n        Why should I report my illness?\n    ",
-    "pa9": "\n        If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable more effective contact tracing.\n    ",
-    "aq1": "\n        What is contact tracing?\n    ",
-    "aa1": "\nContact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they\u2019ve been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. With CovidSafe, tracing is done through the app instead of in person.\n    ",
-    "aq2": "\n        Why should I report my illness?\n    ",
-    "aa2": "\n        If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable contact tracing.\n    ",
+    "q1": "What is the purpose of this app?",
+    "a1": "CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it \u2014 public health authorities and their contact tracing teams.",
+    "q2": "How does this app benefit me?",
+    "a2": "CovidSafe offers several features to protect both you and your community:\n\n        \u2022\tGet notified about possible exposure. You may be notified if someone who was near you within the last two weeks has come down with symptoms of COVID-19. The measure of \u2018near\u2019 is not as precise as the medical definition (within 6 feet for more than 10 minutes), but it is accurate up to a few meters.\n\n        \u2022\tTrack your symptoms. The symptoms you track may be useful to assist public health teams if you are confirmed positive, and for having this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.",
+    "q3": "Who can use CovidSafe?",
+    "a3": "When it becomes available for use, CovidSafe is free, and anyone can use it.",
+    "q4": "Who else benefits from my participation with this app?",
+    "a4": "CovidSafe is capable of alerting people who have been in areas where coronavirus is active. If you test positive for coronavirus, you'll also be able to anonymously notify others you may have been in contact with over the past two weeks to alert them that they may have been exposed, and to prepare them for potential contact tracing interviews.",
+    "q5": "How does CovidSafe help public health officials?",
+    "a5": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CovidSafe helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.",
+    "pq1": "If I test positive and I disclose it via CovidSafe, what information is revealed to others?",
+    "pa1": "Other people with the application, who have been exposed may be notified, along with the time the exposure occurred. No other information will be revealed.",
+    "pq2": "If I test negative, can a malicious person get access to my phone\u2019s broadcasts and report me as being positive?",
+    "pa2": "No, this isn\u2019t possible. The app is encrypted to prevent it from happening using similar security technology used for other purposes, such as online banking.",
+    "pq3": "If someone else obtains data used to alert people who have been exposed, what can they learn?",
+    "pa3": "They'll see a sequence of random identifiers that have been broadcast over time near people who have tested positive for coronavirus. They could assume the location of the person who tested positive if the random identifiers were collected at specific locations. Otherwise, the person remains anonymous. The security of the system relies on the fact this data can be made public without compromising privacy.",
+    "pq4": "If I receive a message that I have been exposed, what is disclosed to the public?",
+    "pa4": "Nothing about your identity will be disclosed to the public.",
+    "pq5": "Can the identity of a person who chooses to report they\u2019ve tested positive be guessed by others?",
+    "pa5": "Possibly. A person who was near someone who has tested positive may be able to guess the infected person's identity. If there are two or more people who were near someone who has tested positive, the process of identifying the infected person may be easier. However, the person's identity will never be broadcast directly. People\u2019s identities aren\u2019t stored in the data. Only the infected person\u2019s random broadcast is stored.",
+    "pq6": "What data is stored on my phone? What data about me is stored publicly?",
+    "pa6": "Each phone broadcasts a random signal (using Bluetooth) to other nearby phones. All phones remember the signals they send and receive for two weeks. These broadcast signals can be thought of as non-identifying random numbers. The signal each phone broadcasts changes, so the signals remain anonymous and can\u2019t be linked to a specific person. If someone tests positive and chooses to disclose this information to help others, they would be disclosing only their phone's broadcasts for the past two weeks. This lets other people using CovidSafe check if they were near the infected person to determine if they were exposed, based on their own phones' broadcasts.",
+    "pq7": "How does location tracking work?",
+    "pa7": "See the Bluetooth section in the PACT white paper on our website.",
+    "pq8": "Will this information be shared with government agencies?",
+    "pa8": "The tool won't alert government agencies about your identity if you're exposed.",
+    "pq9": "Why should I report my illness?",
+    "pa9": "If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable more effective contact tracing.",
+    "aq1": "What is contact tracing?",
+    "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they\u2019ve been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. With CovidSafe, tracing is done through the app instead of in person.",
+    "aq2": "Why should I report my illness?",
+    "aa2": "If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable contact tracing.",
     "certError": "Please check the box to certify that all the information in this form is correct.",
     "noneCheckedError": "Please check at least one symptom.",
     "addressError": "The address you have entered is invalid. Please try again.",
@@ -119,7 +119,7 @@
     "retry": "Retry",
     "sure": "I'm sure",
     "logging": "Limited trace data is being collected. We keep your identity anonymous.",
-    "stopping": "Turn broadcasting on to improve the accuracy of your notifications. ",
+    "stopping": "Turn broadcasting on to improve the accuracy of your notifications.",
     "faq": "FAQ",
     "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
     "covidSiteLink": "https://covidsafe.cs.washington.edu/",
@@ -130,29 +130,29 @@
     "lipsum3": "Odio tempor orci dapibus ultrices in iaculis nunc sed",
     "lipsum4": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.",
     "lipsum5": "Egestas tellus rutrum tellus ultrices in iaculis pellentesque eu tincidunt?",
-    "lipsum6": "Odio tempor orci dapibus ultrices in iaculis ",
-    "privacyText": "\n        Learn more\n    ",
-    "permissionsHeader": "\n        Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nCovidSafe reveals no information about you without your consent.\n    ",
+    "lipsum6": "Odio tempor orci dapibus ultrices in iaculis",
+    "privacyText": "Learn more",
+    "permissionsHeader": "Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nCovidSafe reveals no information about you without your consent.",
     "cancel": "Cancel",
     "duration": "Duration (days)",
     "perm1": "Notifications",
     "perm2": "Location Logging",
     "perm3": "Bluetooth Tracing",
-    "perm1desc": "\n        Receive notifications for exposure risks in your area.\n    ",
-    "perm2desc": "\n        Receive announcements and notifications relevant to your neighborhood. All location information is stored locally.\n    ",
-    "perm3desc": "\n        Emit and detect random numbers by Bluetooth to later discover exposure risks.\n    ",
+    "perm1desc": "Receive notifications for exposure risks in your area.",
+    "perm2desc": "Receive announcements and notifications relevant to your neighborhood. All location information is stored locally.",
+    "perm3desc": "Emit and detect random numbers by Bluetooth to later discover exposure risks.",
     "setting1": "Length of data storage",
     "setting1desc": "Number of days until local logs are automatically deleted.",
-    "storyTitle1": "\n        Welcome to CovidSafe\n    ",
-    "storyTitle2": "\n        Exposure Notifications\n    ",
-    "storyTitle3": "\n        Self-Care Tips\n    ",
-    "storyTitle4": "\n        Your Privacy\n    ",
+    "storyTitle1": "Welcome to CovidSafe",
+    "storyTitle2": "Exposure Notifications",
+    "storyTitle3": "Self-Care Tips",
+    "storyTitle4": "Your Privacy",
     "exposed": "You may have been exposed",
-    "story1": "\n        CovidSafe notifies you if you may have been exposed to coronavirus and helps keep you and your community safer.\n    ",
-    "story2": "\n        Learn if you might have been exposed. If you've recently been in close contact with someone recently diagnosed with COVID-19. You'll get a notification.\n    ",
-    "story3": "\n        Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms. And log locations you recently visited to protect others.\n    ",
-    "story4": "\n        Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.\n    ",
-    "startText": "\n        Let's slow the spread of COVID-19 together.\n    ",
+    "story1": "CovidSafe notifies you if you may have been exposed to coronavirus and helps keep you and your community safer.",
+    "story2": "Learn if you might have been exposed. If you've recently been in close contact with someone recently diagnosed with COVID-19. You'll get a notification.",
+    "story3": "Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms. And log locations you recently visited to protect others.",
+    "story4": "Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.",
+    "startText": "Let's slow the spread of COVID-19 together.",
     "certText": "I certify that the information submitted in this report is true and correct to the best of my knowledge.",
     "certDiagnosisText": "I certify that I have been officially diagnosed with COVID-19",
     "severity": "Severity",
@@ -201,7 +201,7 @@
     "denied": "Permission denied"
   },
   "min": {
-    "api_error": "Your smartphone's operating system version is not supported. The minimum operating system version we support is Android version ",
+    "api_error": "Your smartphone's operating system version is not supported. The minimum operating system version we support is Android version",
     "api_check_pkey": "min_api_check_pkey"
   },
   "dont": {
@@ -281,9 +281,9 @@
     "complete": "Download complete!"
   },
   "tip": {
-    "desc_1": "\n        Everyone with COVID-19 symptoms (fever, cough, and/or difficulty breathing) who has a test result pending, shall stay in an quarantine location (your home if you have one or in a government directed or publicly provided location if one is available) in accordance with CDC and Public Health guidance.\n\n\n        If your test result is positive, you must then remain in isolation.\n    ",
-    "desc_2": "\n        Not everybody who feels ill needs to be tested, particularly if you have mild illness. Healthcare providers determine who should be tested. While testing is becoming more available, there are still limitations in the ability to quickly collect and process tests.\n\n        If you are sick with fever, cough or shortness of breath and are in a high risk group, call your healthcare provider to discuss whether you should be tested for COVID-19.\n    ",
-    "desc_3": "\n        If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first. "
+    "desc_1": "Everyone with COVID-19 symptoms (fever, cough, and/or difficulty breathing) who has a test result pending, shall stay in an quarantine location (your home if you have one or in a government directed or publicly provided location if one is available) in accordance with CDC and Public Health guidance.\n\n\n        If your test result is positive, you must then remain in isolation.",
+    "desc_2": "Not everybody who feels ill needs to be tested, particularly if you have mild illness. Healthcare providers determine who should be tested. While testing is becoming more available, there are still limitations in the ability to quickly collect and process tests.\n\n        If you are sick with fever, cough or shortness of breath and are in a high risk group, call your healthcare provider to discuss whether you should be tested for COVID-19.",
+    "desc_3": "If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first."
   },
   "risk": {
     "low": "No known transmission vectors",
@@ -305,7 +305,7 @@
     "loc_on2": "We need location services enabled to check for announcements. Please enable location services permission."
   },
   "learn": {
-    "about_us": "Download and learn more about the CovidSafe app at ",
+    "about_us": "Download and learn more about the CovidSafe app at",
     "more_link_text": "Learn More",
     "how_we_protect_your_privacy": "Learn about how we protect your privacy"
   },
@@ -331,7 +331,7 @@
     "delete": "Are you sure you want to delete?"
   },
   "emergency": {
-    "text": "\n        Stop and call 911 if you are experiencing:\n\n        \u2022 Severe, constant chest pain or pressure\n\n        \u2022 Extreme difficulty breathing\n\n        \u2022 Severe, constant lightheadedness\n\n        \u2022 Serious disorientation or unresponsiveness\n    ",
+    "text": "Stop and call 911 if you are experiencing:\n\n        \u2022 Severe, constant chest pain or pressure\n\n        \u2022 Extreme difficulty breathing\n\n        \u2022 Severe, constant lightheadedness\n\n        \u2022 Serious disorientation or unresponsiveness",
     "call_text": "Call 911 immediately if you are having a medical emergency."
   },
   "fever": {
@@ -376,7 +376,7 @@
     "symptom_severity_moderate": "Moderate",
     "symptom_severity_severe": "Severe",
     "data_storage_local": "Local Data Storage",
-    "data_storage_local_expiration": "Your data will expire on %1$s\nOn this date your symptom logs and location data will be removed from the app. This action cannot be undone.\n"
+    "data_storage_local_expiration": "Your data will expire on %1$s\nOn this date your symptom logs and location data will be removed from the app. This action cannot be undone."
   },
   "change": {
     "in_settings_text": "Change in Settings"
@@ -442,7 +442,8 @@
     "experienced_last_14_days": "Symptoms you\u2019ve experienced in the last 14 days"
   },
   "locations": {
-    "text": "Locations"
+    "text": "Locations",
+    "timeline_text": "Timeline"
   },
   "people": {
     "text": "People",
@@ -450,7 +451,10 @@
     "txt": "People"
   },
   "socialize": {
-    "text": "Safely add people you\u2019ve been in contact with directly from your contacts list, or one at a time. "
+    "text": "Safely add people you\u2019ve been in contact with directly from your contacts list, or one at a time."
+  },
+  "social": {
+    "interaction_text": "Social Interactions"
   },
   "summary": {
     "text": "Summary"
