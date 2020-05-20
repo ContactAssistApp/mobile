@@ -6,6 +6,7 @@ import SectionHeader from './SectionHeader';
 import DateHeader from './DateHeader';
 import {getSymptoms} from '../realm/realmSymptomsTasks';
 import DateConverter from '../utils/date';
+import { strings } from '../locales/i18n';
 
 class SymptomsList extends Component {
   constructor() {
@@ -34,7 +35,7 @@ class SymptomsList extends Component {
   render() {
     return (
       <>
-        <SectionHeader header={'Symptoms'} />
+        <SectionHeader header={strings('symptoms.text')} />
         {this.state.logs.map((log, index) => {
           const {date, timeOfDay} = log;
           return (

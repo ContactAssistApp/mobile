@@ -5,6 +5,7 @@ import SymptomsList from './SymptomsList';
 import SelectedContacts from '../ContactLog/SelectedContacts';
 import SectionHeader from './SectionHeader';
 import LocationsList from './LocationsList';
+import { strings } from '../locales/i18n';
 
 class Summary extends Component {
   render() {
@@ -17,19 +18,19 @@ class Summary extends Component {
               source={require('../assets/health/summary.png')}
             />
             <Text style={styles.title}>
-              Save this list for reference{'\n'}during your interview.
+              {strings('contact.title_4')}
             </Text>
           </View>
           <Text style={styles.description}>
-            Please review the information below and save your list. Don’t worry, you can always come back to edit this list later.
+            {strings('contact.desc_4')}
           </Text>
         </View>
         <View style={styles.section_title_container}>
-          <Text style={styles.section_title}>Summary</Text>
+          <Text style={styles.section_title}>{strings('summary.text')}</Text>
         </View>
         <SymptomsList />
         <LocationsList />
-        <SectionHeader header={'people'} />
+        <SectionHeader header={strings('people.text')} />
         <SelectedContacts />
       </ScrollView>
     );

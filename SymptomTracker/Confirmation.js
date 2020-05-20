@@ -6,6 +6,7 @@ import CustomIcon from '../assets/icons/CustomIcon.js';
 import {connect} from 'react-redux';
 import SymptomsSummary from './SymptomsSummary';
 import DateConverter from '../utils/date';
+import { strings, fmt_date } from '../locales/i18n';
 
 class Confirmation extends Component {
   render() {
@@ -23,7 +24,7 @@ class Confirmation extends Component {
         />
         <View style={styles.section_header}>
           <Text style={styles.section_title}>
-            Your Symptom log has been saved
+            {strings('your.log_have_been_saved_text')}
           </Text>
           <View style={styles.record}>
             <View style={styles.icon_wrapper}>
@@ -36,7 +37,7 @@ class Confirmation extends Component {
             <View>
               <Text style={styles.time_of_day}>{timeOfDay}</Text>
               <Text style={styles.ts}>
-              {`${DateConverter.dateString(new Date(ts))} | Saved ${DateConverter.timeString(ts)}`}
+              {`${fmt_date(new Date(ts), 'LL')} | ${strings('saved.text')} ${DateConverter.timeString(ts)}`}
               </Text>
             </View>
           </View>

@@ -14,6 +14,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updatePageIndex} from './actions.js';
+import { strings } from '../locales/i18n';
 
 class InterviewPrepIntro extends Component {
   render() {
@@ -25,10 +26,9 @@ class InterviewPrepIntro extends Component {
           source={require('../assets/health/interview_prep_bg.png')}
         />
         <View style={styles.container}>
-          <Text style={styles.section_title}>Preparing for your interview</Text>
+          <Text style={styles.section_title}>{strings('contact.header_text')}</Text>
           <Text style={styles.description}>
-            You can use this app to collect information to share with the
-            nurse. Select GET STARTED below to create your list.
+            {strings('interview.preparation_description_text')}
           </Text>
 
           <View>
@@ -41,7 +41,7 @@ class InterviewPrepIntro extends Component {
                 />
               </View>
               <Text style={styles.detail}>
-                Symptoms you’ve experienced in the last{'\n'}14 days
+                {strings('symptoms.experienced_last_14_days')}
               </Text>
             </View>
             <View style={styles.row}>
@@ -53,7 +53,7 @@ class InterviewPrepIntro extends Component {
                 />
               </View>
               <Text style={styles.detail}>
-                Locations you’ve visited in the last 14 days
+              {strings('location.visited_in_last_14_days')}
               </Text>
             </View>
             <View style={styles.row}>
@@ -65,7 +65,7 @@ class InterviewPrepIntro extends Component {
                 />
               </View>
               <Text style={styles.detail}>
-                People you’ve been in direct contact with{'\n'}over the last 14 days
+              {strings('people.you_have_been_in_contact_last_14_days')}
               </Text>
             </View>
           </View>
@@ -77,7 +77,7 @@ class InterviewPrepIntro extends Component {
                 value: pageIndex + 1,
               });
             }}>
-            <Text style={styles.start_button_text}>Get started</Text>
+            <Text style={styles.start_button_text}>{strings('get.started_text')}</Text>
           </TouchableOpacity>
         </View>
         <Privacy />

@@ -8,6 +8,8 @@ import {bindActionCreators} from 'redux';
 import {getDaysWithLog} from '../realm/realmSymptomsTasks';
 import {updateHealthData} from './actions.js';
 import PropTypes from 'prop-types';
+import { strings, fmt_date } from '../locales/i18n';
+
 
 class Symptoms extends Component {
   componentDidMount() {
@@ -36,7 +38,7 @@ class Symptoms extends Component {
       <ScrollView>
         <View style={styles.header}>
           <Text style={styles.date}>
-            {DateConverter.dateString(symptomsDate)}
+            {fmt_date(new Date(symptomsDate), "ddd, MMM Do")}
           </Text>
         </View>
         <SymptomTracker date={symptomsDate} navigate={this.props.navigate} />

@@ -10,17 +10,17 @@
     "header_text": "Historia"
   },
   "permissions": {
-    "header_text": ""
+    "header_text": "Selecciona tus preferencias"
   },
   "health": {
-    "header_text": "",
-    "header_text_demo": ""
+    "header_text": "Salud",
+    "header_text_demo": "Salud [DEMO]"
   },
   "contact": {
-    "header_text": "",
-    "header_text_demo": "",
-    "log_header_text": "",
-    "log_header_text_demo": "",
+    "header_text": "Preparaci\u00f3n de entrevistas",
+    "header_text_demo": "Preparaci\u00f3n de entrevistas [DEMO]",
+    "log_header_text": "Registro de contacto",
+    "log_header_text_demo": "Registro de contacto [DEMO]",
     "logs": "Registros de contacto",
     "title_1": "Revise qu\u00e9 s\u00edntomas le gustar\u00eda incluir.",
     "title_2": "Revise su historial de ubicaciones de los \u00faltimos 14 d\u00edas.",
@@ -33,20 +33,20 @@
     "healthcare_professional": "Por favor contacte a su profesional de la salud."
   },
   "add": {
-    "symptoms_header_text": ""
+    "symptoms_header_text": "Crear nuevo registro"
   },
   "settings": {
-    "header_text": "",
+    "header_text": "Configuraciones",
     "help_text": "Puede usar este panel para crear un radio de 1 milla alrededor de las ubicaciones que no desea que se rastreen. Puede agregar hasta %1$d ubicaciones.",
     "text": "Configuraciones"
   },
   "help": {
-    "header_text": "",
-    "header_text_demo": "",
+    "header_text": "Recursos",
+    "header_text_demo": "Recursos [DEMO]",
     "your_community_by_reporting": "Ayuda a tu comunidad informando tu diagn\u00f3stico"
   },
   "warning": {
-    "header_text": "",
+    "header_text": "Informe de diagn\u00f3stico",
     "help_text": "Recibi\u00f3 un diagn\u00f3stico positivo de su proveedor de atenci\u00f3n m\u00e9dica. Para confirmar su diagn\u00f3stico, proporcione sus credenciales a continuaci\u00f3n."
   },
   "symptom": {
@@ -123,7 +123,7 @@
     "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
     "covidSiteLink": "https://covidsafe.cs.washington.edu/",
     "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
-    "privacyLink1": "",
+    "privacyLink1": "Aprende m\u00e1s.",
     "lipsum": "Egestas tellus rutrum tellus pellentesque eu tincidun. Odio tempor orci dapibus ultrices en iaculis nunc sed augue suspendisse.",
     "lipsum2": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices en iaculis nunc sed augue.",
     "lipsum3": "Odio tempor orci dapibus ultrices en iaculis nunc sed",
@@ -304,12 +304,12 @@
     "how_we_protect_your_privacy": "Conozca c\u00f3mo protegemos su privacidad"
   },
   "privacy": {
-    "link": "",
+    "link": "Intimidad  |",
     "text": "Intimidad",
     "and_security": "Privacidad y seguridad"
   },
   "terms": {
-    "link": "",
+    "link": "T\u00e9rminos y Condiciones",
     "text": "T\u00e9rminos y Condiciones"
   },
   "onset": {

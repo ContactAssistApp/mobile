@@ -18,6 +18,7 @@ import {updateHealthData} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {strings} from '../locales/i18n';
 
 class Health extends Component {
   constructor() {
@@ -48,7 +49,7 @@ class Health extends Component {
               style={styles.logo}
               source={require('../assets/home/logo.png')}
             />
-            <Text style={styles.title}>Health Report[DEMO]</Text>
+            <Text style={styles.title}>{strings('bottom.sheet_menu_item_health_report')}[DEMO]</Text>
           </View>
           <TouchableOpacity
             style={styles.calendar_button}
@@ -80,10 +81,10 @@ class Health extends Component {
           weekView={this.state.weekView}>
           <TabView>
             <Symptoms
-              tabLabel={'symptoms'}
+              tabLabel={strings('symptoms.text')}
               navigate={this.props.navigation.navigate}
             />
-            <Report tabLabel={'diagnosis'} />
+            <Report tabLabel={strings('diagnosis.text')} />
           </TabView>
         </Calendar>
       </>

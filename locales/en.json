@@ -10,17 +10,17 @@
     "header_text": "History"
   },
   "permissions": {
-    "header_text": ""
+    "header_text": "Select your preferences"
   },
   "health": {
-    "header_text": "",
-    "header_text_demo": ""
+    "header_text": "Health",
+    "header_text_demo": "Health [DEMO]"
   },
   "contact": {
-    "header_text": "",
-    "header_text_demo": "",
-    "log_header_text": "",
-    "log_header_text_demo": "",
+    "header_text": "Interview Preparation",
+    "header_text_demo": "Interview Preparation [DEMO]",
+    "log_header_text": "Contact Log",
+    "log_header_text_demo": "Contact Log [DEMO]",
     "logs": "Contact logs",
     "title_1": "Review which symptoms you would like to include.",
     "title_2": "Review your location history from the last 14 days.",
@@ -33,20 +33,20 @@
     "healthcare_professional": "Please contact your healthcare professional."
   },
   "add": {
-    "symptoms_header_text": ""
+    "symptoms_header_text": "Create New Log"
   },
   "settings": {
-    "header_text": "",
+    "header_text": "Settings",
     "help_text": "You can use this panel to create a 1 mile radius around locations you don't want to be tracked. You can add up to %1$d locations.",
     "text": "Settings"
   },
   "help": {
-    "header_text": "",
-    "header_text_demo": "",
+    "header_text": "Resources",
+    "header_text_demo": "Resources [DEMO]",
     "your_community_by_reporting": "Help your community by reporting your diagnosis"
   },
   "warning": {
-    "header_text": "",
+    "header_text": "Diagnosis Report",
     "help_text": "You've received a positive diagnosis from your healthcare provider. To confirm your diagnosis, please provider your credentials below."
   },
   "symptom": {
@@ -124,7 +124,7 @@
     "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
     "covidSiteLink": "https://covidsafe.cs.washington.edu/",
     "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
-    "privacyLink1": "",
+    "privacyLink1": "Learn more.",
     "lipsum": "Egestas tellus rutrum tellus pellentesque eu tincidun. Odio tempor orci dapibus ultrices in iaculis nunc sed augue suspendisse.",
     "lipsum2": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices in iaculis nunc sed augue.",
     "lipsum3": "Odio tempor orci dapibus ultrices in iaculis nunc sed",
@@ -310,12 +310,12 @@
     "how_we_protect_your_privacy": "Learn about how we protect your privacy"
   },
   "privacy": {
-    "link": "",
+    "link": "Privacy  |",
     "text": "Privacy",
     "and_security": "Privacy and Security"
   },
   "terms": {
-    "link": "",
+    "link": "Terms and Conditions",
     "text": "Terms and Conditions"
   },
   "onset": {

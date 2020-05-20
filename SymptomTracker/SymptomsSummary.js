@@ -5,6 +5,8 @@ import colors from '../assets/colors';
 import {connect} from 'react-redux';
 import Privacy from '../Privacy/Privacy';
 import SymptomsHalfDay from './SymptomsHalfDay';
+import { strings } from '../locales/i18n';
+
 
 class SymptomsSummary extends Component {
   render() {
@@ -12,7 +14,7 @@ class SymptomsSummary extends Component {
 
     return (
       <>
-        <Text style={styles.symptom_header}>SYMPTOMS</Text>
+        <Text style={styles.symptom_header}>{strings('symptoms.text')}</Text>
         <SymptomsHalfDay symptoms={symptoms} />
         <Privacy />
       </>

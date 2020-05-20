@@ -8,6 +8,7 @@ import DateConverter from '../utils/date';
 import {updateContactLog} from './actions.js';
 import Import from './Import';
 import Location from '../utils/location';
+import { strings, fmt_date } from '../locales/i18n';
 
 class Locations extends Component {
   constructor() {
@@ -49,9 +50,9 @@ class Locations extends Component {
         {this.state.addresses && this.state.addresses.length > 0 ?
           <>
             <Text style={styles.date}>
-              {DateConverter.dateString(new Date(date.replace(/-/g, '/')))}
+            { fmt_date(new Date(date.replace(/-/g, '/')), "ddd, MMM Do") }
             </Text>
-            <Text style={styles.sub_header}>RECENT LOCATIONS</Text>
+            <Text style={styles.sub_header}>{strings("locations.timeline_text")}</Text>
             {this.state.addresses.map((item, idx) => {
               const {name, address} = item;
               return (

@@ -4,6 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import SectionHeader from './SectionHeader';
 import Location from '../utils/location';
+import { strings } from '../locales/i18n';
 
 class LocationsList extends Component {
   constructor() {
@@ -27,7 +28,7 @@ class LocationsList extends Component {
   render() {
     return (
       <>
-        <SectionHeader header={'general locations'} />
+        <SectionHeader header={strings('general.locations_txt')} />
         {this.state.addresses.map((item, idx) => {
           const {name, address} = item;
           return (

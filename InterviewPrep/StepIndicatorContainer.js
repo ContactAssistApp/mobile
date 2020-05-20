@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 import colors from '../assets/colors';
 import StepIndicator from './StepIndicator';
+import { strings } from '../locales/i18n';
 
 class StepIndicatorContainer extends Component {
   render() {
@@ -10,22 +11,22 @@ class StepIndicatorContainer extends Component {
       <View style={styles.container}>
         <StepIndicator
           number={1}
-          label={'Symptoms'}
+          label={strings('symptoms.text')}
           selected={this.props.index === 0}
         />
         <StepIndicator
           number={2}
-          label={'Locations'}
+          label={strings('locations.text')}
           selected={this.props.index === 1}
         />
         <StepIndicator
           number={3}
-          label={'People'}
+          label={strings('people.text')}
           selected={this.props.index === 2}
         />
         <StepIndicator
           number={4}
-          label={'Summary'}
+          label={strings('summary.text')}
           selected={this.props.index === 3}
         />
       </View>
