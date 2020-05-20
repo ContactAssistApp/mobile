@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import { strings } from '../locales/i18n';
 
 class Emergency extends Component {
   render() {
@@ -16,7 +17,7 @@ class Emergency extends Component {
           />
         </View>
         <Text style={styles.text}>
-          Call 911 immediately if you are having a medical emergency.
+          {strings('emergency.call_text')}
         </Text>
       </View>
     );

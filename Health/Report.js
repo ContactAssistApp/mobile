@@ -18,6 +18,7 @@ import {UW_URL} from '../utils/constants';
 import Emergency from '../Privacy/Emergency';
 import CareTips from '../CareTips/CareTips';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
+import { strings } from '../locales/i18n';
 
 class Report extends PureComponent {
   constructor() {
@@ -99,35 +100,35 @@ class Report extends PureComponent {
           <TouchableOpacity
             style={styles.button}
             onPress={() => this.uploadBLE()}>
-            <Text style={styles.button_text}>Upload Your Trace Data</Text>
+            <Text style={styles.button_text}>{strings("submit.your_report_button_text")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.learn_more]}
             onPress={() =>
               Alert.alert(
-                'Trace Data',
-                'If you upload trace data, people who have visited any locations you’ve recently been to will be notified that they may have been exposed.\n\nRest assured, your personal identity and information will be kept private.',
+                strings('warning.header_text'),
+                strings('confirm.diagnosis'),
                 [
                   {
-                    text: 'Learn More',
+                    text: strings('global.privacyText'),
                     onPress: () => {
                       Linking.openURL(UW_URL);
                     },
                   },
                   {
-                    text: 'Got it',
+                    text: strings('global.ok'),
                     style: 'cancel'
                   },
                 ],
                 {cancelable: false}
               )}>
             <Text style={[styles.button_text, styles.learn_more_text]}>
-              What Happens When Upload Trace Data?
+              {strings("what.happen_when_i_submit_report")}
             </Text>
           </TouchableOpacity>
-          {this.state.uploadBLESuccess && <Text>Success!</Text>}
+          {this.state.uploadBLESuccess && <Text>{strings('pos.text')}</Text>}
         </View>
-        <Text style={styles.header}>Next Steps</Text>
+        <Text style={styles.header}>{strings('next.steps_text')}</Text>
         <PrepareInterviewComponent />
         <Emergency />
         <CareTips />

@@ -7,6 +7,7 @@ import InterviewPrepContainer from './Container';
 import Modal from '../views/Modal';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import { strings } from '../locales/i18n';
 
 class PrepareInterviewComponent extends Component {
   constructor() {
@@ -43,11 +44,11 @@ class PrepareInterviewComponent extends Component {
             source={require('../assets/health/clipboard.png')}
           />
           <Text style={styles.title}>
-            Your public health Agency{'\n'}will be contacting you For{'\n'}an Interview
+            {strings('prepare.for_contact_tracer_interview')}
           </Text>
         </View>
         <Text style={styles.description}>
-          During your interview, a healthcare nurse will be collecting a list of critical information to help identify those around you who may have been exposed.
+          {strings('prepare.for_contact_tracer_description_text')}
         </Text>
         <View style={styles.button_group}>
           <TouchableOpacity
@@ -57,14 +58,14 @@ class PrepareInterviewComponent extends Component {
                 modalOn: true,
               });
             }}>
-            <Text style={styles.button_text}>prepare for your interview</Text>
+            <Text style={styles.button_text}>{strings('prepare.for_interview_btn_text')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.learn_more]}
             onPress={() => {
 
             }}>
-            <Text style={[styles.button_text, styles.learn_more_text]}>Learn more</Text>
+            <Text style={[styles.button_text, styles.learn_more_text]}>{strings('learn.more_link_text')}</Text>
           </TouchableOpacity>
         </View>
       </View>

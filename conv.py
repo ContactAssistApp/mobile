@@ -9,11 +9,17 @@ def translate_file(in_file, out_file):
     root_trans = dict()
     for strs in strings.getroot():
         attr = strs.attrib['name']
-        text = strs.text 
+        text = strs.text.strip();
 
         #cleanup2
         if "<" in text:
-            text = text[0 : text.index('<')]
+            tmp = text[0 : text.index('<')]
+            #handle the case where the whole text is surrounded by a tag
+            if len(tmp) == 0:
+                tmp = text
+                while '<' in tmp:
+                    tmp = tmp[tmp.index('>') + 1 : tmp.rindex('<')]
+            text = tmp
         ns = 'global'
         key = attr
 

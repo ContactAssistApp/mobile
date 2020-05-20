@@ -3,21 +3,22 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import Tip from './Tip';
+import { strings } from '../locales/i18n';
 
 class CareTips extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>What To Do When You Get Sick</Text>
+        <Text style={styles.header}>{strings("what.to_do_if_you_are_sick")}</Text>
         <Tip
           icon={'incognito24'}
-          title={'Isolation order'}
-          content={'Everyone who has tested positive for COVID-19 shall remain in isolation until no longer infectious. Do not leave your home or recovery facility, except to receive medical care.'}
+          title={strings('isolation.order')}
+          content={strings('global.isolation1') + strings('global.isolation2')}
         />
         <Tip
           icon={'activity24'}
-          title={'Monitor You Symptoms'}
-          content={'If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first. Do not go to the emergency room. Emergency rooms need to be able to serve those with the most critical needs. If you have difficulty breathing, it doesn’t mean you have novel coronavirus, but you should call 911.'}
+          title={strings('monitor.your_symptoms')}
+          content={strings('global.monitor1') + strings('global.monitor2') + strings('global.monitor3')}
         />
       </View>
     );
