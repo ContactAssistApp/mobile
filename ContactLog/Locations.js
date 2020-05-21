@@ -16,6 +16,7 @@ import Import from './Import';
 import Location from '../utils/location';
 import {strings, fmt_date} from '../locales/i18n';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import {deleteLocation} from '../realm/realmLocationTasks';
 
 class Locations extends Component {
   constructor() {
@@ -43,13 +44,12 @@ class Locations extends Component {
     const addresses = Location.fetchAddresses(
       new Date(date.replace(/-/g, '/')),
     );
-
     this.setState({
       addresses,
     });
   };
 
-  handleAction = () => {
+  handleAction = address => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: ['Cancel', 'Edit', 'Delete'],
@@ -60,8 +60,17 @@ class Locations extends Component {
         if (buttonIndex === 1) {
           // edit
         } else if (buttonIndex === 2) {
-          // delete
+          deleteLocation(address);
+          const index = this.state.addresses.findIndex(
+            item => item.address === address,
+          );
 
+          if (index > -1) {
+            this.state.addresses.splice(index, 1);
+            this.setState({
+              addresses: this.state.addresses,
+            });
+          }
         }
       },
     );
@@ -70,6 +79,7 @@ class Locations extends Component {
   render() {
     const {date} = this.props;
     const {addresses} = this.state;
+
     return (
       <ScrollView>
         {addresses && addresses.length > 0 ?
@@ -92,7 +102,7 @@ class Locations extends Component {
                   </View>
                   <TouchableOpacity
                     style={styles.action_button}
-                    onPress={this.handleAction}>
+                    onPress={() => this.handleAction(address)}>
                     <CustomIcon
                       name={'action24'}
                       size={20}

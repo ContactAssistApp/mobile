@@ -70,3 +70,16 @@ export function getLocations(endDateTime, timeRange) {
 
   return locations;
 }
+
+export function deleteLocation(address) {
+  try {
+    const locations = realm
+      .objects('Location')
+      .filtered('address == $0', address);
+    realm.write(() => {
+      realm.delete(locations);
+    });
+  } catch (err) {
+    console.log('delete location error: ', err);
+  }
+}

@@ -23,7 +23,7 @@ const Location = {
     });
 
     return addresses;
-  }
+  },
 };
 
 export default Location;
