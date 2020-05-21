@@ -34,7 +34,9 @@ class PrepareInterviewComponent extends Component {
           {
             {
               0: <InterviewPrepIntro />,
-              1: <InterviewPrepContainer />,
+              1: <InterviewPrepContainer
+                  handleModalClose={this.handleModalClose}
+                />,
             }[pageIndex]
           }
         </Modal>

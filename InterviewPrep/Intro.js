@@ -14,7 +14,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updatePageIndex} from './actions.js';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class InterviewPrepIntro extends Component {
   render() {
@@ -26,7 +26,9 @@ class InterviewPrepIntro extends Component {
           source={require('../assets/health/interview_prep_bg.png')}
         />
         <View style={styles.container}>
-          <Text style={styles.section_title}>{strings('contact.header_text')}</Text>
+          <Text style={styles.section_title}>
+            {strings('contact.header_text')}
+          </Text>
           <Text style={styles.description}>
             {strings('interview.preparation_description_text')}
           </Text>
@@ -53,7 +55,7 @@ class InterviewPrepIntro extends Component {
                 />
               </View>
               <Text style={styles.detail}>
-              {strings('location.visited_in_last_14_days')}
+                {strings('location.visited_in_last_14_days')}
               </Text>
             </View>
             <View style={styles.row}>
@@ -65,7 +67,7 @@ class InterviewPrepIntro extends Component {
                 />
               </View>
               <Text style={styles.detail}>
-              {strings('people.you_have_been_in_contact_last_14_days')}
+                {strings('people.you_have_been_in_contact_last_14_days')}
               </Text>
             </View>
           </View>
@@ -127,6 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     color: colors.body_copy,
+    flex: 1,
   },
   start_button: {
     marginVertical: 31,

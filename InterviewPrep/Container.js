@@ -16,7 +16,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updatePageIndex} from './actions.js';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class InterviewPrepContainer extends Component {
   constructor() {
@@ -56,7 +56,7 @@ class InterviewPrepContainer extends Component {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-
+                this.props.handleModalClose();
               }}>
               <Text style={styles.button_text}>{strings('save.text')}</Text>
             </TouchableOpacity>
