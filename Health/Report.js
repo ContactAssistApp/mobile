@@ -18,7 +18,7 @@ import {UW_URL} from '../utils/constants';
 import Emergency from '../Privacy/Emergency';
 import CareTips from '../CareTips/CareTips';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class Report extends PureComponent {
   constructor() {
@@ -31,7 +31,13 @@ class Report extends PureComponent {
   uploadBLE = () => {
     let seeds;
     this.getDeviceSeedAndRotate().then(data => {
-      seeds = data;
+      seeds = data.map(seed => {
+        return {
+          seed: seed.seed,
+          sequenceEndTime: seed.sequenceEndTime * 1000,
+          sequenceStartTime: seed.sequenceStartTime * 1000,
+        };
+      });
       getLatestCoarseLocation(true).then(location => {
         if (location) {
           this.reportBLE(seeds, location);
