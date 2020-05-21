@@ -11,7 +11,7 @@ const CheckBox = ({selected, onPress, text = '', ...props}) => (
       name={selected ? 'check-box' : 'check-box-outline-blank'}
       style={styles.icon}
     />
-    <Text style={styles.text_style}>{text}</Text>
+    {text !== '' && <Text style={styles.text}>{text}</Text>}
   </TouchableOpacity>
 );
 
@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
   icon: {
     paddingRight: 10,
   },
-  text_style: {
+  text: {
     fontSize: 16,
     lineHeight: 24,
+    flex: 1,
   },
 });
 export default CheckBox;
