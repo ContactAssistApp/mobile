@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import LocationsList from './LocationsList';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class Locations extends Component {
   render() {
@@ -14,15 +14,11 @@ class Locations extends Component {
               style={styles.icon}
               source={require('../assets/health/map.png')}
             />
-            <Text style={styles.title}>
-              {strings('contact.title_2')}
-            </Text>
+            <Text style={styles.title}>{strings('contact.title_2')}</Text>
           </View>
-          <Text style={styles.description}>
-            {strings('contact.desc_2')}
-          </Text>
-          <LocationsList />
+          <Text style={styles.description}>{strings('contact.desc_2')}</Text>
         </View>
+        <LocationsList />
       </>
     );
   }
@@ -49,6 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
+    flex: 1,
   },
   description: {
     fontSize: 14,
