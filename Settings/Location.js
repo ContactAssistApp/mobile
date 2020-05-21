@@ -45,7 +45,7 @@ class Location extends Component {
         iconName={'location24'}
         title={'Location'}
         description={
-          'Share your location information with healthcare providers.'
+          'Use location to filter notifications relevant to you. All location information is stored locally.'
         }
         toggleValue={this.state.location}
         handleToggle={this.updateSetting}

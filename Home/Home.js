@@ -355,10 +355,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   broadcast_container: {
-    marginVertical: 10,
-    borderRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 15,
+    borderRadius: 20,
+    marginVertical: 16,
+    marginHorizontal: 6,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
