@@ -4,11 +4,10 @@ import colors from '../assets/colors';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
-import DateConverter from '../utils/date';
 import {updateContactLog} from './actions.js';
 import Import from './Import';
 import Location from '../utils/location';
-import { strings, fmt_date } from '../locales/i18n';
+import {strings, fmt_date} from '../locales/i18n';
 
 class Locations extends Component {
   constructor() {
@@ -50,9 +49,11 @@ class Locations extends Component {
         {this.state.addresses && this.state.addresses.length > 0 ?
           <>
             <Text style={styles.date}>
-            { fmt_date(new Date(date.replace(/-/g, '/')), "ddd, MMM Do") }
+              {fmt_date(new Date(date.replace(/-/g, '/')), 'ddd, MMM Do')}
             </Text>
-            <Text style={styles.sub_header}>{strings("locations.timeline_text")}</Text>
+            <Text style={styles.sub_header}>
+              {strings('locations.timeline_text')}
+            </Text>
             {this.state.addresses.map((item, idx) => {
               const {name, address} = item;
               return (

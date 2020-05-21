@@ -13,7 +13,7 @@ import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {deleteSymptom} from '../realm/realmSymptomsTasks';
 import {connect} from 'react-redux';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class Record extends Component {
   handleAdd = () => {
@@ -86,7 +86,9 @@ class Record extends Component {
           <View style={styles.record_detail}>
             <Text style={styles.title}>{timeOfDay}</Text>
             <Text style={styles.time}>
-              {logTime ? `${strings('saved.text')} ${logTime}` : strings('not.logged_text')}
+              {logTime
+                ? `${strings('saved.text')} ${logTime}`
+                : strings('not.logged_text')}
             </Text>
           </View>
           {
