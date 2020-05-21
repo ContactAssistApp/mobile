@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActionSheetIOS,
+} from 'react-native';
 import colors from '../assets/colors';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -8,6 +15,7 @@ import {updateContactLog} from './actions.js';
 import Import from './Import';
 import Location from '../utils/location';
 import {strings, fmt_date} from '../locales/i18n';
+import CustomIcon from '../assets/icons/CustomIcon.js';
 
 class Locations extends Component {
   constructor() {
@@ -41,12 +49,30 @@ class Locations extends Component {
     });
   };
 
+  handleAction = () => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancel', 'Edit', 'Delete'],
+        destructiveButtonIndex: 2,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) {
+          // edit
+        } else if (buttonIndex === 2) {
+          // delete
+
+        }
+      },
+    );
+  };
+
   render() {
     const {date} = this.props;
-
+    const {addresses} = this.state;
     return (
       <ScrollView>
-        {this.state.addresses && this.state.addresses.length > 0 ?
+        {addresses && addresses.length > 0 ?
           <>
             <Text style={styles.date}>
               {fmt_date(new Date(date.replace(/-/g, '/')), 'ddd, MMM Do')}
@@ -54,14 +80,25 @@ class Locations extends Component {
             <Text style={styles.sub_header}>
               {strings('locations.timeline_text')}
             </Text>
-            {this.state.addresses.map((item, idx) => {
+            {addresses.map((item, idx) => {
               const {name, address} = item;
               return (
                 <View style={styles.address_card} key={idx}>
-                  <Text style={styles.name}>{name}</Text>
-                  {address !== '' && (
-                    <Text style={styles.address}>{address}</Text>
-                  )}
+                  <View>
+                    <Text style={styles.name}>{name}</Text>
+                    {address !== '' && (
+                      <Text style={styles.address}>{address}</Text>
+                    )}
+                  </View>
+                  <TouchableOpacity
+                    style={styles.action_button}
+                    onPress={this.handleAction}>
+                    <CustomIcon
+                      name={'action24'}
+                      size={20}
+                      color={colors.gray_icon}
+                    />
+                  </TouchableOpacity>
                 </View>
               );
             })}
@@ -96,7 +133,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 5,
     paddingVertical: 17,
-    paddingHorizontal: 11,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   name: {
     fontWeight: '500',
@@ -114,6 +153,10 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     color: colors.body_copy,
     paddingVertical: 6,
+  },
+  action_button: {
+    paddingLeft: 20,
+    paddingRight: 15,
   },
 });
 
