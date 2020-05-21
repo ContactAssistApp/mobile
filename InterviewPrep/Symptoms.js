@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import SymptomsList from './SymptomsList';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class Symptoms extends Component {
   render() {
@@ -15,13 +15,9 @@ class Symptoms extends Component {
               style={styles.clipboard}
               source={require('../assets/health/clipboard.png')}
             />
-            <Text style={styles.title}>
-              {strings('contact.title_1')}
-            </Text>
+            <Text style={styles.title}>{strings('contact.title_1')}</Text>
           </View>
-          <Text style={styles.description}>
-            {strings('contact.desc_1')}
-          </Text>
+          <Text style={styles.description}>{strings('contact.desc_1')}</Text>
         </View>
         <SymptomsList />
       </>
@@ -50,6 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
+    flex: 1,
   },
   description: {
     fontSize: 14,

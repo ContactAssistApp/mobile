@@ -5,7 +5,7 @@ import SymptomsList from './SymptomsList';
 import SelectedContacts from '../ContactLog/SelectedContacts';
 import SectionHeader from './SectionHeader';
 import LocationsList from './LocationsList';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class Summary extends Component {
   render() {
@@ -17,13 +17,9 @@ class Summary extends Component {
               style={styles.icon}
               source={require('../assets/health/summary.png')}
             />
-            <Text style={styles.title}>
-              {strings('contact.title_4')}
-            </Text>
+            <Text style={styles.title}>{strings('contact.title_4')}</Text>
           </View>
-          <Text style={styles.description}>
-            {strings('contact.desc_4')}
-          </Text>
+          <Text style={styles.description}>{strings('contact.desc_4')}</Text>
         </View>
         <View style={styles.section_title_container}>
           <Text style={styles.section_title}>{strings('summary.text')}</Text>
@@ -58,6 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
+    flex: 1,
   },
   description: {
     fontSize: 14,
