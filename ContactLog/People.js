@@ -11,8 +11,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
-import { strings } from '../locales/i18n';
-
+import {strings} from '../locales/i18n';
 
 class People extends Component {
   constructor() {
