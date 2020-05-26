@@ -1,9 +1,4 @@
 const Ble = {
-  start: function() {
-  },
-
-  stop: function() {
-  },
 
   getDeviceSeedAndRotate: function(interval) {
     throw new Error("seed rotation not supported")
@@ -17,10 +12,6 @@ const Ble = {
   },
 
   purgeOldRecords: function() {
-  },
-
-  deleteAllData: async function() {
-    return true;
   },
 };
 
