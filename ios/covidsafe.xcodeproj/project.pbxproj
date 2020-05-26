@@ -14,7 +14,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */; };
-		14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */; };
 		14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7CF2454B5FE00937BF4 /* Locations.swift */; };
 		14CCE7ED24550F0200937BF4 /* Locations.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE7EC24550F0200937BF4 /* Locations.m */; };
 		14CCE83924606D3300937BF4 /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83824606D3300937BF4 /* AES.swift */; };
@@ -28,14 +27,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* covidsafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* covidsafeTests.m */; };
-		A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117593243BCAD500BCD5AA /* query-engine.cc */; };
-		A511759A243BCAD500BCD5AA /* proto.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117595243BCAD500BCD5AA /* proto.cc */; };
-		A511759B243BCAD500BCD5AA /* util.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5117596243BCAD500BCD5AA /* util.cc */; };
-		A58968B42460DA3B00117C67 /* crypto.mm in Sources */ = {isa = PBXBuildFile; fileRef = A58968B32460DA3B00117C67 /* crypto.mm */; };
 		A5CB15BE24632830002A4B20 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5CB15BC24632830002A4B20 /* AppCenter-Config.plist */; };
-		A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5E323C2242E6FE00066AB83 /* BLE.mm */; };
-		A5EEA9B0243E332300DDC471 /* contact.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9AC243E332300DDC471 /* contact.cc */; };
-		A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA9B1243E33A800DDC471 /* contact-model.cc */; };
 		B537F701AA40882F8AA59C69 /* libPods-covidsafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */; };
 		D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */; };
 		D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */; };
@@ -84,8 +76,6 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = covidsafe/main.m; sourceTree = "<group>"; };
 		140F6FCA242B9AE6005BE5B9 /* covidsafe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "covidsafe-Bridging-Header.h"; sourceTree = "<group>"; };
 		1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
-		14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconBroadcast.m; sourceTree = "<group>"; };
-		14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconBroadcast.h; sourceTree = "<group>"; };
 		14431C432431186F00DEFBBE /* RCTBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBackgroundGeolocation.xcodeproj; path = "../node_modules/@mauron85/react-native-background-geolocation/ios/RCTBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		14CCE7CF2454B5FE00937BF4 /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		14CCE7EB24550F0200937BF4 /* Locations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Locations.h; sourceTree = "<group>"; };
@@ -119,21 +109,7 @@
 		7DB4869357700CE101CFA78B /* Pods-covidsafeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafeTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafeTests/Pods-covidsafeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		80E2B511E00B4278976ED673 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		99F1ADC311164B4D88434CFB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		A5117593243BCAD500BCD5AA /* query-engine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "query-engine.cc"; sourceTree = "<group>"; };
-		A5117594243BCAD500BCD5AA /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
-		A5117595243BCAD500BCD5AA /* proto.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = proto.cc; sourceTree = "<group>"; };
-		A5117596243BCAD500BCD5AA /* util.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cc; sourceTree = "<group>"; };
-		A5117597243BCAD500BCD5AA /* query-engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "query-engine.h"; sourceTree = "<group>"; };
-		A5117598243BCAD500BCD5AA /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
-		A58968B12460DA3B00117C67 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
-		A58968B32460DA3B00117C67 /* crypto.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = crypto.mm; sourceTree = "<group>"; };
 		A5CB15BC24632830002A4B20 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
-		A5E323C2242E6FE00066AB83 /* BLE.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BLE.mm; sourceTree = "<group>"; };
-		A5E323C3242E6FE00066AB83 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
-		A5EEA9AC243E332300DDC471 /* contact.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = contact.cc; sourceTree = "<group>"; };
-		A5EEA9AE243E332300DDC471 /* contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contact.h; sourceTree = "<group>"; };
-		A5EEA9AF243E332300DDC471 /* contact-model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "contact-model.h"; sourceTree = "<group>"; };
-		A5EEA9B1243E33A800DDC471 /* contact-model.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "contact-model.cc"; sourceTree = "<group>"; };
 		B16E092F4292471095648AF9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		C265E1F2F323413F897ABDEC /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C7F87A4AC1994270AC1163B9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
@@ -210,23 +186,10 @@
 			isa = PBXGroup;
 			children = (
 				14CCE88C2461A9BB00937BF4 /* covidsafe.entitlements */,
-				A58968B12460DA3B00117C67 /* crypto.h */,
-				A58968B32460DA3B00117C67 /* crypto.mm */,
 				D26183132457EC45006B4478 /* ImportGoogleTimeline */,
 				14CCE83624606D0E00937BF4 /* Encryption */,
 				14CCE7CB2454B58A00937BF4 /* ContactLog */,
-				A5EEA9B1243E33A800DDC471 /* contact-model.cc */,
-				A5EEA9AF243E332300DDC471 /* contact-model.h */,
-				A5EEA9AC243E332300DDC471 /* contact.cc */,
-				A5EEA9AE243E332300DDC471 /* contact.h */,
-				A5117595243BCAD500BCD5AA /* proto.cc */,
-				A5117598243BCAD500BCD5AA /* proto.h */,
-				A5117593243BCAD500BCD5AA /* query-engine.cc */,
-				A5117597243BCAD500BCD5AA /* query-engine.h */,
-				A5117596243BCAD500BCD5AA /* util.cc */,
-				A5117594243BCAD500BCD5AA /* util.h */,
 				1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */,
-				14431C2F242D8B4300DEFBBE /* BLE */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -236,17 +199,6 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = covidsafe;
-			sourceTree = "<group>";
-		};
-		14431C2F242D8B4300DEFBBE /* BLE */ = {
-			isa = PBXGroup;
-			children = (
-				A5E323C3242E6FE00066AB83 /* BLE.h */,
-				A5E323C2242E6FE00066AB83 /* BLE.mm */,
-				14431C30242D8B6200DEFBBE /* BeaconBroadcast.m */,
-				14431C32242D8B7100DEFBBE /* BeaconBroadcast.h */,
-			);
-			name = BLE;
 			sourceTree = "<group>";
 		};
 		14431C442431186F00DEFBBE /* Products */ = {
@@ -797,22 +749,14 @@
 				D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
-				14431C31242D8B6200DEFBBE /* BeaconBroadcast.m in Sources */,
 				14CCE87F2460A34F00937BF4 /* EncryptionUtil.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				14CCE83B24606D9400937BF4 /* EncryptionUtil.swift in Sources */,
 				14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */,
-				A5EEA9B0243E332300DDC471 /* contact.cc in Sources */,
-				A5117599243BCAD500BCD5AA /* query-engine.cc in Sources */,
-				A5EEA9B2243E33A800DDC471 /* contact-model.cc in Sources */,
-				A511759B243BCAD500BCD5AA /* util.cc in Sources */,
-				A5E323C4242E6FE00066AB83 /* BLE.mm in Sources */,
-				A511759A243BCAD500BCD5AA /* proto.cc in Sources */,
 				D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */,
 				14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */,
 				14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */,
 				14CCE7ED24550F0200937BF4 /* Locations.m in Sources */,
-				A58968B42460DA3B00117C67 /* crypto.mm in Sources */,
 				14CCE83924606D3300937BF4 /* AES.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

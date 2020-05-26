@@ -41,10 +41,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>CovidSafe uses bluetooth to track people that comes close to you.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>CovidSafe uses bluetooth to track people that comes close to you.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>CovidSafe uses contact list to help you prepare contact tracer interview</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -77,8 +73,6 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>bluetooth-central</string>
-		<string>bluetooth-peripheral</string>
 		<string>fetch</string>
 		<string>location</string>
 		<string>processing</string>
