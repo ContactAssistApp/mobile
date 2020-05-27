@@ -21,7 +21,8 @@ class SymptomsList extends Component {
   }
 
   fetchLog = async () => {
-    const logs = await getSymptoms(new Date(), 14).map(log => {
+    const symptoms = await getSymptoms(new Date(), 14);
+    const logs = symptoms.map(log => {
       let logObj = JSON.parse(JSON.stringify(log));
       logObj.date = DateConverter.calendarFormat(new Date(logObj.date));
       return logObj;
