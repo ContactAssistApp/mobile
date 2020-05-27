@@ -35,9 +35,9 @@ class ContactLog extends Component {
     this.fetchMarkedDays();
   }
 
-  fetchMarkedDays = () => {
+  fetchMarkedDays = async () => {
     let markedDates = {};
-    const dates = getDaysWithLocations();
+    const dates = await getDaysWithLocations();
 
     dates.forEach(date => {
       markedDates[date] = {marked: true};

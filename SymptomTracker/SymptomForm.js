@@ -20,7 +20,7 @@ import Modal from '../views/Modal';
 import {addSymptoms} from '../realm/realmSymptomsTasks';
 import DateConverter from '../utils/date';
 import {getSymptoms} from '../realm/realmSymptomsTasks';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class SymptomForm extends Component {
   constructor() {
@@ -42,14 +42,13 @@ class SymptomForm extends Component {
     this.props.navigation.navigate('BottomNav');
   };
 
-  fetchLog = () => {
+  fetchLog = async () => {
     const {
       symptoms: {date, timeOfDay},
     } = this.props;
 
-    const log = getSymptoms(DateConverter.calendarToDate(date)).filter(
-      item => item.timeOfDay === timeOfDay,
-    )[0];
+    const logs = await getSymptoms(DateConverter.calendarToDate(date));
+    const log = logs.filter(item => item.timeOfDay === timeOfDay)[0];
 
     if (log) {
       let logObj = JSON.parse(JSON.stringify(log));
@@ -64,7 +63,7 @@ class SymptomForm extends Component {
     });
   };
 
-  submitForm = () => {
+  submitForm = async () => {
     let {
       symptoms,
       symptoms: {date, timeOfDay},
@@ -87,7 +86,7 @@ class SymptomForm extends Component {
     symptoms.ts = currentTime;
     symptoms.dateTime = `${date}_${timeOfDay}`;
     symptoms.date = DateConverter.calendarToDate(date);
-    addSymptoms(symptoms);
+    await addSymptoms(symptoms);
 
     this.setState({
       modalOn: true,
@@ -174,7 +173,7 @@ class SymptomForm extends Component {
               onPress={() => {
                 this.handleCheckboxPress(
                   'difficultyBreathing',
-                  difficultyBreathing
+                  difficultyBreathing,
                 );
               }}
               selected={difficultyBreathing}
@@ -218,10 +217,10 @@ class SymptomForm extends Component {
             />
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.next_button}
-          onPress={this.submitForm}>
-          <Text style={styles.next_button_text}>{strings('next.btn_text')}</Text>
+        <TouchableOpacity style={styles.next_button} onPress={this.submitForm}>
+          <Text style={styles.next_button_text}>
+            {strings('next.btn_text')}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     );

@@ -6,7 +6,7 @@ import SectionHeader from './SectionHeader';
 import DateHeader from './DateHeader';
 import {getSymptoms} from '../realm/realmSymptomsTasks';
 import DateConverter from '../utils/date';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class SymptomsList extends Component {
   constructor() {
@@ -20,8 +20,8 @@ class SymptomsList extends Component {
     this.fetchLog();
   }
 
-  fetchLog = () => {
-    const logs = getSymptoms(new Date(), 14).map(log => {
+  fetchLog = async () => {
+    const logs = await getSymptoms(new Date(), 14).map(log => {
       let logObj = JSON.parse(JSON.stringify(log));
       logObj.date = DateConverter.calendarFormat(new Date(logObj.date));
       return logObj;

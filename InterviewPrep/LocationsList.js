@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import SectionHeader from './SectionHeader';
 import Location from '../utils/location';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class LocationsList extends Component {
   constructor() {
@@ -18,8 +18,8 @@ class LocationsList extends Component {
     this.fetchAddresses();
   }
 
-  fetchAddresses = () => {
-    const addresses = Location.fetchAddresses(new Date(), 14);
+  fetchAddresses = async () => {
+    const addresses = await Location.fetchAddresses(new Date(), 14);
     this.setState({
       addresses,
     });

@@ -1,8 +1,9 @@
-import realm from './realm';
 import DateConverter from '../utils/date';
+import RealmObj from './realm';
 
-export function addSymptoms(symptoms) {
+export async function addSymptoms(symptoms) {
   try {
+    const realm = await RealmObj.init();
     realm.write(() => {
       realm.create('Symptoms', symptoms, true);
     });
@@ -11,7 +12,8 @@ export function addSymptoms(symptoms) {
   }
 }
 
-export function getSymptoms(endDate, dateRange = 0) {
+export async function getSymptoms(endDate, dateRange = 0) {
+  const realm = await RealmObj.init();
   const allSymptoms = realm.objects('Symptoms');
   let startDate = new Date(endDate.valueOf());
 
@@ -28,8 +30,9 @@ export function getSymptoms(endDate, dateRange = 0) {
   return symptoms;
 }
 
-export function deleteSymptom(id) {
+export async function deleteSymptom(id) {
   try {
+    const realm = await RealmObj.init();
     realm.write(() => {
       realm.delete(realm.objectForPrimaryKey('Symptoms', id));
     });
@@ -38,7 +41,8 @@ export function deleteSymptom(id) {
   }
 }
 
-export function getDaysWithLog() {
+export async function getDaysWithLog() {
+  const realm = await RealmObj.init();
   const logs = realm.objects('Symptoms');
   let dates = [];
   logs.forEach(log => {

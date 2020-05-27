@@ -23,7 +23,7 @@ class ImportGoogleTimeline extends Component {
     ]);
   };
 
-  processPlacemarks = placemarks => {
+  processPlacemarks = async placemarks => {
     const locations = placemarks.filter(placemark => {
       return placemark.Point && placemark.Point.length > 0;
     })
@@ -58,7 +58,7 @@ class ImportGoogleTimeline extends Component {
     );
 
     if (locations && locations.length > 0) {
-      addGoogleLocations(locations);
+      await addGoogleLocations(locations);
     }
 
     this.importFinished(
