@@ -7,7 +7,7 @@ import InterviewPrepContainer from './Container';
 import Modal from '../views/Modal';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class PrepareInterviewComponent extends Component {
   constructor() {
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     color: colors.module_title,
     paddingLeft: 10,
+    flex: 1,
   },
   description: {
     fontSize: 14,
