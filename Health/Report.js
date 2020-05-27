@@ -1,30 +1,12 @@
 import React, {PureComponent} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  Alert,
-  Linking,
-} from 'react-native';
-import {getLatestCoarseLocation} from '../utils/coarseLocation';
+import {ScrollView, StyleSheet, Image} from 'react-native';
 import colors from '../assets/colors';
 import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
-import {UW_URL} from '../utils/constants';
 import Emergency from '../Privacy/Emergency';
 import CareTips from '../CareTips/CareTips';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import {strings} from '../locales/i18n';
 
 class Report extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
-
   render() {
     return (
       <ScrollView>

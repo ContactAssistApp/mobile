@@ -96,7 +96,8 @@ class Home extends Component {
     if (location) {
       const messageIDs = await this.fetchMessageID(location);
       if (messageIDs && messageIDs.length > 0) {
-        let notifications = await this.searchQuery(args, msgs);
+        // const messages = await this.fetchMessages(messageIDs);
+        let notifications = await this.searchQuery();
         if (notifications && notifications.length > 0) {
           this.setState({notifications});
 
@@ -112,9 +113,9 @@ class Home extends Component {
     }
   };
 
-  searchQuery = async (args, msgs) => {
-    return []
-  }
+  searchQuery = async () => {
+    return [];
+  };
 
   fetchMessageID = location => {
     const url = `${GET_MESSAGE_LIST_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=0`;
