@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {DEFAULT_LOG_WINDOW} from '../utils/constants';
 import {StyleSheet, Text, View, TextInput} from 'react-native';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import Ble from '../utils/ble';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 
@@ -26,7 +25,6 @@ class DataStorage extends Component {
         });
 
         SetStoreData('LOG_WINDOW', DEFAULT_LOG_WINDOW);
-        Ble.updateLogWindow(DEFAULT_LOG_WINDOW);
       }
     });
   }
@@ -62,7 +60,6 @@ class DataStorage extends Component {
           maxLength={2}
           onEndEditing={() => {
             SetStoreData('LOG_WINDOW', this.state.log_window);
-            Ble.updateLogWindow(this.state.log_window);
           }}
         />
       </View>
