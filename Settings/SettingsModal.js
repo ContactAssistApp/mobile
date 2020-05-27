@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Notification from './Notification';
 import Location from './Location';
-import Bluetooth from './Bluetooth';
 import DataStorage from './DataStorage';
 import Import from './Import';
 import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
@@ -38,7 +37,6 @@ class SettingsModal extends Component {
               <Text style={styles.section_title}>Tracing</Text>
               <Notification />
               <Location />
-              <Bluetooth />
               <Import />
               <DataStorage />
               <AnalyticsOptIn />

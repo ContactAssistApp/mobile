@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import colors from '../../assets/colors';
 import Notification from '../../Settings/Notification';
 import Location from '../../Settings/Location';
-import Bluetooth from '../../Settings/Bluetooth';
 import Import from '../../Settings/Import';
 import DataStorage from '../../Settings/DataStorage';
 import AnalyticsOptIn from '../../Settings/AnalyticsOptIn';
@@ -41,7 +40,6 @@ class Preferences extends Component {
           <View style={styles.settings}>
             <Notification />
             <Location />
-            <Bluetooth />
             <Import />
             <DataStorage />
             <AnalyticsOptIn />

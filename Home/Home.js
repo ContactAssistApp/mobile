@@ -19,7 +19,6 @@ import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
-import Ble from '../utils/ble';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import SettingsModal from '../Settings/SettingsModal';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
@@ -77,15 +76,6 @@ class Home extends Component {
           location: data,
         });
         LocationServices.start();
-      }
-    });
-
-    this.getSetting('ENABLE_BLE').then(data => {
-      if (data) {
-        this.setState({
-          ble: data,
-        });
-        Ble.start();
       }
     });
 
@@ -219,7 +209,6 @@ class Home extends Component {
   updateSetting = state => {
     if (state) {
       SetStoreData('ENABLE_LOCATION', 'true');
-      SetStoreData('ENABLE_BLE', 'true');
 
       this.setState({
         location: true,
@@ -227,17 +216,14 @@ class Home extends Component {
       });
 
       LocationServices.start();
-      Ble.start();
     } else {
       SetStoreData('ENABLE_LOCATION', 'false');
-      SetStoreData('ENABLE_BLE', 'false');
 
       this.setState({
         location: false,
         ble: false,
       });
       LocationServices.stop();
-      Ble.stop();
     }
   };
 
