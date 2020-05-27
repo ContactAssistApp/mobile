@@ -34,7 +34,6 @@ class Home extends Component {
     this.state = {
       refreshing: false,
       location: false,
-      ble: false,
       enable_notification: false,
       notifications: [],
     };
@@ -101,32 +100,7 @@ class Home extends Component {
         let args = [];
         let msgs = [];
         messages.forEach(messageObj => {
-          const {bluetoothMatches} = messageObj;
 
-          bluetoothMatches.forEach(match => {
-            const {userMessage, seeds} = match;
-            let timestamps = [];
-            let seedsArray = [];
-            seeds.forEach(seedObj => {
-              if (seedObj
-                && seedObj.seed
-                && seedObj.seed !== '00000000-0000-0000-0000-000000000000') {
-                timestamps.push(seedObj.sequenceStartTime);
-                seedsArray.push(seedObj.seed);
-              }
-            });
-
-            if (seedsArray && seedsArray.length > 0) {
-              args.push(seedsArray);
-              args.push(timestamps);
-
-              if (userMessage) {
-                msgs.push(userMessage);
-              } else {
-                msgs.push(DEFAULT_NOTIFICATION);
-              }
-            }
-          });
         });
 
         let notifications = await this.searchQuery(args, msgs);
@@ -146,21 +120,7 @@ class Home extends Component {
   };
 
   searchQuery = async (args, msgs) => {
-    return Ble.runBleQuery(args).then(
-      results => {
-        let notifications = [];
-        results.forEach((result, index) => {
-          if (result === 1) {
-            const msg = msgs[index];
-            notifications.push(msg);
-          }
-        });
-        return notifications;
-      },
-      error => {
-        console.log(error);
-      },
-    );
+
   };
 
   fetchMessageID = location => {
@@ -212,7 +172,6 @@ class Home extends Component {
 
       this.setState({
         location: true,
-        ble: true,
       });
 
       LocationServices.start();
@@ -221,7 +180,6 @@ class Home extends Component {
 
       this.setState({
         location: false,
-        ble: false,
       });
       LocationServices.stop();
     }
@@ -236,8 +194,7 @@ class Home extends Component {
   };
 
   render() {
-    const {location, ble} = this.state;
-    const isBroadcasting = location || ble;
+    const isBroadcasting = this.state.location;
     const broadcastStatus = isBroadcasting
       ? strings('broadcasting.on_text')
       : strings('broadcasting.off_text');
@@ -254,8 +211,7 @@ class Home extends Component {
               refreshing={this.state.refreshing}
               onRefresh={this.handleOnRefresh}
             />
-          }
-        >
+          }>
           <View style={styles.status_container}>
             <View style={styles.status_header}>
               <View style={styles.title_container}>
@@ -263,7 +219,7 @@ class Home extends Component {
                   style={styles.logo}
                   source={require('../assets/home/logo.png')}
                 />
-              <Text style={styles.title}>{strings('app.name_one_line')}</Text>
+                <Text style={styles.title}>{strings('app.name_one_line')}</Text>
               </View>
               <SettingsModal />
             </View>
@@ -276,8 +232,7 @@ class Home extends Component {
                   <Text style={styles.broadcast_description}>
                     {isBroadcasting
                       ? strings('global.logging')
-                      : strings('global.stopping')
-                    }
+                      : strings('global.stopping')}
                     <Text
                       style={styles.lear_more_link}
                       onPress={() => Linking.openURL(UW_URL)}>
@@ -290,7 +245,7 @@ class Home extends Component {
                 handleToggle={selectedState => {
                   this.updateSetting(selectedState);
                 }}
-                value={this.state.location || this.state.ble}
+                value={this.state.location}
                 style={styles.toggle}
               />
             </View>
