@@ -4,24 +4,82 @@ import {StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 import CustomIcon from '../assets/icons/CustomIcon.js';
+import DateConverter from '../utils/date';
 
 class Notification extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      index: 0,
+    };
+  }
+
+  handleOnPress = () => {
+    this.setState({index: 1});
+  };
+
+  handleDismiss = () => {
+    this.setState({
+      display: false,
+    });
+  };
+
   render() {
+    const {notifications} = this.props;
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <CustomIcon
-            name={'warning24'}
-            color={colors.warning_high}
-            size={20} />
-          <Text style={styles.title}>You May Have Been Exposed</Text>
+        <View style={styles.container_header}>
+          <CustomIcon name={'alert24'} color={'#8F761E'} size={20} />
+          <Text style={styles.title}>Local alerts</Text>
         </View>
-        {this.props.notifications.map((notification, idx) => {
-          return (
-            <Text key={`notification_${idx}`} style={styles.message}>
-              {notification}
-            </Text>
-          );
+        {notifications.map((notification, idx) => {
+          if (this.state.index % notifications.length === idx) {
+            const {
+              type,
+              title,
+              street,
+              city,
+              state,
+              zip,
+              description,
+              beginTime,
+              endTime,
+            } = notification;
+
+            return (
+              <View
+                style={styles.content_container}
+                key={`notification_${idx}`}>
+                <Text style={styles.card_title}>{title}</Text>
+                <View style={styles.card_line_wrapper}>
+                  <CustomIcon
+                    name={'location24'}
+                    color={colors.gray_icon}
+                    size={20}
+                    style={styles.card_content_icon}
+                  />
+                  <View>
+                    <Text style={styles.card_line}>{street}</Text>
+                    <Text style={styles.card_line}>
+                      {`${city}, ${state} ${zip}`}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.card_line_wrapper}>
+                  <CustomIcon
+                    name={'calendar24'}
+                    color={colors.gray_icon}
+                    size={20}
+                    style={styles.card_content_icon}
+                  />
+                  <Text style={styles.card_line}>
+                    {`${DateConverter.dateString(new Date(beginTime))} - ${DateConverter.dateString(new Date(endTime))}`}
+                  </Text>
+                </View>
+                <Text style={styles.message}>{description}</Text>
+              </View>
+            );
+          }
         })}
       </View>
     );
@@ -31,33 +89,51 @@ class Notification extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
     borderRadius: 20,
     marginTop: 20,
     marginHorizontal: 16,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FDE7E9',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
   title: {
-    color: colors.warning_high,
+    color: '#8F761E',
     fontWeight: '500',
     fontSize: 16,
     lineHeight: 20,
     paddingLeft: 5,
   },
   message: {
-    fontSize: 15,
-    lineHeight: 20,
     letterSpacing: -0.24,
-    color: colors.secondary_body_copy,
     paddingVertical: 15,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  container_header: {
+    flexDirection: 'row',
+    paddingVertical: 17,
+    paddingHorizontal: 21,
+    backgroundColor: colors.chip_moderate,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+  },
+  content_container: {
+    paddingHorizontal: 18,
+  },
+  card_title: {
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: '500',
+    paddingVertical: 15,
+  },
+  card_content_icon: {
+    paddingRight: 5,
+  },
+  card_line_wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 5,
+  },
+  card_line: {
+    fontSize: 14,
+    lineHeight: 20,
   },
 });
 

@@ -16,7 +16,6 @@ import {
   Linking,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
-import {DEFAULT_NOTIFICATION} from '../utils/constants';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import {getLatestCoarseLocation} from '../utils/coarseLocation';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
@@ -26,6 +25,9 @@ import {UW_URL} from '../utils/constants';
 import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
 import {strings} from '../locales/i18n';
+import {getLocations} from '../realm/realmLocationTasks';
+import {addAreas, getAreas} from '../realm/realmAreaMatchesTasks';
+import DateConverter from '../utils/date';
 
 class Home extends Component {
   constructor() {
@@ -93,32 +95,128 @@ class Home extends Component {
 
   processQueries = async () => {
     let location = await getLatestCoarseLocation();
+    let currentTime = new Date().getTime();
+
     if (location) {
       const messageIDs = await this.fetchMessageID(location);
-      if (messageIDs && messageIDs.length > 0) {
-        // const messages = await this.fetchMessages(messageIDs);
-        let notifications = await this.searchQuery();
-        if (notifications && notifications.length > 0) {
-          this.setState({notifications});
+      let notifications = [];
 
-          if (this.state.enable_notification) {
-            notifications.map(notification => {
-              return PushNotification.localNotification({
-                message: notification,
-              });
+      if (messageIDs && messageIDs.length > 0) {
+        const {narrowcastMessages} = await this.fetchMessages(messageIDs);
+        let pastMessages = [];
+        let futureMessages = [];
+
+        narrowcastMessages.forEach((message, i) => {
+          const {
+            area: {beginTime},
+          } = message;
+
+          if (beginTime <= currentTime) {
+            pastMessages.push(message);
+          } else {
+            futureMessages.push(message);
+          }
+        });
+
+        if (futureMessages && futureMessages.length > 0) {
+          addAreas(futureMessages);
+        }
+
+        pastMessages.forEach(match => {
+          const {
+            userMessage,
+            area,
+            area: {beginTime, endTime},
+          } = match;
+
+          if (this.isMatch(area) && userMessage.startsWith('{')) {
+            notifications.push({
+              ...JSON.parse(userMessage),
+              beginTime,
+              endTime,
             });
           }
+        });
+
+        const pastMessagesDB = getAreas(currentTime);
+        if (pastMessagesDB && pastMessagesDB.length > 0) {
+          pastMessagesDB.forEach(match => {
+            const {
+              userMessage,
+              area,
+              area: {beginTime, endTime},
+            } = match;
+            // TODO: change isChecked to true
+            if (this.isMatch(area) && userMessage.startsWith('{')) {
+              notifications.push({
+                ...JSON.parse(userMessage),
+                beginTime,
+                endTime,
+              });
+            }
+          });
+        }
+      }
+
+      if (notifications && notifications.length > 0) {
+        this.setState({notifications});
+
+        if (this.state.enable_notification) {
+          notifications.map(notification => {
+            return PushNotification.localNotification({
+              message: notification.description,
+            });
+          });
         }
       }
     }
   };
 
-  searchQuery = async () => {
-    return [];
+  isMatch = async area => {
+    const {
+      location: {latitude: targetLat, longitude: targetLon},
+      radiusMeters,
+      beginTime,
+      endTime,
+    } = area;
+
+    const locations = await getLocations(new Date(), 14);
+    if (locations && locations.length > 0) {
+      locations.find(location => {
+        const {latitude: lat, longitude: lon, time} = location;
+        if (this.distance(lat, lon, targetLat, targetLon) < radiusMeters &&
+          beginTime < time &&
+          time < endTime) {
+          return true;
+        }
+      });
+    }
+    return false;
   };
 
-  fetchMessageID = location => {
-    const url = `${GET_MESSAGE_LIST_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=0`;
+  distance = (lat1, lon1, lat2, lon2) => {
+    if (lat1 === lat2 && lon1 === lon2) {
+      return 0;
+    } else {
+      const radlat1 = (Math.PI * lat1) / 180;
+      const radlat2 = (Math.PI * lat2) / 180;
+      const theta = lon1 - lon2;
+      const radtheta = (Math.PI * theta) / 180;
+      let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = (dist * 180) / Math.PI;
+      dist = dist * 60 * 1.1515;
+      dist = dist * 1.609344 * 1000; //distance in meter
+      return dist;
+    }
+  };
+
+  fetchMessageID = async location => {
+    const ts = await this.getTs();
+    const url = `${GET_MESSAGE_LIST_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=${ts}`;
 
     return fetch(url, {
       headers: {
@@ -131,6 +229,7 @@ class Home extends Component {
       })
       .then(data => {
         const {messageInfoes} = data;
+        SetStoreData('LAST_QUERY_TS', DateConverter.getRoundedTime(new Date()));
         return messageInfoes;
       })
       .catch(err => {
@@ -185,6 +284,14 @@ class Home extends Component {
     });
 
     this.processQueries().then(() => this.setState({refreshing: false}));
+  };
+
+  getTs = async () => {
+    const ts = await GetStoreData('LAST_QUERY_TS');
+    if (ts) {
+      return ts;
+    }
+    return DateConverter.getRoundedTime(new Date());
   };
 
   render() {
