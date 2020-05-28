@@ -48,7 +48,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>App requires background tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>CovidSafe uses location to track people that comes close to you.</string>
+	<string>CovidSafe uses location to track people that come close to you.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>App requires motion tracking</string>
 	<key>UIAppFonts</key>
