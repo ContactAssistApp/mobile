@@ -1,4 +1,4 @@
-package com.tracedefense1;
+package com.covidsafe;
 
 import android.app.Application;
 import android.content.Context;
