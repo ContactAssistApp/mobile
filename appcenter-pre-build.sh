@@ -1,4 +1,3 @@
 
 plutil -replace AppSecret -string $AppCenterKey ios/AppCenter-Config.plist 
-
-#fixme patch android/app/src/main/assets/appcenter-config.json
+sed -i tmp s/{APP_CENTER_KEY}/$AppCenterKey/g android/app/src/main/assets/appcenter-config.json
