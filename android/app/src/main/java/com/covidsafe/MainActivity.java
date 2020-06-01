@@ -1,4 +1,4 @@
-package com.tracedefense1;
+package com.covidsafe;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "tracedefense1";
+    return "covidsafe";
   }
 }

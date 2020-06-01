@@ -48,8 +48,8 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"analyticsOptIn"]) {
     [AppCenterReactNative register];
-    [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
-    [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
+    [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:false];
+    [AppCenterReactNativeCrashes register];
   }
 
   return YES;
