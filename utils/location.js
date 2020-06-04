@@ -4,9 +4,13 @@ import {getLocations} from '../realm/realmLocationTasks';
 const Location = {
   convertToAddress: function(coordinate) {
     return new Promise((resolve, reject) => {
-      NativeModules.Locations.reverseGeoCode([coordinate], addresses => {
-        resolve(addresses);
-      });
+      try {
+        NativeModules.Locations.reverseGeoCode([coordinate], addresses => {
+          resolve(addresses);
+        });
+      } catch(e) {
+        reject(e);
+      }
     });
   },
   fetchAddresses: async function(dateObj, dayRange = 0) {
