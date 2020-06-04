@@ -45,12 +45,9 @@
   center.delegate = self;
 
   // Enable crash reporting and analytics if opted-in.
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if ([defaults boolForKey:@"analyticsOptIn"]) {
-    [AppCenterReactNative register];
-    [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:false];
-    [AppCenterReactNativeCrashes register];
-  }
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:false];
+  [AppCenterReactNativeCrashes register];
 
   return YES;
 }
