@@ -48,6 +48,8 @@ target 'covidsafe' do
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
   pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
+  pod 'RNSecureRandom', :path => '../node_modules/react-native-securerandom'
+
   target 'covidsafeTests' do
     inherit! :search_paths
     # Pods for testing
