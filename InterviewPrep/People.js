@@ -4,7 +4,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../assets/colors';
 import SelectedContacts from '../ContactLog/SelectedContacts';
 import SectionHeader from './SectionHeader';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class People extends Component {
   render() {
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 25,
     color: colors.section_title,
+    flex: 1,
   },
   description: {
     fontSize: 14,

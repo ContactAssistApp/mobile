@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: colors.body_copy,
     paddingVertical: 6,
+    width: 280,
   },
   time: {
     fontSize: 12,

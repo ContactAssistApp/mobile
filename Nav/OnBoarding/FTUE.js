@@ -68,7 +68,7 @@ class FTUE extends Component {
       },
       {
         key: 'ftue_2',
-        title: 'Exposure Notifcations',
+        title: 'Local Alerts',
         text: 'Learn if you might have been exposed. If you\'ve recently visited a location with a risk of COVID-19 exposure, you\'ll get a notification letting you know.',
         image: require('../../assets/ftue/ftue_2.png'),
       },

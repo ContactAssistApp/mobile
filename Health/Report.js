@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   result_container: {
     backgroundColor: 'white',
     paddingVertical: 20,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
   },
   title: {
     fontWeight: 'bold',
