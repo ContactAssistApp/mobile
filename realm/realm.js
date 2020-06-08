@@ -50,12 +50,12 @@ Symptoms.schema = {
   },
 };
 
-const REAL_PW_KEY = "REALM_PW_KEY";
-const REAM_KEY_SIZE = 64;
+const REALM_PW_KEY = "REALM_PW_KEY";
+const REALM_KEY_SIZE = 64;
 
 const createKey = async () => {
-  const tmpString = base64js.fromByteArray(await generateSecureRandom(REAM_KEY_SIZE))
-  if(await Keychain.setGenericPassword(REAL_PW_KEY, tmpString))
+  const tmpString = base64js.fromByteArray(await generateSecureRandom(REALM_KEY_SIZE))
+  if(await Keychain.setGenericPassword(REALM_PW_KEY, tmpString))
     return tmpString;
   return null;
 };
@@ -77,7 +77,7 @@ const getKey = async () => {
         }
       });
 
-      if(credentials && credentials.username != REAL_PW_KEY) {
+      if(credentials && credentials.username != REALM_PW_KEY) {
         credentials = null;
         Keychain.resetGenericPassword();
       }
