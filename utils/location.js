@@ -1,17 +1,10 @@
-import {NativeModules} from 'react-native';
+import {Platform, NativeModules} from 'react-native';
 import {getLocations} from '../realm/realmLocationTasks';
 
 const Location = {
   convertToAddress: function(coordinate) {
-    return new Promise((resolve, reject) => {
-      try {
-        NativeModules.Locations.reverseGeoCode([coordinate], addresses => {
-          resolve(addresses);
-        });
-      } catch(e) {
-        reject(e);
-      }
-    });
+    console.log("convertToAddress:: " + JSON.stringify(coordinate));
+    return NativeModules.Locations.reverseGeoCode(coordinate)
   },
   fetchAddresses: async function(dateObj, dayRange = 0) {
     const locations = await getLocations(dateObj, dayRange);
