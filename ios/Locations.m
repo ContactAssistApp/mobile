@@ -1,5 +1,9 @@
 #import "React/RCTBridgeModule.h"
 
 @interface RCT_EXTERN_MODULE(Locations, NSObject)
-  RCT_EXTERN_METHOD(reverseGeoCode: (NSDictionary *)geoList resolve: (RCTPromiseResolveBlock *)resolver reject: (RCTPromiseRejectBlock*)rejecter)
+  RCT_EXTERN_METHOD(
+    reverseGeoCode: (NSDictionary *)geo
+    resolve: (RCTPromiseResolveBlock)resolve
+    rejecter: (RCTPromiseRejectBlock*)reject
+  )
 @end

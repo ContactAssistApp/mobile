@@ -13,8 +13,8 @@ class Locations: NSObject {
   @objc
   func reverseGeoCode(
     _ geo: NSDictionary,
-    resolver resolve: @escaping RCTPromiseResolveBlock,
-    rejecter reject: @escaping RCTPromiseRejectBlock) {
+    resolve resolve: @escaping RCTPromiseResolveBlock,
+    rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
     let lat = geo.value(forKey: "latitude") as! Double
     let lon = geo.value(forKey: "longitude") as! Double
     let geocoder = CLGeocoder()
