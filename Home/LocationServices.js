@@ -8,23 +8,20 @@ let instanceCount = 0;
 
 export default class LocationServices {
   static start() {
-    const saveLocation = location => {
+    const saveLocation = async (location) => {
       const {latitude, longitude} = location;
       const time = DateConverter.getUTCUnixTime();
 
-      Location.convertToAddress({latitude, longitude, time}).then(addresses => {
-        const name =
-          addresses[0][0] === '' ? 'Unknown Location' : addresses[0][0];
-        const addressString = addresses[0][1];
-
+      let addressObj = await Location.convertToAddress({latitude, longitude});
+      console.log('converted ' + latitude + ", " + longitude + " to: " +  JSON.stringify(addressObj));
+      if(addressObj)
         addLocation({
           latitude,
           longitude,
           time,
-          address: addressString,
-          name,
+          address: addressObj.address,
+          name: addressObj.name,
         });
-      });
     };
 
     instanceCount += 1;
