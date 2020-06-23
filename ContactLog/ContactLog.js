@@ -19,7 +19,7 @@ import Calendar from '../views/Calendar';
 import TabView from '../views/TabView';
 import DateConverter from '../utils/date';
 import {getDaysWithLocations} from '../realm/realmLocationTasks';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class ContactLog extends Component {
   constructor() {

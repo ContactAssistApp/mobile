@@ -81,6 +81,10 @@ const DateConverter = {
   calendarToDate: function(dateString) {
     return new Date(dateString.replace(/-/g, '/'));
   },
+  getRoundedTime: function(dateObj) {
+    const ms = 1000 * 60 * 15; // round to 15min buckets
+    return Math.round(dateObj.getTime() / ms) * ms;
+  },
 };
 
 export default DateConverter;

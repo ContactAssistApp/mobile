@@ -1,10 +1,39 @@
 'use strict';
 import {Platform, NativeModules} from 'react-native';
 import Realm from 'realm';
+import {generateSecureRandom} from 'react-native-securerandom';
+import * as Keychain from 'react-native-keychain';
 const base64js = require('base64-js');
 
-import { generateSecureRandom } from 'react-native-securerandom';
-import * as Keychain from 'react-native-keychain';
+class NarrowcastLocation extends Realm.Object {}
+NarrowcastLocation.schema = {
+  name: 'NarrowcastLocation',
+  properties: {
+    latitude: 'double',
+    longitude: 'double',
+  },
+};
+
+class Area extends Realm.Object {}
+Area.schema = {
+  name: 'Area',
+  properties: {
+    location: 'NarrowcastLocation',
+    radiusMeters: 'double',
+    beginTime: 'int',
+    endTime: 'int',
+  },
+};
+
+class AreaMatches extends Realm.Object {}
+AreaMatches.schema = {
+  name: 'AreaMatches',
+  properties: {
+    userMessage: 'string',
+    area: 'Area',
+    isChecked: 'bool',
+  },
+};
 
 class Location extends Realm.Object {}
 Location.schema = {
@@ -50,13 +79,16 @@ Symptoms.schema = {
   },
 };
 
-const REALM_PW_KEY = "REALM_PW_KEY";
+const REALM_PW_KEY = 'REALM_PW_KEY';
 const REALM_KEY_SIZE = 64;
 
 const createKey = async () => {
-  const tmpString = base64js.fromByteArray(await generateSecureRandom(REALM_KEY_SIZE))
-  if(await Keychain.setGenericPassword(REALM_PW_KEY, tmpString))
+  const tmpString = base64js.fromByteArray(
+    await generateSecureRandom(REALM_KEY_SIZE),
+  );
+  if (await Keychain.setGenericPassword(REALM_PW_KEY, tmpString)) {
     return tmpString;
+  }
   return null;
 };
 
@@ -64,31 +96,30 @@ let createKeyInstance = null;
 const getKey = async () => {
   try {
     let keyString = null;
-    
-    if(Platform.OS == 'ios') {
+    if (Platform.OS === 'ios') {
       keyString = await NativeModules.EncryptionUtil.getRealmKey();
     } else {
       //this strings won't show up since they are only used if biometric auth is used (which isn't here)
       let credentials = await Keychain.getGenericPassword({
         authenticationPrompt: {
-          title: "CovidSafe Backend storage",
-          subtitle: "CovidSafe uses this password to protect your personal data",
-          description: "locally stored location data"
-        }
+          title: 'CovidSafe Backend storage',
+          subtitle: 'CovidSafe uses this password to protect your personal data',
+          description: 'locally stored location data',
+        },
       });
 
-      if(credentials && credentials.username != REALM_PW_KEY) {
+      if (credentials && credentials.username !== REALM_PW_KEY) {
         credentials = null;
         Keychain.resetGenericPassword();
       }
-      if(credentials) {
+      if (credentials) {
         keyString = credentials.password;
       } else {
         //since this is async, it could race with multiple attempts at open
-        if(!createKeyInstance)
+        if (!createKeyInstance) {
           createKeyInstance = createKey();
+        }
         keyString = await createKeyInstance;
-
       }
     }
     if (keyString) {
@@ -103,12 +134,19 @@ const getKey = async () => {
 let realmDbInstance = null;
 class RealmObj {
   static async init() {
-    if(realmDbInstance)
+    if (realmDbInstance) {
       return realmDbInstance;
+    }
     let key = await getKey();
-    if(realmDbInstance == null) {
-      realmDbInstance =  Realm.open({
-        schema: [Location.schema, Symptoms.schema],
+    if (realmDbInstance == null) {
+      realmDbInstance = Realm.open({
+        schema: [
+          Location.schema,
+          Symptoms.schema,
+          NarrowcastLocation.schema,
+          Area.schema,
+          AreaMatches.schema,
+        ],
         encryptionKey: key,
       });
     }

@@ -2,7 +2,7 @@ export const DEFAULT_NOTIFICATION = 'Based on your location history, we believe 
 
 export const QUERY_SIZE_LIMIT = 1000;
 
-export const PRECISION_LIMIT = 4;
+export const PRECISION_LIMIT = 8;
 
 export const DEFAULT_LOG_WINDOW = '14';
 
