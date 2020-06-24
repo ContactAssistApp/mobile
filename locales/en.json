@@ -594,6 +594,12 @@
     "911": "Call 911 immediately if you are having a medical emergency."
   },
   "google": {
-    "downloadInProgress": "Download in Progress"
-  },
+    "downloadInProgress": "Download in Progress",
+    "downloadFailed": "Failed to Import Location from Google",
+    "downloadSuccessful": "Successfully Imported Location History from Google",
+    "noHistory": "You don't have any location history on Google.",
+    "parsingFailed": "Failed to load your Google location history",
+    "noDataFound": "Could not load your Google location history",
+    "signin": "Sign-in to Google"
+  }
 }

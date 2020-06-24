@@ -4,6 +4,7 @@ import {parseString} from 'react-native-xml2js';
 import Modal from '../views/Modal';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
 import {addGoogleLocations} from '../realm/realmLocationTasks';
+import {strings} from '../locales/i18n';
 
 class ImportGoogleTimeline extends Component {
   importFinished = (reason, succeeded) => {
@@ -13,7 +14,7 @@ class ImportGoogleTimeline extends Component {
     if (succeeded) {
       title = reason;
     } else {
-      title = 'Failed to Import Location from Google';
+      title = strings('google.downloadFailed');
       description = reason;
     }
     Alert.alert(title, description, [
@@ -62,7 +63,7 @@ class ImportGoogleTimeline extends Component {
     }
 
     this.importFinished(
-      'Successfully Imported Location History from Google',
+      strings('google.downloadSuccessful'),
       true,
     );
   };
@@ -76,13 +77,13 @@ class ImportGoogleTimeline extends Component {
             this.processPlacemarks(placemarks);
           } else {
             this.importFinished(
-              "You don't have any location history on Google.",
+              strings('google.noHistory'),
               true,
             );
           }
         } else {
           console.log('Failed to parse KML due to: ' + JSON.stringify(error));
-          this.importFinished('Failed to load your Google location history');
+          this.importFinished(strings('google.parsingFailed'));
         }
       });
     } else {
