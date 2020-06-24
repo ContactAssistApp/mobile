@@ -10,7 +10,6 @@
 		00E356F31AD99517003FC87E /* covidsafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* covidsafeTests.m */; };
 		1123ACC52B400C4FFD59E85D /* libPods-covidsafe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75651575E3F0264CB5F9AE05 /* libPods-covidsafe-tvOS.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */; };
@@ -22,6 +21,7 @@
 		14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE83E24606DFB00937BF4 /* KeyChain.swift */; };
 		14CCE84424606EEB00937BF4 /* EncryptionUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE84324606EEB00937BF4 /* EncryptionUnitTest.swift */; };
 		14CCE87F2460A34F00937BF4 /* EncryptionUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CCE87E2460A34F00937BF4 /* EncryptionUtil.m */; };
+		14FC67BD24A3F5670090B1EE /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14FC67BA24A3F5660090B1EE /* Launch Screen.storyboard */; };
 		17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35472C232F804031A439818A /* icomoon.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -70,7 +70,6 @@
 		13B07F961A680F5B00A75B9A /* covidsafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = covidsafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = covidsafe/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = covidsafe/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = covidsafe/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = covidsafe/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = covidsafe/main.m; sourceTree = "<group>"; };
@@ -88,6 +87,7 @@
 		14CCE87D2460A34F00937BF4 /* EncryptionUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EncryptionUtil.h; sourceTree = "<group>"; };
 		14CCE87E2460A34F00937BF4 /* EncryptionUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EncryptionUtil.m; sourceTree = "<group>"; };
 		14CCE88C2461A9BB00937BF4 /* covidsafe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = covidsafe.entitlements; path = covidsafe/covidsafe.entitlements; sourceTree = "<group>"; };
+		14FC67BB24A3F5660090B1EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "covidsafe/Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-covidsafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F2626E92A547D8ACCF17C51 /* Pods-covidsafe-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1FCD43A2CE3EA8E1EB58114E /* Pods-covidsafe-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOSTests/Pods-covidsafe-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -185,6 +185,7 @@
 		13B07FAE1A68108700A75B9A /* covidsafe */ = {
 			isa = PBXGroup;
 			children = (
+				14FC67BA24A3F5660090B1EE /* Launch Screen.storyboard */,
 				14CCE88C2461A9BB00937BF4 /* covidsafe.entitlements */,
 				D26183132457EC45006B4478 /* ImportGoogleTimeline */,
 				14CCE83624606D0E00937BF4 /* Encryption */,
@@ -195,7 +196,6 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = covidsafe;
@@ -504,7 +504,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				A5CB15BE24632830002A4B20 /* AppCenter-Config.plist in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				14FC67BD24A3F5670090B1EE /* Launch Screen.storyboard in Resources */,
 				17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -794,13 +794,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
+		14FC67BA24A3F5660090B1EE /* Launch Screen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				13B07FB21A68108700A75B9A /* Base */,
+				14FC67BB24A3F5660090B1EE /* Base */,
 			);
-			name = LaunchScreen.xib;
-			path = covidsafe;
+			name = "Launch Screen.storyboard";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
