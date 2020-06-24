@@ -88,7 +88,7 @@ class ImportGoogleTimeline extends Component {
       });
     } else {
       console.log('No KML data found due to: ' + JSON.stringify(dict.error));
-      this.importFinished('google.noDataFound');
+      this.importFinished(strings('google.noDataFound'));
     }
   };
 
