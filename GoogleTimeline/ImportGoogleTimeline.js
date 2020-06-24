@@ -88,7 +88,7 @@ class ImportGoogleTimeline extends Component {
       });
     } else {
       console.log('No KML data found due to: ' + JSON.stringify(dict.error));
-      this.importFinished('Could not load your Google location history');
+      this.importFinished('google.noDataFound');
     }
   };
 
@@ -98,7 +98,7 @@ class ImportGoogleTimeline extends Component {
         visible={this.props.visible}
         handleModalClose={this.props.handleModalClose}
         useScrollView={false}
-        title={'Sign-in to Google'}>
+        title={strings('google.signin'}>
         <GoogleTimelineImportView
           style={styles.wrapper}
           onReceivingPlacemarks={this.processKMLResponse}
