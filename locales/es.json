@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Covid \nSafe",
-    "name_one_line": "CovidSafe"
+    "name_one_line": "CommonCircle Assist"
   },
   "main": {
     "header_text": "Covid \nSafe"
@@ -72,16 +72,16 @@
   "global": {
     "warning": "Advertencia",
     "q1": "\u00bfCu\u00e1l es el prop\u00f3sito de esta aplicaci\u00f3n?",
-    "a1": "CovidSafe es una aplicaci\u00f3n que busca reducir la propagaci\u00f3n del coronavirus en la comunidad, espec\u00edficamente ayudando a las personas a saber si han estado expuestas, conect\u00e1ndolas con la orientaci\u00f3n adecuada de salud p\u00fablica y permitiendo un seguimiento de contactos efectivo. CovidSafe tambi\u00e9n reduce la carga sobre los sistemas de salud p\u00fablica al ofrecer a las personas que han sido diagnosticadas positivamente y sus posibles exposiciones, una forma segura, privada y r\u00e1pida de comunicar esta informaci\u00f3n a las personas que la necesitan: las autoridades de salud p\u00fablica y sus equipos de b\u00fasqueda de contactos.",
+    "a1": "CommonCircle Assist es una aplicaci\u00f3n que busca reducir la propagaci\u00f3n del coronavirus en la comunidad, espec\u00edficamente ayudando a las personas a saber si han estado expuestas, conect\u00e1ndolas con la orientaci\u00f3n adecuada de salud p\u00fablica y permitiendo un seguimiento de contactos efectivo. CommonCircle Assist tambi\u00e9n reduce la carga sobre los sistemas de salud p\u00fablica al ofrecer a las personas que han sido diagnosticadas positivamente y sus posibles exposiciones, una forma segura, privada y r\u00e1pida de comunicar esta informaci\u00f3n a las personas que la necesitan: las autoridades de salud p\u00fablica y sus equipos de b\u00fasqueda de contactos.",
     "q2": "\u00bfC\u00f3mo me beneficia esta aplicaci\u00f3n?",
-    "a2": "CovidSafe ofrece varias funciones para protegerlo a usted y a su comunidad: \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Recibir notificaciones sobre una posible exposici\u00f3n. Es posible que se le notifique si alguien que estuvo cerca de usted en las \u00faltimas dos semanas ha presentado s\u00edntomas de COVID-19. La medida de \"cerca\" no es tan precisa como la definici\u00f3n m\u00e9dica (dentro de 6 pies por m\u00e1s de 10 minutos), pero es precisa hasta unos pocos metros. \n \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Rastree sus s\u00edntomas. Los s\u00edntomas que rastrea pueden ser \u00fatiles para ayudar a los equipos de salud p\u00fablica si se confirma que es positivo, y para tener esta informaci\u00f3n f\u00e1cilmente disponible si est\u00e1 expuesto y solicita una entrevista de seguimiento de contactos. Tambi\u00e9n puede obtener informaci\u00f3n confiable y verificada sobre el SARS-CoV-2, por qu\u00e9 es tan peligroso y c\u00f3mo se propaga.",
-    "q3": "\u00bfQui\u00e9n puede usar CovidSafe?",
-    "a3": "Cuando est\u00e1 disponible para su uso, CovidSafe es gratuito y cualquiera puede usarlo.",
+    "a2": "CommonCircle Assist ofrece varias funciones para protegerlo a usted y a su comunidad: \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Recibir notificaciones sobre una posible exposici\u00f3n. Es posible que se le notifique si alguien que estuvo cerca de usted en las \u00faltimas dos semanas ha presentado s\u00edntomas de COVID-19. La medida de \"cerca\" no es tan precisa como la definici\u00f3n m\u00e9dica (dentro de 6 pies por m\u00e1s de 10 minutos), pero es precisa hasta unos pocos metros. \n \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Rastree sus s\u00edntomas. Los s\u00edntomas que rastrea pueden ser \u00fatiles para ayudar a los equipos de salud p\u00fablica si se confirma que es positivo, y para tener esta informaci\u00f3n f\u00e1cilmente disponible si est\u00e1 expuesto y solicita una entrevista de seguimiento de contactos. Tambi\u00e9n puede obtener informaci\u00f3n confiable y verificada sobre el SARS-CoV-2, por qu\u00e9 es tan peligroso y c\u00f3mo se propaga.",
+    "q3": "\u00bfQui\u00e9n puede usar CommonCircle Assist?",
+    "a3": "Cuando est\u00e1 disponible para su uso, CommonCircle Assist es gratuito y cualquiera puede usarlo.",
     "q4": "\u00bfQui\u00e9n m\u00e1s se beneficia de mi participaci\u00f3n con esta aplicaci\u00f3n?",
-    "a4": "CovidSafe es capaz de alertar a las personas que han estado en \u00e1reas donde el coronavirus est\u00e1 activo. Si su prueba de coronavirus es positiva, tambi\u00e9n podr\u00e1 notificar an\u00f3nimamente a otras personas con las que haya estado en contacto durante las \u00faltimas dos semanas para alertarlos de que pueden haber estado expuestos y prepararlos para posibles entrevistas de rastreo de contactos.",
-    "q5": "\u00bfC\u00f3mo ayuda CovidSafe a los funcionarios de salud p\u00fablica?",
-    "a5": "Las entrevistas tradicionales de rastreo de contactos realizadas por los servicios de salud p\u00fablica son importantes, laboriosas, complicadas y a veces pueden omitir contactos importantes porque los pacientes olvidan mencionarlos. CovidSafe ayuda a las personas que han evaluado lugares de recuerdo positivos que visitaron recientemente, proporcionando un registro objetivo, que luego pueden compartir con los equipos de seguimiento de contactos. Tambi\u00e9n existe una funcionalidad para organizar la informaci\u00f3n de contacto de contactos conocidos, lo que agiliza el proceso de la entrevista y permite que los rastreadores de contactos trabajen m\u00e1s r\u00e1pido.",
-    "pq1": "Si el resultado es positivo y lo divulgo a trav\u00e9s de CovidSafe, \u00bfqu\u00e9 informaci\u00f3n se revela a los dem\u00e1s?",
+    "a4": "CommonCircle Assist es capaz de alertar a las personas que han estado en \u00e1reas donde el coronavirus est\u00e1 activo. Si su prueba de coronavirus es positiva, tambi\u00e9n podr\u00e1 notificar an\u00f3nimamente a otras personas con las que haya estado en contacto durante las \u00faltimas dos semanas para alertarlos de que pueden haber estado expuestos y prepararlos para posibles entrevistas de rastreo de contactos.",
+    "q5": "\u00bfC\u00f3mo ayuda CommonCircle Assist a los funcionarios de salud p\u00fablica?",
+    "a5": "Las entrevistas tradicionales de rastreo de contactos realizadas por los servicios de salud p\u00fablica son importantes, laboriosas, complicadas y a veces pueden omitir contactos importantes porque los pacientes olvidan mencionarlos. CommonCircle Assist ayuda a las personas que han evaluado lugares de recuerdo positivos que visitaron recientemente, proporcionando un registro objetivo, que luego pueden compartir con los equipos de seguimiento de contactos. Tambi\u00e9n existe una funcionalidad para organizar la informaci\u00f3n de contacto de contactos conocidos, lo que agiliza el proceso de la entrevista y permite que los rastreadores de contactos trabajen m\u00e1s r\u00e1pido.",
+    "pq1": "Si el resultado es positivo y lo divulgo a trav\u00e9s de CommonCircle Assist, \u00bfqu\u00e9 informaci\u00f3n se revela a los dem\u00e1s?",
     "pa1": "Otras personas con la aplicaci\u00f3n, que han sido expuestas pueden ser notificadas, junto con el momento en que ocurri\u00f3 la exposici\u00f3n. Ninguna otra informaci\u00f3n ser\u00e1 revelada.",
     "pq2": "Si el resultado es negativo, \u00bfpuede una persona malintencionada tener acceso a las transmisiones de mi tel\u00e9fono y denunciarme como positivo?",
     "pa2": "No, esto no es posible. La aplicaci\u00f3n est\u00e1 encriptada para evitar que ocurra utilizando tecnolog\u00eda de seguridad similar utilizada para otros fines, como la banca en l\u00ednea.",
@@ -92,7 +92,7 @@
     "pq5": "\u00bfPueden otros adivinar la identidad de una persona que opta por informar que ha dado positivo?",
     "pa5": "Posiblemente. Una persona que estaba cerca de alguien que dio positivo en el examen puede adivinar la identidad de la persona infectada. Si hay dos o m\u00e1s personas que estaban cerca de alguien que dio positivo, el proceso de identificaci\u00f3n de la persona infectada puede ser m\u00e1s f\u00e1cil. Sin embargo, la identidad de la persona nunca se transmitir\u00e1 directamente. Las identidades de las personas no se almacenan en los datos. Solo se almacena la transmisi\u00f3n aleatoria de la persona infectada.",
     "pq6": "\u00bfQu\u00e9 datos se almacenan en mi tel\u00e9fono? \u00bfQu\u00e9 datos sobre m\u00ed se almacenan p\u00fablicamente?",
-    "pa6": "Cada tel\u00e9fono emite una se\u00f1al aleatoria (usando Bluetooth) a otros tel\u00e9fonos cercanos. Todos los tel\u00e9fonos recuerdan las se\u00f1ales que env\u00edan y reciben durante dos semanas. Estas se\u00f1ales de transmisi\u00f3n pueden considerarse como n\u00fameros aleatorios no identificables. La se\u00f1al que transmite cada tel\u00e9fono cambia, por lo que las se\u00f1ales permanecen an\u00f3nimas y no se pueden vincular a una persona espec\u00edfica. Si alguien da positivo y decide divulgar esta informaci\u00f3n para ayudar a otros, solo divulgar\u00e1 las transmisiones de su tel\u00e9fono durante las \u00faltimas dos semanas. Esto permite que otras personas que usan CovidSafe comprueben si estaban cerca de la persona infectada para determinar si estuvieron expuestos, en funci\u00f3n de las transmisiones de sus propios tel\u00e9fonos.",
+    "pa6": "Cada tel\u00e9fono emite una se\u00f1al aleatoria (usando Bluetooth) a otros tel\u00e9fonos cercanos. Todos los tel\u00e9fonos recuerdan las se\u00f1ales que env\u00edan y reciben durante dos semanas. Estas se\u00f1ales de transmisi\u00f3n pueden considerarse como n\u00fameros aleatorios no identificables. La se\u00f1al que transmite cada tel\u00e9fono cambia, por lo que las se\u00f1ales permanecen an\u00f3nimas y no se pueden vincular a una persona espec\u00edfica. Si alguien da positivo y decide divulgar esta informaci\u00f3n para ayudar a otros, solo divulgar\u00e1 las transmisiones de su tel\u00e9fono durante las \u00faltimas dos semanas. Esto permite que otras personas que usan CommonCircle Assist comprueben si estaban cerca de la persona infectada para determinar si estuvieron expuestos, en funci\u00f3n de las transmisiones de sus propios tel\u00e9fonos.",
     "pq7": "\u00bfC\u00f3mo funciona el seguimiento de ubicaci\u00f3n?",
     "pa7": "Consulte la secci\u00f3n de Bluetooth en el documento t\u00e9cnico de PACT en nuestro sitio web.",
     "pq8": "\u00bfSe compartir\u00e1 esta informaci\u00f3n con las agencias gubernamentales?",
@@ -100,7 +100,7 @@
     "pq9": "\u00bfPor qu\u00e9 debo informar mi enfermedad?",
     "pa9": "Si se enferma, puede usar la aplicaci\u00f3n para mejorar la eficiencia y la integridad de las entrevistas manuales de seguimiento de contactos. Su privacidad se maximiza al garantizar que todos los datos permanezcan en su dispositivo, a excepci\u00f3n de lo que revela voluntariamente a las autoridades sanitarias para permitir un seguimiento de contactos m\u00e1s efectivo.",
     "aq1": "\u00bfQu\u00e9 es el rastreo de contactos?",
-    "aa1": "El rastreo de contactos es un proceso que ayuda a identificar a todas las personas que pueden haber entrado en contacto con una persona enferma. Tradicionalmente, el seguimiento de contactos se realiza mediante trabajadores de salud p\u00fablica que entrevistan a la persona que est\u00e1 enferma para conocer a las personas con las que han estado en contacto y los lugares que han visitado recientemente en un per\u00edodo de tiempo espec\u00edfico, como las \u00faltimas dos semanas. Con CovidSafe, el seguimiento se realiza a trav\u00e9s de la aplicaci\u00f3n en lugar de en persona.",
+    "aa1": "El rastreo de contactos es un proceso que ayuda a identificar a todas las personas que pueden haber entrado en contacto con una persona enferma. Tradicionalmente, el seguimiento de contactos se realiza mediante trabajadores de salud p\u00fablica que entrevistan a la persona que est\u00e1 enferma para conocer a las personas con las que han estado en contacto y los lugares que han visitado recientemente en un per\u00edodo de tiempo espec\u00edfico, como las \u00faltimas dos semanas. Con CommonCircle Assist, el seguimiento se realiza a trav\u00e9s de la aplicaci\u00f3n en lugar de en persona.",
     "aq2": "\u00bfPor qu\u00e9 debo informar mi enfermedad?",
     "aa2": "Si se enferma, puede usar la aplicaci\u00f3n para mejorar la eficiencia y la integridad de las entrevistas manuales de seguimiento de contactos. Su privacidad se maximiza al garantizar que todos los datos permanezcan en su dispositivo, excepto lo que voluntariamente revela a las autoridades sanitarias para permitir el seguimiento de contactos.",
     "certError": "Marque la casilla para certificar que toda la informaci\u00f3n en este formulario es correcta.",
@@ -108,7 +108,7 @@
     "addressError": "La direcci\u00f3n que ha ingresado no es v\u00e1lida. Int\u00e9ntalo de nuevo.",
     "maxBlacklistSizeError": "Tama\u00f1o m\u00e1ximo de la lista negra alcanzado.",
     "phone": "911",
-    "privacyDisclaimer": "Cualquier informaci\u00f3n recopilada en CovidSafe se almacena de forma segura y local en su aplicaci\u00f3n, y es privada para usted.",
+    "privacyDisclaimer": "Cualquier informaci\u00f3n recopilada en CommonCircle Assist se almacena de forma segura y local en su aplicaci\u00f3n, y es privada para usted.",
     "privacyDisclaimer2": "Esta informaci\u00f3n se almacena de forma segura y local en su aplicaci\u00f3n, y permanece privada para usted.",
     "start": "Comience a iniciar sesi\u00f3n",
     "stop": "Dejar de iniciar sesi\u00f3n",
@@ -142,12 +142,12 @@
     "perm3desc": "Emite y detecta n\u00fameros aleatorios por Bluetooth para luego descubrir riesgos de exposici\u00f3n.",
     "setting1": "Longitud de almacenamiento de datos",
     "setting1desc": "N\u00famero de d\u00edas hasta que los registros locales se eliminen autom\u00e1ticamente.",
-    "storyTitle1": "Bienvenido a CovidSafe",
+    "storyTitle1": "Bienvenido a CommonCircle Assist",
     "storyTitle2": "Notificaciones de exposici\u00f3n",
     "storyTitle3": "Consejos de autocuidado",
     "storyTitle4": "Tu privacidad",
     "exposed": "Puede haber estado expuesto",
-    "story1": "CovidSafe le notifica si puede haber estado expuesto al coronavirus y lo ayuda a usted y a su comunidad a estar m\u00e1s seguros.",
+    "story1": "CommonCircle Assist le notifica si puede haber estado expuesto al coronavirus y lo ayuda a usted y a su comunidad a estar m\u00e1s seguros.",
     "story2": "Aprende si podr\u00edas haber estado expuesto. Si recientemente ha estado en contacto cercano con alguien recientemente diagnosticado con COVID-19. Recibir\u00e1 una notificaci\u00f3n.",
     "story3": "Cu\u00eddate a ti mismo y a los dem\u00e1s. Obtenga consejos de autocuidado, con\u00e9ctese con la gu\u00eda de salud p\u00fablica adecuada si ha experimentado s\u00edntomas. Y registre ubicaciones que visit\u00f3 recientemente para proteger a otros.",
     "story4": "Cualquier informaci\u00f3n que contribuya est\u00e1 protegida. Obtenga m\u00e1s informaci\u00f3n sobre c\u00f3mo se usa y protege su informaci\u00f3n en la p\u00e1gina Privacidad en Configuraci\u00f3n.",
@@ -174,7 +174,7 @@
     "prep": "Preparaci\u00f3n de entrevistas"
   },
   "email": {
-    "subject": "Paquete de informaci\u00f3n de la entrevista de CovidSafe Contact Tracer"
+    "subject": "Paquete de informaci\u00f3n de la entrevista de CommonCircle Assist Contact Tracer"
   },
   "location": {
     "logs": "Registros de ubicaci\u00f3n",
@@ -299,7 +299,7 @@
     "loc_on2": "Necesitamos servicios de ubicaci\u00f3n habilitados para verificar los anuncios. Habilite el permiso de los servicios de ubicaci\u00f3n."
   },
   "learn": {
-    "about_us": "Descargue y aprenda m\u00e1s sobre la aplicaci\u00f3n CovidSafe en",
+    "about_us": "Descargue y aprenda m\u00e1s sobre la aplicaci\u00f3n CommonCircle Assist en",
     "more_link_text": "Aprende m\u00e1s",
     "how_we_protect_your_privacy": "Conozca c\u00f3mo protegemos su privacidad"
   },
@@ -496,7 +496,7 @@
     "to_prepare_for_your_interview": "C\u00f3mo prepararse para su entrevista"
   },
   "interview": {
-    "preparation_description_text": "Durante su entrevista, una enfermera de atenci\u00f3n m\u00e9dica recopilar\u00e1 una lista de informaci\u00f3n cr\u00edtica para ayudar a identificar a las personas que pudieron haber estado expuestas. Puede preparar una lista de informaci\u00f3n sobre la que preguntar\u00e1n en funci\u00f3n de la informaci\u00f3n recopilada a trav\u00e9s de CovidSafe. Esta informaci\u00f3n incluye:"
+    "preparation_description_text": "Durante su entrevista, una enfermera de atenci\u00f3n m\u00e9dica recopilar\u00e1 una lista de informaci\u00f3n cr\u00edtica para ayudar a identificar a las personas que pudieron haber estado expuestas. Puede preparar una lista de informaci\u00f3n sobre la que preguntar\u00e1n en funci\u00f3n de la informaci\u00f3n recopilada a trav\u00e9s de CommonCircle Assist. Esta informaci\u00f3n incluye:"
   },
   "get": {
     "started_text": "Empezar"
@@ -505,7 +505,7 @@
     "asked_questions": "Preguntas frecuentes"
   },
   "about": {
-    "covidsafe": "Sobre CovidSafe"
+    "covidsafe": "Sobre CommonCircle Assist"
   },
   "tracing": {
     "tools": "Herramientas de rastreo"
@@ -524,10 +524,10 @@
     "logs": "Registros recientes"
   },
   "welcome": {
-    "to_covidsafe_text": "Bienvenido a CovidSafe"
+    "to_covidsafe_text": "Bienvenido a CommonCircle Assist"
   },
   "covidsafe": {
-    "notifies_you": "CovidSafe le notifica si puede haber estado expuesto al coronavirus y lo ayuda a controlar cualquier s\u00edntoma que tenga."
+    "notifies_you": "CommonCircle Assist le notifica si puede haber estado expuesto al coronavirus y lo ayuda a controlar cualquier s\u00edntoma que tenga."
   },
   "clear": {
     "all_text": "Limpiar todo"

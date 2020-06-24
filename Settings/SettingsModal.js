@@ -47,7 +47,7 @@ class SettingsModal extends Component {
               <SettingLink iconName={'share24'} title={'Share'} />
               <SettingLink
                 iconName={'logo24'}
-                title={'About CovidSafe'}
+                title={'About CommonCircle Assist'}
                 url={UW_URL}
               />
               <SettingLink

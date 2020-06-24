@@ -62,8 +62,8 @@ class FTUE extends Component {
     const slides = [
       {
         key: 'ftue_1',
-        title: 'Welcome to CovidSafe',
-        text: 'CovidSafe notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you\'re having.',
+        title: 'Welcome to CommonCircle Assist',
+        text: 'CommonCircle Assist notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you\'re having.',
         image: require('../../assets/ftue/ftue_1.png'),
       },
       {
@@ -122,9 +122,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   ftue_title: {
-    fontWeight: 'bold',
-    fontSize: 26,
-    lineHeight: 31,
+    fontWeight: '500',
+    fontSize: 20,
+    lineHeight: 26,
     letterSpacing: 0.33,
     paddingBottom: 15,
     color: 'white',

@@ -3,7 +3,7 @@
 //  covidsafe
 //
 //  Created by Apollo Zhu on 4/28/20.
-//  Copyright © 2020 CovidSafe. All rights reserved.
+//  Copyright © 2020 CommonCircle Assist. All rights reserved.
 //
 
 import Foundation
@@ -62,7 +62,7 @@ class GoogleTimelineImportViewManager: RCTViewManager, WKNavigationDelegate {
         .hasPrefix(GoogleTimelineImportViewManager.SIGNED_IN_HOST) == true
       else { return }
     view.activityIndictor.startAnimating()
-    
+
     func handleCookies(_ cookies: [HTTPCookie]) {
       request(urlForPreviousDays(), withCookies: cookies, then: callback)
     }

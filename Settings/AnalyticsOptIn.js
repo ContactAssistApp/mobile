@@ -44,7 +44,7 @@ class AnalyticsOptIn extends Component {
         iconName={'share24'}
         title={'Analytics'}
         description={
-          'Share analytics and crash data with CovidSafe developers.'
+          'Share analytics and crash data with CommonCircle Assist developers.'
         }
         toggleValue={this.state.optIn}
         handleToggle={this.updateSetting}

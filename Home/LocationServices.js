@@ -106,7 +106,7 @@ export default class LocationServices {
       setTimeout(
         () =>
           Alert.alert(
-            'CovidSafe requires access to location information',
+            'CommonCircle Assist requires access to location information',
             'Would you like to open app settings?',
             [
               {
