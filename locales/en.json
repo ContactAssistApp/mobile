@@ -592,5 +592,8 @@
   },
   "call": {
     "911": "Call 911 immediately if you are having a medical emergency."
-  }
+  },
+  "google": {
+    "downloadInProgress": "Download in Progress"
+  },
 }

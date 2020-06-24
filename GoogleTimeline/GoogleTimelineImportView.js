@@ -1,28 +1,24 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {requireNativeComponent} from 'react-native';
+import { View, Text } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 import CookieManager from '@react-native-community/cookies';
+
+import {strings} from '../locales/i18n';
 
 const SIGN_IN_URL = "https://accounts.google.com/signin";
 const SIGNED_IN_HOST = "https://myaccount.google.com";
 const useWebKit = true;
 
-let import_in_progress = false;
-
 class GoogleTimelineImportView extends Component {
-  _onReceivingPlacemarks = event => {
-    if (!this.props.onReceivingPlacemarks) {
-      return;
-    }
-    this.props.onReceivingPlacemarks(event.nativeEvent);
-  };
-  
-  componentDidMount = () => {
-    import_in_progress = false;
-  }
+  constructor() {
+    super();
 
+    this.state = {
+      downloadInProgess: false,
+    };
+  }
 
   onNavigationStateChange = newNavState => {
     const { url } = newNavState;
@@ -30,13 +26,11 @@ class GoogleTimelineImportView extends Component {
     if(!url.startsWith(SIGNED_IN_HOST))
       return;
 
-    console.log("logged in fine!");
-    if(import_in_progress) {
+    if(this.state.downloadInProgess) {
       console.log("import in progress, skip");
       return;
     }
-
-    import_in_progress = true;
+    this.setState({ downloadInProgess: true })
 
     CookieManager.get('https://www.google.com', useWebKit).then(cookies => {
       let cookie_str = ""  
@@ -50,8 +44,9 @@ class GoogleTimelineImportView extends Component {
       var begin = new Date(now.getTime() - 14 * 24 * 3600 * 1000);
   
       let download_url = `https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i${begin.getFullYear()}!2i${begin.getMonth()+1}!3i${begin.getDate()}!2m3!1i${now.getFullYear()}!2i${now.getMonth()+1}!3i${now.getDate()}`; 
-      console.log(download_url);
-      
+
+      console.log("dowloading: " + download_url);
+
       fetch(download_url, {
         headers: {
           'content-disposition': 'attachment',
@@ -60,13 +55,12 @@ class GoogleTimelineImportView extends Component {
         }})
         .then(response => response.text())
         .then(body => {
-          import_in_progress = false;
+          console.log("download successfull");
           if(this.props.onReceivingPlacemarks)
             this.props.onReceivingPlacemarks({ 'data': body })
         })
         .catch(e => {
           console.log('Google Import failed: ' + e);
-          import_in_progress = false;
           if(this.props.onReceivingPlacemarks)
             this.props.onReceivingPlacemarks({ 'error': e })
         });
@@ -75,17 +69,16 @@ class GoogleTimelineImportView extends Component {
     
 
   render() {
-    return (
-      <WebView
-        source = {{ uri: SIGN_IN_URL }}
-        onNavigationStateChange = {this.onNavigationStateChange} />
-    );
-      // return (
-    //   <NativeGoogleTimelineImportView
-    //     {...this.props}
-    //     onReceivingPlacemarks={this._onReceivingPlacemarks}
-    //   />
-    // );
+    if(this.state.downloadInProgess)
+      return (
+        <View><Text>{strings('google.downloadInProgress')}</Text></View>
+      );
+    else
+      return (
+        <WebView
+          source = {{ uri: SIGN_IN_URL }}
+          onNavigationStateChange = {this.onNavigationStateChange} />
+      );
   }
 }
 
@@ -96,8 +89,3 @@ GoogleTimelineImportView.propTypes = {
 };
 
 module.exports = GoogleTimelineImportView;
-
-// var NativeGoogleTimelineImportView = requireNativeComponent(
-//   'GoogleTimelineImportView',
-//   GoogleTimelineImportView,
-// );
