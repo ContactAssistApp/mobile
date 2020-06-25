@@ -179,7 +179,8 @@
   "location": {
     "logs": "Registros de ubicaci\u00f3n",
     "text": "Ubicaci\u00f3n",
-    "visited_in_last_14_days": "Lugares que ha visitado en los \u00faltimos 14 d\u00edas."
+    "visited_in_last_14_days": "Lugares que ha visitado en los \u00faltimos 14 d\u00edas.",
+    "description": "Use la ubicación para filtrar notificaciones relevantes para usted. Toda la información de ubicación se almacena localmente."
   },
   "send": {
     "email": "Enviar correo electr\u00f3nico"
@@ -583,5 +584,27 @@
   },
   "call": {
     "911": "Llame al 911 de inmediato si tiene una emergencia m\u00e9dica."
+  },
+
+  "google": {
+    "downloadInProgress": "Descarga en curso",
+    "downloadFailed": "Error al importar la ubicación de Google",
+    "downloadSuccessful": "Historial de ubicaciones importado correctamente de Google",
+    "noHistory": "No tienes ningún historial de ubicaciones en Google.",
+    "parsingFailed": "Failed to load your Google location history",
+    "noDataFound": "Error al cargar tu historial de ubicaciones de Google",
+    "signin": "Inicia sesión en Google"
+  },
+
+  "analytics": {
+    "title": "Analítica",
+    "description": "Comparta datos analíticos y de fallas con los desarrolladores de CovidSafe."
+  },
+
+  "import": {
+    "text": "Importar historial de ubicaciones",
+    "long_text": "Sincronice su historial de ubicaciones\npara comenzar.",
+    "description": "Sincronice su historial de ubicaciones directamente desde Google importando sus datos de línea de tiempo.",
+    "btn_text": "Importar"
   }
 }

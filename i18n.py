@@ -5,9 +5,9 @@ import json
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--bad', '-b', help='Show matches to potentially bad usage of strings', action='store_true')
+parser.add_argument('--bad', '-b', help='Show matches of potentially bad usage of strings', action='store_true')
 parser.add_argument('--missing', '-m', help='Dont show missing strings in all locales', action='store_false')
-parser.add_argument('--unused', '-u', help='Dont show unused strings in all locales', action='store_false')
+parser.add_argument('--unused', '-u', help='Dont show unused strings from all locales', action='store_false')
 parser.add_argument('--edit', '-e', help='Edit strings files in place and remove unused entries', action='store_true')
 args = parser.parse_args()
 
