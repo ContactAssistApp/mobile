@@ -35,7 +35,7 @@ export default class LocationServices {
       desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
       stationaryRadius: 50,
       distanceFilter: 3500,
-      debug: true, // when true, it beeps every time a loc is read
+      debug: false, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
       locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
 

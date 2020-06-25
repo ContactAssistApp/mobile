@@ -98,7 +98,7 @@ class ImportGoogleTimeline extends Component {
         visible={this.props.visible}
         handleModalClose={this.props.handleModalClose}
         useScrollView={false}
-        title={strings('google.signin'}>
+        title={strings('google.signin')}>
         <GoogleTimelineImportView
           style={styles.wrapper}
           onReceivingPlacemarks={this.processKMLResponse}
