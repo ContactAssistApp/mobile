@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import LocationServices from '../Home/LocationServices';
 import TraceTool from './TraceTool';
+import {strings} from '../locales/i18n';
 
 class Location extends Component {
   constructor(props) {
@@ -43,10 +44,8 @@ class Location extends Component {
     return (
       <TraceTool
         iconName={'location24'}
-        title={'Location'}
-        description={
-          'Use location to filter notifications relevant to you. All location information is stored locally.'
-        }
+        title={strings('location.text')}
+        description={strings('location.description')}
         toggleValue={this.state.location}
         handleToggle={this.updateSetting}
       />

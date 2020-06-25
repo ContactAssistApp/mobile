@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, TextInput} from 'react-native';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
+import {strings} from '../locales/i18n';
 
 class DataStorage extends Component {
   constructor(props) {
@@ -45,10 +46,8 @@ class DataStorage extends Component {
           style={styles.icon}
         />
         <View style={styles.content}>
-          <Text style={styles.title}>{'Length of data storage'}</Text>
-          <Text style={styles.description}>
-            {'Number of days until local logs are automatically deleted'}
-          </Text>
+          <Text style={styles.title}>{strings('global.setting1')}</Text>
+          <Text style={styles.description}>{strings('global.setting1desc')}</Text>
         </View>
         <TextInput
           style={styles.log_window_input}

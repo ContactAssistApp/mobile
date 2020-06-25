@@ -71,7 +71,7 @@ class AppNav extends Component {
                   name={'Preferences'}
                   component={Preferences}
                   options={{
-                    title: 'Select your preferences',
+                    title: strings('permissions.header_text'),
                     headerTintColor: colors.primary_theme,
                     headerBackTitle: ' ',
                   }}

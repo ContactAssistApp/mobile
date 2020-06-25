@@ -5,6 +5,7 @@ import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import DateConverter from '../utils/date';
+import {strings} from '../locales/i18n';
 
 class Notification extends Component {
   constructor(props) {

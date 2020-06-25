@@ -17,6 +17,7 @@ import Location from '../../Settings/Location';
 import Import from '../../Settings/Import';
 import DataStorage from '../../Settings/DataStorage';
 import AnalyticsOptIn from '../../Settings/AnalyticsOptIn';
+import {strings} from '../../locales/i18n';
 
 class Preferences extends Component {
   completeFTUE = () => {
@@ -34,7 +35,7 @@ class Preferences extends Component {
         <ScrollView>
           <View style={styles.intro_container}>
             <Text style={styles.intro_text}>
-              For improved location accuracy and awareness, turn on location permissions.
+              {strings('global.stopping')}
             </Text>
           </View>
           <View style={styles.settings}>
@@ -50,7 +51,7 @@ class Preferences extends Component {
               this.completeFTUE();
               navigate('BottomNav');
             }}>
-            <Text style={styles.next_button_text}>Next</Text>
+            <Text style={styles.next_button_text}>{strings('next.btn_text')}</Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>

@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
+import {strings} from '../locales/i18n';
 
 class Import extends Component {
   constructor() {
@@ -23,10 +24,10 @@ class Import extends Component {
         />
         <Image source={require('../assets/health/map.png')} />
         <Text style={styles.title}>
-          Sync your location history{'\n'}to get started.
+          {strings('import.long_text')}
         </Text>
         <Text style={styles.description}>
-          Import your timeline data from Google to sync your locations quickly. You can also add locations one by one.
+         {strings('import.description')}
         </Text>
         <TouchableOpacity
           style={styles.button}
@@ -39,7 +40,7 @@ class Import extends Component {
             size={16}
             style={styles.import_icon}
           />
-          <Text style={styles.button_text}>Import</Text>
+          <Text style={styles.button_text}>{strings('import.btn_text')}</Text>
         </TouchableOpacity>
       </View>
     );

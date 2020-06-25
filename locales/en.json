@@ -170,7 +170,8 @@
   "location": {
     "logs": "Location logs",
     "text": "Location",
-    "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days"
+    "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days",
+    "description": "Use location to filter notifications relevant to you. All location information is stored locally."
   },
   "send": {
     "email": "Send email"
@@ -381,7 +382,10 @@
     "text": "Release information"
   },
   "import": {
-    "text": "Import location history"
+    "text": "Import location history",
+    "long_text": "Sync your location history\nto get started.",
+    "description": "Sync your location history directly from Google by importing your timeline data.",
+    "btn_text": "Import"
   },
   "share": {
     "text": "Share"
@@ -591,5 +595,10 @@
     "parsingFailed": "Failed to load your Google location history",
     "noDataFound": "Could not load your Google location history",
     "signin": "Sign-in to Google"
+  },
+
+  "analytics": {
+    "title": "Analytics",
+    "description": "Share analytics and crash data with CommonCircle Assist developers."
   }
 }

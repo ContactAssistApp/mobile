@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {SetStoreData} from '../../utils/asyncStorage';
 import colors from '../../assets/colors.js';
+import {strings} from '../../locales/i18n';
+
 
 class FTUE extends Component {
   renderItem = ({item}) => {
@@ -22,10 +24,10 @@ class FTUE extends Component {
               <View style={styles.ftue_links}>
                 <View style={styles.privacy_link}>
                   <CustomIcon name={'lock16'} color={'white'} size={16} />
-                  <Text style={styles.privacy_text}>Privacy</Text>
+                  <Text style={styles.privacy_text}>{strings('privacy.text')}</Text>
                 </View>
                 <View style={styles.terms_link}>
-                  <Text style={styles.term_text}>Terms and Conditions</Text>
+                  <Text style={styles.term_text}>{strings('terms.text')}</Text>
                 </View>
               </View>
             </ImageBackground>
@@ -33,7 +35,7 @@ class FTUE extends Component {
           <View style={styles.ftue_text_container}>
             <Text style={styles.ftue_title}>{item.title}</Text>
             <TouchableOpacity style={styles.start_button} onPress={this.onDone}>
-              <Text style={styles.start_button_text}>Get Started</Text>
+              <Text style={styles.start_button_text}>{strings('get.started_text')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -62,31 +64,31 @@ class FTUE extends Component {
     const slides = [
       {
         key: 'ftue_1',
-        title: 'Welcome to CommonCircle Assist',
-        text: 'CommonCircle Assist notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you\'re having.',
+        title: strings('global.storyTitle1'),
+        text: strings('global.story1'),
         image: require('../../assets/ftue/ftue_1.png'),
       },
       {
         key: 'ftue_2',
-        title: 'Local Alerts',
-        text: 'Learn if you might have been exposed. If you\'ve recently visited a location with a risk of COVID-19 exposure, you\'ll get a notification letting you know.',
+        title: strings('global.storyTitle2'),
+        text: strings('global.story2'),
         image: require('../../assets/ftue/ftue_2.png'),
       },
       {
         key: 'ftue_3',
-        title: 'Self-Care Tips',
-        text: 'Take care of yourself and others Get self-care tips, connect with a healthcare professional if your symptoms worsen, and report locations you recently visited to protect others.',
+        title: strings('global.storyTitle3'),
+        text: strings('global.story3'),
         image: require('../../assets/ftue/ftue_3.png'),
       },
       {
         key: 'ftue_4',
-        title: 'Your Privacy',
-        text: 'Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.',
+        title: strings('global.storyTitle4'),
+        text: strings('global.story4'),
         image: require('../../assets/ftue/ftue_4.png'),
       },
       {
         key: 'ftue_5',
-        title: 'Let\'s slow the spread of COVID-19 together',
+        title: strings('global.startText'),
         image: require('../../assets/ftue/ftue_5.png'),
       },
     ];
