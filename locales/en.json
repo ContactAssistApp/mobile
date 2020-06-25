@@ -600,5 +600,9 @@
   "analytics": {
     "title": "Analytics",
     "description": "Share analytics and crash data with CommonCircle Assist developers."
+  },
+
+  "narrowcast": {
+    "alerts": "Local alerts"
   }
 }

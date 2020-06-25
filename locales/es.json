@@ -606,5 +606,9 @@
     "long_text": "Sincronice su historial de ubicaciones\npara comenzar.",
     "description": "Sincronice su historial de ubicaciones directamente desde Google importando sus datos de línea de tiempo.",
     "btn_text": "Importar"
+  },
+
+  "narrowcast": {
+    "alerts": "Alertas locales"
   }
 }
