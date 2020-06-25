@@ -107,10 +107,11 @@ const styles = StyleSheet.create({
   },
   title_container: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   logo: {
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
     marginRight: 5,
   },
   title: {
