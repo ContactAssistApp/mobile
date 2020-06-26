@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TraceTool from './TraceTool';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
 import NotificationServices from '../services/NotificationServices';
+import {strings} from '../locales/i18n';
 
 class Notification extends Component {
   constructor(props) {
@@ -41,8 +42,8 @@ class Notification extends Component {
     return (
       <TraceTool
         iconName={'alert24'}
-        title={'Notifications'}
-        description={'Receive notifications for local alerts and updates.'}
+        title={strings('global.perm1')}
+        description={strings('global.perm1desc')}
         toggleValue={this.state.notification}
         handleToggle={this.updateSetting}
       />

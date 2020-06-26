@@ -3,6 +3,7 @@ import TraceTool from './TraceTool';
 import Crashes from 'appcenter-crashes';
 import Analytics from 'appcenter-analytics';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
+import {strings} from '../locales/i18n';
 
 class AnalyticsOptIn extends Component {
   constructor(props) {
@@ -42,10 +43,8 @@ class AnalyticsOptIn extends Component {
     return (
       <TraceTool
         iconName={'share24'}
-        title={'Analytics'}
-        description={
-          'Share analytics and crash data with CommonCircle Assist developers.'
-        }
+        title={strings('analytics.title')}
+        description={strings('analytics.description')}
         toggleValue={this.state.optIn}
         handleToggle={this.updateSetting}
       />

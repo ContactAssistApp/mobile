@@ -5,6 +5,7 @@ import colors from '../assets/colors';
 import PropTypes from 'prop-types';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import DateConverter from '../utils/date';
+import {strings} from '../locales/i18n';
 
 class Notification extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Notification extends Component {
       <View style={styles.container}>
         <View style={styles.container_header}>
           <CustomIcon name={'alert24'} color={'#8F761E'} size={20} />
-          <Text style={styles.title}>Local alerts[DEMO]</Text>
+          <Text style={styles.title}>{strings('narrowcast.alerts')}[DEMO]</Text>
         </View>
         {notifications.map((notification, idx) => {
           if (this.state.index % notifications.length === idx) {

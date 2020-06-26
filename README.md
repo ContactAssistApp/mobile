@@ -27,8 +27,6 @@ May need to run certain commands to get unstuck
 
 ## I18n
 
-All string authoring happens in the Android App (https://github.com/covidsafe/App-Android). All authoring must happen there.
-To update the translations checkout the android app and then run the following command:
-```
-python conv.py PATH_TO_ANDROID_APP
-```
+All strings are under `locales/*.json` and should be edited there.
+There's a `i18n.py` script to help with translation maintenance by detecting missing and unused strings. Use it before a release.
+The script doesn't try to detect direct strings in the app that haven't being translated.

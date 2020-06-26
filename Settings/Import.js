@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
+import {strings} from '../locales/i18n';
 
 class Import extends Component {
   constructor() {
@@ -31,10 +32,8 @@ class Import extends Component {
             style={styles.icon}
           />
           <View style={styles.content}>
-            <Text style={styles.title}>Import Location History</Text>
-            <Text style={styles.description}>
-              Sync your location history directly from Google by importing your timeline data.
-            </Text>
+            <Text style={styles.title}>{strings('import.text')}</Text>
+            <Text style={styles.description}>{strings('import.description')}</Text>
           </View>
         </TouchableOpacity>
       </>

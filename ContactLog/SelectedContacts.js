@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GetStoreData} from '../utils/asyncStorage';
+import {strings} from '../locales/i18n';
 
 class SelectedContacts extends Component {
   componentDidMount() {
@@ -42,7 +43,7 @@ class SelectedContacts extends Component {
             })}
             </View>
           : <Text style={styles.description}>
-              Safely add people you’ve been in contact with directly from your contacts list, or one at a time.
+            {strings('socialize.text')}
             </Text>
         }
       </>
