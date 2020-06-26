@@ -3,6 +3,7 @@ import {Alert, Platform, Linking} from 'react-native';
 import {addLocation} from '../realm/realmLocationTasks';
 import Location from '../utils/location';
 import DateConverter from '../utils/date';
+import {strings} from '../locales/i18n';
 
 let instanceCount = 0;
 
@@ -106,11 +107,11 @@ export default class LocationServices {
       setTimeout(
         () =>
           Alert.alert(
-            'CommonCircle Assist requires access to location information',
-            'Would you like to open app settings?',
+            strings('location.permission_title'),
+            strings('location.pemission_description'),
             [
               {
-                text: 'Yes',
+                text: strings('global.yes'),
                 onPress: () => {
                   if (Platform.OS === 'android') {
                     // showLocationSettings() only works for android
@@ -122,7 +123,7 @@ export default class LocationServices {
                 },
               },
               {
-                text: 'No',
+                text: strings('global.no'),
                 onPress: () => {
                   alertOnTheWay = false;
                 },

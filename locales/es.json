@@ -180,7 +180,9 @@
     "logs": "Registros de ubicaci\u00f3n",
     "text": "Ubicaci\u00f3n",
     "visited_in_last_14_days": "Lugares que ha visitado en los \u00faltimos 14 d\u00edas.",
-    "description": "Use la ubicación para filtrar notificaciones relevantes para usted. Toda la información de ubicación se almacena localmente."
+    "description": "Use la ubicación para filtrar notificaciones relevantes para usted. Toda la información de ubicación se almacena localmente.",
+    "permission_title": "CommonCircle Assist requiere acceso a la información de ubicación",
+    "pemission_description": "u00bfDesea abrir la configuraci\u00f3n de la aplicaci\u00f3n para habilitar esto?"
   },
   "send": {
     "email": "Enviar correo electr\u00f3nico"
