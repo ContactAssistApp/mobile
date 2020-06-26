@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {SetStoreData} from '../utils/asyncStorage';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class ContactList extends Component {
   selectContact = contact => {
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 });
 
 ContactList.propTypes = {
-  updateContactLog: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func,
 };
 
 const mapStateToProps = state => {
