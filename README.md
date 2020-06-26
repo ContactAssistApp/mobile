@@ -1,4 +1,4 @@
-# CovidSafe
+# CommonCircle Assist
 
 ## To run code:
 Run `pod install` under the `ios` directory
@@ -28,7 +28,7 @@ May need to run certain commands to get unstuck
 ## I18n
 
 All string authoring happens in the Android App (https://github.com/covidsafe/App-Android). All authoring must happen there.
-To update the translations checkout the android app and then run the following command: 
+To update the translations checkout the android app and then run the following command:
 ```
 python conv.py PATH_TO_ANDROID_APP
 ```

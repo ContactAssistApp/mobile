@@ -97,10 +97,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 15,
     paddingHorizontal: 10,
+    alignItems: 'center',
   },
   logo: {
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
     marginRight: 5,
   },
   title: {

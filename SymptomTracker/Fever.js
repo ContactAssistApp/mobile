@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { strings } from '../locales/i18n';
-
+import {strings} from '../locales/i18n';
 
 class Fever extends Component {
   handleEdit = (id, value) => {
@@ -38,19 +37,21 @@ class Fever extends Component {
         <Text style={styles.label}>{strings('highest.temperature_text')}:</Text>
         <TextInput
           style={styles.inputbox}
-          keyboardType={'numeric'}
+          keyboardType={'decimal-pad'}
           onChangeText={text => {
-            this.handleEdit('feverTemperature', text);
+            this.handleEdit('feverTemperature', parseFloat(text));
           }}
           value={feverTemperature}
-          maxLength={3}
+          maxLength={5}
         />
-        <Text style={styles.label}>{strings('card.onset_days_experienced')}:</Text>
+        <Text style={styles.label}>
+          {strings('card.onset_days_experienced')}:
+        </Text>
         <TextInput
           style={styles.inputbox}
           keyboardType={'numeric'}
           onChangeText={text => {
-            this.handleEdit('feverDays', text);
+            this.handleEdit('feverDays', parseInt(text));
           }}
           value={feverDays}
           maxLength={2}

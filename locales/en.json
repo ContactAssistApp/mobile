@@ -1,10 +1,6 @@
 {
   "app": {
-    "name": "Covid\nSafe",
-    "name_one_line": "CovidSafe"
-  },
-  "main": {
-    "header_text": "Covid\nSafe"
+    "name_one_line": "CommonCircle Assist"
   },
   "history": {
     "header_text": "History"
@@ -72,16 +68,16 @@
   "global": {
     "warning": "Warning",
     "q1": "What is the purpose of this app?",
-    "a1": "CovidSafe is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CovidSafe also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it \u2014 public health authorities and their contact tracing teams.",
+    "a1": "CommonCircle Assist is an app that seeks to reduce the spread of coronavirus in the community, specifically by helping people learn if they've been exposed, connecting them to the appropriate public health guidance, and by enabling effective contact tracing. CommonCircle Assist also reduces the burden on public health systems by offering people who have been positively diagnosed and their potential exposures, a safe, private, and fast way to communicate this information to the people who need it \u2014 public health authorities and their contact tracing teams.",
     "q2": "How does this app benefit me?",
-    "a2": "CovidSafe offers several features to protect both you and your community:\n\n        \u2022\tGet notified about possible exposure. You may be notified if someone who was near you within the last two weeks has come down with symptoms of COVID-19. The measure of \u2018near\u2019 is not as precise as the medical definition (within 6 feet for more than 10 minutes), but it is accurate up to a few meters.\n\n        \u2022\tTrack your symptoms. The symptoms you track may be useful to assist public health teams if you are confirmed positive, and for having this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.",
-    "q3": "Who can use CovidSafe?",
-    "a3": "When it becomes available for use, CovidSafe is free, and anyone can use it.",
+    "a2": "CommonCircle Assist offers several features to protect both you and your community:\n\n        \u2022\tGet notified about possible exposure. You may be notified if someone who was near you within the last two weeks has come down with symptoms of COVID-19. The measure of \u2018near\u2019 is not as precise as the medical definition (within 6 feet for more than 10 minutes), but it is accurate up to a few meters.\n\n        \u2022\tTrack your symptoms. The symptoms you track may be useful to assist public health teams if you are confirmed positive, and for having this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.",
+    "q3": "Who can use CommonCircle Assist?",
+    "a3": "When it becomes available for use, CommonCircle Assist is free, and anyone can use it.",
     "q4": "Who else benefits from my participation with this app?",
-    "a4": "CovidSafe is capable of alerting people who have been in areas where coronavirus is active. If you test positive for coronavirus, you'll also be able to anonymously notify others you may have been in contact with over the past two weeks to alert them that they may have been exposed, and to prepare them for potential contact tracing interviews.",
-    "q5": "How does CovidSafe help public health officials?",
-    "a5": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CovidSafe helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.",
-    "pq1": "If I test positive and I disclose it via CovidSafe, what information is revealed to others?",
+    "a4": "CommonCircle Assist is capable of alerting people who have been in areas where coronavirus is active. If you test positive for coronavirus, you'll also be able to anonymously notify others you may have been in contact with over the past two weeks to alert them that they may have been exposed, and to prepare them for potential contact tracing interviews.",
+    "q5": "How does CommonCircle Assist help public health officials?",
+    "a5": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CommonCircle Assist helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.",
+    "pq1": "If I test positive and I disclose it via CommonCircle Assist, what information is revealed to others?",
     "pa1": "Other people with the application, who have been exposed may be notified, along with the time the exposure occurred. No other information will be revealed.",
     "pq2": "If I test negative, can a malicious person get access to my phone\u2019s broadcasts and report me as being positive?",
     "pa2": "No, this isn\u2019t possible. The app is encrypted to prevent it from happening using similar security technology used for other purposes, such as online banking.",
@@ -92,7 +88,7 @@
     "pq5": "Can the identity of a person who chooses to report they\u2019ve tested positive be guessed by others?",
     "pa5": "Possibly. A person who was near someone who has tested positive may be able to guess the infected person's identity. If there are two or more people who were near someone who has tested positive, the process of identifying the infected person may be easier. However, the person's identity will never be broadcast directly. People\u2019s identities aren\u2019t stored in the data. Only the infected person\u2019s random broadcast is stored.",
     "pq6": "What data is stored on my phone? What data about me is stored publicly?",
-    "pa6": "Each phone broadcasts a random signal (using Bluetooth) to other nearby phones. All phones remember the signals they send and receive for two weeks. These broadcast signals can be thought of as non-identifying random numbers. The signal each phone broadcasts changes, so the signals remain anonymous and can\u2019t be linked to a specific person. If someone tests positive and chooses to disclose this information to help others, they would be disclosing only their phone's broadcasts for the past two weeks. This lets other people using CovidSafe check if they were near the infected person to determine if they were exposed, based on their own phones' broadcasts.",
+    "pa6": "Each phone broadcasts a random signal (using Bluetooth) to other nearby phones. All phones remember the signals they send and receive for two weeks. These broadcast signals can be thought of as non-identifying random numbers. The signal each phone broadcasts changes, so the signals remain anonymous and can\u2019t be linked to a specific person. If someone tests positive and chooses to disclose this information to help others, they would be disclosing only their phone's broadcasts for the past two weeks. This lets other people using CommonCircle Assist check if they were near the infected person to determine if they were exposed, based on their own phones' broadcasts.",
     "pq7": "How does location tracking work?",
     "pa7": "See the Bluetooth section in the PACT white paper on our website.",
     "pq8": "Will this information be shared with government agencies?",
@@ -100,7 +96,7 @@
     "pq9": "Why should I report my illness?",
     "pa9": "If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable more effective contact tracing.",
     "aq1": "What is contact tracing?",
-    "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they\u2019ve been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. With CovidSafe, tracing is done through the app instead of in person.",
+    "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they\u2019ve been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. With CommonCircle Assist, tracing is done through the app instead of in person.",
     "aq2": "Why should I report my illness?",
     "aa2": "If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable contact tracing.",
     "certError": "Please check the box to certify that all the information in this form is correct.",
@@ -109,7 +105,7 @@
     "maxBlacklistSizeError": "Maximum blacklist size reached.",
     "downloading": "Downloading file...",
     "phone": "911",
-    "privacyDisclaimer": "Any information collected on CovidSafe is stored securely and locally in your app, and remain private to you.",
+    "privacyDisclaimer": "Any information collected on CommonCircle Assist is stored securely and locally in your app, and remain private to you.",
     "privacyDisclaimer2": "This information is stored securely and locally on your app, and remains private to you.",
     "start": "Start logging",
     "stop": "Stop logging",
@@ -137,12 +133,12 @@
     "perm3desc": "Emit and detect random numbers by Bluetooth to later discover exposure risks.",
     "setting1": "Length of data storage",
     "setting1desc": "Number of days until local logs are automatically deleted.",
-    "storyTitle1": "Welcome to CovidSafe",
+    "storyTitle1": "Welcome to CommonCircle Assist",
     "storyTitle2": "Exposure Notifications",
     "storyTitle3": "Self-Care Tips",
     "storyTitle4": "Your Privacy",
     "exposed": "You may have been exposed",
-    "story1": "CovidSafe notifies you if you may have been exposed to coronavirus and helps keep you and your community safer.",
+    "story1": "CommonCircle Assist notifies you if you may have been exposed to coronavirus and helps keep you and your community safer.",
     "story2": "Learn if you might have been exposed. If you've recently been in close contact with someone recently diagnosed with COVID-19. You'll get a notification.",
     "story3": "Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms. And log locations you recently visited to protect others.",
     "story4": "Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.",
@@ -169,7 +165,7 @@
     "prep": "Interview Preparation"
   },
   "email": {
-    "subject": "CovidSafe Contact Tracer Interview Information Packet"
+    "subject": "CommonCircle Assist Contact Tracer Interview Information Packet"
   },
   "location": {
     "logs": "Location logs",
@@ -299,7 +295,7 @@
     "loc_on2": "We need location services enabled to check for announcements. Please enable location services permission."
   },
   "learn": {
-    "about_us": "Download and learn more about the CovidSafe app at",
+    "about_us": "Download and learn more about the CommonCircle Assist app at",
     "more_link_text": "Learn More",
     "how_we_protect_your_privacy": "Learn about how we protect your privacy"
   },
@@ -499,7 +495,7 @@
     "to_prepare_for_your_interview": "How to prepare for your interview"
   },
   "interview": {
-    "preparation_description_text": "During your interview, a healthcare nurse will be collecting a list of critical information to help identify those who may have been exposed.\n\nYou can prepare a list of informaton they will ask about based on information collected through CovidSafe. This information includes:"
+    "preparation_description_text": "During your interview, a healthcare nurse will be collecting a list of critical information to help identify those who may have been exposed.\n\nYou can prepare a list of informaton they will ask about based on information collected through CommonCircle Assist. This information includes:"
   },
   "get": {
     "started_text": "Get started"
@@ -508,7 +504,7 @@
     "asked_questions": "Frequently Asked Questions"
   },
   "about": {
-    "covidsafe": "About CovidSafe"
+    "covidsafe": "About CommonCircle Assist"
   },
   "tracing": {
     "tools": "Tracing tools"
@@ -527,10 +523,10 @@
     "logs": "Recent logs"
   },
   "welcome": {
-    "to_covidsafe_text": "Welcome to CovidSafe"
+    "to_covidsafe_text": "Welcome to CommonCircle Assist"
   },
   "covidsafe": {
-    "notifies_you": "CovidSafe notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you're having."
+    "notifies_you": "CommonCircle Assist notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you're having."
   },
   "clear": {
     "all_text": "Clear all"

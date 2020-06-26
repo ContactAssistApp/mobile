@@ -3,7 +3,7 @@
 //  covidsafe
 //
 //  Created by Apollo Zhu on 4/28/20.
-//  Copyright © 2020 CovidSafe. All rights reserved.
+//  Copyright © 2020 CommonCircle Assist. All rights reserved.
 //
 
 #import "React/RCTViewManager.h"
