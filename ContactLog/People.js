@@ -17,7 +17,6 @@ class People extends Component {
   constructor() {
     super();
     this.state = {
-      permission: Contacts.PERMISSION_UNDEFINED,
       modalOn: false,
     };
   }
@@ -25,10 +24,6 @@ class People extends Component {
   componentDidMount() {
     this.checkPermission()
       .then(permission => {
-        this.setState({
-          permission,
-        });
-
         if (permission === Contacts.PERMISSION_UNDEFINED) {
           this.requestPermission();
         } else if (permission === Contacts.PERMISSION_AUTHORIZED) {
@@ -59,10 +54,9 @@ class People extends Component {
         console.log('error in contacts: ' + err);
         return;
       }
-
-      this.setState({
-        permission,
-      });
+      if (permission === Contacts.PERMISSION_AUTHORIZED) {
+        this.loadContacts();
+      }
     });
   };
 
@@ -78,8 +72,17 @@ class People extends Component {
           id: contact.recordID,
           name: `${contact.givenName} ${contact.familyName}`,
         };
+      })
+      .sort(function(a, b) {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        } else if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
       });
-
       this.props.updateContactLog({
         field: 'allContacts',
         value: contactList,
@@ -109,7 +112,9 @@ class People extends Component {
           <ContactList handleModalClose={this.closeModal} />
         </Modal>
         <ScrollView>
-          <Text style={styles.header}>{strings("social.interaction_text")}</Text>
+          <Text style={styles.header}>
+            {strings("social.interaction_text")}
+          </Text>
           <SelectedContacts />
         </ScrollView>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
