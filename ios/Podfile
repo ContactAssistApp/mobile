@@ -57,13 +57,3 @@ target 'covidsafe' do
 
   use_native_modules!
 end
-
-target 'covidsafe-tvOS' do
-  # Pods for covidsafe-tvOS
-
-  target 'covidsafe-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end

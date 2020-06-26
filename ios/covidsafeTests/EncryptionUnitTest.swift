@@ -1,5 +1,5 @@
 import XCTest
-@testable import covidsafe
+@testable import CommonCircle_Assist
 
 class EncryptionUnitTest: XCTestCase {
 
