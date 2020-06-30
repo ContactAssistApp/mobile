@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ActionSheetIOS,
 } from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
@@ -14,8 +13,10 @@ import {bindActionCreators} from 'redux';
 import {deleteSymptom} from '../realm/realmSymptomsTasks';
 import {connect} from 'react-redux';
 import {strings} from '../locales/i18n';
+import { connectActionSheet } from '@expo/react-native-action-sheet'
 
-class Record extends Component {
+
+class RecordComp extends Component {
   handleAdd = () => {
     this.props.updateSymptom({
       timeOfDay: this.props.timeOfDay,
@@ -29,9 +30,9 @@ class Record extends Component {
       timeOfDay,
       symptoms: {date},
     } = this.props;
-    ActionSheetIOS.showActionSheetWithOptions(
+    this.props.showActionSheetWithOptions(
       {
-        options: ['Cancel', 'Edit', 'Delete'],
+        options: [strings('global.cancel'), strings('global.edit'), strings('global.delete')],
         destructiveButtonIndex: 2,
         cancelButtonIndex: 0,
       },
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
   },
 });
 
-Record.propTypes = {
+RecordComp.propTypes = {
   timeOfDay: PropTypes.string.isRequired,
   logTime: PropTypes.string.isRequired,
   navigate: PropTypes.func.isRequired,
@@ -181,6 +182,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateSymptom,
   clearSymptoms,
 }, dispatch);
+
+const Record = connectActionSheet(RecordComp)
 
 export default connect(
   mapStateToProps,

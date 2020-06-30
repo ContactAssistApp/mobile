@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import AppNav from './Nav/AppNav';
 import SplashScreen from 'react-native-splash-screen';
 import configureStore from './store/configureStore';
-
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 const store = configureStore();
 
 function App() {
@@ -14,7 +14,9 @@ function App() {
 
   return (
     <Provider store={store}>
-      <AppNav />
+      <ActionSheetProvider>
+        <AppNav />
+      </ActionSheetProvider>
     </Provider>
   );
 }

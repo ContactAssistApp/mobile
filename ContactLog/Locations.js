@@ -5,7 +5,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  ActionSheetIOS,
 } from 'react-native';
 import colors from '../assets/colors';
 import {connect} from 'react-redux';
@@ -17,8 +16,9 @@ import Location from '../utils/location';
 import {strings, fmt_date} from '../locales/i18n';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {deleteLocation} from '../realm/realmLocationTasks';
+import { connectActionSheet } from '@expo/react-native-action-sheet'
 
-class Locations extends Component {
+class LocationsComp extends Component {
   constructor() {
     super();
 
@@ -50,9 +50,9 @@ class Locations extends Component {
   };
 
   handleAction = address => {
-    ActionSheetIOS.showActionSheetWithOptions(
+    this.props.showActionSheetWithOptions(
       {
-        options: ['Cancel', 'Edit', 'Delete'],
+        options: [strings('global.cancel'), strings('global.edit'), strings('global.delete')],
         destructiveButtonIndex: 2,
         cancelButtonIndex: 0,
       },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
 });
 
-Locations.propTypes = {
+LocationsComp.propTypes = {
   updateContactLog: PropTypes.func,
 };
 
@@ -184,6 +184,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateContactLog
 }, dispatch);
+
+const Locations = connectActionSheet(LocationsComp)
 
 export default connect(
   mapStateToProps,
