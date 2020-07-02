@@ -173,7 +173,8 @@
     "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days",
     "description": "Use location to filter notifications relevant to you. All location information is stored locally.",
     "permission_title": "CommonCircle Assist requires access to location information",
-    "pemission_description": "Would you like to open app settings?"
+    "pemission_description": "Would you like to open app settings?",
+    "unknown": "Unknown"
   },
   "send": {
     "email": "Send email"

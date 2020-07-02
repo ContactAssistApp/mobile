@@ -13,16 +13,25 @@ export default class LocationServices {
       const {latitude, longitude} = location;
       const time = DateConverter.getUTCUnixTime();
 
-      let addressObj = await Location.convertToAddress({latitude, longitude});
-      console.log('converted ' + latitude + ", " + longitude + " to: " +  JSON.stringify(addressObj));
-      if(addressObj)
-        addLocation({
-          latitude,
-          longitude,
-          time,
-          address: addressObj.address,
-          name: addressObj.name,
-        });
+      let addressObj = null;
+
+      try {
+        addressObj = await Location.convertToAddress({latitude, longitude});
+        console.log('converted ' + latitude + ", " + longitude + " to: " +  JSON.stringify(addressObj));
+      } catch(err) {
+        console.log('reverse geoquery failed: ' + JSON.stringify(err));
+        addressObj = {
+          address: strings('location.unknown'),
+          name: strings('location.unknown'),
+        };
+      }
+      addLocation({
+        latitude,
+        longitude,
+        time,
+        address: addressObj.address,
+        name: addressObj.name,
+      });
     };
 
     instanceCount += 1;
