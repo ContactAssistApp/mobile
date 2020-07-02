@@ -173,7 +173,8 @@
     "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days",
     "description": "Use location to filter notifications relevant to you. All location information is stored locally.",
     "permission_title": "CommonCircle Assist requires access to location information",
-    "pemission_description": "Would you like to open app settings?"
+    "pemission_description": "Would you like to open app settings?",
+    "unknown": "Unknown"
   },
   "send": {
     "email": "Send email"
@@ -566,7 +567,11 @@
     "txt": "Done"
   },
   "export": {
-    "as_email_txt": "Export as email"
+    "title": "Export",
+    "description": "Export all data stored locally",
+    "message_title": "Export your local data",
+    "subject": "CommonCircle Assist device dump",
+    "message": "The attached file containts a JSON dump of the local data with all records collected by CommonCircle Assist"
   },
   "check": {
     "box": "Please check the box to confirm this information is accurate."
@@ -606,5 +611,5 @@
 
   "narrowcast": {
     "alerts": "Local alerts"
-  }
+  },
 }
