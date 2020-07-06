@@ -26,7 +26,7 @@ import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
 import {strings} from '../locales/i18n';
 import {getLocations} from '../realm/realmLocationTasks';
-import {addAreas, getAreas} from '../realm/realmAreaMatchesTasks';
+import {addAreas} from '../realm/realmAreaMatchesTasks';
 import DateConverter from '../utils/date';
 
 class Home extends Component {
@@ -108,11 +108,14 @@ class Home extends Component {
 
         narrowcastMessages.forEach((message, i) => {
           const {
-            area: {beginTime},
+            area: {beginTime, endTime},
           } = message;
 
-          if (beginTime <= currentTime) {
+          if (endTime <= currentTime) {
             pastMessages.push(message);
+          } else if (beginTime <= currentTime && currentTime <= endTime) {
+            pastMessages.push(message);
+            futureMessages.push(message);
           } else {
             futureMessages.push(message);
           }
@@ -137,25 +140,6 @@ class Home extends Component {
             });
           }
         });
-
-        const pastMessagesDB = getAreas(currentTime);
-        if (pastMessagesDB && pastMessagesDB.length > 0) {
-          pastMessagesDB.forEach(match => {
-            const {
-              userMessage,
-              area,
-              area: {beginTime, endTime},
-            } = match;
-            // TODO: change isChecked to true
-            if (this.isMatch(area) && userMessage.startsWith('{')) {
-              notifications.push({
-                ...JSON.parse(userMessage),
-                beginTime,
-                endTime,
-              });
-            }
-          });
-        }
       }
 
       if (notifications && notifications.length > 0) {
