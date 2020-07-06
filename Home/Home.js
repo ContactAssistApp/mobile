@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import BackgroundFetch from 'react-native-background-fetch';
-import LocationServices from '../Home/LocationServices';
+import LocationServices from '../services/LocationServices';
 import Notification from './Notification';
 import Toggle from '../views/Toggle';
 import colors from '../assets/colors';
