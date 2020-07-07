@@ -4,15 +4,50 @@ import {addLocation} from '../realm/realmLocationTasks';
 import Location from '../utils/location';
 import DateConverter from '../utils/date';
 import {strings} from '../locales/i18n';
+import {getAreas} from '../realm/realmAreaMatchesTasks';
+import PushNotification from 'react-native-push-notification';
+import {GetStoreData} from '../utils/asyncStorage';
 
 let instanceCount = 0;
 
 export default class LocationServices {
   static start() {
+    const checkAreaMatch = async ts => {
+      const pastMessagesDB = getAreas(ts);
+      let notifications = [];
+      if (pastMessagesDB && pastMessagesDB.length > 0) {
+        pastMessagesDB.forEach(match => {
+          const {
+            userMessage,
+            area,
+            area: {beginTime, endTime},
+          } = match;
+          // TODO: change isChecked to true
+          if (Location.isAreaMatch(area) && userMessage.startsWith('{')) {
+            notifications.push({
+              ...JSON.parse(userMessage),
+              beginTime,
+              endTime,
+            });
+          }
+        });
+
+        if (notifications && notifications.length > 0) {
+          const notificationEnabled = await GetStoreData('ENABLE_NOTIFICATION');
+          if (notificationEnabled === 'true') {
+            notifications.map(notification => {
+              return PushNotification.localNotification({
+                message: notification.description,
+              });
+            });
+          }
+        }
+      }
+    };
     const saveLocation = async location => {
       const {latitude, longitude} = location;
       const time = DateConverter.getUTCUnixTime();
-
+      checkAreaMatch(time);
       let addressObj = null;
 
       try {

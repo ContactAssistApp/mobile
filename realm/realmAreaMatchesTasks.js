@@ -17,6 +17,6 @@ export async function getAreas(currentTime) {
   const realm = await RealmObj.init();
   let areas = realm
     .objects('AreaMatches')
-    .filtered('area.beginTime >= $0 SORT(area.beginTime ASC)', currentTime);
+    .filtered('area.beginTime <= $0 SORT(area.beginTime ASC)', currentTime);
   return areas;
 }
