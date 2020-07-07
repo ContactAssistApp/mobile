@@ -28,7 +28,7 @@ class Import extends Component {
           <CustomIcon
             name={'import24'}
             color={colors.gray_icon}
-            size={16}
+            size={24}
             style={styles.icon}
           />
           <View style={styles.content}>

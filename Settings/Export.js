@@ -76,9 +76,9 @@ class Export extends Component {
           style={styles.row}
           onPress={this.exportData}>
           <CustomIcon
-            name={'import24'}
+            name={'export24'}
             color={colors.gray_icon}
-            size={16}
+            size={24}
             style={styles.icon}
           />
           <View style={styles.content}>
