@@ -15,7 +15,6 @@ import colors from '../../assets/colors';
 import Notification from '../../Settings/Notification';
 import Location from '../../Settings/Location';
 import Import from '../../Settings/Import';
-import DataStorage from '../../Settings/DataStorage';
 import AnalyticsOptIn from '../../Settings/AnalyticsOptIn';
 import {strings} from '../../locales/i18n';
 
@@ -34,15 +33,12 @@ class Preferences extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <View style={styles.intro_container}>
-            <Text style={styles.intro_text}>
-              {strings('global.stopping')}
-            </Text>
+            <Text style={styles.intro_text}>{strings('global.stopping')}</Text>
           </View>
           <View style={styles.settings}>
             <Notification />
             <Location />
             <Import />
-            <DataStorage />
             <AnalyticsOptIn />
           </View>
           <TouchableOpacity
@@ -51,7 +47,9 @@ class Preferences extends Component {
               this.completeFTUE();
               navigate('BottomNav');
             }}>
-            <Text style={styles.next_button_text}>{strings('next.btn_text')}</Text>
+            <Text style={styles.next_button_text}>
+              {strings('next.btn_text')}
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
