@@ -9,7 +9,7 @@ let instanceCount = 0;
 
 export default class LocationServices {
   static start() {
-    const saveLocation = async (location) => {
+    const saveLocation = async location => {
       const {latitude, longitude} = location;
       const time = DateConverter.getUTCUnixTime();
 
@@ -18,7 +18,7 @@ export default class LocationServices {
       try {
         addressObj = await Location.convertToAddress({latitude, longitude});
         console.log('converted ' + latitude + ", " + longitude + " to: " +  JSON.stringify(addressObj));
-      } catch(err) {
+      } catch (err) {
         console.log('reverse geoquery failed: ' + JSON.stringify(err));
         addressObj = {
           address: strings('location.unknown'),
@@ -45,7 +45,7 @@ export default class LocationServices {
       desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
       stationaryRadius: 50,
       distanceFilter: 3500,
-      debug: false, // when true, it beeps every time a loc is read
+      debug: true, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
       locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
 
