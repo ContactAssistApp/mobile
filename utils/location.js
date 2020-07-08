@@ -53,9 +53,9 @@ const Location = {
     if (locations && locations.length > 0) {
       locations.find(location => {
         const {latitude: lat, longitude: lon, time} = location;
-        if (distance(lat, lon, targetLat, targetLon) < radiusMeters &&
-          beginTime < time &&
-          time < endTime) {
+        if (distance(lat, lon, targetLat, targetLon) <= radiusMeters &&
+          beginTime <= time &&
+          time <= endTime) {
           return true;
         }
       });
