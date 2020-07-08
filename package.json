@@ -31,6 +31,7 @@
     "react-native-background-fetch": "^3.0.4",
     "react-native-calendars": "^1.265.0",
     "react-native-contacts": "^5.2.0",
+    "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-i18n": "^2.0.15",
     "react-native-keychain": "^6.1.0",

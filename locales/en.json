@@ -571,7 +571,7 @@
     "description": "Export all data stored locally",
     "message_title": "Export your local data",
     "subject": "CommonCircle Assist device dump",
-    "message": "The attached file containts a JSON dump of the local data with all records collected by CommonCircle Assist"
+    "message": "Local data with all records collected by CommonCircle Assist"
   },
   "check": {
     "box": "Please check the box to confirm this information is accurate."
