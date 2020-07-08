@@ -1,67 +1,44 @@
 import React, {Component} from 'react';
-import {DEFAULT_LOG_WINDOW} from '../utils/constants';
-import {StyleSheet, Text, View, TextInput} from 'react-native';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import colors from '../assets/colors';
 import {strings} from '../locales/i18n';
+import DeleteDataModal from './DeleteDataModal';
 
 class DataStorage extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-      log_window: '',
+      visible: false,
     };
   }
 
-  componentDidMount() {
-    this.getLogWindow().then(data => {
-      if (data) {
-        this.setState({
-          log_window: data,
-        });
-      } else {
-        this.setState({
-          log_window: DEFAULT_LOG_WINDOW,
-        });
-
-        SetStoreData('LOG_WINDOW', DEFAULT_LOG_WINDOW);
-      }
-    });
-  }
-
-  getLogWindow = () => {
-    return GetStoreData('LOG_WINDOW').then(data => {
-      return data;
-    });
-  };
-
   render() {
     return (
-      <View style={styles.row}>
-        <CustomIcon
-          name={'usage24'}
-          color={colors.gray_icon}
-          size={24}
-          style={styles.icon}
-        />
-        <View style={styles.content}>
-          <Text style={styles.title}>{strings('global.setting1')}</Text>
-          <Text style={styles.description}>{strings('global.setting1desc')}</Text>
-        </View>
-        <TextInput
-          style={styles.log_window_input}
-          keyboardType={'numeric'}
-          onChangeText={text => {
-            this.setState({log_window: text});
-          }}
-          value={this.state.log_window}
-          maxLength={2}
-          onEndEditing={() => {
-            SetStoreData('LOG_WINDOW', this.state.log_window);
+      <>
+        <DeleteDataModal
+          visible={this.state.visible}
+          handleModalClose={() => {
+            this.setState({visible: false});
           }}
         />
-      </View>
+        <TouchableOpacity
+          style={styles.row}
+          onPress={() => this.setState({visible: true})}>
+          <CustomIcon
+            name={'usage24'}
+            color={colors.gray_icon}
+            size={24}
+            style={styles.icon}
+          />
+          <View style={styles.content}>
+            <Text style={styles.title}>{strings('global.setting1')}</Text>
+            <Text style={styles.description}>
+              {strings('global.setting1desc')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </>
     );
   }
 }
@@ -80,14 +57,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 11,
-  },
-  log_window_input: {
-    flex: 2,
-    height: 40,
-    borderColor: colors.border,
-    borderWidth: 1,
-    textAlign: 'center',
-    color: colors.body_copy,
   },
   title: {
     fontSize: 17,

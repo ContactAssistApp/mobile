@@ -131,8 +131,8 @@
     "perm1desc": "Receive notifications for exposure risks in your area.",
     "perm2desc": "Receive announcements and notifications relevant to your neighborhood. All location information is stored locally.",
     "perm3desc": "Emit and detect random numbers by Bluetooth to later discover exposure risks.",
-    "setting1": "Length of data storage",
-    "setting1desc": "Number of days until local logs are automatically deleted.",
+    "setting1": "Control your data storage",
+    "setting1desc": "You maintain control over how long we store your data. Delete your data at any time.",
     "storyTitle1": "Welcome to CommonCircle Assist",
     "storyTitle2": "Exposure Notifications",
     "storyTitle3": "Self-Care Tips",
@@ -593,6 +593,14 @@
   },
   "call": {
     "911": "Call 911 immediately if you are having a medical emergency."
+  },
+  "data_storage_modal": {
+    "title": "Control your data storage",
+    "desc_1": "Your privacy is important to us. We encourage you to retain your data so, if you test positive, you can use this information to quickly prepare for a contact tracing interview.",
+    "desc_2": "You can always choose to delete your data completely from CommonCircle Assist. This action cannot be undone.",
+    "delete_button": "Delete All Data",
+    "delete_success": "Your locations have been deleted.",
+    "delete_failure": "Delete location error.",
   },
   "google": {
     "downloadInProgress": "Download in Progress",
