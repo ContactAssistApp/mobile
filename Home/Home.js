@@ -94,7 +94,8 @@ class Home extends Component {
   };
 
   processQueries = async () => {
-    let location = await getLatestCoarseLocation();
+    const ts = await this.getTs();
+    let location = await getLatestCoarseLocation(ts);
     let currentTime = new Date().getTime();
 
     if (location) {
@@ -157,7 +158,6 @@ class Home extends Component {
 
   fetchMessageID = async location => {
     const ts = await this.getTs();
-    // const ts = "1594062739000";
     const url = `${GET_MESSAGE_LIST_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=${ts}`;
 
     return fetch(url, {
