@@ -2,11 +2,11 @@ import {GET_MESSAGE_LIST_URL} from './endpoints';
 import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
 import {getLocations} from '../realm/realmLocationTasks';
 
-export async function getLatestCoarseLocation() {
+export async function getLatestCoarseLocation(ts) {
   const location = await getLatestLocation();
   if (location) {
     const {latitude: lat, longitude: lon} = location;
-    const coarsLocation = await getCoarseLocation(lat, lon);
+    const coarsLocation = await getCoarseLocation(lat, lon, ts);
     return coarsLocation;
   }
   return null;
@@ -20,7 +20,7 @@ async function getLatestLocation() {
   return null;
 }
 
-async function getCoarseLocation(lat, lon) {
+async function getCoarseLocation(lat, lon, ts) {
   const bestPrecision = PRECISION_LIMIT; // from -180degree to 180 degree
   const initialPrecision = 0; // 0 corresponds to entire globe, 8 corresponds to 1 degree.
 
@@ -29,7 +29,7 @@ async function getCoarseLocation(lat, lon) {
   let coarseLon = round(lon, precision);
 
   for (; precision < bestPrecision; ++precision) {
-    if (await canWeAfford(coarseLat, coarseLon, precision)) {
+    if (await canWeAfford(coarseLat, coarseLon, precision, ts)) {
       break;
     }
     coarseLat = round(lat, precision);
@@ -43,14 +43,13 @@ async function getCoarseLocation(lat, lon) {
   };
 }
 
-async function canWeAfford(lat, lon, precision) {
-  let querySize = await fetchQuerySize(lat, lon, precision);
+async function canWeAfford(lat, lon, precision, ts) {
+  let querySize = await fetchQuerySize(lat, lon, precision, ts);
   return querySize <= QUERY_SIZE_LIMIT ? true : false;
 }
 
-function fetchQuerySize(lat, lon, precision) {
-  const url = `${GET_MESSAGE_LIST_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=0`;
-
+function fetchQuerySize(lat, lon, precision, ts) {
+  const url = `${GET_MESSAGE_LIST_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=${ts}`;
   return fetch(url, {
     method: 'HEAD',
   })

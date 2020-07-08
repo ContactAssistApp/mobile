@@ -13,8 +13,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updateFTUE} from './actions.js';
-import { strings } from '../locales/i18n';
-
+import {strings} from '../locales/i18n';
 
 const Stack = createStackNavigator();
 
@@ -61,7 +60,7 @@ class AppNav extends Component {
                   name={'FTUE'}
                   component={FTUE}
                   options={{
-                    title: 'FTUE',
+                    title: '',
                     headerStyle: {height: 0},
                   }}
                 />
@@ -81,7 +80,7 @@ class AppNav extends Component {
                 name="BottomNav"
                 component={BottomNav}
                 options={{
-                  title: strings('bottom.sheet_menu_item_home'),
+                  title: '',
                   headerStyle: {height: 0},
                   // headerBackTitle: '',
                 }}
