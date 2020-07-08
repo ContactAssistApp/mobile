@@ -4,8 +4,19 @@ import Modal from '../views/Modal';
 import {strings} from '../locales/i18n';
 import colors from '../assets/colors';
 import {deleteLocationLog} from '../realm/realmLocationTasks';
+import StatusAlert from '../views/StatusAlert';
 
 class DeleteDataModal extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      status: '',
+      text: '',
+      showAlert: false,
+    };
+  }
+
   render() {
     return (
       <Modal
@@ -23,11 +34,42 @@ class DeleteDataModal extends Component {
         </View>
         <TouchableOpacity
           style={styles.delete_button}
-          onPress={deleteLocationLog}>
+          onPress={() => {
+            deleteLocationLog(status => {
+              if (status === 'success') {
+                this.setState({
+                  status: 'success',
+                  text: strings('data_storage_modal.delete_success'),
+                });
+              } else {
+                this.setState({
+                  status: 'failure',
+                  text: strings('data_storage_modal.delete_failure'),
+                });
+              }
+
+              this.setState({
+                showAlert: true,
+              });
+            });
+          }}>
           <Text style={styles.delete_button_text}>
             {strings('data_storage_modal.delete_button')}
           </Text>
         </TouchableOpacity>
+        {this.state.showAlert && (
+          <View style={styles.status_alert}>
+            <StatusAlert
+              status={'success'}
+              text={this.state.text}
+              showAlertCallback={() => {
+                this.setState({
+                  showAlert: false,
+                });
+              }}
+            />
+          </View>
+        )}
       </Modal>
     );
   }
@@ -59,6 +101,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     lineHeight: 16,
+  },
+  status_alert: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
 });
 

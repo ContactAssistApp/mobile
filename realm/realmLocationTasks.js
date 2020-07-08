@@ -101,14 +101,16 @@ export async function deleteLocation(address) {
   }
 }
 
-export async function deleteLocationLog() {
+export async function deleteLocationLog(callback) {
   try {
     const realm = await RealmObj.init();
     const locations = realm.objects('Location');
     realm.write(() => {
       realm.delete(locations);
+      callback('success');
     });
   } catch (err) {
     console.log('delete location log error: ', err);
+    callback(err);
   }
 }
