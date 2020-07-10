@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 24,
     height: 24,
-    marginRight: 5,
+    marginRight: 10,
   },
   title: {
     color: colors.section_title,
