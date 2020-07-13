@@ -49,7 +49,7 @@ async function canWeAfford(lat, lon, precision, ts) {
 }
 
 function fetchQuerySize(lat, lon, precision, ts) {
-  const url = `${GET_MESSAGE_LIST_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=${ts}`;
+  const url = `${GET_MESSAGE_LIST_URL}&lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=${ts}`;
   return fetch(url, {
     method: 'HEAD',
   })
