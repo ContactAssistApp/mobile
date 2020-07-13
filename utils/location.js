@@ -30,6 +30,8 @@ const Location = {
     const locations = await getLocations(dateObj, dayRange);
 
     const addresses = locations.filter((location, index, self) => {
+      if(location.kind == 'moving' && location.speed > 1)
+        return false;
       return index === self.findIndex(t => t.address === location.address);
     })
     .map(location => {
