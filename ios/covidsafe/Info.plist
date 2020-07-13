@@ -49,6 +49,8 @@
 	<string>App requires background tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>CommonCircle Assist uses location to track people that come close to you.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>CovidSafe uses bluetooth to track people that comes close to you.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>CommonCircle Assist uses bluetooth to track people that comes close to you.</string>
 	<key>NSMotionUsageDescription</key>

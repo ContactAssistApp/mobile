@@ -44,9 +44,12 @@ export default class LocationServices {
         }
       }
     };
-    const saveLocation = async location => {
-      const {latitude, longitude} = location;
+    const saveLocation = async (location, kind) => {
+      const {latitude, longitude, accuracy, speed, altitude, provider} = location;
       const time = DateConverter.getUTCUnixTime();
+      // not available on iOS
+      const source = provider === undefined ? 'device' : provider;
+
       checkAreaMatch(time);
       let addressObj = null;
 
@@ -60,10 +63,16 @@ export default class LocationServices {
           name: strings('location.unknown'),
         };
       }
+
       addLocation({
         latitude,
         longitude,
+        accuracy,
+        speed,
+        altitude,
+        kind,
         time,
+        source,
         address: addressObj.address,
         name: addressObj.name,
       });
@@ -78,8 +87,8 @@ export default class LocationServices {
 
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
-      stationaryRadius: 50,
-      distanceFilter: 3500,
+      stationaryRadius: 50, // We can't distinguish two locations less than 50 meters apart
+      distanceFilter: 500, //We can't detect movement beyond this threshold. Reduce it to improve narrowcast accuracy
       debug: false, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
       locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
@@ -105,7 +114,7 @@ export default class LocationServices {
         // execute long running task
         // eg. ajax post location
         // IMPORTANT: task has to be ended by endTask
-        saveLocation(location);
+        saveLocation(location, 'moving');
         BackgroundGeolocation.endTask(taskKey);
       });
     });
@@ -122,7 +131,7 @@ export default class LocationServices {
         // tested as I couldn't produce stationaryLocation callback in emulator
         // but since the plugin documentation mentions it, no reason to keep
         // it empty I believe.
-        saveLocation(stationaryLocation);
+        saveLocation(stationaryLocation, 'stationary');
         BackgroundGeolocation.endTask(taskKey);
       });
       console.log('[INFO] stationaryLocation:', stationaryLocation);

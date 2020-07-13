@@ -40,13 +40,21 @@ class ImportGoogleTimeline extends Component {
       const coordinates = pointArr[0].coordinates[0].split(',');
       const lat = parseFloat(coordinates[1]);
       const lon = parseFloat(coordinates[0]);
+      const altitude = coordinates.length > 2 ? parseFloat(coordinates[3]) : null;
       const timespan = `${beginArr[0]},${endArr[0]}`;
+      const accuracy = 0;
+      const speed = 0;
+      const kind = 'stationary';
 
       return {
         name: nameArr[0],
         address: addressArr[0],
         latitude: lat,
         longitude: lon,
+        accuracy,
+        speed,
+        altitude,
+        kind,
         source: 'google',
         timespan,
         time: new Date(endArr[0]).getTime(),

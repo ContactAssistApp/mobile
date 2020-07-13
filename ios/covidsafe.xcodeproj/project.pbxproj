@@ -666,7 +666,7 @@
 				CODE_SIGN_ENTITLEMENTS = covidsafe/covidsafe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				INFOPLIST_FILE = covidsafe/Info.plist;
@@ -695,7 +695,7 @@
 				CODE_SIGN_ENTITLEMENTS = covidsafe/covidsafe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				INFOPLIST_FILE = covidsafe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
