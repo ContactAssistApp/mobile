@@ -6,7 +6,7 @@ export async function addLocation(location) {
     const realm = await RealmObj.init();
     realm.write(() => {
       realm.create('Location',
-        {...location, source: 'device', timespan: ''},
+        {...location, timespan: ''},
         true,
       );
     });

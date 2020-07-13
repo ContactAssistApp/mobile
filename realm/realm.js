@@ -35,8 +35,8 @@ AreaMatches.schema = {
   },
 };
 
-class Location extends Realm.Object {}
-Location.schema = {
+class Location0 extends Realm.Object {}
+Location0.schema = {
   name: 'Location',
   primaryKey: 'time',
   properties: {
@@ -47,6 +47,27 @@ Location.schema = {
     name: 'string',
     source: 'string',
     timespan: 'string',
+  },
+};
+
+class Location1 extends Realm.Object {}
+Location1.schema = {
+  name: 'Location',
+  primaryKey: 'time',
+  properties: {
+    latitude: 'double',
+    longitude: 'double',
+    time: 'int',
+    address: 'string',
+    name: 'string',
+    source: 'string',
+    timespan: 'string',
+
+    //new fields
+    accuracy: 'double',
+    speed: 'double',
+    altitude: 'double?',
+    kind: 'string', //moving or stationary
   },
 };
 
@@ -131,24 +152,75 @@ const getKey = async () => {
   }
 };
 
+//migrate from schema0 to schema1
+function addLocation1Fields(oldRealm, newRealm)
+{
+  if (oldRealm.schemaVersion >= 1)
+    return;
+  const newObjects = newRealm.objects('Location');
+  for (let i = 0; i < newRealm.length; i++) {
+    //use safe defaults
+    newObjects[i].accuracy = 1;
+    newObjects[i].speed = 0;
+    newObjects[i].altitude = null;
+    newObjects[i].kind = 'stationary';
+  }
+}
+
+const schema0 = [
+  Location0.schema,
+  Symptoms.schema,
+  NarrowcastLocation.schema,
+  Area.schema,
+  AreaMatches.schema,
+]
+
+const schema1 = [
+  Location1.schema,
+  Symptoms.schema,
+  NarrowcastLocation.schema,
+  Area.schema,
+  AreaMatches.schema,
+]
+
+const schemas = [
+  { schema: schema0, schemaVersion: 0 },
+  { schema: schema1, schemaVersion: 1, migration: addLocation1Fields },
+];
+
 let realmDbInstance = null;
+
 class RealmObj {
+  static async openRealm(key) {
+    let nextSchemaIndex = Realm.schemaVersion(Realm.defaultPath, key);
+    console.log('current schema: ' + nextSchemaIndex + " latest schema " + schemas[schemas.length - 1].schemaVersion);
+
+    if(nextSchemaIndex !== -1) {
+      ++nextSchemaIndex; // our schemas are zero indexed
+      while (nextSchemaIndex < schemas.length - 1) {
+        console.log('opening')
+        let migratedRealm = new Realm({
+          ...schemas[nextSchemaIndex++],
+          encryptionKey: key
+        });
+        migratedRealm.close();
+      }
+    }
+
+    var obj = Realm.open({
+      ...schemas[schemas.length - 1],
+      encryptionKey: key,
+    });
+    return obj;
+  }
   static async init() {
     if (realmDbInstance) {
       return realmDbInstance;
     }
     let key = await getKey();
     if (realmDbInstance == null) {
-      realmDbInstance = Realm.open({
-        schema: [
-          Location.schema,
-          Symptoms.schema,
-          NarrowcastLocation.schema,
-          Area.schema,
-          AreaMatches.schema,
-        ],
-        encryptionKey: key,
-      });
+      realmDbInstance = RealmObj.openRealm(key);
+
     }
     return await realmDbInstance;
   }
