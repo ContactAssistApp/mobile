@@ -6,8 +6,8 @@ export async function getLatestCoarseLocation(ts) {
   const location = await getLatestLocation();
   if (location) {
     const {latitude: lat, longitude: lon} = location;
-    const coarsLocation = await getCoarseLocation(lat, lon, ts);
-    return coarsLocation;
+    const coarseLocation = await getCoarseLocation(lat, lon, ts);
+    return coarseLocation;
   }
   return null;
 }
@@ -49,7 +49,7 @@ async function canWeAfford(lat, lon, precision, ts) {
 }
 
 function fetchQuerySize(lat, lon, precision, ts) {
-  const url = `${GET_MESSAGE_LIST_URL}?lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=${ts}`;
+  const url = `${GET_MESSAGE_LIST_URL}&lat=${lat}&lon=${lon}&precision=${precision}&lastTimestamp=${ts}`;
   return fetch(url, {
     method: 'HEAD',
   })

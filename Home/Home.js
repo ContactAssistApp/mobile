@@ -158,7 +158,7 @@ class Home extends Component {
 
   fetchMessageID = async location => {
     const ts = await this.getTs();
-    const url = `${GET_MESSAGE_LIST_URL}?lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=${ts}`;
+    const url = `${GET_MESSAGE_LIST_URL}&lat=${location.latitudePrefix}&lon=${location.longitudePrefix}&precision=${location.precision}&lastTimestamp=${ts}`;
 
     return fetch(url, {
       headers: {
