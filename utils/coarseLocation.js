@@ -6,8 +6,8 @@ export async function getLatestCoarseLocation(ts) {
   const location = await getLatestLocation();
   if (location) {
     const {latitude: lat, longitude: lon} = location;
-    const coarsLocation = await getCoarseLocation(lat, lon, ts);
-    return coarsLocation;
+    const coarseLocation = await getCoarseLocation(lat, lon, ts);
+    return coarseLocation;
   }
   return null;
 }
