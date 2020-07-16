@@ -22,7 +22,6 @@ import Location from '../utils/location';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import SettingsModal from '../Settings/SettingsModal';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import {UW_URL} from '../utils/constants';
 import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
 import {strings} from '../locales/i18n';
@@ -276,11 +275,6 @@ class Home extends Component {
                     {isBroadcasting
                       ? strings('global.logging')
                       : strings('global.stopping')}
-                    <Text
-                      style={styles.lear_more_link}
-                      onPress={() => Linking.openURL(UW_URL)}>
-                      {strings('learn.more_link_text')}
-                    </Text>
                   </Text>
                 </View>
               </View>
@@ -368,9 +362,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: -0.24,
     color: colors.secondary_body_copy,
-  },
-  lear_more_link: {
-    color: colors.primary_theme,
   },
   resources_container: {
     backgroundColor: 'white',
