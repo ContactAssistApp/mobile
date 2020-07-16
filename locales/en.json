@@ -18,14 +18,14 @@
     "log_header_text": "Contact Log",
     "log_header_text_demo": "Contact Log [DEMO]",
     "logs": "Contact logs",
-    "title_1": "Review which symptoms you would like to include.",
-    "title_2": "Review your location history from the last 14 days.",
-    "title_3": "Review the people you\u2019ve been in contact with recently.",
-    "title_4": "Save this list for reference during your interview.",
-    "desc_1": "We\u2019ve detected severe symptoms in your recent reports, and collected them below.",
-    "desc_2": "Below are locations you\u2019ve recently visited for 10 minutes or more. This helps us track locations that might be high-risk for exposure.",
-    "desc_3": "Below you can add a list of people you\u2019ve been in close contact with (6m) for 10 or more minutes in the last 14 days.",
-    "desc_4": "Don\u2019t worry, you can always come back to edit this list later. You can export this information into an email record for yourself.",
+    "title_1": "Review the symptoms you’ve experienced in the past 14 days.",
+    "title_2": "Review any locations you’ve visited in the past 14 days.",
+    "title_3": "Review people you’ve been in close contact with in the past 14 days.",
+    "title_4": "Please review and save this list for reference during your interview.",
+    "desc_1": "Sharing your symptoms helps your interviewer understand how long you’ve been sick, as well as the severity of your symptoms. Symptoms you’ve added are listed below.",
+    "desc_2": "Sharing locations you’ve visited helps your interviewer learn about places where other people may have been exposed to COVID-19. Include any locations you visited for 10 minutes or more. Locations you've logged are listed below.",
+    "desc_3": "Sharing the names of people you’ve had close contact with helps your interviewer determine who is most at risk for contracting COVID-19 from you. Include anyone you were within 6 feet of for 10 minutes or more. Contacts you've logged are listed below.",
+    "desc_4": "Please review the information below and save your list. You can always edit this list later.",
     "healthcare_professional": "Please contact your healthcare professional."
   },
   "add": {
@@ -46,13 +46,13 @@
     "help_text": "You've received a positive diagnosis from your healthcare provider. To confirm your diagnosis, please provider your credentials below."
   },
   "symptom": {
-    "help_text": "Use this form to provide a daily report of any symptoms you have. You may submit this form once a day.",
+    "help_text": "Use this form to monitor your health each day. Keep track of when symptoms begin and end by logging in the morning and evening. You can also indicate when you are experiencing no symptoms.",
     "logs": "Symptom logs",
     "submission_date_pkey": "symptom_submission_date_pkey",
     "tracker_text": "Symptom Tracker [DEMO]"
   },
   "notif": {
-    "message": "We are currently logging your location.",
+    "message": "We are currently logging your location. If you would like to turn off location logging, please visit the Settings page.",
     "id_pkey": "notif_id_pkey"
   },
   "default": {
@@ -105,8 +105,8 @@
     "maxBlacklistSizeError": "Maximum blacklist size reached.",
     "downloading": "Downloading file...",
     "phone": "911",
-    "privacyDisclaimer": "Any information collected on CommonCircle Assist is stored securely and locally in your app, and remain private to you.",
-    "privacyDisclaimer2": "This information is stored securely and locally on your app, and remains private to you.",
+    "privacyDisclaimer": "Information collected through CommonCircle Assist is stored securely and locally on your app, and remains private to you. Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
+    "privacyDisclaimer2": "Information collected through CommonCircle Assist is stored securely and locally on your app, and remains private to you. Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
     "start": "Start logging",
     "stop": "Stop logging",
     "ok": "Ok",
@@ -149,7 +149,7 @@
     "confirm": "I confirm",
     "edit": "Edit",
     "delete": "Delete",
-    "isolation1": "Everyone who has tested positive for COVID-19 shall remain in isolation until no longer infectious.",
+    "isolation1": "Anyone who has tested positive for COVID-19 should remain in isolation until no longer infectious. For more information, please contact your local healthcare professional.",
     "isolation2": "Do not leave your home or recovery facility, except to receive medical care.",
     "monitor1": "If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first.",
     "monitor2": "Do not go to the emergency room.",
@@ -202,7 +202,7 @@
     "show_this_again": "Don't show this again"
   },
   "prompt": {
-    "to_enable_error": "Enable Bluetooth and GPS in settings to start logging."
+    "to_enable_error": "Enable Location Logging in Settings to log your locations in real time."
   },
   "bluetooth": {
     "is_off": "Bluetooth is currently turned off.",
@@ -268,7 +268,7 @@
   },
   "quarantine": {
     "end_time_pkey": "quarantine_end_time_pkey",
-    "desc": "Everyone with COVID-19 symptoms who has a test result pending shall remain in quarantine while waiting for the test results.",
+    "desc": "Anyone with COVID-19 symptoms who has a test result pending shall remain in quarantine while waiting for the test results.",
     "directive": "Quarantine directive"
   },
   "download": {
@@ -296,7 +296,7 @@
   },
   "turn": {
     "loc_on": "We need location services enabled to send your infection report. Please enable location services permission.",
-    "loc_on2": "We need location services enabled to check for announcements. Please enable location services permission."
+    "loc_on2": "We need location services enabled to check for local announcements. Please enable location services permission."
   },
   "learn": {
     "about_us": "Download and learn more about the CommonCircle Assist app at",
@@ -448,7 +448,7 @@
     "txt": "People"
   },
   "socialize": {
-    "text": "Safely add people you\u2019ve been in contact with directly from your contacts list, or one at a time."
+    "text": "Safely add people you’ve been in contact with directly from your contacts list, or add them one at a time. "
   },
   "social": {
     "interaction_text": "Social Interactions"
@@ -457,10 +457,10 @@
     "text": "Summary"
   },
   "review": {
-    "which_symptoms_to_include": "Review which symptoms you would like to include."
+    "which_symptoms_to_include": "Review the symptoms you’ve experienced in the past 14 days."
   },
   "we": {
-    "have_detected_severe_symptoms_in_your_report": "We\u2019ve detected severe symptoms in your recent reports, and collected them below. We use this to determine lorem ipsum dolor consect. Learn More"
+    "have_detected_severe_symptoms_in_your_report": "Sharing your symptoms helps your interviewer understand how long you’ve been sick, as well as the severity of your symptoms. The symptoms you’ve added are listed below. Uncheck any that you would like to keep private."
   },
   "diag": {
     "not_submitted": "Diagnosis not submitted."
@@ -499,10 +499,10 @@
     "btn_text": "Previous"
   },
   "how": {
-    "to_prepare_for_your_interview": "How to prepare for your interview"
+    "to_prepare_for_your_interview": "Prepare a list of important information for your interview"
   },
   "interview": {
-    "preparation_description_text": "During your interview, a healthcare nurse will be collecting a list of critical information to help identify those who may have been exposed.\n\nYou can prepare a list of informaton they will ask about based on information collected through CommonCircle Assist. This information includes:"
+    "preparation_description_text": "You can use this app to collect information from the past 14 days to share with the interviewer. Select Get Started below to create your list."
   },
   "get": {
     "started_text": "Get started"
@@ -533,7 +533,7 @@
     "to_covidsafe_text": "Welcome to CommonCircle Assist"
   },
   "covidsafe": {
-    "notifies_you": "CommonCircle Assist notifies you if you may have been exposed to coronavirus and helps you monitor any symptoms you're having."
+    "notifies_you": "If you chose to receive notifications, CommonCircle Assist can send you announcements made by your local health department."
   },
   "clear": {
     "all_text": "Clear all"
@@ -604,11 +604,11 @@
   },
   "google": {
     "downloadInProgress": "Download in Progress",
-    "downloadFailed": "Failed to Import Location from Google",
+    "downloadFailed": "There was a problem importing your location history from Google. Please try importing your locations again.",
     "downloadSuccessful": "Successfully Imported Location History from Google",
     "noHistory": "You don't have any location history on Google.",
-    "parsingFailed": "Failed to load your Google location history",
-    "noDataFound": "Could not load your Google location history",
+    "parsingFailed": "There was a problem loading your location history from Google. Please try importing your locations again.",
+    "noDataFound": "There was a problem loading your location history from Google. Please try importing your locations again.",
     "signin": "Sign-in to Google"
   },
 
