@@ -40,8 +40,8 @@ class SettingsModal extends Component {
               <Location />
               <Import />
               <DataStorage />
-              <AnalyticsOptIn />
               <Export />
+              <AnalyticsOptIn />
             </>
 
             <>
