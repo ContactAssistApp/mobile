@@ -114,12 +114,12 @@
     "no": "No",
     "retry": "Retry",
     "sure": "I'm sure",
-    "logging": "Location data is being collected.\nYour identity is hidden.",
-    "stopping": "Turn location on to improve the accuracy of your notifications.",
+    "logging": "Location data is being collected and saved locally to your phone.",
+    "stopping": "Turn on location logging to improve the accuracy of your notifications.",
     "faq": "FAQ",
     "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
-    "covidSiteLink": "https://covidsafe.cs.washington.edu/",
-    "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
+    "covidSiteLink": "https://commoncircle.us/",
+    "covidSiteFaqLink": "https://commoncircle.us/FAQ.html",
     "privacyLink1": "Learn more.",
     "privacyText": "Learn more",
     "permissionsHeader": "Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nCovidSafe reveals no information about you without your consent.",
@@ -134,14 +134,14 @@
     "setting1": "Control your data storage",
     "setting1desc": "You maintain control over how long we store your data. Delete your data at any time.",
     "storyTitle1": "Welcome to CommonCircle Assist",
-    "storyTitle2": "Exposure Notifications",
-    "storyTitle3": "Self-Care Tips",
+    "storyTitle2": "Protect yourself",
+    "storyTitle3": "Care for yourself",
     "storyTitle4": "Your Privacy",
     "exposed": "You may have been exposed",
-    "story1": "CommonCircle Assist notifies you if you may have been exposed to coronavirus and helps keep you and your community safer.",
-    "story2": "Learn if you might have been exposed. If you've recently been in close contact with someone recently diagnosed with COVID-19, you'll get a notification.",
+    "story1": "CommonCircle Assist helps you protect yourself from risks and stay up to date on what’s happening near you, take care of yourself if you get sick, and record information that can help protect others if you get ill.",
+    "story2": "Get notifications about locations near you where there’s a risk of COVID-19 exposure. You’ll also get critical alerts from your local health department, such as closures or cleanings of public spaces nearby.",
     "story3": "Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms, and log locations you recently visited to protect others.",
-    "story4": "Any information you contribute is protected. Learn more about how your information is used and protected on the Privacy page in Settings.",
+    "story4": "Any information you log in CommonCircle Assist is protected. Learn more about our approach on privacy in our FAQ.",
     "startText": "Let's slow the spread of COVID-19 together.",
     "certText": "I certify that the information submitted in this report is true and correct to the best of my knowledge.",
     "certDiagnosisText": "I certify that I have been officially diagnosed with COVID-19",
@@ -227,9 +227,9 @@
   },
   "broadcasting": {
     "enabled_pkey": "broadcasting",
-    "on_text": "Broadcasting on",
-    "off_text": "Broadcasting off",
-    "description_text": "Limited trace data is being collected. We keep your identity anonymous. Learn More."
+    "on_text": "Location logging on",
+    "off_text": "Location logging off",
+    "description_text": "Location data is being collected and saved locally to your phone."
   },
   "gps": {
     "enabled_pkey": "gpsEnabled"
@@ -514,7 +514,7 @@
     "covidsafe": "About CommonCircle Assist"
   },
   "tracing": {
-    "tools": "Tracing tools"
+    "tools": "Data Preferences"
   },
   "more": {
     "text": "More"
