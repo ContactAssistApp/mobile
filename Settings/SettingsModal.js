@@ -11,6 +11,7 @@ import Modal from '../views/Modal';
 import SettingLink from './SettingLink';
 import AnalyticsOptIn from './AnalyticsOptIn';
 import {UW_URL} from '../utils/constants.js';
+import {strings} from '../locales/i18n';
 
 class SettingsModal extends Component {
   constructor() {
@@ -35,7 +36,9 @@ class SettingsModal extends Component {
           title={'Settings'}>
           <ScrollView>
             <>
-              <Text style={styles.section_title}>Tracing</Text>
+              <Text style={styles.section_title}>
+                {strings('tracing.tools')}
+              </Text>
               <Notification />
               <Location />
               <Import />
@@ -45,7 +48,7 @@ class SettingsModal extends Component {
             </>
 
             <>
-              <Text style={styles.section_title}>More</Text>
+              <Text style={styles.section_title}>{strings('more.text')}</Text>
               <SettingLink iconName={'share24'} title={'Share'} />
               <SettingLink
                 iconName={'logo24'}
