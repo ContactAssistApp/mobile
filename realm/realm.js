@@ -14,6 +14,16 @@ NarrowcastLocation.schema = {
   },
 };
 
+class BackgroundTaskLog extends Realm.Object {}
+BackgroundTaskLog.schema = {
+  name: 'BackgroundTaskLog',
+  properties: {
+    taskId: 'string',
+    localeTime: 'string',
+    ts: 'int',
+  },
+};
+
 class Area extends Realm.Object {}
 Area.schema = {
   name: 'Area',
@@ -173,7 +183,7 @@ const schema0 = [
   NarrowcastLocation.schema,
   Area.schema,
   AreaMatches.schema,
-]
+];
 
 const schema1 = [
   Location1.schema,
@@ -181,7 +191,8 @@ const schema1 = [
   NarrowcastLocation.schema,
   Area.schema,
   AreaMatches.schema,
-]
+  BackgroundTaskLog.schema,
+];
 
 const schemas = [
   { schema: schema0, schemaVersion: 0 },
