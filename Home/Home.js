@@ -26,6 +26,7 @@ import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
 import {strings} from '../locales/i18n';
 import {addAreas} from '../realm/realmAreaMatchesTasks';
+import {addBackgroundLog} from '../realm/realmLoggingTasks';
 import DateConverter from '../utils/date';
 
 class Home extends Component {
@@ -46,6 +47,12 @@ class Home extends Component {
       {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
       async taskId => {
         console.log('[js] Received background-fetch event: ', taskId);
+        const ts = DateConverter.getUTCUnixTime();
+        addBackgroundLog({
+          taskId: 'Narrowcast background fetch',
+          localeTime: new Date(ts).toLocaleString(),
+          ts,
+        });
         this.processQueries();
         BackgroundFetch.finish(taskId);
       },

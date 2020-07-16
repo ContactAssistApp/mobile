@@ -7,6 +7,7 @@ import {strings} from '../locales/i18n';
 import {getAreas} from '../realm/realmAreaMatchesTasks';
 import PushNotification from 'react-native-push-notification';
 import {GetStoreData} from '../utils/asyncStorage';
+import {addBackgroundLog} from '../realm/realmLoggingTasks';
 
 let instanceCount = 0;
 
@@ -47,6 +48,12 @@ export default class LocationServices {
     const saveLocation = async (location, kind) => {
       const {latitude, longitude, accuracy, speed, altitude, provider} = location;
       const time = DateConverter.getUTCUnixTime();
+      addBackgroundLog({
+        taskId: 'Location background log',
+        localeTime: new Date(time).toLocaleString(),
+        ts: time,
+      });
+
       // not available on iOS
       const source = provider === undefined ? 'device' : provider;
 
