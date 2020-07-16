@@ -92,18 +92,26 @@ export default class LocationServices {
       return;
     }
 
+    let error_fun = (error) => {
+      console.log('BGL error: ' + JSON.stringify(error));
+    };
+
     BackgroundGeolocation.configure({
-      desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
-      stationaryRadius: 50, // We can't distinguish two locations less than 50 meters apart
-      distanceFilter: 500, //We can't detect movement beyond this threshold. Reduce it to improve narrowcast accuracy
+      desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+      stationaryRadius: 30, // We can't distinguish two locations less than 50 meters apart
+      distanceFilter: 1000, //We can't detect movement beyond this threshold. Reduce it to improve narrowcast accuracy
       debug: false, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
-      locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
+      locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
 
-      activityType: 'AutomotiveNavigation',
+      activityType: 'OtherNavigation',
       pauseLocationUpdates: false,
       saveBatteryOnBackground: false,
-    });
+    }, null, error_fun);
+
+    // BackgroundGeolocation.getLogEntries(100, 0, 'DEBUG', newLogEntries => {
+    //   newLogEntries.forEach(l => console.log(JSON.stringify(l)))
+    // })
 
     BackgroundGeolocation.on('location', location => {
       // handle your locations here
