@@ -1,5 +1,7 @@
 import {NativeModules} from 'react-native';
 import {getLocations} from '../realm/realmLocationTasks';
+import { appendFile } from 'react-native-fs';
+import { fmt_date } from '../locales/i18n'
 
 //minimum accuracy of a location for us to care for
 const MIN_ACCURACY = 100
@@ -32,68 +34,71 @@ const Location = {
   fetchAddresses: async function(dateObj, dayRange = 0) {
     const locations = await getLocations(dateObj, dayRange);
 
-    let candidates_dict = {}
-    let possible_locs = []
+    let final_locs = []
+    let appendLoc = function(loc) {
+      let cand = final_locs[final_locs.length - 1]
+      let cand_lat = cand.latitude / cand.count
+      let cand_lon = cand.longitude / cand.count
+
+      let cross_addr_dist = distance(loc.latitude, loc.longitude, cand_lat, cand_lon)
+      let acc = (loc.accuracy + (cand.accuracy / cand.count)) / 2
+      if (cross_addr_dist > acc)
+        return false;
+      cand.latitude += loc.latitude
+      cand.longitude += loc.longitude
+      cand.count += 1
+      cand.endTime = loc.time
+      for(var addr in cand.locs) {
+        if(addr[0] == loc.address) {
+          addr[2]++
+          return true;
+        }
+      }
+      cand.locs.push([loc.address, loc.name, 1])
+      return true;
+    }
+
     locations.forEach(loc => {
       //ignore unknown locations
       if(loc.name == 'Unknown')
         return;
-      //ignore non-stationary locations 
+      //ignore non-stationary locations when moving beyond walking
       if(loc.speed > 1)
         return;
-      //ignore low precision data points
-      if(loc.accuracy > MIN_ACCURACY)
+      //ignore low precision non stationary data points
+      if(loc.accuracy > MIN_ACCURACY && loc.kind != 'stationary')
         return;
-      if(!candidates_dict[loc.address])
-      {  let g = {
+      if(final_locs.length == 0 || !appendLoc(loc))
+      {
+        final_locs.push({
           latitude: loc.latitude,
           longitude: loc.longitude,
           accuracy: loc.accuracy,
+          count: 1,
           name: loc.name,
           address: loc.address,
-          count: 1,
-          valid: true
-        };
-        candidates_dict[loc.address] = g;
-        possible_locs.push(g);
-      } else {
-        let g = candidates_dict[loc.address];
-        g.latitude += loc.latitude;
-        g.longitude += loc.longitude;
-        g.accuracy += loc.accuracy;
-        g.count++;
+          startTime: loc.time,
+          endTime: loc.time,
+          locs: [ [loc.address, loc.name, 1] ]
+        });
       }
     });
 
-    possible_locs.forEach(location => {
-      location.latitude /= location.count;
-      location.longitude /= location.count;
-    })
 
-    for (var i = 0; i < possible_locs.length; ++i) {
-      var src = possible_locs[i];
-      if(!src.valid)
-        continue;
-      for (var j = i + 1; j < possible_locs.length; ++j) {
-        var dest = possible_locs[j]
-        if(!dest.valid)
-          continue;
-        if(distance(src.latitude, src.longitude, dest.latitude, dest.longitude) < (src.accuracy + dest.accuracy) / 2) {
-          if(src.count > dest.count) {
-            dest.valid = false;
-            src.count += dest.count;
-          } else {
-            src.valid = false;
-            dest.count += src.count;
-          }
-        }
-      }
-    }
-
-    return possible_locs.map(location => {
+    return final_locs.map(location => {
+      //find address
+      let addr = null;
+      location.locs.forEach(l => {
+        if(addr == null || addr[3] < l[3])
+          addr = l
+      });
+      let range = fmt_date(new Date(location.startTime), 'HH:mm')
+      if(location.startTime < location.endTime)
+        range += ' - ' + fmt_date(new Date(location.endTime), 'HH:mm')
       return {
-        name: location.name,
-        address: location.address,
+        address: addr[0],
+        name: addr[1],
+        timerange: range
       }
     });
   },
