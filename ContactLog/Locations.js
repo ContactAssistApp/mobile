@@ -91,7 +91,7 @@ class LocationsComp extends Component {
               {strings('locations.timeline_text')}
             </Text>
             {addresses.map((item, idx) => {
-              const {name, address} = item;
+              const {name, address, timerange} = item;
               return (
                 <View style={styles.address_card} key={idx}>
                   <View>
@@ -99,6 +99,7 @@ class LocationsComp extends Component {
                     {address !== '' && (
                       <Text style={styles.address}>{address}</Text>
                     )}
+                    <Text style={styles.time}>{timerange}</Text>
                   </View>
                   <TouchableOpacity
                     style={styles.action_button}
