@@ -33,7 +33,7 @@ class GoogleTimelineImportView extends Component {
     this.setState({ downloadInProgess: true })
 
     CookieManager.get('https://www.google.com', useWebKit).then(cookies => {
-      let cookie_str = ""  
+      let cookie_str = ""
       for (const [key, value] of Object.entries(cookies)) {
         if(cookie_str != "")
           cookie_str += "; ";
@@ -42,8 +42,8 @@ class GoogleTimelineImportView extends Component {
 
       var now = new Date();
       var begin = new Date(now.getTime() - 14 * 24 * 3600 * 1000);
-  
-      let download_url = `https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i${begin.getFullYear()}!2i${begin.getMonth()+1}!3i${begin.getDate()}!2m3!1i${now.getFullYear()}!2i${now.getMonth()+1}!3i${now.getDate()}`; 
+
+      let download_url = `https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i${begin.getFullYear()}!2i${begin.getMonth()}!3i${begin.getDate()}!2m3!1i${now.getFullYear()}!2i${now.getMonth()}!3i${now.getDate()}`; 
 
       console.log("dowloading: " + download_url);
 
@@ -64,9 +64,9 @@ class GoogleTimelineImportView extends Component {
           if(this.props.onReceivingPlacemarks)
             this.props.onReceivingPlacemarks({ 'error': e })
         });
-    });    
+    });
   }
-    
+
 
   render() {
     if(this.state.downloadInProgess)
