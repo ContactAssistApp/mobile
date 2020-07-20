@@ -96,13 +96,15 @@ export default class LocationServices {
       console.log('BGL error: ' + JSON.stringify(error));
     };
 
+    let provider = Platform.OS === 'ios' ? BackgroundGeolocation.ACTIVITY_PROVIDER : BackgroundGeolocation.DISTANCE_FILTER_PROVIDER;
+
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 30, // We can't distinguish two locations less than 50 meters apart
       distanceFilter: 1000, //We can't detect movement beyond this threshold. Reduce it to improve narrowcast accuracy
       debug: false, // when true, it beeps every time a loc is read
       stopOnTerminate: false,
-      locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+      locationProvider: provider,
 
       activityType: 'OtherNavigation',
       pauseLocationUpdates: false,

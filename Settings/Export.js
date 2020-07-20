@@ -1,3 +1,4 @@
+import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
 import colors from '../assets/colors';
@@ -17,12 +18,24 @@ class Export extends Component {
 
   async exportData() {
     let real = await RealmObj.init();
+    let logLines = await new Promise((resolve, reject) => {
+      BackgroundGeolocation.getLogEntries(500, 0, 'DEBUG', newLogEntries => {
+        resolve(newLogEntries);
+      }, error => {
+        let msg = "failed to lookup logs due to: " + JSON.stringify(error);
+        console.log(msg);
+        resolve(msg);
+      })
+    });
+
     let dump = {
       'narrowcast-locations': real.objects('NarrowcastLocation'),
       'areas': real.objects('Area'),
       'area-matches': real.objects('AreaMatches'),
       'locations': real.objects('Location'),
-      'symptoms': real.objects('Symptoms')
+      'symptoms': real.objects('Symptoms'),
+      'app-log': real.objects('BackgroundTaskLog'),
+      'gps-log': logLines,
     };
     try {
       let the_url = null;
