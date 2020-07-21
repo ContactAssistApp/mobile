@@ -52,7 +52,11 @@ class LocationsComp extends Component {
   handleAction = address => {
     this.props.showActionSheetWithOptions(
       {
-        options: [strings('global.cancel'), strings('global.edit'), strings('global.delete')],
+        options: [
+          strings('global.cancel'),
+          strings('global.edit'),
+          strings('global.delete'),
+        ],
         destructiveButtonIndex: 2,
         cancelButtonIndex: 0,
       },

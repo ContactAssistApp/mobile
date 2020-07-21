@@ -84,7 +84,6 @@ const Location = {
       }
     });
 
-
     return final_locs.map(location => {
       //find address
       let addr = null;
