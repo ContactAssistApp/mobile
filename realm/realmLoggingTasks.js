@@ -1,6 +1,14 @@
 import RealmObj from './realm';
+import DateConverter from '../utils/date';
 
-export async function addBackgroundLog(bgTask) {
+export async function addBackgroundLog(logLine) {
+  var time = DateConverter.getUTCUnixTime();
+  var bgTask = {
+    taskId: logLine,
+    localeTime: new Date(time).toLocaleString(),
+    ts: time,
+  };
+
   try {
     const realm = await RealmObj.init();
     realm.write(() => {
