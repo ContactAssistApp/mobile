@@ -109,7 +109,7 @@ class LocationsComp extends Component {
               const {name, address, timerange} = item;
               return (
                 <View style={styles.address_card} key={idx}>
-                  <View>
+                  <View style={styles.address_content}>
                     <Text style={styles.name}>{name}</Text>
                     {address !== '' && (
                       <Text style={styles.address}>{address}</Text>
@@ -185,6 +185,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  address_content: {
+    width: 280,
+  },
   name: {
     fontWeight: '500',
     fontSize: 16,
@@ -195,7 +198,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: colors.body_copy,
     paddingVertical: 6,
-    width: 280,
   },
   time: {
     fontSize: 12,
