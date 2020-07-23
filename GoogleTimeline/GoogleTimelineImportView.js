@@ -4,6 +4,7 @@ import {View, Text} from 'react-native';
 import {WebView} from 'react-native-webview';
 import CookieManager from '@react-native-community/cookies';
 import {strings} from '../locales/i18n';
+import DateConverter from '../utils/date';
 
 const SIGN_IN_URL = 'https://accounts.google.com/signin';
 const SIGNED_IN_HOST = 'https://myaccount.google.com';
@@ -20,6 +21,7 @@ class GoogleTimelineImportView extends Component {
 
   onNavigationStateChange = newNavState => {
     const {url} = newNavState;
+    const {endDateStr} = this.props;
 
     if (!url.startsWith(SIGNED_IN_HOST)) {
       return;
@@ -34,9 +36,9 @@ class GoogleTimelineImportView extends Component {
 
     CookieManager.get('https://www.google.com', useWebKit).then(cookies => {
       let cookie_str = `${cookies.SIDCC.name}=${cookies.SIDCC.value}`;
-      const now = new Date();
+      const endDate = DateConverter.calendarToDate(endDateStr);
 
-      let download_url = `https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i${now.getFullYear()}!2i${now.getMonth()}!3i${now.getDate()}!2m3!1i${now.getFullYear()}!2i${now.getMonth()}!3i${now.getDate()}`;
+      let download_url = `https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i${endDate.getFullYear()}!2i${endDate.getMonth()}!3i${endDate.getDate()}!2m3!1i${endDate.getFullYear()}!2i${endDate.getMonth()}!3i${endDate.getDate()}`;
 
       console.log('dowloading: ' + download_url);
 
@@ -65,7 +67,9 @@ class GoogleTimelineImportView extends Component {
   render() {
     if (this.state.downloadInProgess) {
       return (
-        <View><Text>{strings('google.downloadInProgress')}</Text></View>
+        <View>
+          <Text>{strings('google.downloadInProgress')}</Text>
+        </View>
       );
     } else {
       return (
@@ -82,6 +86,8 @@ GoogleTimelineImportView.propTypes = {
   isVisible: PropTypes.bool,
   logWindow: PropTypes.number,
   onReceivingPlacemarks: PropTypes.func,
+  endDateStr: PropTypes.string.isRequired,
+  dateRange: PropTypes.number.isRequired,
 };
 
 module.exports = GoogleTimelineImportView;

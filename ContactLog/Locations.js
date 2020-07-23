@@ -90,6 +90,8 @@ class LocationsComp extends Component {
     return (
       <ScrollView>
         <ImportGoogleTimeline
+          endDateStr={date}
+          dateRange={1}
           visible={this.state.visible}
           handleModalClose={() => {
             this.setState({visible: false});
@@ -149,7 +151,7 @@ class LocationsComp extends Component {
             </View>
             <Disclaimer />
           </> :
-          <Import />
+          <Import date={date} />
         }
       </ScrollView>
     );

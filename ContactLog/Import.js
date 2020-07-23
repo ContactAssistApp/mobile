@@ -4,6 +4,7 @@ import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
 import {strings} from '../locales/i18n';
+import DateConverter from '../utils/date';
 
 class Import extends Component {
   constructor() {
@@ -14,6 +15,7 @@ class Import extends Component {
   }
 
   render() {
+    const {date} = this.props;
     return (
       <View style={styles.container}>
         <ImportGoogleTimeline
@@ -21,6 +23,8 @@ class Import extends Component {
           handleModalClose={() => {
             this.setState({visible: false});
           }}
+          endDateStr={date}
+          dateRange={1}
         />
         <Image source={require('../assets/health/map.png')} />
         <Text style={styles.title}>

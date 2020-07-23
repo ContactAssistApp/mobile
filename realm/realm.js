@@ -86,8 +86,8 @@ Location2.schema = {
   name: 'Location',
   primaryKey: 'time',
   properties: {
-    latitude: 'double',
-    longitude: 'double',
+    latitude: 'double?',
+    longitude: 'double?',
     time: 'int',
     logTime: 'int',
     address: 'string',
