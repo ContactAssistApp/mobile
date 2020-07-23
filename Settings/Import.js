@@ -33,7 +33,9 @@ class Import extends Component {
           />
           <View style={styles.content}>
             <Text style={styles.title}>{strings('import.text')}</Text>
-            <Text style={styles.description}>{strings('import.description')}</Text>
+            <Text style={styles.description}>
+              {strings('import.description')}
+            </Text>
           </View>
         </TouchableOpacity>
       </>
