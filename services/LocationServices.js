@@ -46,13 +46,9 @@ export default class LocationServices {
       }
     };
     const saveLocation = async (location, kind) => {
-      const {latitude, longitude, accuracy, speed, altitude, provider} = location;
-      const time = DateConverter.getUTCUnixTime();
-      addBackgroundLog({
-        taskId: 'Location background log',
-        localeTime: new Date(time).toLocaleString(),
-        ts: time,
-      });
+      const {latitude, longitude, accuracy, speed, altitude, provider, time} = location;
+      const logTime = DateConverter.getUTCUnixTime();
+      addBackgroundLog('Location background log');
 
       // not available on iOS
       const source = provider === undefined ? 'device' : provider;
@@ -79,6 +75,7 @@ export default class LocationServices {
         altitude,
         kind,
         time,
+        logTime,
         source,
         address: addressObj.address,
         name: addressObj.name,

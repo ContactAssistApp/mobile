@@ -5,6 +5,7 @@ import Modal from '../views/Modal';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
 import {addGoogleLocations} from '../realm/realmLocationTasks';
 import {strings} from '../locales/i18n';
+import {addBackgroundLog} from '../realm/realmLoggingTasks'
 
 class ImportGoogleTimeline extends Component {
   importFinished = (reason, succeeded) => {
@@ -83,19 +84,25 @@ class ImportGoogleTimeline extends Component {
           let placemarks = result.kml.Document[0].Placemark;
           if (placemarks && placemarks.length > 0) {
             this.processPlacemarks(placemarks);
+            addBackgroundLog('Google import successfull. found ' + placemarks.length + ' placemarks.');
           } else {
+            addBackgroundLog('No google history found')
             this.importFinished(
               strings('google.noHistory'),
               true,
             );
           }
         } else {
-          console.log('Failed to parse KML due to: ' + JSON.stringify(error));
+          let errMsg = 'Failed to parse KML due to: ' + JSON.stringify(error);
+          addBackgroundLog(errMsg);
+          console.log(errMsg);
           this.importFinished(strings('google.parsingFailed'));
         }
       });
     } else {
-      console.log('No KML data found due to: ' + JSON.stringify(dict.error));
+      let errMsg = 'No KML data found due to: ' + JSON.stringify(dict.error);
+      addBackgroundLog(errMsg);
+      console.log(errMsg);
       this.importFinished(strings('google.noDataFound'));
     }
   };

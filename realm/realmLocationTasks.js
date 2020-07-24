@@ -35,6 +35,7 @@ export async function addGoogleLocations(locations) {
           );
 
         if (locationsOfDay.length === 0) {
+          location.logTime = DateConverter.getUTCUnixTime();
           realm.create('Location', location, true);
         }
       });

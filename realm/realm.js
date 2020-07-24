@@ -81,6 +81,28 @@ Location1.schema = {
   },
 };
 
+class Location2 extends Realm.Object {}
+Location2.schema = {
+  name: 'Location',
+  primaryKey: 'time',
+  properties: {
+    latitude: 'double',
+    longitude: 'double',
+    time: 'int',
+    logTime: 'int',
+    address: 'string',
+    name: 'string',
+    source: 'string',
+    timespan: 'string',
+
+    //new fields
+    accuracy: 'double',
+    speed: 'double',
+    altitude: 'double?',
+    kind: 'string', //moving or stationary
+  },
+};
+
 class Symptoms extends Realm.Object {}
 Symptoms.schema = {
   name: 'Symptoms',
@@ -177,6 +199,18 @@ function addLocation1Fields(oldRealm, newRealm)
   }
 }
 
+//migrate from schema0 to schema1
+function addLogTimeField(oldRealm, newRealm)
+{
+  if (oldRealm.schemaVersion >= 1)
+    return;
+  const newObjects = newRealm.objects('Location');
+  for (let i = 0; i < newRealm.length; i++) {
+    //use safe defaults
+    newObjects[i].logTime = newObjects[i].time;
+  }
+}
+
 const schema0 = [
   Location0.schema,
   Symptoms.schema,
@@ -194,9 +228,19 @@ const schema1 = [
   BackgroundTaskLog.schema,
 ];
 
+const schema2 = [
+  Location2.schema,
+  Symptoms.schema,
+  NarrowcastLocation.schema,
+  Area.schema,
+  AreaMatches.schema,
+  BackgroundTaskLog.schema,
+];
+
 const schemas = [
   { schema: schema0, schemaVersion: 0 },
   { schema: schema1, schemaVersion: 1, migration: addLocation1Fields },
+  { schema: schema2, schemaVersion: 2, migration: addLogTimeField },
 ];
 
 let realmDbInstance = null;
