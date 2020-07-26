@@ -79,26 +79,40 @@ const Location = {
           address: loc.address,
           startTime: loc.time,
           endTime: loc.time,
-          locs: [ [loc.address, loc.name, 1] ]
+          locs: [ [loc.address, loc.name, 1] ],
+          timespan: loc.timespan,
+          source: loc.source,
         });
       }
     });
 
-
     return final_locs.map(location => {
+      const {locs, startTime, endTime, timespan, source} = location;
+
       //find address
       let addr = null;
-      location.locs.forEach(l => {
+      locs.forEach(l => {
         if(addr == null || addr[3] < l[3])
           addr = l
       });
-      let range = fmt_date(new Date(location.startTime), 'HH:mm')
-      if(location.startTime < location.endTime)
-        range += ' - ' + fmt_date(new Date(location.endTime), 'HH:mm')
+
+      let range = '';
+      if (source === 'google' && timespan) {
+        const timespans = timespan.split(',');
+        const googleStart = fmt_date(new Date(timespans[0]), 'HH:mm');
+        const googleEnd = fmt_date(new Date(timespans[1]), 'HH:mm');
+        range = `${googleStart} - ${googleEnd}`;
+      } else {
+        range = fmt_date(new Date(startTime), 'HH:mm');
+        if (startTime < endTime) {
+          range += ' - ' + fmt_date(new Date(endTime), 'HH:mm');
+        }
+      }
+
       return {
         address: addr[0],
         name: addr[1],
-        timerange: range
+        timerange: range,
       }
     });
   },

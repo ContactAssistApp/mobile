@@ -5,7 +5,8 @@ import Modal from '../views/Modal';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
 import {addGoogleLocations} from '../realm/realmLocationTasks';
 import {strings} from '../locales/i18n';
-import {addBackgroundLog} from '../realm/realmLoggingTasks'
+import {addBackgroundLog} from '../realm/realmLoggingTasks';
+import PropTypes from 'prop-types';
 
 class ImportGoogleTimeline extends Component {
   importFinished = (reason, succeeded) => {
@@ -26,22 +27,25 @@ class ImportGoogleTimeline extends Component {
   };
 
   processPlacemarks = async placemarks => {
-    const locations = placemarks.filter(placemark => {
-      return placemark.Point && placemark.Point.length > 0;
-    })
-    .map(placemark => {
+    const locations = placemarks.map(placemark => {
       const {
         name: nameArr,
         address: addressArr,
         Point: pointArr,
         TimeSpan,
       } = placemark;
+      let coordinates = [];
+      let lat = null;
+      let lon = null;
+      let altitude = null;
 
       const {begin: beginArr, end: endArr} = TimeSpan[0];
-      const coordinates = pointArr[0].coordinates[0].split(',');
-      const lat = parseFloat(coordinates[1]);
-      const lon = parseFloat(coordinates[0]);
-      const altitude = coordinates.length > 2 ? parseFloat(coordinates[3]) : null;
+      if (pointArr && pointArr.length > 0) {
+        coordinates = pointArr[0].coordinates[0].split(',');
+        lat = parseFloat(coordinates[1]);
+        lon = parseFloat(coordinates[0]);
+        altitude = coordinates.length > 2 ? parseFloat(coordinates[2]) : null;
+      }
       const timespan = `${beginArr[0]},${endArr[0]}`;
       const accuracy = 0;
       const speed = 0;
@@ -61,7 +65,6 @@ class ImportGoogleTimeline extends Component {
         time: new Date(endArr[0]).getTime(),
       };
     });
-
     console.log(
       `Imported ${locations.length} location points ` +
         `from ${placemarks.length} placemarks`,
@@ -108,6 +111,7 @@ class ImportGoogleTimeline extends Component {
   };
 
   render() {
+    const {dateRange, endDateStr} = this.props;
     return (
       <Modal
         visible={this.props.visible}
@@ -117,6 +121,8 @@ class ImportGoogleTimeline extends Component {
         <GoogleTimelineImportView
           style={styles.wrapper}
           onReceivingPlacemarks={this.processKMLResponse}
+          endDateStr={endDateStr}
+          dateRange={dateRange}
         />
       </Modal>
     );
@@ -128,5 +134,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+ImportGoogleTimeline.propTypes = {
+  endDateStr: PropTypes.string.isRequired,
+  dateRange: PropTypes.number.isRequired,
+};
 
 export default ImportGoogleTimeline;

@@ -26,18 +26,8 @@ export async function addGoogleLocations(locations) {
 
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
-
-        let locationsOfDay = realm.objects('Location')
-          .filtered(
-            'time >= $0 && time <= $1 LIMIT(1)',
-            start.getTime(),
-            end.getTime(),
-          );
-
-        if (locationsOfDay.length === 0) {
-          location.logTime = DateConverter.getUTCUnixTime();
-          realm.create('Location', location, true);
-        }
+        location.logTime = DateConverter.getUTCUnixTime();
+        realm.create('Location', location, true);
       });
     });
   } catch (err) {

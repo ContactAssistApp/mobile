@@ -91,7 +91,10 @@ class ContactLog extends Component {
           }}
           weekView={this.state.weekView}>
           <TabView>
-            <Locations tabLabel={strings('locations.text')} date={this.state.date} />
+            <Locations
+              tabLabel={strings('locations.text')}
+              date={this.state.date}
+            />
             <People tabLabel={strings('people.text')} />
           </TabView>
         </Calendar>

@@ -4,6 +4,7 @@ import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
 import {strings} from '../locales/i18n';
+import DateConverter from '../utils/date';
 
 class Import extends Component {
   constructor() {
@@ -21,6 +22,8 @@ class Import extends Component {
           handleModalClose={() => {
             this.setState({visible: false});
           }}
+          endDateStr={DateConverter.calendarFormat(new Date())}
+          dateRange={14}
         />
         <TouchableOpacity
           style={styles.row}
@@ -33,7 +36,9 @@ class Import extends Component {
           />
           <View style={styles.content}>
             <Text style={styles.title}>{strings('import.text')}</Text>
-            <Text style={styles.description}>{strings('import.description')}</Text>
+            <Text style={styles.description}>
+              {strings('import.description')}
+            </Text>
           </View>
         </TouchableOpacity>
       </>
