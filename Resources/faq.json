@@ -6,11 +6,6 @@
     { "q": "global.q4", "a": "global.a4" },
     { "q": "global.q5", "a": "global.a5" },
 
-    { "q": "global.pq1", "a": "global.pa1" },
-    { "q": "global.pq2", "a": "global.pa2" },
-    { "q": "global.pq3", "a": "global.pa3" },
-    { "q": "global.pq4", "a": "global.pa4" },
-    { "q": "global.pq5", "a": "global.pa5" },
     { "q": "global.pq6", "a": "global.pa6" },
     { "q": "global.pq7", "a": "global.pa7" },
     { "q": "global.pq8", "a": "global.pa8" },
