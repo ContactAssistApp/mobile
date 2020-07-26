@@ -21,15 +21,7 @@ class FTUE extends Component {
         <View style={styles.ftue_container}>
           <View style={styles.ftue_bg_container}>
             <ImageBackground style={styles.ftue_bg} source={item.image}>
-              <View style={styles.ftue_links}>
-                <View style={styles.privacy_link}>
-                  <CustomIcon name={'lock16'} color={'white'} size={16} />
-                  <Text style={styles.privacy_text}>{strings('privacy.text')}</Text>
-                </View>
-                <View style={styles.terms_link}>
-                  <Text style={styles.term_text}>{strings('terms.text')}</Text>
-                </View>
-              </View>
+              
             </ImageBackground>
           </View>
           <View style={styles.ftue_text_container}>
@@ -56,7 +48,7 @@ class FTUE extends Component {
   };
 
   onDone = () => {
-    SetStoreData('ENABLE_FTUE', 'false');
+    // SetStoreData('ENABLE_FTUE', 'false');
     this.props.navigation.navigate('Preferences');
   };
 
