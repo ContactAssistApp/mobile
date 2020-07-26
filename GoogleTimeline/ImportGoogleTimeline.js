@@ -62,10 +62,9 @@ class ImportGoogleTimeline extends Component {
         kind,
         source: 'google',
         timespan,
-        time: new Date(beginArr[0]).getTime(),
+        time: new Date(endArr[0]).getTime(),
       };
     });
-
     console.log(
       `Imported ${locations.length} location points ` +
         `from ${placemarks.length} placemarks`,

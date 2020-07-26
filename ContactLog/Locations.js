@@ -27,6 +27,8 @@ class LocationsComp extends Component {
     this.state = {
       addresses: [],
       visible: false,
+      imported: false,
+      isImporting: false,
     };
   }
 
@@ -37,7 +39,6 @@ class LocationsComp extends Component {
 
   componentDidUpdate(prevProps) {
     const {date} = this.props;
-
     if (prevProps.date !== date) {
       this.fetchAddresses(date);
     }
@@ -94,7 +95,13 @@ class LocationsComp extends Component {
           dateRange={1}
           visible={this.state.visible}
           handleModalClose={() => {
-            this.setState({visible: false});
+            this.setState({
+              visible: false,
+              isImporting: false,
+              imported: true,
+            }, () => {
+              this.fetchAddresses(date)
+            });
           }}
         />
         {addresses && addresses.length > 0 ?
@@ -144,14 +151,31 @@ class LocationsComp extends Component {
                   color={colors.primary_theme}
                   style={styles.import_icon}
                 />
-              <Text style={styles.import_text}>
+                <Text style={styles.import_text}>
                   {strings('missing_locations.import_button')}
                 </Text>
               </TouchableOpacity>
             </View>
             <Disclaimer />
           </> :
-          <Import date={date} />
+          <Import
+            date={date}
+            visible={this.state.visible}
+            handleModalOpen={() => {
+              this.setState({
+                visible: true,
+              });
+            }}
+            handleModalClose={() => {
+              this.setState({
+                visible: false,
+                isImporting: false,
+                imported: true,
+              }, () => {
+                this.fetchAddresses(date)
+              });
+            }}
+          />
         }
       </ScrollView>
     );

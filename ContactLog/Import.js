@@ -4,40 +4,24 @@ import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
 import {strings} from '../locales/i18n';
-import DateConverter from '../utils/date';
 
 class Import extends Component {
-  constructor() {
-    super();
-    this.state = {
-      visible: false,
-    };
-  }
-
   render() {
     const {date} = this.props;
     return (
       <View style={styles.container}>
         <ImportGoogleTimeline
-          visible={this.state.visible}
-          handleModalClose={() => {
-            this.setState({visible: false});
-          }}
+          visible={this.props.visible}
+          handleModalClose={this.props.handleModalClose}
           endDateStr={date}
           dateRange={1}
         />
         <Image source={require('../assets/health/map.png')} />
-        <Text style={styles.title}>
-          {strings('import.long_text')}
-        </Text>
-        <Text style={styles.description}>
-         {strings('import.description')}
-        </Text>
+        <Text style={styles.title}>{strings('import.long_text')}</Text>
+        <Text style={styles.description}>{strings('import.description')}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            this.setState({visible: true});
-          }}>
+          onPress={this.props.handleModalOpen}>
           <CustomIcon
             name={'import24'}
             color={'white'}
