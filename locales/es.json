@@ -87,8 +87,6 @@
     "pa8": "La herramienta no alertar\u00e1 a las agencias gubernamentales sobre su identidad si est\u00e1 expuesto.",
     "aq1": "\u00bfQu\u00e9 es el rastreo de contactos?",
     "aa1": "El rastreo de contactos es un proceso que ayuda a identificar a todas las personas que pueden haber entrado en contacto con una persona enferma. Tradicionalmente, el seguimiento de contactos se realiza mediante trabajadores de salud p\u00fablica que entrevistan a la persona que est\u00e1 enferma para conocer a las personas con las que han estado en contacto y los lugares que han visitado recientemente en un per\u00edodo de tiempo espec\u00edfico, como las \u00faltimas dos semanas. Con CommonCircle Assist, el seguimiento se realiza a trav\u00e9s de la aplicaci\u00f3n en lugar de en persona.",
-    "aq2": "\u00bfPor qu\u00e9 debo informar mi enfermedad?",
-    "aa2": "Si se enferma, puede usar la aplicaci\u00f3n para mejorar la eficiencia y la integridad de las entrevistas manuales de seguimiento de contactos. Su privacidad se maximiza al garantizar que todos los datos permanezcan en su dispositivo, excepto lo que voluntariamente revela a las autoridades sanitarias para permitir el seguimiento de contactos.",
     "certError": "Marque la casilla para certificar que toda la informaci\u00f3n en este formulario es correcta.",
     "noneCheckedError": "Por favor marque al menos un s\u00edntoma.",
     "addressError": "La direcci\u00f3n que ha ingresado no es v\u00e1lida. Int\u00e9ntalo de nuevo.",

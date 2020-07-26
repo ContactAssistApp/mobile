@@ -88,8 +88,6 @@
     "pa8": "CommonCircle Assist won't alert government agencies about your identity or information stored on your phone. In order to help contain the spread of COVID19, you can elect to share that information during a contact tracing interview with a public health professional. However, this will be the decision of the user how they share this information and with whom.",
     "aq1": "What is contact tracing?",
     "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they've been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. If you are asked to complete a contact tracing interview, CommonCircle Assist can help you prepare important information in advance, which can then be referenced during your interview.",
-    "aq2": "Why should I report my illness?",
-    "aa2": "If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews. Your privacy is maximized by ensuring that all the data remains on your device, except for what you voluntarily reveal to healthcare authorities to enable contact tracing.",
     "certError": "Please check the box to certify that all the information in this form is correct.",
     "noneCheckedError": "Please check at least one symptom.",
     "addressError": "The address you have entered is invalid. Please try again.",
