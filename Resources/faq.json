@@ -7,9 +7,7 @@
     { "q": "global.q5", "a": "global.a5" },
 
     { "q": "global.pq6", "a": "global.pa6" },
-    { "q": "global.pq7", "a": "global.pa7" },
     { "q": "global.pq8", "a": "global.pa8" },
-    { "q": "global.pq9", "a": "global.pa9" },
 
     { "q": "global.aq1", "a": "global.aa1" },
     { "q": "global.aq2", "a": "global.aa2" }
