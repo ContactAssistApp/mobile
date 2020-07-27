@@ -27,6 +27,7 @@ let es = require("../locales/es.json");
 const esKeys = getKeys(es, "", []);
 const esKeysMap = createKeyMap(esKeys);
 
+
 /*
   Delete all unused keys in the given @keymap from the given @obj.
   All unused keys should be marked false in the @keymap.
@@ -71,13 +72,14 @@ function deleteKey(obj, keys) {
   If any key is missing, log with @label
   Return true if all keys are present, false otherwise.
 */
-function hasAllKeys(required, actual, label) {
+function hasAllKeys(required, actual, label, missing) {
   hasAll = true;
   for (let key of required.keys()) {
     if (actual.has(key)) {
       actual.set(key, true);
     } else {
-      console.log(`${label} is missing key: ${key}`);
+      // console.log(`${label} is missing key: ${key}`);
+      missing.push(key);
       hasAll = false;
     }
   }
@@ -186,16 +188,20 @@ function createKeyMap(array) {
 */
 describe('En has no missing keys', () => {
   test('En_no_missing_keys', () => {
-    const enHasAll = hasAllKeys(usedKeysMap, enKeysMap, 'en');
+    const missing = [];
+    const enHasAll = hasAllKeys(usedKeysMap, enKeysMap, 'en', missing);
+    if (!enHasAll) {
+      console.log(`en.json is missing following keys:\n
+        ${JSON.stringify(missing, null, 2)}`);
+    }
     expect(enHasAll).toBeTruthy();
   })
 });
 
 /*
   This test will check if en.json has extra keys, if so, extra keys
-  will be deleted. If the new json has all keys and no extra keys,
-  it will be write to ./locales/newEn.json. Original en.json will
-  be unchanged.
+  will be deleted. Edited json will be write to ./locales/newEn.json.
+  Original en.json will be unchanged.
 */
 describe('En has no extra keys', () => {
   test('En_has_no_extra_keys', () => {
@@ -207,18 +213,20 @@ describe('En has no extra keys', () => {
       console.log('Check new en meets requirements');
       const newEnKeys = getKeys(newEn, "", []);
       const newEnKeysMap = createKeyMap(newEnKeys);
-      enHasAll = hasAllKeys(usedKeysMap, newEnKeysMap, 'newEn');
+      const missing = [];
+      enHasAll = hasAllKeys(usedKeysMap, newEnKeysMap, 'newEn', missing);
       if (!enHasAll) {
-        console.log('newEn.json has missing keys');
+        console.log(`newEn.json is missing following keys:\n
+          ${JSON.stringify(missing, null, 2)}`);
       }
       enUsedAll = usedAllKeys(newEnKeysMap, 'newEn');
       if (!enUsedAll) {
         console.log('newEn.json has extra keys');
       }
-      if (enUsedAll && enHasAll) {
-        console.log('newEn.json meets requirements, writing to file');
-        fs.writeFileSync('./locales/newEn.json', JSON.stringify(newEn, null, 2));
+      if (enHasAll && enUsedAll) {
+        console.log('newEn.json meets requirements');
       }
+      fs.writeFileSync('./locales/newEn.json', JSON.stringify(newEn, null, 2));
     }
     expect(enUsedAll && enHasAll).toBeTruthy();
   })
@@ -230,7 +238,12 @@ describe('En has no extra keys', () => {
 */
 describe('Es has no missing keys', () => {
   test('Es_no_missing_keys', () => {
-    const esHasAll = hasAllKeys(usedKeysMap, esKeysMap, 'es');
+    const missing = [];
+    const esHasAll = hasAllKeys(usedKeysMap, esKeysMap, 'es', missing);
+    if (!esHasAll) {
+      console.log(`es.json is missing following keys:\n
+        ${JSON.stringify(missing, null, 2)}`);
+    }
     expect(esHasAll).toBeTruthy();
   })
 });
@@ -252,18 +265,20 @@ describe("Es has no extra keys", () => {
       console.log('Check new es meets requirements');
       const newEsKeys = getKeys(newEs, "", []);
       const newEsKeysMap = createKeyMap(newEsKeys);
-      esHasAll = hasAllKeys(usedKeysMap, newEsKeysMap, 'newEs');
+      const missing = [];
+      esHasAll = hasAllKeys(usedKeysMap, newEsKeysMap, 'newEs', missing);
       if (!esHasAll) {
-        console.log('newEs.json has missing keys');
+        console.log(`newEs.json is missing following keys:\n
+          ${JSON.stringify(missing, null, 2)}`);
       }
       esUsedAll = usedAllKeys(newEsKeysMap, 'newEs');
       if (!esUsedAll) {
         console.log('newEs.json has extra keys');
       }
-      if (esUsedAll && esHasAll) {
-        console.log('newEn.json meets requirements, writing to file');
-        fs.writeFileSync('./locales/newEs.json', JSON.stringify(newEs, null, 2));
+      if (esHasAll && esUsedAll) {
+        console.log('newEs.json meets requirements');
       }
+      fs.writeFileSync('./locales/newEs.json', JSON.stringify(newEs, null, 2));
     }
     expect(esUsedAll && esHasAll).toBeTruthy();
   })
