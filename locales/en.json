@@ -48,7 +48,7 @@
   "missing_locations": {
     "title": "Missing locations?",
     "description": "You can update today’s locations quickly by importing your location history from Google. This action will replace your current list and delete any notes you’ve added per location. This action cannot be undone.",
-    "import_button": "Import google timeline",
+    "import_button": "Import google timeline"
   },
   "symptom": {
     "help_text": "Use this form to monitor your health each day. Keep track of when symptoms begin and end by logging in the morning and evening. You can also indicate when you are experiencing no symptoms.",
@@ -589,7 +589,7 @@
     "desc_2": "You can always choose to delete your data completely from CommonCircle Assist. This action cannot be undone.",
     "delete_button": "Delete All Data",
     "delete_success": "Your locations have been deleted.",
-    "delete_failure": "Delete location error.",
+    "delete_failure": "Delete location error."
   },
   "google": {
     "downloadInProgress": "Download in Progress",
@@ -612,6 +612,6 @@
 
   "disclaimer": {
     "title": "Disclaimer",
-    "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
+    "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice."
   }
 }
