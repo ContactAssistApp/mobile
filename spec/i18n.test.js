@@ -13,8 +13,39 @@ const esKeys = getKeys(es, "", []);
 const esKeysMap = createKeyMap(esKeys);
 
 
+/*
+  Checks that all keys in @required are present in @actual.
+  If any key is missing, log with @label
+  Return true if all keys are present, false otherwise.
+*/
+function hasAllKeys(required, actual, label) {
+  hasAll = true;
+  for (let key of required.keys()) {
+    if (actual.has(key)) {
+      actual.set(key, true);
+    } else {
+      console.log(`${label} is missing key: ${key}`);
+      hasAll = false;
+    }
+  }
+  return hasAll;
+}
 
-
+/*
+  Checks if all keys are used (marked true) in  @actual,
+  Log with @label if any key is unused.
+  Return true if all keys are used.
+*/
+function usedAllKeys(actual, label) {
+  usedAll = true;
+  for (let key of actual.keys()) {
+    if (!actual.get(key)) {
+      console.log(`${label} has unused key: ${key}`);
+      usedAll = false;
+    }
+  }
+  return usedAll;
+}
 
 /*
    Create the map of required en keys from files
@@ -96,31 +127,47 @@ function createKeyMap(array) {
   return map;
 }
 
-describe('i18n', () => {
+// describe('get keys', () => {
+//
+//   test('pretest_getKeys', () => {
+//     console.log(enKeysMap);
+//     expect(true).toBeTruthy();
+//   });
+//
+//   test('pretest_getUsedKeys', async () => {
+//     console.log(usedKeysMap);
+//     expect(usedKeysMap).toBeTruthy();
+//   })
+// });
 
-  test('pretest_getKeys', () => {
-    console.log(enKeysMap);
-    expect(true).toBeTruthy();
-  });
+describe('En has no missing keys', () => {
+  test('En_no_missing_keys', () => {
+    const enHasAll = hasAllKeys(usedKeysMap, enKeysMap, 'en');
 
-  test('pretest_getUsedKeys', async () => {
-    console.log(usedKeysMap);
-    expect(usedKeysMap).toBeTruthy();
+    expect(enHasAll).toBeTruthy();
   })
-
-  // test('Try find unused keys', async (resolve) => {
-  //   jest.setTimeout(60000);
-  //   let allUsed = true;
-  //   for (let i = 0; i < 5; i += 1) {
-  //     await new Promise(resolve => {
-  //       exec(`findstr /s /l ${enKeys[i]} .\\*.js`, (_, stdout) => {
-  //         allUsed = stdout != '' && allUsed;
-  //         if (stdout == '')
-  //           console.warn(`[I18n] Could not find '${enKeys[i]}'`);
-  //         resolve();
-  //       });
-  //     });
-  //   }
-  //   expect(allUsed).toBeTruthy();
-  // });
 });
+
+describe('En has no extra keys', () => {
+  test('En_has_no_extra_keys', () => {
+    const enUsedAll = usedAllKeys(enKeysMap, 'en');
+
+    expect(enUsedAll).toBeTruthy();
+  })
+});
+
+describe('Es has no missing keys', () => {
+  test('Es_no_missing_keys', () => {
+    const esHasAll = hasAllKeys(usedKeysMap, esKeysMap, 'es');
+
+    expect(esHasAll).toBeTruthy();
+  })
+});
+
+describe("Es has no extra keys", () => {
+  test('Es_has_no_extra_keys', () => {
+    const esUsedAll = usedAllKeys(esKeysMap, 'es');
+
+    expect(esUsedAll).toBeTruthy();
+  })
+})
