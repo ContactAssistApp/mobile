@@ -1,345 +1,98 @@
 {
   "app": {
-    "name": "Covid \nSafe",
     "name_one_line": "CommonCircle Assist"
-  },
-  "main": {
-    "header_text": "Covid \nSafe"
-  },
-  "history": {
-    "header_text": "Historia"
   },
   "permissions": {
     "header_text": "Selecciona tus preferencias"
   },
-  "health": {
-    "header_text": "Salud",
-    "header_text_demo": "Salud [DEMO]"
-  },
   "contact": {
-    "header_text": "Preparaci\u00f3n de entrevistas",
-    "header_text_demo": "Preparaci\u00f3n de entrevistas [DEMO]",
-    "log_header_text": "Registro de contacto",
-    "log_header_text_demo": "Registro de contacto [DEMO]",
-    "logs": "Registros de contacto",
-    "title_1": "Revise qu\u00e9 s\u00edntomas le gustar\u00eda incluir.",
-    "title_2": "Revise su historial de ubicaciones de los \u00faltimos 14 d\u00edas.",
+    "header_text": "Preparación de entrevistas",
+    "header_text_demo": "Preparación de entrevistas [DEMO]",
+    "title_1": "Revise qué síntomas le gustaría incluir.",
+    "title_2": "Revise su historial de ubicaciones de los últimos 14 días.",
     "title_3": "Revisa las personas con las que has estado en contacto recientemente.",
     "title_4": "Guarde esta lista como referencia durante su entrevista.",
-    "desc_1": "Hemos detectado s\u00edntomas graves en sus informes recientes y los hemos recopilado a continuaci\u00f3n.",
-    "desc_2": "A continuaci\u00f3n se muestran las ubicaciones que visit\u00f3 recientemente durante 10 minutos o m\u00e1s. Esto nos ayuda a rastrear ubicaciones que podr\u00edan ser de alto riesgo de exposici\u00f3n.",
-    "desc_3": "A continuaci\u00f3n, puede agregar una lista de las personas con las que ha estado en contacto cercano (6 m) durante 10 minutos o m\u00e1s en los \u00faltimos 14 d\u00edas.",
-    "desc_4": "No se preocupe, siempre puede volver a editar esta lista m\u00e1s tarde. Puede exportar esta informaci\u00f3n a un registro de correo electr\u00f3nico por s\u00ed mismo.",
-    "healthcare_professional": "Por favor contacte a su profesional de la salud."
+    "desc_1": "Hemos detectado síntomas graves en sus informes recientes y los hemos recopilado a continuación.",
+    "desc_2": "A continuación se muestran las ubicaciones que visitó recientemente durante 10 minutos o más. Esto nos ayuda a rastrear ubicaciones que podrían ser de alto riesgo de exposición.",
+    "desc_3": "A continuación, puede agregar una lista de las personas con las que ha estado en contacto cercano (6 m) durante 10 minutos o más en los últimos 14 días.",
+    "desc_4": "No se preocupe, siempre puede volver a editar esta lista más tarde. Puede exportar esta información a un registro de correo electrónico por sí mismo."
   },
   "add": {
     "symptoms_header_text": "Crear nuevo registro"
   },
-  "settings": {
-    "header_text": "Configuraciones",
-    "help_text": "Puede usar este panel para crear un radio de 1 milla alrededor de las ubicaciones que no desea que se rastreen. Puede agregar hasta %1$d ubicaciones.",
-    "text": "Configuraciones"
-  },
-  "help": {
-    "header_text": "Recursos",
-    "header_text_demo": "Recursos [DEMO]",
-    "your_community_by_reporting": "Ayuda a tu comunidad informando tu diagn\u00f3stico"
-  },
-  "warning": {
-    "header_text": "Informe de diagn\u00f3stico",
-    "help_text": "Recibi\u00f3 un diagn\u00f3stico positivo de su proveedor de atenci\u00f3n m\u00e9dica. Para confirmar su diagn\u00f3stico, proporcione sus credenciales a continuaci\u00f3n."
-  },
   "symptom": {
-    "help_text": "Use este formulario para proporcionar un informe diario de cualquier s\u00edntoma que tenga. Puede enviar este formulario una vez al d\u00eda.",
-    "logs": "Registros de s\u00edntomas [DEMO]",
-    "submission_date_pkey": "s\u00edntomas_submission_date_pkey",
-    "tracker_text": "Rastreador de s\u00edntomas"
-  },
-  "notif": {
-    "message": "Actualmente estamos registrando su ubicaci\u00f3n.",
-    "id_pkey": "notif_id_pkey"
-  },
-  "default": {
-    "exposed_notif": "Seg\u00fan su historial de ubicaciones, creemos que podr\u00eda haber estado en el mismo lugar que las personas infectadas con COVID-19."
-  },
-  "exposed": {
-    "notif2": "Por favor contacte a su profesional de la salud."
+    "tracker_text": "Rastreador de síntomas"
   },
   "select": {
-    "contact": "Selecciona tus contactos",
-    "share": "Selecciona una opci\u00f3n para compartir"
+    "contact": "Selecciona tus contactos"
   },
   "global": {
-    "warning": "Advertencia",
-    "q1": "\u00bfCu\u00e1l es el prop\u00f3sito de esta aplicaci\u00f3n?",
-    "a1": "CommonCircle Assist es una aplicaci\u00f3n que busca reducir la propagaci\u00f3n del coronavirus en la comunidad, espec\u00edficamente ayudando a las personas a saber si han estado expuestas, conect\u00e1ndolas con la orientaci\u00f3n adecuada de salud p\u00fablica y permitiendo un seguimiento de contactos efectivo. CommonCircle Assist tambi\u00e9n reduce la carga sobre los sistemas de salud p\u00fablica al ofrecer a las personas que han sido diagnosticadas positivamente y sus posibles exposiciones, una forma segura, privada y r\u00e1pida de comunicar esta informaci\u00f3n a las personas que la necesitan: las autoridades de salud p\u00fablica y sus equipos de b\u00fasqueda de contactos.",
-    "q2": "\u00bfC\u00f3mo me beneficia esta aplicaci\u00f3n?",
-    "a2": "CommonCircle Assist ofrece varias funciones para protegerlo a usted y a su comunidad: \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Recibir notificaciones sobre una posible exposici\u00f3n. Es posible que se le notifique si alguien que estuvo cerca de usted en las \u00faltimas dos semanas ha presentado s\u00edntomas de COVID-19. La medida de \"cerca\" no es tan precisa como la definici\u00f3n m\u00e9dica (dentro de 6 pies por m\u00e1s de 10 minutos), pero es precisa hasta unos pocos metros. \n \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Rastree sus s\u00edntomas. Los s\u00edntomas que rastrea pueden ser \u00fatiles para ayudar a los equipos de salud p\u00fablica si se confirma que es positivo, y para tener esta informaci\u00f3n f\u00e1cilmente disponible si est\u00e1 expuesto y solicita una entrevista de seguimiento de contactos. Tambi\u00e9n puede obtener informaci\u00f3n confiable y verificada sobre el SARS-CoV-2, por qu\u00e9 es tan peligroso y c\u00f3mo se propaga.",
-    "q3": "\u00bfQui\u00e9n puede usar CommonCircle Assist?",
-    "a3": "Cuando est\u00e1 disponible para su uso, CommonCircle Assist es gratuito y cualquiera puede usarlo.",
-    "q4": "\u00bfQui\u00e9n m\u00e1s se beneficia de mi participaci\u00f3n con esta aplicaci\u00f3n?",
-    "a4": "CommonCircle Assist es capaz de alertar a las personas que han estado en \u00e1reas donde el coronavirus est\u00e1 activo. Si su prueba de coronavirus es positiva, tambi\u00e9n podr\u00e1 notificar an\u00f3nimamente a otras personas con las que haya estado en contacto durante las \u00faltimas dos semanas para alertarlos de que pueden haber estado expuestos y prepararlos para posibles entrevistas de rastreo de contactos.",
-    "q5": "\u00bfC\u00f3mo ayuda CommonCircle Assist a los funcionarios de salud p\u00fablica?",
-    "a5": "Las entrevistas tradicionales de rastreo de contactos realizadas por los servicios de salud p\u00fablica son importantes, laboriosas, complicadas y a veces pueden omitir contactos importantes porque los pacientes olvidan mencionarlos. CommonCircle Assist ayuda a las personas que han evaluado lugares de recuerdo positivos que visitaron recientemente, proporcionando un registro objetivo, que luego pueden compartir con los equipos de seguimiento de contactos. Tambi\u00e9n existe una funcionalidad para organizar la informaci\u00f3n de contacto de contactos conocidos, lo que agiliza el proceso de la entrevista y permite que los rastreadores de contactos trabajen m\u00e1s r\u00e1pido.",
-    "pq6": "\u00bfQu\u00e9 datos se almacenan en mi tel\u00e9fono? \u00bfQu\u00e9 datos sobre m\u00ed se almacenan p\u00fablicamente?",
-    "pa6": "Cada tel\u00e9fono emite una se\u00f1al aleatoria (usando Bluetooth) a otros tel\u00e9fonos cercanos. Todos los tel\u00e9fonos recuerdan las se\u00f1ales que env\u00edan y reciben durante dos semanas. Estas se\u00f1ales de transmisi\u00f3n pueden considerarse como n\u00fameros aleatorios no identificables. La se\u00f1al que transmite cada tel\u00e9fono cambia, por lo que las se\u00f1ales permanecen an\u00f3nimas y no se pueden vincular a una persona espec\u00edfica. Si alguien da positivo y decide divulgar esta informaci\u00f3n para ayudar a otros, solo divulgar\u00e1 las transmisiones de su tel\u00e9fono durante las \u00faltimas dos semanas. Esto permite que otras personas que usan CommonCircle Assist comprueben si estaban cerca de la persona infectada para determinar si estuvieron expuestos, en funci\u00f3n de las transmisiones de sus propios tel\u00e9fonos.",
-    "pq8": "\u00bfSe compartir\u00e1 esta informaci\u00f3n con las agencias gubernamentales?",
-    "pa8": "La herramienta no alertar\u00e1 a las agencias gubernamentales sobre su identidad si est\u00e1 expuesto.",
-    "aq1": "\u00bfQu\u00e9 es el rastreo de contactos?",
-    "aa1": "El rastreo de contactos es un proceso que ayuda a identificar a todas las personas que pueden haber entrado en contacto con una persona enferma. Tradicionalmente, el seguimiento de contactos se realiza mediante trabajadores de salud p\u00fablica que entrevistan a la persona que est\u00e1 enferma para conocer a las personas con las que han estado en contacto y los lugares que han visitado recientemente en un per\u00edodo de tiempo espec\u00edfico, como las \u00faltimas dos semanas. Con CommonCircle Assist, el seguimiento se realiza a trav\u00e9s de la aplicaci\u00f3n en lugar de en persona.",
-    "certError": "Marque la casilla para certificar que toda la informaci\u00f3n en este formulario es correcta.",
-    "noneCheckedError": "Por favor marque al menos un s\u00edntoma.",
-    "addressError": "La direcci\u00f3n que ha ingresado no es v\u00e1lida. Int\u00e9ntalo de nuevo.",
-    "maxBlacklistSizeError": "Tama\u00f1o m\u00e1ximo de la lista negra alcanzado.",
-    "phone": "911",
-    "privacyDisclaimer": "Cualquier informaci\u00f3n recopilada en CommonCircle Assist se almacena de forma segura y local en su aplicaci\u00f3n, y es privada para usted.",
-    "privacyDisclaimer2": "Esta informaci\u00f3n se almacena de forma segura y local en su aplicaci\u00f3n, y permanece privada para usted.",
-    "start": "Comience a iniciar sesi\u00f3n",
-    "stop": "Dejar de iniciar sesi\u00f3n",
-    "ok": "Okay",
+    "privacyDisclaimer2": "Esta información se almacena de forma segura y local en su aplicación, y permanece privada para usted.",
     "yes": "si",
     "no": "No",
-    "retry": "Procesar de nuevo",
-    "sure": "Estoy seguro",
-    "logging": "Se est\u00e1n recopilando datos de seguimiento limitados. Mantenemos su identidad an\u00f3nima. Obtenga m\u00e1s informaci\u00f3n.",
-    "stopping": "Active la transmisi\u00f3n para mejorar la precisi\u00f3n de sus notificaciones. Aprende m\u00e1s",
-    "faq": "Preguntas m\u00e1s frecuentes",
-    "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
-    "covidSiteLink": "https://covidsafe.cs.washington.edu/",
-    "covidSiteFaqLink": "https://covidsafe.cs.washington.edu/#faq",
-    "privacyLink1": "Aprende m\u00e1s.",
-    "lipsum": "Egestas tellus rutrum tellus pellentesque eu tincidun. Odio tempor orci dapibus ultrices en iaculis nunc sed augue suspendisse.",
-    "lipsum2": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices en iaculis nunc sed augue.",
-    "lipsum3": "Odio tempor orci dapibus ultrices en iaculis nunc sed",
-    "lipsum4": "Egestas tellus rutrum tellus pellentesque eu tincidunt. Odio tempor orci dapibus ultrices en iaculis nunc sed augue.",
-    "lipsum5": "Egestas tellus rutrum tellus ultrices in iaculis pellentesque eu tincidunt?",
-    "lipsum6": "Odio tempor orci dapibus ultrices en iaculis",
-    "privacyText": "Aprende m\u00e1s",
-    "permissionsHeader": "Habilite las notificaciones en tiempo real para recibir alertas sobre posibles exposiciones y mensajes de salud p\u00fablica relevantes para usted. \n \nCovidSafe no revela informaci\u00f3n sobre usted sin su consentimiento.",
+    "logging": "Se están recopilando datos de seguimiento limitados. Mantenemos su identidad anónima. Obtenga más información.",
+    "stopping": "Active la transmisión para mejorar la precisión de sus notificaciones. Aprende más",
     "cancel": "Cancelar",
-    "duration": "Duraci\u00f3n (D\u00edas)",
     "perm1": "Notificaciones",
-    "perm2": "Registro de ubicaci\u00f3n",
-    "perm3": "Rastreo Bluetooth",
-    "perm1desc": "Reciba notificaciones de riesgos de exposici\u00f3n en su \u00e1rea.",
-    "perm2desc": "Reciba anuncios y notificaciones relevantes para su vecindario. Toda la informaci\u00f3n de ubicaci\u00f3n se almacena localmente.",
-    "perm3desc": "Emite y detecta n\u00fameros aleatorios por Bluetooth para luego descubrir riesgos de exposici\u00f3n.",
+    "perm1desc": "Reciba notificaciones de riesgos de exposición en su área.",
     "setting1": "Longitud de almacenamiento de datos",
-    "setting1desc": "N\u00famero de d\u00edas hasta que los registros locales se eliminen autom\u00e1ticamente.",
+    "setting1desc": "Número de días hasta que los registros locales se eliminen automáticamente.",
     "storyTitle1": "Bienvenido a CommonCircle Assist",
-    "storyTitle2": "Notificaciones de exposici\u00f3n",
+    "storyTitle2": "Notificaciones de exposición",
     "storyTitle3": "Consejos de autocuidado",
     "storyTitle4": "Tu privacidad",
-    "exposed": "Puede haber estado expuesto",
-    "story1": "CommonCircle Assist le notifica si puede haber estado expuesto al coronavirus y lo ayuda a usted y a su comunidad a estar m\u00e1s seguros.",
-    "story2": "Aprende si podr\u00edas haber estado expuesto. Si recientemente ha estado en contacto cercano con alguien recientemente diagnosticado con COVID-19. Recibir\u00e1 una notificaci\u00f3n.",
-    "story3": "Cu\u00eddate a ti mismo y a los dem\u00e1s. Obtenga consejos de autocuidado, con\u00e9ctese con la gu\u00eda de salud p\u00fablica adecuada si ha experimentado s\u00edntomas. Y registre ubicaciones que visit\u00f3 recientemente para proteger a otros.",
-    "story4": "Cualquier informaci\u00f3n que contribuya est\u00e1 protegida. Obtenga m\u00e1s informaci\u00f3n sobre c\u00f3mo se usa y protege su informaci\u00f3n en la p\u00e1gina Privacidad en Configuraci\u00f3n.",
-    "startText": "Vamos a frenar la propagaci\u00f3n de COVID-19 juntos.",
-    "certText": "Certifico que la informaci\u00f3n presentada en este informe es verdadera y correcta a mi leal saber y entender.",
-    "certDiagnosisText": "Certifico que me han diagnosticado oficialmente con COVID-19",
+    "story1": "CommonCircle Assist le notifica si puede haber estado expuesto al coronavirus y lo ayuda a usted y a su comunidad a estar más seguros.",
+    "story2": "Aprende si podrías haber estado expuesto. Si recientemente ha estado en contacto cercano con alguien recientemente diagnosticado con COVID-19. Recibirá una notificación.",
+    "story3": "Cuídate a ti mismo y a los demás. Obtenga consejos de autocuidado, conéctese con la guía de salud pública adecuada si ha experimentado síntomas. Y registre ubicaciones que visitó recientemente para proteger a otros.",
+    "story4": "Cualquier información que contribuya está protegida. Obtenga más información sobre cómo se usa y protege su información en la página Privacidad en Configuración.",
+    "startText": "Vamos a frenar la propagación de COVID-19 juntos.",
     "severity": "Gravedad",
-    "confirm": "Confirmo",
     "edit": "Editar",
     "delete": "Eliminar",
-    "isolation1": "Todas las personas que dieron positivo para COVID-19 permanecer\u00e1n aisladas hasta que ya no sean infecciosas.",
-    "isolation2": "No salga de su hogar o centro de recuperaci\u00f3n, excepto para recibir atenci\u00f3n m\u00e9dica.",
-    "monitor1": "Si tiene s\u00edntomas como tos, fiebre u otros problemas respiratorios, comun\u00edquese primero con su m\u00e9dico habitual.",
+    "isolation1": "Todas las personas que dieron positivo para COVID-19 permanecerán aisladas hasta que ya no sean infecciosas.",
+    "isolation2": "No salga de su hogar o centro de recuperación, excepto para recibir atención médica.",
+    "monitor1": "Si tiene síntomas como tos, fiebre u otros problemas respiratorios, comuníquese primero con su médico habitual.",
     "monitor2": "No vaya a la sala de emergencias.",
-    "monitor3": "Las salas de emergencia deben poder atender a las personas con las necesidades m\u00e1s cr\u00edticas. Si tiene dificultades para respirar, no significa que tenga un coronavirus nuevo, pero debe llamar al 911.",
-    "language": "Lenguaje",
-    "english": "English",
-    "spanish": "Espa\u00f1ol"
-  },
-  "logging": {
-    "now_off": "El registro ahora est\u00e1 desactivado."
-  },
-  "inter": {
-    "prep": "Preparaci\u00f3n de entrevistas"
-  },
-  "email": {
-    "subject": "Paquete de informaci\u00f3n de la entrevista de CommonCircle Assist Contact Tracer"
+    "monitor3": "Las salas de emergencia deben poder atender a las personas con las necesidades más críticas. Si tiene dificultades para respirar, no significa que tenga un coronavirus nuevo, pero debe llamar al 911."
   },
   "location": {
-    "logs": "Registros de ubicaci\u00f3n",
-    "text": "Ubicaci\u00f3n",
-    "visited_in_last_14_days": "Lugares que ha visitado en los \u00faltimos 14 d\u00edas.",
+    "text": "Ubicación",
+    "visited_in_last_14_days": "Lugares que ha visitado en los últimos 14 días.",
     "description": "Use la ubicación para filtrar notificaciones relevantes para usted. Toda la información de ubicación se almacena localmente.",
     "permission_title": "CommonCircle Assist requiere acceso a la información de ubicación",
-    "pemission_description": "u00bfDesea abrir la configuraci\u00f3n de la aplicaci\u00f3n para habilitar esto?"
-  },
-  "send": {
-    "email": "Enviar correo electr\u00f3nico"
-  },
-  "perm": {
-    "error": "El acceso a la ubicaci\u00f3n debe estar habilitado en todo momento para que se realice el seguimiento. Int\u00e9ntalo de nuevo.",
-    "gps_rationale": "Sin este permiso, no podremos capturar informaci\u00f3n de ubicaci\u00f3n. \u00bfEst\u00e1s seguro de que quieres negar este permiso?",
-    "gps_ask": "Requerimos acceso a la informaci\u00f3n de ubicaci\u00f3n cuando la aplicaci\u00f3n est\u00e1 cerrada. \u00bfDesea abrir la configuraci\u00f3n de la aplicaci\u00f3n para habilitar esto?",
-    "ble_rationale": "Sin este permiso, no podremos capturar informaci\u00f3n de Bluetooth de los usuarios a su alrededor. \u00bfEst\u00e1s seguro de que quieres negar este permiso?",
-    "ble_ask": "Requerimos acceso a la informaci\u00f3n de Bluetooth cuando la aplicaci\u00f3n est\u00e1 cerrada. \u00bfDesea abrir la configuraci\u00f3n de la aplicaci\u00f3n para habilitar esto?",
-    "contacts_rationale": "Sin este permiso, no podremos agregar contactos a la aplicaci\u00f3n. \u00bfEst\u00e1s seguro de que quieres negar este permiso?",
-    "notifs_rationale": "Sin este permiso, no podremos enviarle notificaciones. \u00bfEst\u00e1s seguro de que quieres negar este permiso?",
-    "notifs_ask": "Requerimos notificaciones push para habilitarse. \u00bfDesea abrir la configuraci\u00f3n de la aplicaci\u00f3n para habilitar esto?",
-    "loc_rationale": "Sin este permiso, no podremos rastrear su ubicaci\u00f3n cuando se cierre la aplicaci\u00f3n. \u00bfEst\u00e1s seguro de que quieres negar este permiso?",
-    "loc_ask": "Requerimos acceso a la informaci\u00f3n de ubicaci\u00f3n cuando la aplicaci\u00f3n est\u00e1 cerrada. \u00bfDesea abrir la configuraci\u00f3n de la aplicaci\u00f3n para habilitar esto?",
-    "denied": "Permiso denegado"
-  },
-  "min": {
-    "api_error": "La versi\u00f3n del sistema operativo de su tel\u00e9fono inteligente no es compatible. La versi\u00f3n m\u00ednima del sistema operativo que admitimos es la versi\u00f3n de Android",
-    "api_check_pkey": "min_api_check_pkey"
-  },
-  "dont": {
-    "show_this_again": "No muestres esto de nuevo"
-  },
-  "prompt": {
-    "to_enable_error": "Habilite Bluetooth y GPS en la configuraci\u00f3n para comenzar a iniciar sesi\u00f3n."
-  },
-  "bluetooth": {
-    "is_off": "Bluetooth est\u00e1 actualmente desactivado.",
-    "is_disabled_on_this_device": "Bluetooth est\u00e1 deshabilitado en este dispositivo"
-  },
-  "pos": {
-    "text": "Diagn\u00f3stico positivo de COVID-19 informado"
-  },
-  "lang": {
-    "pkey": "lang_pkey"
+    "pemission_description": "u00bfDesea abrir la configuración de la aplicación para habilitar esto?"
   },
   "public": {
-    "key_pkey": "public_key_pkey",
-    "health": "Salud P\u00fablica - Seattle"
-  },
-  "last": {
-    "refresh_date_pkey": "last_refresh_date_pkey",
-    "submission_date_pkey": "last_submission_date",
-    "symptom_update_pkey": "last_symptom_update_pkey",
-    "submitted": "\u00daltimo enviado",
-    "updated_text": "\u00daltima actualizaci\u00f3n"
+    "health": "Salud Pública - Seattle"
   },
   "broadcasting": {
-    "enabled_pkey": "radiodifusi\u00f3n",
     "on_text": "Transmitiendo en",
-    "off_text": "Transmitiendo",
-    "description_text": "Se est\u00e1n recopilando datos de seguimiento limitados. Mantenemos su identidad an\u00f3nima. Aprende m\u00e1s."
-  },
-  "gps": {
-    "enabled_pkey": "gpsEnabled"
-  },
-  "ble": {
-    "enabled_pkey": "bleEnabled"
-  },
-  "onboard": {
-    "enabled_pkey": "prefs_onboard"
-  },
-  "notifs": {
-    "enabled_pkey": "prefs_notifs"
-  },
-  "most": {
-    "recent_seed_pkey": "most_recent_seed_pkey",
-    "recent_seed_timestamp_pkey": "most_recent_seed_timestamp_pkey"
+    "off_text": "Transmitiendo"
   },
   "diagnosis": {
-    "pkey": "prefs_diagnosis_date",
-    "text": "Diagn\u00f3stico"
+    "text": "Diagnóstico"
   },
   "time": {
-    "of_last_query_pkey": "time_of_last_query_pkey",
     "am": "A.M",
     "pm": "P.M"
   },
-  "init": {
-    "key_exists_pkey": "init_key_exists_pkey"
-  },
-  "aes": {
-    "key_pkey": "aes_key_pkey",
-    "iv_pkey": "aes_iv_pkey"
-  },
-  "infection": {
-    "window_in_days_pkeys": "infecci\u00f3n_ventana_en_d\u00edas_claves"
-  },
-  "quarantine": {
-    "end_time_pkey": "quarantine_end_time_pkey",
-    "desc": "Todas las personas con s\u00edntomas COVID-19 que tengan un resultado de prueba pendiente permanecer\u00e1n en cuarentena mientras esperan los resultados de la prueba.",
-    "directive": "Directiva de cuarentena"
-  },
-  "tip": {
-    "desc_1": "Todas las personas con s\u00edntomas de COVID-19 (fiebre, tos y /o dificultad para respirar) que tengan un resultado de prueba pendiente, deber\u00e1n permanecer en un lugar de cuarentena (su hogar si tiene uno o en un lugar dirigido por el gobierno o provisto p\u00fablicamente si est\u00e1 disponible) ) de acuerdo con los CDC y la gu\u00eda de salud p\u00fablica. \n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0Si el resultado de su prueba es positivo, debe permanecer aislado.",
-    "desc_2": "No todas las personas que se sienten enfermas deben hacerse la prueba, especialmente si tiene una enfermedad leve. Los proveedores de atenci\u00f3n m\u00e9dica determinan qui\u00e9n debe hacerse la prueba. Si bien las pruebas est\u00e1n cada vez m\u00e1s disponibles, todav\u00eda existen limitaciones en la capacidad de recolectar y procesar r\u00e1pidamente las pruebas. \n \nSi est\u00e1 enfermo con fiebre, tos o falta de aliento y est\u00e1 en un grupo de alto riesgo, llame a su proveedor de atenci\u00f3n m\u00e9dica para discuta si debe hacerse la prueba de COVID-19.",
-    "desc_3": "Si tiene s\u00edntomas como tos, fiebre u otros problemas respiratorios, comun\u00edquese primero con su m\u00e9dico habitual."
-  },
-  "risk": {
-    "low": "No se conocen vectores de transmisi\u00f3n.",
-    "high": "Riesgo de transmisi\u00f3n"
-  },
-  "error": {
-    "submitting_data": "Se produjo un error al enviar sus rastros. Por favor, int\u00e9ntelo de nuevo m\u00e1s tarde."
-  },
-  "confirm": {
-    "info": "Por favor confirme que esta informaci\u00f3n es precisa",
-    "diagnosis_sure": "Informar un diagn\u00f3stico positivo no se puede deshacer. Por favor, est\u00e9 seguro Ingrese la frase \"Confirmo\" en el cuadro a continuaci\u00f3n para confirmar que ha sido diagnosticado oficialmente con COVID-19",
-    "diagnosis": "Si carga este informe de diagn\u00f3stico, las personas con las que haya estado en contacto recientemente recibir\u00e1n una notificaci\u00f3n de que podr\u00edan haber estado expuestas. Tu identidad no ser\u00e1 revelada."
-  },
-  "gen": {
-    "error": "Ocurri\u00f3 un error. Por favor, int\u00e9ntelo de nuevo m\u00e1s tarde."
-  },
-  "turn": {
-    "loc_on": "Necesitamos servicios de ubicaci\u00f3n habilitados para enviar su informe de infecci\u00f3n. Habilite el permiso de los servicios de ubicaci\u00f3n.",
-    "loc_on2": "Necesitamos servicios de ubicaci\u00f3n habilitados para verificar los anuncios. Habilite el permiso de los servicios de ubicaci\u00f3n."
-  },
   "learn": {
-    "about_us": "Descargue y aprenda m\u00e1s sobre la aplicaci\u00f3n CommonCircle Assist en",
-    "more_link_text": "Aprende m\u00e1s",
-    "how_we_protect_your_privacy": "Conozca c\u00f3mo protegemos su privacidad"
+    "more_link_text": "Aprende más"
   },
   "privacy": {
-    "link": "Intimidad  |",
-    "text": "Intimidad",
-    "and_security": "Privacidad y seguridad"
+    "text": "Intimidad"
   },
   "terms": {
-    "link": "T\u00e9rminos y Condiciones",
-    "text": "T\u00e9rminos y Condiciones"
-  },
-  "onset": {
-    "date": "Fecha de comienzo"
-  },
-  "symp": {
-    "updated": "Registro de s\u00edntomas actualizado"
-  },
-  "this": {
-    "was_during": "Esto fue durante"
-  },
-  "sure": {
-    "delete": "\u00bfEstas seguro que quieres borrarlo?"
+    "text": "Términos y Condiciones"
   },
   "emergency": {
-    "text": "Det\u00e9ngase y llame al 911 si tiene: \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Dolor o presi\u00f3n severa y constante en el pecho \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Dificultad extrema para respirar \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Mareo severo y constante \n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u2022 Desorientaci\u00f3n grave o falta de respuesta.",
-    "call_text": "Llame al 911 de inmediato si tiene una emergencia m\u00e9dica."
+    "call_text": "Llame al 911 de inmediato si tiene una emergencia médica."
   },
   "fever": {
-    "txt": "Fiebre",
-    "desc": "Una temperatura alta de m\u00e1s de 100 \u00b0 F: siente calor al tocar el pecho o la espalda."
+    "txt": "Fiebre"
   },
   "cough": {
-    "txt": "Tos",
-    "desc": "Un sonido repentino y contundente de pirateo para liberar aire y eliminar una irritaci\u00f3n en la garganta o las v\u00edas respiratorias.",
-    "text": "Tos",
-    "symptoms_text": "Una nueva tos continua: esto significa que ha comenzado a toser repetidamente"
-  },
-  "shortness": {
-    "of_breath_txt": "Dificultad para respirar"
-  },
-  "trouble": {
-    "breathing_txt": "Dificultad para respirar"
-  },
-  "persistent": {
-    "pain_or_pressure_in_chest": "Dolor o presi\u00f3n persistentes en el pecho."
-  },
-  "new": {
-    "confusion_inability_to_arouse": "Nueva confusi\u00f3n o incapacidad para despertar",
-    "report_text": "Nuevo reporte"
-  },
-  "bluish": {
-    "lips_or_face": "Labios o cara azulados"
+    "txt": "Tos"
   },
   "bottom": {
     "sheet_menu_item_home": "Casa",
@@ -347,77 +100,36 @@
     "sheet_menu_item_health_report": "Reporte de salud",
     "sheet_menu_item_resources": "Recursos"
   },
-  "self": {
-    "quarantine_for_14_days": "Auto-cuarentena por 14 d\u00edas"
-  },
   "card": {
     "onset_date_hint": "Fecha de inicio (MM /DD)",
-    "onset_days_experienced": "D\u00edas de experiencia",
+    "onset_days_experienced": "Días de experiencia",
     "symptom_severity_mild": "Leve",
     "symptom_severity_moderate": "Moderar",
-    "symptom_severity_severe": "Grave",
-    "data_storage_local": "Almacenamiento local de datos",
-    "data_storage_local_expiration": "Sus datos caducar\u00e1n en %1$s\nEn esta fecha, los registros de s\u00edntomas y los datos de ubicaci\u00f3n se eliminar\u00e1n de la aplicaci\u00f3n. Esta acci\u00f3n no se puede deshacer."
-  },
-  "change": {
-    "in_settings_text": "Cambio en la configuraci\u00f3n"
+    "symptom_severity_severe": "Grave"
   },
   "highest": {
-    "temperature_text": "Temperatura m\u00e1s alta"
-  },
-  "legal": {
-    "text": "Legal"
-  },
-  "release": {
-    "text": "Liberar informaci\u00f3n"
-  },
-  "share": {
-    "text": "Compartir"
-  },
-  "you": {
-    "might_have_exposed": "Es posible que hayas estado expuesto"
-  },
-  "exposure": {
-    "notification_description_text": "Seg\u00fan su historial de ubicaciones, creemos que podr\u00eda haber estado en el mismo lugar que las personas infectadas con COVID-19",
-    "history": "Historial de exposici\u00f3n"
-  },
-  "dismiss": {
-    "text": "Descartar"
-  },
-  "disclaimer": {
-    "text": "Descargo de responsabilidad"
+    "temperature_text": "Temperatura más alta"
   },
   "cdc": {
-    "guidance_text": "Gu\u00eda de los CDC"
+    "guidance_text": "Guía de los CDC"
   },
   "saved": {
     "text": "Salvado"
   },
   "not": {
-    "logged_text": "No registrado",
-    "logged_txt": "No registrado"
+    "logged_text": "No registrado"
   },
   "prepare": {
-    "for_contact_tracer_interview": "Prep\u00e1rese para su entrevista de contacto",
-    "for_interview_btn_text": "Prep\u00e1rate para tu entrevista",
-    "for_contact_tracer_description_text": "Durante una entrevista, un funcionario de salud p\u00fablica recopilar\u00e1 una lista de informaci\u00f3n cr\u00edtica para ayudar a identificar a las personas a su alrededor que puedan haber estado expuestas."
-  },
-  "positive": {
-    "covid_report": "Diagn\u00f3stico positivo de COVID-19 informado"
-  },
-  "reported": {
-    "text": "Reportado"
-  },
-  "submit": {
-    "your_report_button_text": "Env\u00eda tu informe"
+    "for_contact_tracer_interview": "Prepárese para su entrevista de contacto",
+    "for_interview_btn_text": "Prepárate para tu entrevista",
+    "for_contact_tracer_description_text": "Durante una entrevista, un funcionario de salud pública recopilará una lista de información crítica para ayudar a identificar a las personas a su alrededor que puedan haber estado expuestas."
   },
   "what": {
-    "happen_when_i_submit_report": "\u00bfQu\u00e9 sucede cuando env\u00edo mi informe?",
-    "to_do_if_you_are_sick": "Qu\u00e9 hacer si est\u00e1s enfermo"
+    "to_do_if_you_are_sick": "Qué hacer si estás enfermo"
   },
   "symptoms": {
-    "text": "S\u00edntomas",
-    "experienced_last_14_days": "S\u00edntomas que ha experimentado en los \u00faltimos 14 d\u00edas."
+    "text": "Síntomas",
+    "experienced_last_14_days": "Síntomas que ha experimentado en los últimos 14 días."
   },
   "locations": {
     "text": "Localizaciones",
@@ -425,8 +137,7 @@
   },
   "people": {
     "text": "Personas",
-    "you_have_been_in_contact_last_14_days": "Personas con las que has estado en contacto directo durante los \u00faltimos 14 d\u00edas",
-    "txt": "Personas"
+    "you_have_been_in_contact_last_14_days": "Personas con las que has estado en contacto directo durante los últimos 14 días"
   },
   "socialize": {
     "text": "Agregue de forma segura a las personas con las que ha estado en contacto directamente desde su lista de contactos, o una a la vez."
@@ -437,53 +148,32 @@
   "summary": {
     "text": "Resumen"
   },
-  "review": {
-    "which_symptoms_to_include": "Revise qu\u00e9 s\u00edntomas le gustar\u00eda incluir."
-  },
-  "we": {
-    "have_detected_severe_symptoms_in_your_report": "Hemos detectado s\u00edntomas graves en sus informes recientes y los hemos recopilado a continuaci\u00f3n. Usamos esto para determinar el consentimiento del lorem ipsum dolor. Aprende m\u00e1s"
-  },
-  "diag": {
-    "not_submitted": "Diagn\u00f3stico no presentado."
-  },
   "ab": {
-    "pain_desc": "Dolor desde el interior del abdomen o la pared muscular externa, que var\u00eda de leve y temporal a intenso."
+    "pain_desc": "Dolor desde el interior del abdomen o la pared muscular externa, que varía de leve y temporal a intenso."
   },
   "chills": {
-    "desc": "La sensaci\u00f3n de fr\u00edo, aunque no necesariamente en un ambiente fr\u00edo, a menudo acompa\u00f1ado de temblores o temblores.",
     "txt": "Resfriado"
   },
   "diarrhea": {
-    "desc": "Deposiciones sueltas y acuosas que pueden ocurrir con frecuencia y con una sensaci\u00f3n de urgencia.",
     "txt": "Diarrea"
   },
-  "breathing": {
-    "desc": "La falta de aliento, o disnea, es una condici\u00f3n inc\u00f3moda que dificulta la entrada total de aire en los pulmones."
-  },
   "headache": {
-    "desc": "Una sensaci\u00f3n dolorosa en cualquier parte de la cabeza, que var\u00eda de aguda a opaca, que puede ocurrir con otros s\u00edntomas.",
     "txt": "Dolor de cabeza"
   },
   "sore": {
-    "throat_desc": "El dolor o la irritaci\u00f3n en la garganta que puede ocurrir con o sin tragar, a menudo acompa\u00f1a a las infecciones.",
     "throat_txt": "Dolor de garganta"
   },
   "vomiting": {
-    "desc": "Expulsar con fuerza el contenido del est\u00f3mago de la boca.",
-    "txt": "V\u00f3mito"
+    "txt": "Vómito"
   },
   "next": {
-    "btn_text": "pr\u00f3ximo",
-    "steps_text": "Pr\u00f3ximos pasos"
+    "btn_text": "próximo"
   },
   "previous": {
     "btn_text": "Anterior"
   },
-  "how": {
-    "to_prepare_for_your_interview": "C\u00f3mo prepararse para su entrevista"
-  },
   "interview": {
-    "preparation_description_text": "Durante su entrevista, una enfermera de atenci\u00f3n m\u00e9dica recopilar\u00e1 una lista de informaci\u00f3n cr\u00edtica para ayudar a identificar a las personas que pudieron haber estado expuestas. Puede preparar una lista de informaci\u00f3n sobre la que preguntar\u00e1n en funci\u00f3n de la informaci\u00f3n recopilada a trav\u00e9s de CommonCircle Assist. Esta informaci\u00f3n incluye:"
+    "preparation_description_text": "Durante su entrevista, una enfermera de atención médica recopilará una lista de información crítica para ayudar a identificar a las personas que pudieron haber estado expuestas. Puede preparar una lista de información sobre la que preguntarán en función de la información recopilada a través de CommonCircle Assist. Esta información incluye:"
   },
   "get": {
     "started_text": "Empezar"
@@ -498,26 +188,10 @@
     "tools": "Herramientas de rastreo"
   },
   "more": {
-    "text": "M\u00e1s"
+    "text": "Más"
   },
   "your": {
-    "log_have_been_saved_text": "Su registro ha sido guardado",
-    "report_will_be_anonymous_text": "Su informe ser\u00e1 an\u00f3nimo y su identidad estar\u00e1 protegida."
-  },
-  "report": {
-    "has_been_submitted": "Su informe ha sido enviado."
-  },
-  "recent": {
-    "logs": "Registros recientes"
-  },
-  "welcome": {
-    "to_covidsafe_text": "Bienvenido a CommonCircle Assist"
-  },
-  "covidsafe": {
-    "notifies_you": "CommonCircle Assist le notifica si puede haber estado expuesto al coronavirus y lo ayuda a controlar cualquier s\u00edntoma que tenga."
-  },
-  "clear": {
-    "all_text": "Limpiar todo"
+    "log_have_been_saved_text": "Su registro ha sido guardado"
   },
   "save": {
     "text": "Salvar"
@@ -526,52 +200,17 @@
     "pain_txt": "Dolor abdominal"
   },
   "difficult": {
-    "in_breathing": "Respiraci\u00f3n dificultosa",
-    "in_breathing_not_severe": "Dificultad para respirar (no severa)"
-  },
-  "chest": {
-    "pain_txt": "Dolores en el pecho"
-  },
-  "announcement": {
-    "txt": "Anuncio"
-  },
-  "logged": {
-    "txt": "Registrado"
-  },
-  "unknown": {
-    "address_txt": "Direcci\u00f3n desconocida"
+    "in_breathing": "Respiración dificultosa"
   },
   "general": {
     "locations_txt": "Ubicaciones generales"
   },
-  "done": {
-    "txt": "Hecho"
-  },
-  "export": {
-    "as_email_txt": "Exportar como correo electr\u00f3nico"
-  },
-  "check": {
-    "box": "Marque la casilla para confirmar que esta informaci\u00f3n es precisa."
-  },
-  "network": {
-    "down": "Red no disponible. Int\u00e9ntalo de nuevo."
-  },
-  "demo": {
-    "disabled": "Esta funci\u00f3n est\u00e1 deshabilitada en la versi\u00f3n demo de la aplicaci\u00f3n."
-  },
   "monitor": {
-    "your_symptoms": "Controle sus s\u00edntomas"
+    "your_symptoms": "Controle sus síntomas"
   },
   "isolation": {
     "order": "Orden de aislamiento"
   },
-  "request": {
-    "test": "Solicita una prueba"
-  },
-  "call": {
-    "911": "Llame al 911 de inmediato si tiene una emergencia m\u00e9dica."
-  },
-
   "google": {
     "downloadInProgress": "Descarga en curso",
     "downloadFailed": "Error al importar la ubicación de Google",
@@ -581,19 +220,16 @@
     "noDataFound": "Error al cargar tu historial de ubicaciones de Google",
     "signin": "Inicia sesión en Google"
   },
-
   "analytics": {
     "title": "Analítica",
     "description": "Comparta datos analíticos y de fallas con los desarrolladores de CovidSafe."
   },
-
   "import": {
     "text": "Importar historial de ubicaciones",
     "long_text": "Sincronice su historial de ubicaciones\npara comenzar.",
     "description": "Sincronice su historial de ubicaciones directamente desde Google importando sus datos de línea de tiempo.",
     "btn_text": "Importar"
   },
-
   "narrowcast": {
     "alerts": "Alertas locales"
   }

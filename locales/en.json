@@ -2,22 +2,12 @@
   "app": {
     "name_one_line": "CommonCircle Assist"
   },
-  "history": {
-    "header_text": "History"
-  },
   "permissions": {
     "header_text": "Select your preferences"
-  },
-  "health": {
-    "header_text": "Health",
-    "header_text_demo": "Health [DEMO]"
   },
   "contact": {
     "header_text": "Interview Preparation",
     "header_text_demo": "Interview Preparation [DEMO]",
-    "log_header_text": "Contact Log",
-    "log_header_text_demo": "Contact Log [DEMO]",
-    "logs": "Contact logs",
     "title_1": "Review the symptoms you’ve experienced in the past 14 days.",
     "title_2": "Review any locations you’ve visited in the past 14 days.",
     "title_3": "Review people you’ve been in close contact with in the past 14 days.",
@@ -25,25 +15,10 @@
     "desc_1": "Sharing your symptoms helps your interviewer understand how long you’ve been sick, as well as the severity of your symptoms. Symptoms you’ve added are listed below.",
     "desc_2": "Sharing locations you’ve visited helps your interviewer learn about places where other people may have been exposed to COVID-19. Include any locations you visited for 10 minutes or more. Locations you've logged are listed below.",
     "desc_3": "Sharing the names of people you’ve had close contact with helps your interviewer determine who is most at risk for contracting COVID-19 from you. Include anyone you were within 6 feet of for 10 minutes or more. Contacts you've logged are listed below.",
-    "desc_4": "Please review the information below and save your list. You can always edit this list later.",
-    "healthcare_professional": "Please contact your healthcare professional."
+    "desc_4": "Please review the information below and save your list. You can always edit this list later."
   },
   "add": {
     "symptoms_header_text": "Create New Log"
-  },
-  "settings": {
-    "header_text": "Settings",
-    "help_text": "You can use this panel to create a 1 mile radius around locations you don't want to be tracked. You can add up to %1$d locations.",
-    "text": "Settings"
-  },
-  "help": {
-    "header_text": "Resources",
-    "header_text_demo": "Resources [DEMO]",
-    "your_community_by_reporting": "Help your community by reporting your diagnosis"
-  },
-  "warning": {
-    "header_text": "Diagnosis Report",
-    "help_text": "You've received a positive diagnosis from your healthcare provider. To confirm your diagnosis, please provider your credentials below."
   },
   "missing_locations": {
     "title": "Missing locations?",
@@ -51,297 +26,79 @@
     "import_button": "Import google timeline"
   },
   "symptom": {
-    "help_text": "Use this form to monitor your health each day. Keep track of when symptoms begin and end by logging in the morning and evening. You can also indicate when you are experiencing no symptoms.",
-    "logs": "Symptom logs",
-    "submission_date_pkey": "symptom_submission_date_pkey",
     "tracker_text": "Symptom Tracker [DEMO]"
   },
-  "notif": {
-    "message": "We are currently logging your location. If you would like to turn off location logging, please visit the Settings page.",
-    "id_pkey": "notif_id_pkey"
-  },
-  "default": {
-    "exposed_notif": "Based on your location history, we believe you might have been in the same place as people infected with COVID-19."
-  },
-  "exposed": {
-    "notif2": "Please contact your healthcare professional."
-  },
   "select": {
-    "contact": "Select Contacts",
-    "share": "Select a sharing option"
+    "contact": "Select Contacts"
   },
   "global": {
-    "warning": "Warning",
-    "q1": "What is the purpose of this app?",
-    "a1": "CommonCircle Assist (formerly UW CovidSafe) is one of a pair of companion apps that seek to reduce the spread of coronavirus in the community, specifically by connecting you to the appropriate public health guidance for more peace of mind as the community reopens, and by enabling effective contact tracing. You can opt-in to recieve alerts from your local public health department and keep track of important information that may protect you and others if you become ill, such as symptoms, locations, and people you've recently come into contact with in the last 14 days. If you are asked to complete a contact tracing interview, CommonCircle Assist provides you with a safe, private, and fast way to communicate this information to the people who need it — public health authorities and their contact tracing teams.",
-    "q2": "How does this app benefit me?",
-    "a2": "CommonCircle Assist allows you to log important information that could protect yourself and others if you become ill or are confirmed positive, including symptoms, locations, and people you've recently come into contact with in the last 14 days. You can have this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.",
-    "q3": "Who can use CommonCircle Assist?",
-    "a3": "CommonCircle Assist is free, and anyone can use it.",
-    "q4": "Who else benefits from my participation with this app?",
-    "a4": "If you test positive for coronavirus, or are asked to complete a contact tracing interview, CommonCircle Assist can help you securely organize and share information of your chosing with your interviewer. Specifically, in the event you may become ill, are exposed, or confirmed positive, location information can be used to better inform community messages sent by public health officials, while keeping your identity and personal information private.",
-    "q5": "How does CommonCircle Assist help public health officials?",
-    "a5": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CommonCircle Assist helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.",
-    "pq6": "What data is stored on my phone?",
-    "pa6": "Your privacy and data security is important to us. You control your data at all times. The only data stored on your phone is information you choose to log, whether it's automatically through GPS location logging or information you add to the app one-by-one. If you turn on location logging, you can easily turn if off from the home screen or Settings menu, while individual log entries such as specific locations, symptoms, or contacts may be edited, added or deleted at any time. You can also choose to delete your data completely from CommonCircle Assist from the Settings menu.",
-    "pq8": "Will this information be shared with government agencies?",
-    "pa8": "CommonCircle Assist won't alert government agencies about your identity or information stored on your phone. In order to help contain the spread of COVID19, you can elect to share that information during a contact tracing interview with a public health professional. However, this will be the decision of the user how they share this information and with whom.",
-    "aq1": "What is contact tracing?",
-    "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they've been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. If you are asked to complete a contact tracing interview, CommonCircle Assist can help you prepare important information in advance, which can then be referenced during your interview.",
-    "certError": "Please check the box to certify that all the information in this form is correct.",
-    "noneCheckedError": "Please check at least one symptom.",
-    "addressError": "The address you have entered is invalid. Please try again.",
-    "maxBlacklistSizeError": "Maximum blacklist size reached.",
-    "downloading": "Downloading file...",
-    "phone": "911",
-    "privacyDisclaimer": "Information collected through CommonCircle Assist is stored securely and locally on your app, and remains private to you. Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
     "privacyDisclaimer2": "Information collected through CommonCircle Assist is stored securely and locally on your app, and remains private to you. Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
-    "start": "Start logging",
-    "stop": "Stop logging",
-    "ok": "Ok",
     "yes": "Yes",
     "no": "No",
-    "retry": "Retry",
-    "sure": "I'm sure",
     "logging": "Location data is being collected and saved locally to your phone.",
     "stopping": "Turn on location logging to improve the accuracy of your notifications.",
-    "faq": "FAQ",
-    "kingCountyLink": "https://kingcounty.gov/depts/health/communicable-diseases/disease-control/novel-coronavirus.aspx",
-    "covidSiteLink": "https://commoncircle.us/",
-    "covidSiteFaqLink": "https://commoncircle.us/FAQ.html",
-    "privacyLink1": "Learn more.",
-    "privacyText": "Learn more",
-    "permissionsHeader": "Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nCovidSafe reveals no information about you without your consent.",
     "cancel": "Cancel",
-    "duration": "Duration (days)",
     "perm1": "Notifications",
-    "perm2": "Location Logging",
-    "perm3": "Bluetooth Tracing",
     "perm1desc": "Receive notifications for exposure risks in your area.",
-    "perm2desc": "Receive announcements and notifications relevant to your neighborhood. All location information is stored locally.",
-    "perm3desc": "Emit and detect random numbers by Bluetooth to later discover exposure risks.",
     "setting1": "Control your data storage",
     "setting1desc": "You maintain control over how long we store your data. Delete your data at any time.",
     "storyTitle1": "Welcome to CommonCircle Assist",
     "storyTitle2": "Protect yourself",
     "storyTitle3": "Care for yourself",
     "storyTitle4": "Your Privacy",
-    "exposed": "You may have been exposed",
     "story1": "CommonCircle Assist helps you protect yourself from risks and stay up to date on what’s happening near you, take care of yourself if you get sick, and record information that can help protect others if you get ill.",
     "story2": "Get notifications about locations near you where there’s a risk of COVID-19 exposure. You’ll also get critical alerts from your local health department, such as closures or cleanings of public spaces nearby.",
     "story3": "Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms, and log locations you recently visited to protect others.",
     "story4": "Any information you log in CommonCircle Assist is protected. Learn more about our approach on privacy in our FAQ.",
     "startText": "Let's slow the spread of COVID-19 together.",
-    "certText": "I certify that the information submitted in this report is true and correct to the best of my knowledge.",
-    "certDiagnosisText": "I certify that I have been officially diagnosed with COVID-19",
     "severity": "Severity",
-    "confirm": "I confirm",
     "edit": "Edit",
     "delete": "Delete",
     "isolation1": "Anyone who has tested positive for COVID-19 should remain in isolation until no longer infectious. For more information, please contact your local healthcare professional.",
     "isolation2": "Do not leave your home or recovery facility, except to receive medical care.",
     "monitor1": "If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first.",
     "monitor2": "Do not go to the emergency room.",
-    "monitor3": "Emergency rooms need to be able to serve those with the most critical needs. If you have difficulty breathing, it doesn\u2019t mean you have novel coronavirus, but you should call 911.",
-    "language": "Language",
-    "english": "English",
-    "spanish": "Spanish"
-  },
-  "logging": {
-    "now_off": "Logging is now turned off."
-  },
-  "inter": {
-    "prep": "Interview Preparation"
-  },
-  "email": {
-    "subject": "CommonCircle Assist Contact Tracer Interview Information Packet"
+    "monitor3": "Emergency rooms need to be able to serve those with the most critical needs. If you have difficulty breathing, it doesn’t mean you have novel coronavirus, but you should call 911."
   },
   "location": {
-    "logs": "Location logs",
     "text": "Location",
-    "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days",
+    "visited_in_last_14_days": "Locations you’ve visited in the last 14 days",
     "description": "Use location to filter notifications relevant to you. All location information is stored locally.",
     "permission_title": "CommonCircle Assist requires access to location information",
     "pemission_description": "Would you like to open app settings?",
     "unknown": "Unknown"
   },
-  "send": {
-    "email": "Send email"
-  },
-  "perm": {
-    "error": "Location access must be enabled at all times for tracking to take place. Please try again.",
-    "gps_rationale": "Without this permission, we will be unable to capture location information. Are you sure you want to deny this permission?",
-    "gps_ask": "We require access to location information when the app is closed. Would you like to open app settings to enable this?",
-    "write_ask": "We require access to location information to import your history. Would you like to open app settings to enable this?",
-    "ble_rationale": "Without this permission, we will be unable to capture Bluetooth information of users around you. Are you sure you want to deny this permission?",
-    "write_rationale": "Without this permission, we will be unable to import your location history. Are you sure you want to deny this permission?",
-    "ble_ask": "We require access to Bluetooth information when the app is closed. Would you like to open app settings to enable this?",
-    "contacts_rationale": "Without this permission, we will be unable to add contacts to the app. Are you sure you want to deny this permission?",
-    "notifs_rationale": "Without this permission, we will be unable to send you notifications. Are you sure you want to deny this permission?",
-    "notifs_ask": "We require push notifications to be enabled. Would you like to open app settings to enable this?",
-    "loc_rationale": "Without this permission, we will be unable to track your location when the app is closed. Are you sure you want to deny this permission?",
-    "loc_ask": "We require access to location information when the app is closed. Would you like to open app settings to enable this?",
-    "denied": "Permission denied"
-  },
-  "min": {
-    "api_error": "Your smartphone's operating system version is not supported. The minimum operating system version we support is Android version",
-    "api_check_pkey": "min_api_check_pkey"
-  },
-  "dont": {
-    "show_this_again": "Don't show this again"
-  },
-  "prompt": {
-    "to_enable_error": "Enable Location Logging in Settings to log your locations in real time."
-  },
-  "bluetooth": {
-    "is_off": "Bluetooth is currently turned off.",
-    "is_disabled_on_this_device": "Bluetooth is disabled on this device"
-  },
-  "pos": {
-    "text": "Positive COVID-19 Diagnosis Reported"
-  },
-  "lang": {
-    "pkey": "lang_pkey"
-  },
   "public": {
-    "key_pkey": "public_key_pkey",
     "health": "Public Health - Seattle & King County"
   },
-  "last": {
-    "refresh_date_pkey": "last_refresh_date_pkey",
-    "submission_date_pkey": "last_submission_date",
-    "symptom_update_pkey": "last_symptom_update_pkey",
-    "submitted": "Last submitted",
-    "updated_text": "Last updated"
-  },
   "broadcasting": {
-    "enabled_pkey": "broadcasting",
     "on_text": "Location logging on",
-    "off_text": "Location logging off",
-    "description_text": "Location data is being collected and saved locally to your phone."
-  },
-  "gps": {
-    "enabled_pkey": "gpsEnabled"
-  },
-  "ble": {
-    "enabled_pkey": "bleEnabled"
-  },
-  "onboard": {
-    "enabled_pkey": "prefs_onboard"
-  },
-  "notifs": {
-    "enabled_pkey": "prefs_notifs"
-  },
-  "most": {
-    "recent_seed_pkey": "most_recent_seed_pkey",
-    "recent_seed_timestamp_pkey": "most_recent_seed_timestamp_pkey"
+    "off_text": "Location logging off"
   },
   "diagnosis": {
-    "pkey": "prefs_diagnosis_date",
     "text": "Diagnosis"
   },
   "time": {
-    "of_last_query_pkey": "time_of_last_query_pkey",
     "am": "AM",
     "pm": "PM"
   },
-  "init": {
-    "key_exists_pkey": "init_key_exists_pkey"
-  },
-  "aes": {
-    "key_pkey": "aes_key_pkey",
-    "iv_pkey": "aes_iv_pkey"
-  },
-  "infection": {
-    "window_in_days_pkeys": "infection_window_in_days_pkeys"
-  },
-  "quarantine": {
-    "end_time_pkey": "quarantine_end_time_pkey",
-    "desc": "Anyone with COVID-19 symptoms who has a test result pending shall remain in quarantine while waiting for the test results.",
-    "directive": "Quarantine directive"
-  },
-  "download": {
-    "complete": "Download complete!"
-  },
-  "tip": {
-    "desc_1": "Everyone with COVID-19 symptoms (fever, cough, and/or difficulty breathing) who has a test result pending, shall stay in an quarantine location (your home if you have one or in a government directed or publicly provided location if one is available) in accordance with CDC and Public Health guidance.\n\n\n        If your test result is positive, you must then remain in isolation.",
-    "desc_2": "Not everybody who feels ill needs to be tested, particularly if you have mild illness. Healthcare providers determine who should be tested. While testing is becoming more available, there are still limitations in the ability to quickly collect and process tests.\n\n        If you are sick with fever, cough or shortness of breath and are in a high risk group, call your healthcare provider to discuss whether you should be tested for COVID-19.",
-    "desc_3": "If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first."
-  },
-  "risk": {
-    "low": "No known transmission vectors",
-    "high": "Risk of transmission"
-  },
-  "error": {
-    "submitting_data": "There was an error with submitting your traces. Please try again later."
-  },
-  "confirm": {
-    "info": "Please confirm this information is accurate",
-    "diagnosis_sure": "Reporting a positive diagnosis cannot be undone. Please be certain. Please enter the phrase \"I confirm\" in the box below to confirm that you have been officially diagnosed with COVID-19",
-    "diagnosis": "If you upload this diagnosis report, people you've recently been in contact with will be notified that they might have been exposed. Your identity will not be revealed."
-  },
-  "gen": {
-    "error": "An error occurred. Please try again later."
-  },
-  "turn": {
-    "loc_on": "We need location services enabled to send your infection report. Please enable location services permission.",
-    "loc_on2": "We need location services enabled to check for local announcements. Please enable location services permission."
-  },
   "learn": {
-    "about_us": "Download and learn more about the CommonCircle Assist app at",
-    "more_link_text": "Learn More",
-    "how_we_protect_your_privacy": "Learn about how we protect your privacy"
+    "more_link_text": "Learn More"
   },
   "privacy": {
-    "link": "Privacy  |",
-    "text": "Privacy",
-    "and_security": "Privacy and Security"
+    "text": "Privacy"
   },
   "terms": {
-    "link": "Terms and Conditions",
     "text": "Terms and Conditions"
   },
-  "onset": {
-    "date": "Onset date"
-  },
-  "symp": {
-    "updated": "Symptom log updated"
-  },
-  "this": {
-    "was_during": "This was during"
-  },
-  "sure": {
-    "delete": "Are you sure you want to delete?"
-  },
   "emergency": {
-    "text": "Stop and call 911 if you are experiencing:\n\n        \u2022 Severe, constant chest pain or pressure\n\n        \u2022 Extreme difficulty breathing\n\n        \u2022 Severe, constant lightheadedness\n\n        \u2022 Serious disorientation or unresponsiveness",
     "call_text": "Call 911 immediately if you are having a medical emergency."
   },
   "fever": {
-    "txt": "Fever",
-    "desc": "A high temperature of over 100\u00b0F - you feel hot to touch on your chest or back."
+    "txt": "Fever"
   },
   "cough": {
-    "txt": "Cough",
-    "desc": "A sudden, forceful hacking sound to release air and clear an irritation in the throat or airway.",
-    "text": "Cough",
-    "symptoms_text": "A new, continuous cough - this means you've started coughing repeatedly"
-  },
-  "shortness": {
-    "of_breath_txt": "Shortness of breath"
-  },
-  "trouble": {
-    "breathing_txt": "Trouble breathing"
-  },
-  "persistent": {
-    "pain_or_pressure_in_chest": "Persistent pain or pressure in the chest"
-  },
-  "new": {
-    "confusion_inability_to_arouse": "New confusion or inability to arouse",
-    "report_text": "New Report"
-  },
-  "bluish": {
-    "lips_or_face": "Bluish lips or face"
+    "txt": "Cough"
   },
   "bottom": {
     "sheet_menu_item_home": "Home",
@@ -349,29 +106,15 @@
     "sheet_menu_item_health_report": "Health Report",
     "sheet_menu_item_resources": "Resources"
   },
-  "self": {
-    "quarantine_for_14_days": "Self-quarantine For 14 Days"
-  },
   "card": {
     "onset_date_hint": "Onset Date (MM/DD)",
     "onset_days_experienced": "Days experienced",
     "symptom_severity_mild": "Mild",
     "symptom_severity_moderate": "Moderate",
-    "symptom_severity_severe": "Severe",
-    "data_storage_local": "Local Data Storage",
-    "data_storage_local_expiration": "Your data will expire on %1$s\nOn this date your symptom logs and location data will be removed from the app. This action cannot be undone."
-  },
-  "change": {
-    "in_settings_text": "Change in Settings"
+    "symptom_severity_severe": "Severe"
   },
   "highest": {
     "temperature_text": "Highest temperature"
-  },
-  "legal": {
-    "text": "Legal"
-  },
-  "release": {
-    "text": "Release information"
   },
   "import": {
     "text": "Import location history",
@@ -379,21 +122,9 @@
     "description": "Sync your location history directly from Google by importing your timeline data.",
     "btn_text": "Import"
   },
-  "share": {
-    "text": "Share"
-  },
-  "you": {
-    "might_have_exposed": "You might have been exposed"
-  },
-  "exposure": {
-    "notification_description_text": "Based on your location history, we believe you might have been in the same place as people infected with COVID-19",
-    "history": "Exposure history"
-  },
-  "dismiss": {
-    "text": "Dismiss"
-  },
   "disclaimer": {
-    "text": "Disclaimer"
+    "title": "Disclaimer",
+    "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice."
   },
   "cdc": {
     "guidance_text": "CDC Guidance"
@@ -402,30 +133,19 @@
     "text": "Saved"
   },
   "not": {
-    "logged_text": "Not Logged",
-    "logged_txt": "Not logged"
+    "logged_text": "Not Logged"
   },
   "prepare": {
     "for_contact_tracer_interview": "Prepare for your contact tracer interview",
     "for_interview_btn_text": "Prepare for your interview",
     "for_contact_tracer_description_text": "During an interview, a public health official will collect a list of critical information to help identify those around you who may have been exposed."
   },
-  "positive": {
-    "covid_report": "Positive COVID-19 Diagnosis Reported"
-  },
-  "reported": {
-    "text": "Reported"
-  },
-  "submit": {
-    "your_report_button_text": "Submit your report"
-  },
   "what": {
-    "happen_when_i_submit_report": "What happens when I submit my report?",
     "to_do_if_you_are_sick": "What to do if you are sick"
   },
   "symptoms": {
     "text": "Symptoms",
-    "experienced_last_14_days": "Symptoms you\u2019ve experienced in the last 14 days"
+    "experienced_last_14_days": "Symptoms you’ve experienced in the last 14 days"
   },
   "locations": {
     "text": "Locations",
@@ -433,8 +153,7 @@
   },
   "people": {
     "text": "People",
-    "you_have_been_in_contact_last_14_days": "People you\u2019ve been in direct contact with over the last 14 days",
-    "txt": "People"
+    "you_have_been_in_contact_last_14_days": "People you’ve been in direct contact with over the last 14 days"
   },
   "socialize": {
     "text": "Safely add people you’ve been in contact with directly from your contacts list, or add them one at a time. "
@@ -445,50 +164,29 @@
   "summary": {
     "text": "Summary"
   },
-  "review": {
-    "which_symptoms_to_include": "Review the symptoms you’ve experienced in the past 14 days."
-  },
-  "we": {
-    "have_detected_severe_symptoms_in_your_report": "Sharing your symptoms helps your interviewer understand how long you’ve been sick, as well as the severity of your symptoms. The symptoms you’ve added are listed below. Uncheck any that you would like to keep private."
-  },
-  "diag": {
-    "not_submitted": "Diagnosis not submitted."
-  },
   "ab": {
     "pain_desc": "Pain from inside the abdomen or the outer muscle wall, ranging from mild and temporary to severe."
   },
   "chills": {
-    "desc": "The feeling of being cold, though not necessarily in a cold environment, often accompanied by shivering or shaking.",
     "txt": "Chills"
   },
   "diarrhea": {
-    "desc": "Loose, watery bowel movements that may occur frequently and with a sense of urgency.",
     "txt": "Diarrhea"
   },
-  "breathing": {
-    "desc": "Shortness of breath, or dyspnea, is an uncomfortable condition that makes it difficult to fully get air into your lungs."
-  },
   "headache": {
-    "desc": "A painful sensation in any part of the head, ranging from sharp to dull, that may occur with other symptoms.",
     "txt": "Headache"
   },
   "sore": {
-    "throat_desc": "Pain or irritation in the throat that can occur with or without swallowing, often accompanies infections.",
     "throat_txt": "Sore throat"
   },
   "vomiting": {
-    "desc": "Forcefully expelling the stomach's contents out of the mouth.",
     "txt": "Vomtting"
   },
   "next": {
-    "btn_text": "Next",
-    "steps_text": "Next Steps"
+    "btn_text": "Next"
   },
   "previous": {
     "btn_text": "Previous"
-  },
-  "how": {
-    "to_prepare_for_your_interview": "Prepare a list of important information for your interview"
   },
   "interview": {
     "preparation_description_text": "You can use this app to collect information from the past 14 days to share with the interviewer. Select Get Started below to create your list."
@@ -509,23 +207,7 @@
     "text": "More"
   },
   "your": {
-    "log_have_been_saved_text": "Your log has been saved",
-    "report_will_be_anonymous_text": "Your report will be anonymous and your identity will be protected"
-  },
-  "report": {
-    "has_been_submitted": "Your report has been submitted."
-  },
-  "recent": {
-    "logs": "Recent logs"
-  },
-  "welcome": {
-    "to_covidsafe_text": "Welcome to CommonCircle Assist"
-  },
-  "covidsafe": {
-    "notifies_you": "If you chose to receive notifications, CommonCircle Assist can send you announcements made by your local health department."
-  },
-  "clear": {
-    "all_text": "Clear all"
+    "log_have_been_saved_text": "Your log has been saved"
   },
   "save": {
     "text": "Save"
@@ -534,54 +216,21 @@
     "pain_txt": "Abdominal pain"
   },
   "difficult": {
-    "in_breathing": "Difficulty breathing",
-    "in_breathing_not_severe": "Difficulty breathing (not severe)"
-  },
-  "chest": {
-    "pain_txt": "Chest pains"
-  },
-  "announcement": {
-    "txt": "Announcement"
-  },
-  "logged": {
-    "txt": "Logged"
-  },
-  "unknown": {
-    "address_txt": "Unknown address"
+    "in_breathing": "Difficulty breathing"
   },
   "general": {
     "locations_txt": "General Locations"
   },
-  "done": {
-    "txt": "Done"
-  },
   "export": {
     "title": "Export",
     "description": "Export all data stored locally",
-    "message_title": "Export your local data",
-    "subject": "CommonCircle Assist device dump",
     "message": "Local data with all records collected by CommonCircle Assist"
-  },
-  "check": {
-    "box": "Please check the box to confirm this information is accurate."
-  },
-  "network": {
-    "down": "Network not available. Please try again."
-  },
-  "demo": {
-    "disabled": "This function is disabled in the demo version of the app."
   },
   "monitor": {
     "your_symptoms": "Monitor Your Symptoms"
   },
   "isolation": {
     "order": "Isolation order"
-  },
-  "request": {
-    "test": "Request a test"
-  },
-  "call": {
-    "911": "Call 911 immediately if you are having a medical emergency."
   },
   "data_storage_modal": {
     "title": "Control your data storage",
@@ -600,18 +249,11 @@
     "noDataFound": "There was a problem loading your location history from Google. Please try importing your locations again.",
     "signin": "Sign-in to Google"
   },
-
   "analytics": {
     "title": "Analytics",
     "description": "Share analytics and crash data with CommonCircle Assist developers."
   },
-
   "narrowcast": {
     "alerts": "Local alerts"
-  },
-
-  "disclaimer": {
-    "title": "Disclaimer",
-    "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice."
   }
 }

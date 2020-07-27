@@ -226,7 +226,7 @@ describe('En has no extra keys', () => {
       if (enHasAll && enUsedAll) {
         console.log('newEn.json meets requirements');
       }
-      fs.writeFileSync('./locales/newEn.json', JSON.stringify(newEn, null, 2));
+      fs.writeFileSync('./locales/en.json', JSON.stringify(newEn, null, 2));
     }
     expect(enUsedAll && enHasAll).toBeTruthy();
   })
@@ -278,7 +278,7 @@ describe("Es has no extra keys", () => {
       if (esHasAll && esUsedAll) {
         console.log('newEs.json meets requirements');
       }
-      fs.writeFileSync('./locales/newEs.json', JSON.stringify(newEs, null, 2));
+      fs.writeFileSync('./locales/es.json', JSON.stringify(newEs, null, 2));
     }
     expect(esUsedAll && esHasAll).toBeTruthy();
   })
