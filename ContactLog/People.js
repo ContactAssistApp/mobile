@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView, Platform, PermissionsAndroid } from 'react-native';
+import {StyleSheet, Text, ScrollView, Platform } from 'react-native';
 import colors from '../assets/colors';
 import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check} from 'react-native-permissions';
+import {request, PERMISSIONS, check, RESULTS } from 'react-native-permissions';
 
 class People extends Component {
   constructor() {
