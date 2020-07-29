@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {GetStoreData} from '../utils/asyncStorage';
 import FTUE from './OnBoarding/FTUE';
 import Preferences from './OnBoarding/Preferences';
+import ThankYou from './OnBoarding/ThankYou';
 import BottomNav from './BottomNav';
 import SymptomForm from '../SymptomTracker/SymptomForm';
 import colors from '../assets/colors';
@@ -71,11 +72,26 @@ class AppNav extends Component {
                   component={Preferences}
                   options={{
                     title: strings('permissions.header_text'),
-                    headerTintColor: colors.primary_theme,
-                    headerBackTitle: ' ',
+                    headerTintColor: 'black',
+                    // headerBackTitle: ' ',
+                    headerBackTitleVisible: false,
+                    //headerBackImage: require('../../assets/preference/preference_1.png'),
+                    headerTitleAlign: "left",
+                    headerStyle: {height: 100},
                   }}
                 />
               )}
+              {enableFTUE === 'true' && (
+                <Stack.Screen
+                  name={'ThankYou'}
+                  component={ThankYou}
+                  options={{
+                    title: strings('permissions.header_text'),
+                    headerStyle: {height: 0},
+                  }}
+                />
+              )}
+              
               <Stack.Screen
                 name="BottomNav"
                 component={BottomNav}
