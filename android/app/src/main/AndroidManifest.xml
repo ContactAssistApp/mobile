@@ -2,6 +2,9 @@
   package="com.covidsafe">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
       android:name=".MainApplication"
