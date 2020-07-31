@@ -103,6 +103,16 @@ Location2.schema = {
   },
 };
 
+class Person extends Realm.Object {}
+  Person.schema = {
+    name: 'Person',
+    properties: {
+      time: 'int',
+      id: 'string',
+      name: 'string'
+    },
+};
+
 class Symptoms extends Realm.Object {}
 Symptoms.schema = {
   name: 'Symptoms',
@@ -235,6 +245,7 @@ const schema2 = [
   Area.schema,
   AreaMatches.schema,
   BackgroundTaskLog.schema,
+  Person.schema,
 ];
 
 const schemas = [

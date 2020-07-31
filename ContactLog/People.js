@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView, Platform } from 'react-native';
+import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
 import colors from '../assets/colors';
 import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
@@ -12,7 +12,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check, RESULTS } from 'react-native-permissions';
+import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
+import Person from '../utils/person';
 
 class People extends Component {
   constructor() {
@@ -22,33 +23,58 @@ class People extends Component {
     };
   }
 
-  componentDidMount() {
+  fetchSelectedContactsByDate = async (date) => {
+    console.log('Current date', date);
+    const persons = await Person.fetchContactsByDate(
+      new Date(date.replace(/-/g, '/')),
+    );
+    this.props.updateContactLog({
+      field: 'selectedContacts',
+      value: persons,
+    });
+  }
+
+  fetchAllContacts = () => {
     const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
     check(contactPermission)
     .then((result) => {
-      switch (result) {
-        case RESULTS.UNAVAILABLE:
-          console.log(
-            'This feature is not available (on this device / in this context)',
-          );
-          break;
-        case RESULTS.DENIED:
-          console.log(
-            'The permission has not been requested / is denied but requestable',
-          );
-          request(contactPermission).then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log(
+              'This feature is not available (on this device / in this context)',
+            );
+            break;
+          case RESULTS.DENIED:
+            console.log(
+              'The permission has not been requested / is denied but requestable',
+            );
+            request(contactPermission).then((result) => {
+              this.loadContacts();
+          })
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
             this.loadContacts();
-        })
-          break;
-        case RESULTS.GRANTED:
-          console.log('The permission is granted');
-          this.loadContacts();
-          break;
-        case RESULTS.BLOCKED:
-          console.log('The permission is denied and not requestable anymore');
-          break;
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
       }
-    })
+    )
+  }
+
+  componentDidMount() {
+    const { date } = this.props;
+    this.fetchSelectedContactsByDate(date);
+    this.fetchAllContacts();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { date } = this.props;
+    if (prevProps.date !== date) {
+      this.fetchSelectedContactsByDate(date);
+    }
   }
 
   loadContacts = () => {
@@ -100,7 +126,10 @@ class People extends Component {
           visible={this.state.modalOn}
           handleModalClose={this.closeModal}
           title={strings('select.contact')}>
-          <ContactList handleModalClose={this.closeModal} />
+          <ContactList 
+            handleModalClose={this.closeModal} 
+            date={this.props.date}
+          />
         </Modal>
         <ScrollView>
           <Text style={styles.header}>

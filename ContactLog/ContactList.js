@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {SetStoreData} from '../utils/asyncStorage';
 import {strings} from '../locales/i18n';
+import Person from '../utils/person';
 
 class ContactList extends Component {
   selectContact = contact => {
@@ -29,6 +30,16 @@ class ContactList extends Component {
       });
     }
   };
+
+  saveSelectedContacts = (selectedContacts) => {
+    const { date } = this.props;
+    selectedContacts.forEach((selectContact) => {
+      Person.savePerson({
+        time: new Date(date.replace(/-/g, '/')).getTime(),
+        ...selectContact
+      })
+    })
+  }
 
   render() {
     const {
@@ -67,7 +78,8 @@ class ContactList extends Component {
           <TouchableOpacity
             style={styles.save}
             onPress={() => {
-              SetStoreData('CONTACTS', selectedContacts);
+              this.saveSelectedContacts(selectedContacts);
+              // SetStoreData('CONTACTS', selectedContacts);
               this.props.handleModalClose();
             }}>
             <Text style={styles.save_text}>{strings("save.text")}</Text>
