@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
+import {StyleSheet, Text, ScrollView, Platform, Alert} from 'react-native';
 import colors from '../assets/colors';
 import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
@@ -20,11 +20,11 @@ class People extends Component {
     super();
     this.state = {
       modalOn: false,
+      contactAccessIsAllowed: false,
     };
   }
 
   fetchSelectedContactsByDate = async (date) => {
-    console.log('Current date', date);
     const persons = await Person.fetchContactsByDate(
       new Date(date.replace(/-/g, '/')),
     );
@@ -54,6 +54,7 @@ class People extends Component {
             break;
           case RESULTS.GRANTED:
             console.log('The permission is granted');
+            this.setState({ contactAccessIsAllowed: true });
             this.loadContacts();
             break;
           case RESULTS.BLOCKED:
@@ -119,6 +120,22 @@ class People extends Component {
     });
   };
 
+  enableContactPermission = () => {
+    Alert.alert(
+      strings('people.contacts_permission'),
+      strings('people.contacts_permission_long'),
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {} }
+      ],
+      { cancelable: false }
+    );
+  }
+
   render() {
     return (
       <>
@@ -140,6 +157,14 @@ class People extends Component {
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
         </TouchableOpacity>
+        {
+          !this.state.contactAccessIsAllowed && 
+            <TouchableOpacity onPress={this.enableContactPermission} style={styles.enable_permission_button}>
+              <Text>
+                {strings('people.contacts_permission')}
+              </Text>        
+            </TouchableOpacity>
+        }
       </>
     );
   }
@@ -170,6 +195,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  enable_permission_button: {
+    backgroundColor: colors.primary_theme,
+    width: 200,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 130,
+    right: 100,
   },
   contact_wrapper: {
     backgroundColor: 'white',
