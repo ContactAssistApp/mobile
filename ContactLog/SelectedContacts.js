@@ -10,21 +10,6 @@ import {GetStoreData} from 'utils/asyncStorage';
 import {strings} from 'locales/i18n';
 
 class SelectedContacts extends Component {
-  componentDidMount() {
-    this.fetchSelectedContacts();
-  }
-
-  fetchSelectedContacts = () => {
-    return GetStoreData('CONTACTS').then(selectedContacts => {
-      if (selectedContacts) {
-        this.props.updateContactLog({
-          field: 'selectedContacts',
-          value: JSON.parse(selectedContacts),
-        });
-      }
-    });
-  };
-
   render() {
     const {
       contactLogData: {selectedContacts},
