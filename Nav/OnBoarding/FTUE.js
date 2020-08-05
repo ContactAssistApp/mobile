@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import CustomIcon from '../../assets/icons/CustomIcon.js';
 import {
   ImageBackground,
   StyleSheet,
@@ -13,47 +12,26 @@ import {SetStoreData} from '../../utils/asyncStorage';
 import colors from '../../assets/colors.js';
 import {strings} from '../../locales/i18n';
 
-
 class FTUE extends Component {
-  renderItem = ({item}) => {
-    if (item.key === 'ftue_5') {
-      return (
-        <View style={styles.ftue_container}>
-          <View style={styles.ftue_bg_container}>
-            <ImageBackground style={styles.ftue_bg} source={item.image}>
-              <View style={styles.ftue_links}>
-                <View style={styles.privacy_link}>
-                  <CustomIcon name={'lock16'} color={'white'} size={16} />
-                  <Text style={styles.privacy_text}>{strings('privacy.text')}</Text>
-                </View>
-                <View style={styles.terms_link}>
-                  <Text style={styles.term_text}>{strings('terms.text')}</Text>
-                </View>
-              </View>
-            </ImageBackground>
-          </View>
-          <View style={styles.ftue_text_container}>
-            <Text style={styles.ftue_title}>{item.title}</Text>
-            <TouchableOpacity style={styles.start_button} onPress={this.onDone}>
-              <Text style={styles.start_button_text}>{strings('get.started_text')}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.ftue_container}>
-          <View style={styles.ftue_bg_container}>
-            <ImageBackground style={styles.ftue_bg} source={item.image} />
-          </View>
-          <View style={styles.ftue_text_container}>
-            <Text style={styles.ftue_title}>{item.title}</Text>
-            <Text style={styles.ftue_text}>{item.text}</Text>
-          </View>
-        </View>
-      );
-    }
-  };
+  renderItem = ({item}) => (
+    <View style={styles.ftue_container}>
+      <View style={styles.ftue_bg_container}>
+        <ImageBackground style={styles.ftue_bg} source={item.image} />
+      </View>
+      <View style={styles.ftue_text_container}>
+        <Text style={styles.ftue_title}>{item.title}</Text>
+        {item.key === 'ftue_5' ? (
+          <TouchableOpacity style={styles.start_button} onPress={this.onDone}>
+            <Text style={styles.start_button_text}>
+              {strings('get.started_text')}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={styles.ftue_text}>{item.text}</Text>
+        )}
+      </View>
+    </View>
+  );
 
   onDone = () => {
     SetStoreData('ENABLE_FTUE', 'false');
@@ -149,24 +127,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 16,
     fontWeight: '500',
-  },
-  ftue_links: {
-    alignItems: 'center',
-    backgroundColor: colors.primary_theme,
-    borderRadius: 100,
-    bottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 22,
-    position: 'absolute',
-  },
-  privacy_link: {
-    paddingRight: 8,
-    marginRight: 8,
-    borderColor: 'white',
-    borderRightWidth: 1,
-    flexDirection: 'row',
   },
   privacy_text: {
     color: 'white',
