@@ -46,7 +46,15 @@ export default class LocationServices {
       }
     };
     const saveLocation = async (location, kind) => {
-      const {latitude, longitude, accuracy, speed, altitude, provider, time} = location;
+      const {
+        latitude,
+        longitude,
+        accuracy,
+        speed,
+        altitude,
+        provider,
+        time,
+      } = location;
       const logTime = DateConverter.getUTCUnixTime();
       addBackgroundLog('Location background log');
 
@@ -71,7 +79,7 @@ export default class LocationServices {
         latitude,
         longitude,
         accuracy,
-        speed,
+        speed: speed ? speed : 0,
         altitude,
         kind,
         time,
