@@ -7,10 +7,12 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import {SetStoreData} from '../../utils/asyncStorage';
 import colors from '../../assets/colors.js';
 import {strings} from '../../locales/i18n';
+import {PRIVACY_FAQ_URL} from '../../utils/constants';
 
 class FTUE extends Component {
   renderItem = ({item}) => (
@@ -61,7 +63,21 @@ class FTUE extends Component {
       {
         key: 'ftue_4',
         title: strings('global.storyTitle4'),
-        text: strings('global.story4'),
+        text: (
+          <>
+            {strings('global.story4_interpolated.part1_normal')}
+            <Text style={styles.bold_text}>
+              {strings('global.story4_interpolated.part2_bold')}
+            </Text>
+            {strings('global.story4_interpolated.part3_normal')}
+            <Text
+              style={styles.link_text}
+              onPress={() => Linking.openURL(PRIVACY_FAQ_URL)}>
+              {strings('global.story4_interpolated.part4_link')}
+            </Text>
+            {strings('global.story4_interpolated.part5_normal')}
+          </>
+        ),
         image: require('../../assets/ftue/ftue_4.png'),
       },
       {
@@ -134,6 +150,12 @@ const styles = StyleSheet.create({
   },
   term_text: {
     color: 'white',
+  },
+  bold_text: {
+    fontWeight: '700',
+  },
+  link_text: {
+    textDecorationLine: 'underline',
   },
 });
 
