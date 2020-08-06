@@ -123,7 +123,7 @@
     "setting1": "Control your data storage",
     "setting1desc": "You maintain control over how long we store your data. Delete your data at any time.",
     "storyTitle1": "Welcome to CommonCircle Assist",
-    "storyTitle2": "Protect yourself",
+    "storyTitle2": "Stay informed",
     "storyTitle3": "Care for yourself",
     "storyTitle4": "Your Privacy",
     "exposed": "You may have been exposed",
@@ -137,7 +137,6 @@
       "part4_link": "FAQ",
       "part5_normal": "."
     },
-    "story4": "Any information you log in CommonCircle Assist is protected. Learn more about our approach on privacy in our FAQ.",
     "startText": "Let's slow the spread of COVID-19 together.",
     "certText": "I certify that the information submitted in this report is true and correct to the best of my knowledge.",
     "certDiagnosisText": "I certify that I have been officially diagnosed with COVID-19",
