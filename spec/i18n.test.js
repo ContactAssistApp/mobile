@@ -155,3 +155,15 @@ describe('En has no missing keys', () => {
     expect(enHasAll).toBeTruthy();
   })
 });
+
+/*
+  This test will check if en.json has extra keys, if so, extra keys
+  will be deleted. Edited json will be write to ./locales/newEn.json.
+  Original en.json will be unchanged.
+*/
+describe('En has no unused keys', () => {
+  test('En_has_no_unused_keys', () => {
+    let enUsedAll = usedAllKeys(enKeysMap, 'en');
+    expect(enUsedAll).toBeTruthy();
+  })
+});
