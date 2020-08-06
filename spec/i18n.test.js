@@ -17,7 +17,7 @@
 const fs = require('fs');
 const allFiles = getFiles('..');
 const jsFiles = allFiles.filter(file => file.endsWith('.js')); // only examining js files for strings
-const usedKeysMap = getUsedKeys(jsFiles);
+const usedKeys = getUsedKeys(jsFiles);
 
 let en = require("../locales/en.json");
 const enKeys = getKeys(en, "", []);
@@ -25,7 +25,6 @@ const enKeysMap = createKeyMap(enKeys);
 
 let es = require("../locales/es.json");
 const esKeys = getKeys(es, "", []);
-const esKeysMap = createKeyMap(esKeys);
 
 
 /*
@@ -72,9 +71,9 @@ function deleteKey(obj, keys) {
   If any key is missing, log with @label
   Return true if all keys are present, false otherwise.
 */
-function hasAllKeys(required, actual, label, missing) {
+function hasAllKeys(required, actual, missing) {
   hasAll = true;
-  for (let key of required.keys()) {
+  for (let key of required) {
     if (actual.has(key)) {
       actual.set(key, true);
     } else {
@@ -91,12 +90,12 @@ function hasAllKeys(required, actual, label, missing) {
   Log with @label if any key is unused.
   Return true if all keys are used.
 */
-function usedAllKeys(actual, label) {
+function usedAllKeys(actual) {
   usedAll = true;
   for (let key of actual.keys()) {
     if (!actual.get(key)) {
       // console.log(`${label} has unused key: ${key}`);
-      usedAll = false;
+      return false;
     }
   }
   return usedAll;
@@ -110,7 +109,7 @@ function usedAllKeys(actual, label) {
    @files: array of path to files to be examined
 */
 function getUsedKeys(files) {
-  let usedKeyMap = new Map();
+  let usedKeys = new Set();
   for (let i = 0; i < files.length; i++) {
     let data = fs.readFileSync(files[i]);
     // console.log(`searching: ${files[i]}`);
@@ -119,13 +118,13 @@ function getUsedKeys(files) {
     let found;
     while ((found = pattern.exec(script)) !== null) {
       // console.log(found[1]);
-      if (!usedKeyMap.has(found[1])) {
-        usedKeyMap.set(found[1], false);
+      if (!usedKeys.has(found[1])) {
+        usedKeys.add(found[1]);
       }
     }
   }
   // console.log(arr);
-  return usedKeyMap;
+  return usedKeys;
 }
 
 
@@ -135,7 +134,7 @@ function getUsedKeys(files) {
 
   @dir: the root directory's relative path
 */
-function getFiles (dir, files_){
+function getFiles(dir, files_) {
   files_ = files_ || [];
   var files = fs.readdirSync(dir);
   for (var i in files){
@@ -189,7 +188,7 @@ function createKeyMap(array) {
 describe('En has no missing keys', () => {
   test('En_no_missing_keys', () => {
     const missing = [];
-    const enHasAll = hasAllKeys(usedKeysMap, enKeysMap, 'en', missing);
+    const enHasAll = hasAllKeys(usedKeys, enKeysMap, missing);
     if (!enHasAll) {
       console.log(`en.json is missing following keys:\n
         ${JSON.stringify(missing, null, 2)}`);
@@ -203,83 +202,30 @@ describe('En has no missing keys', () => {
   will be deleted. Edited json will be write to ./locales/newEn.json.
   Original en.json will be unchanged.
 */
-describe('En has no extra keys', () => {
-  test('En_has_no_extra_keys', () => {
+describe('En has no unused keys', () => {
+  test('En_has_no_unused_keys', () => {
     let enUsedAll = usedAllKeys(enKeysMap, 'en');
-    let enHasAll = true;
     if (!enUsedAll) {
       console.log('Extra keys in en.json, now deleting');
       let newEn = deleteAllKeys(enKeysMap, en);
-      console.log('Check new en meets requirements');
-      const newEnKeys = getKeys(newEn, "", []);
-      const newEnKeysMap = createKeyMap(newEnKeys);
-      const missing = [];
-      enHasAll = hasAllKeys(usedKeysMap, newEnKeysMap, 'newEn', missing);
-      if (!enHasAll) {
-        console.log(`newEn.json is missing following keys:\n
-          ${JSON.stringify(missing, null, 2)}`);
-      }
-      enUsedAll = usedAllKeys(newEnKeysMap, 'newEn');
-      if (!enUsedAll) {
-        console.log('newEn.json has extra keys');
-      }
-      if (enHasAll && enUsedAll) {
-        console.log('newEn.json meets requirements');
-      }
+      // console.log('Check new en meets requirements');
+      // const newEnKeys = getKeys(newEn, "", []);
+      // const newEnKeysMap = createKeyMap(newEnKeys);
+      // const missing = [];
+      // enHasAll = hasAllKeys(usedKeysMap, newEnKeysMap, 'newEn', missing);
+      // if (!enHasAll) {
+      //   console.log(`newEn.json is missing following keys:\n
+      //     ${JSON.stringify(missing, null, 2)}`);
+      // }
+      // enUsedAll = usedAllKeys(newEnKeysMap, 'newEn');
+      // if (!enUsedAll) {
+      //   console.log('newEn.json has extra keys');
+      // }
+      // if (enHasAll && enUsedAll) {
+      //   console.log('newEn.json meets requirements');
+      // }
       fs.writeFileSync('./locales/en.json', JSON.stringify(newEn, null, 2));
     }
-    expect(enUsedAll && enHasAll).toBeTruthy();
+    expect(enUsedAll).toBeTruthy();
   })
 });
-
-/*
-  This test will check if es.json has missing keys, if so, missing
-  keys will be printed to the console.
-*/
-describe('Es has no missing keys', () => {
-  test('Es_no_missing_keys', () => {
-    const missing = [];
-    const esHasAll = hasAllKeys(usedKeysMap, esKeysMap, 'es', missing);
-    if (!esHasAll) {
-      console.log(`es.json is missing following keys:\n
-        ${JSON.stringify(missing, null, 2)}`);
-    }
-    expect(esHasAll).toBeTruthy();
-  })
-});
-
-
-/*
-  This test will check if es.json has extra keys, if so, extra keys
-  will be deleted. If the new json has all keys and no extra keys,
-  it will be write to ./locales/newEn.json. Original en.json will
-  be unchanged.
-*/
-describe("Es has no extra keys", () => {
-  test('Es_has_no_extra_keys', () => {
-    let esUsedAll = usedAllKeys(esKeysMap, 'es');
-    let esHasAll = true;
-    if (!esUsedAll) {
-      console.log('Extra keys in es.json, now deleting');
-      let newEs = deleteAllKeys(esKeysMap, es);
-      console.log('Check new es meets requirements');
-      const newEsKeys = getKeys(newEs, "", []);
-      const newEsKeysMap = createKeyMap(newEsKeys);
-      const missing = [];
-      esHasAll = hasAllKeys(usedKeysMap, newEsKeysMap, 'newEs', missing);
-      if (!esHasAll) {
-        console.log(`newEs.json is missing following keys:\n
-          ${JSON.stringify(missing, null, 2)}`);
-      }
-      esUsedAll = usedAllKeys(newEsKeysMap, 'newEs');
-      if (!esUsedAll) {
-        console.log('newEs.json has extra keys');
-      }
-      if (esHasAll && esUsedAll) {
-        console.log('newEs.json meets requirements');
-      }
-      fs.writeFileSync('./locales/es.json', JSON.stringify(newEs, null, 2));
-    }
-    expect(esUsedAll && esHasAll).toBeTruthy();
-  })
-})
