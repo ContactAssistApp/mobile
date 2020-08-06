@@ -11,3 +11,4 @@ export const UW_URL = 'https://commoncircle.us/';
 export const CDC_URL = 'https://www.cdc.gov/';
 export const NYC_GUIDANCE_URL = 'https://health.ny.gov/';
 export const KC_GUIDANCE_URL = 'http://www.kingcounty.gov/covid';
+export const PRIVACY_FAQ_URL = 'https://commoncircle.us/FAQ.html';
