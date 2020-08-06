@@ -23,51 +23,6 @@ let en = require("../locales/en.json");
 const enKeys = getKeys(en, "", []);
 const enKeysMap = createKeyMap(enKeys);
 
-let es = require("../locales/es.json");
-const esKeys = getKeys(es, "", []);
-<<<<<<< HEAD
-=======
-
-
-/*
-  Delete all unused keys in the given @keymap from the given @obj.
-  All unused keys should be marked false in the @keymap.
-  Return the @obj.
-*/
-function deleteAllKeys(keyMap, obj) {
-  for (let key of keyMap.keys()) {
-    if (!keyMap.get(key)) {
-      // console.log(`Deleting ${key}`);
-      obj = deleteKey(obj, key.split('.'));
-    }
-  }
-  return obj;
-}
-
-
-/*
-  Delete the given key from the object, return the object.
-  If the key deleted results in an object without any property, the
-  result object is deleted recursively.
-
-  @keys: an array of keys, from outermost level to innermost level in order.
-  @obj: the obj with/without the key to be deleted.
-*/
-function deleteKey(obj, keys) {
-  if (obj.hasOwnProperty(keys[0])) {
-    if (keys.length == 1) {
-      delete obj[keys[0]];
-    } else {
-      obj[keys[0]] = deleteKey(obj[keys[0]], keys.slice(1));
-      if (Object.keys(obj[keys[0]]).length == 0) {
-        delete obj[keys[0]];
-      }
-    }
-  }
-  return obj;
-}
->>>>>>> ebaaf36bbacb355a398dc1b4b1036d184ca07cfe
-
 
 /*
   Checks that all keys in @required are present in @actual.
@@ -184,44 +139,6 @@ function createKeyMap(array) {
   return map;
 }
 
-/*
-  Delete all unused keys in the given @keymap from the given @obj.
-  All unused keys should be marked false in the @keymap.
-  Return the @obj.
-*/
-function deleteAllKeys(keyMap, obj) {
-  for (let key of keyMap.keys()) {
-    if (!keyMap.get(key)) {
-      // console.log(`Deleting ${key}`);
-      obj = deleteKey(obj, key.split('.'));
-    }
-  }
-  return obj;
-}
-
-
-/*
-  Delete the given key from the object, return the object.
-  If the key deleted results in an object without any property, the
-  result object is deleted recursively.
-
-  @keys: an array of keys, from outermost level to innermost level in order.
-  @obj: the obj with/without the key to be deleted.
-*/
-function deleteKey(obj, keys) {
-  if (obj.hasOwnProperty(keys[0])) {
-    if (keys.length == 1) {
-      delete obj[keys[0]];
-    } else {
-      obj[keys[0]] = deleteKey(obj[keys[0]], keys.slice(1));
-      if (Object.keys(obj[keys[0]]).length == 0) {
-        delete obj[keys[0]];
-      }
-    }
-  }
-  return obj;
-}
-
 
 /*
   This test will check if en.json has missing keys, if so, missing
@@ -236,45 +153,5 @@ describe('En has no missing keys', () => {
         ${JSON.stringify(missing, null, 2)}`);
     }
     expect(enHasAll).toBeTruthy();
-  })
-});
-
-/*
-  This test will check if en.json has extra keys, if so, extra keys
-  will be deleted. Edited json will be write to ./locales/newEn.json.
-  Original en.json will be unchanged.
-*/
-describe('En has no unused keys', () => {
-  test('En_has_no_unused_keys', () => {
-<<<<<<< HEAD
-    let enUsedAll = usedAllKeys(enKeysMap);
-    if (!enUsedAll) {
-      console.log('Extra keys in en.json, now deleting');
-      let newEn = deleteAllKeys(enKeysMap, en);
-=======
-    let enUsedAll = usedAllKeys(enKeysMap, 'en');
-    if (!enUsedAll) {
-      console.log('Extra keys in en.json, now deleting');
-      let newEn = deleteAllKeys(enKeysMap, en);
-      // console.log('Check new en meets requirements');
-      // const newEnKeys = getKeys(newEn, "", []);
-      // const newEnKeysMap = createKeyMap(newEnKeys);
-      // const missing = [];
-      // enHasAll = hasAllKeys(usedKeysMap, newEnKeysMap, 'newEn', missing);
-      // if (!enHasAll) {
-      //   console.log(`newEn.json is missing following keys:\n
-      //     ${JSON.stringify(missing, null, 2)}`);
-      // }
-      // enUsedAll = usedAllKeys(newEnKeysMap, 'newEn');
-      // if (!enUsedAll) {
-      //   console.log('newEn.json has extra keys');
-      // }
-      // if (enHasAll && enUsedAll) {
-      //   console.log('newEn.json meets requirements');
-      // }
->>>>>>> ebaaf36bbacb355a398dc1b4b1036d184ca07cfe
-      fs.writeFileSync('./locales/en.json', JSON.stringify(newEn, null, 2));
-    }
-    expect(enUsedAll).toBeTruthy();
   })
 });
