@@ -4,6 +4,7 @@ import BackgroundFetch from 'react-native-background-fetch';
 import LocationServices from '../services/LocationServices';
 import Notification from './Notification';
 import Toggle from '../views/Toggle';
+import Header from '../views/Header';
 import colors from '../assets/colors';
 import {
   RefreshControl,
@@ -11,9 +12,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
-  Linking,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
 import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
@@ -258,13 +257,7 @@ class Home extends Component {
           }>
           <View style={styles.status_container}>
             <View style={styles.status_header}>
-              <View style={styles.title_container}>
-                <Image
-                  style={styles.logo}
-                  source={require('../assets/home/logo.png')}
-                />
-                <Text style={styles.title}>{strings('app.name_one_line')}</Text>
-              </View>
+              <Header title={strings('app.name_one_line')} />
               <SettingsModal />
             </View>
             <View style={[styles.broadcast_container, broadcastBg]}>
@@ -313,34 +306,24 @@ const styles = StyleSheet.create({
   },
   status_container: {
     backgroundColor: 'white',
-    padding: 10,
   },
   logo: {
     width: 24,
     height: 24,
-    marginRight: 5,
-  },
-  title: {
-    color: colors.section_title,
-    fontSize: 24,
-    fontWeight: '500',
-  },
-  title_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    marginRight: 10,
   },
   status_header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   broadcast_container: {
     paddingVertical: 20,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginVertical: 16,
-    marginHorizontal: 6,
+    marginBottom: 26,
+    marginHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
@@ -360,52 +343,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   broadcast_description: {
-    fontSize: 15,
-    lineHeight: 20,
-    letterSpacing: -0.24,
-    color: colors.secondary_body_copy,
-  },
-  resources_container: {
-    backgroundColor: 'white',
-    height: '100%',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    marginTop: 20,
-    marginHorizontal: 10,
-  },
-  resources_header: {
-    fontWeight: '600',
-    fontSize: 22,
-    lineHeight: 26,
-    letterSpacing: 0.35,
-    color: colors.module_title,
-  },
-  resource: {
-    paddingHorizontal: 15,
-    paddingVertical: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontWeight: '600',
-    fontSize: 17,
-    lineHeight: 22,
-    letterSpacing: -0.408,
-    color: colors.module_title,
-  },
-  resource_logo: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
-  resource_title: {
-    fontSize: 17,
-    lineHeight: 22,
-    fontWeight: '600',
-    letterSpacing: -0.408,
-    color: colors.module_title,
-  },
-  resource_description: {
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
