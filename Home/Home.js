@@ -12,7 +12,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
@@ -318,13 +317,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 20,
   },
   broadcast_container: {
     paddingVertical: 20,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginTop: 16,
     marginBottom: 26,
     marginHorizontal: 20,
     flexDirection: 'row',

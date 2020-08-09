@@ -30,5 +30,6 @@ const styles = StyleSheet.create({
   title_container: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 17,
   },
 });

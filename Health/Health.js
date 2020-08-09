@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {SafeAreaView, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Symptoms from './Symptoms';
 import Report from './Report';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import Calendar from '../views/Calendar';
 import TabView from '../views/TabView';
+import Header from '../views/Header';
 import DateConverter from '../utils/date';
 import {updateHealthData} from './actions.js';
 import {bindActionCreators} from 'redux';
@@ -44,13 +38,7 @@ class Health extends Component {
       <>
         <SafeAreaView style={styles.status_bar} />
         <View style={styles.header}>
-          <View style={styles.title_container}>
-            <Image
-              style={styles.logo}
-              source={require('../assets/home/logo.png')}
-            />
-            <Text style={styles.title}>{strings('bottom.sheet_menu_item_health_report')}[DEMO]</Text>
-          </View>
+          <Header title={strings('bottom.sheet_menu_item_health_report')} />
           <TouchableOpacity
             style={styles.calendar_button}
             onPress={() => {
@@ -99,11 +87,11 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    alignItems: 'center',
   },
   title_container: {
     flexDirection: 'row',
