@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 20,
-    marginHorizontal: 16,
-    marginVertical: 8,
+    marginHorizontal: 20,
+    marginTop: 20,
   },
   header: {
     fontWeight: '600',
