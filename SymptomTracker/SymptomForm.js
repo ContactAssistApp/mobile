@@ -218,9 +218,7 @@ class SymptomForm extends Component {
           </View>
         </View>
         <TouchableOpacity style={styles.next_button} onPress={this.submitForm}>
-          <Text style={styles.next_button_text}>
-            {strings('next.btn_text')}
-          </Text>
+          <Text style={styles.next_button_text}>{strings('save.text')}</Text>
         </TouchableOpacity>
       </ScrollView>
     );
