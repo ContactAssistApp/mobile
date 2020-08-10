@@ -352,7 +352,7 @@
   "bottom": {
     "sheet_menu_item_home": "Home",
     "sheet_menu_item_contact_log": "Contact Log",
-    "sheet_menu_item_health_report": "Health Report",
+    "sheet_menu_item_health_report": "Health",
     "sheet_menu_item_resources": "Resources"
   },
   "self": {

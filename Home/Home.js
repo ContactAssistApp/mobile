@@ -21,6 +21,7 @@ import Location from '../utils/location';
 import SymptomTracker from '../SymptomTracker/SymptomTracker';
 import SettingsModal from '../Settings/SettingsModal';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
+import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
 import Privacy from '../Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
 import {strings} from '../locales/i18n';
@@ -286,6 +287,8 @@ class Home extends Component {
           {this.state.notifications && this.state.notifications.length > 0 && (
             <Notification notifications={this.state.notifications} />
           )}
+
+          <PrepareInterviewComponent />
 
           <SymptomTracker
             navigate={this.props.navigation.navigate}

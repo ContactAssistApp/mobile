@@ -1,8 +1,6 @@
 const initialState = {
   symptomsDate: new Date(),
-  tabIdx: 0,
   symptomsMarkedDays: {},
-  reportMarkedDays: {},
 };
 
 const healthReducer = (state = initialState, action) => {
