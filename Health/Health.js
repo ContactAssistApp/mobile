@@ -60,9 +60,9 @@ class Health extends Component {
               weekView: true,
             });
           }}
-          weekView={this.state.weekView}>
-          <Symptoms navigate={this.props.navigation.navigate} />
-        </Calendar>
+          weekView={this.state.weekView}
+        />
+        <Symptoms navigate={this.props.navigation.navigate} />
       </>
     );
   }
