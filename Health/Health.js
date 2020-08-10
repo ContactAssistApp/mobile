@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Symptoms from './Symptoms';
-import Report from './Report';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import Calendar from '../views/Calendar';
-import TabView from '../views/TabView';
 import Header from '../views/Header';
 import DateConverter from '../utils/date';
 import {updateHealthData} from './actions.js';
@@ -29,11 +27,9 @@ class Health extends Component {
   };
 
   render() {
-    const tabs = ['symptoms', 'report'];
     const {
-      healthData: {symptomsDate, tabIdx, symptomsMarkedDays},
+      healthData: {symptomsDate, symptomsMarkedDays},
     } = this.props;
-
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
@@ -58,23 +54,15 @@ class Health extends Component {
           markedDates={symptomsMarkedDays}
           handleDayPress={day => {
             this.props.updateHealthData({
-              [`${tabs[tabIdx]}Date`]: DateConverter.calendarToDate(
-                day.dateString,
-              ),
+              symptomsDate: DateConverter.calendarToDate(day.dateString),
             });
             this.setState({
               weekView: true,
             });
           }}
-          weekView={this.state.weekView}>
-          <TabView>
-            <Symptoms
-              tabLabel={strings('symptoms.text')}
-              navigate={this.props.navigation.navigate}
-            />
-            <Report tabLabel={strings('diagnosis.text')} />
-          </TabView>
-        </Calendar>
+          weekView={this.state.weekView}
+        />
+        <Symptoms navigate={this.props.navigation.navigate} />
       </>
     );
   }
@@ -92,20 +80,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: 'center',
-  },
-  title_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 24,
-    height: 24,
-    marginRight: 5,
-  },
-  title: {
-    fontSize: 24,
-    color: colors.section_title,
-    fontWeight: '500',
   },
 });
 

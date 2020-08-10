@@ -60,7 +60,9 @@ class PrepareInterviewComponent extends Component {
                 modalOn: true,
               });
             }}>
-            <Text style={styles.button_text}>{strings('prepare.for_interview_btn_text')}</Text>
+            <Text style={styles.button_text}>
+              {strings('prepare.for_interview_btn_text')}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.learn_more]}
@@ -78,8 +80,9 @@ class PrepareInterviewComponent extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 8,
-    margin: 16,
+    borderRadius: 20,
+    marginTop: 20,
+    marginHorizontal: 20,
     paddingVertical: 20,
     paddingHorizontal: 15,
   },
