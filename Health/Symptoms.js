@@ -46,7 +46,7 @@ class Symptoms extends Component {
           header={strings('what_to_do_if_sick.header')}
           tips={[
             {
-              icon: 'home24',
+              icon: 'home24_filled',
               title: strings('what_to_do_if_sick.stay_home_title'),
               content: strings('what_to_do_if_sick.stay_home_description'),
             },
