@@ -1,4 +1,4 @@
-import DateConverter from '../utils/date';
+import DateConverter from 'utils/date';
 import RealmObj from './realm';
 
 export async function addSymptoms(symptoms) {

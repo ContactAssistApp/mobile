@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 
 class Tip extends Component {
   render() {

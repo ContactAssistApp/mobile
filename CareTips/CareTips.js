@@ -1,15 +1,16 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
 import Tip from './Tip';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class CareTips extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>{strings("what.to_do_if_you_are_sick")}</Text>
+        <Text style={styles.header}>
+          {strings("what.to_do_if_you_are_sick")}
+        </Text>
         <Tip
           icon={'incognito24'}
           title={strings('isolation.order')}

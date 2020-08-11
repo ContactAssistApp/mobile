@@ -7,8 +7,8 @@ import {
   View,
   Modal as NativeModal,
 } from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import colors from '../assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {

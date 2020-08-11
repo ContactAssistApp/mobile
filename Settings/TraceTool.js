@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import PropTypes from 'prop-types';
-import Toggle from '../views/Toggle';
-import colors from '../assets/colors';
+import Toggle from 'views/Toggle';
+import colors from 'assets/colors';
 
 class TraceTool extends Component {
   render() {

@@ -1,12 +1,10 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 
-
-
 export default class NotificationServices {
   static start() {
-    if(Platform.OS === 'ios') {
+    if (Platform.OS === 'ios') {
       PushNotification.configure({
         // (required) Called when a remote or local notification is opened or received
         onNotification: function(notification) {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import colors from '../assets/colors';
-import DateConverter from '../utils/date';
+import colors from 'assets/colors';
+import DateConverter from 'utils/date';
 
 class DateHeader extends Component {
   render() {

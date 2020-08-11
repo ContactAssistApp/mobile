@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import Modal from '../views/Modal';
-import {strings} from '../locales/i18n';
-import colors from '../assets/colors';
-import {deleteLocationLog} from '../realm/realmLocationTasks';
-import StatusAlert from '../views/StatusAlert';
+import Modal from 'views/Modal';
+import {strings} from 'locales/i18n';
+import colors from 'assets/colors';
+import {deleteLocationLog} from 'realm/realmLocationTasks';
+import StatusAlert from 'views/StatusAlert';
 
 class DeleteDataModal extends Component {
   constructor() {

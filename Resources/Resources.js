@@ -5,16 +5,15 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import data from './faq.json';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Question from './Question';
-import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import {strings} from '../locales/i18n';
-import Header from '../views/Header';
+import ResourcesComponent from 'ResourcesComponent/ResourcesComponent';
+import {strings} from 'locales/i18n';
+import Header from 'views/Header';
 
 class Resources extends Component {
   constructor() {

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import LocationsList from './LocationsList';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class Locations extends Component {
   render() {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 
 class Resource extends Component {
   render() {

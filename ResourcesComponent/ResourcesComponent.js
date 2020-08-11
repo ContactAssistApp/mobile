@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Resource from './Resource';
-import {CDC_URL, KC_GUIDANCE_URL} from '../utils/constants';
-import {strings} from '../locales/i18n';
+import {CDC_URL, KC_GUIDANCE_URL} from 'utils/constants';
+import {strings} from 'locales/i18n';
 
 class ResourcesComponent extends Component {
   render() {

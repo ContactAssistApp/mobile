@@ -9,27 +9,26 @@ class AnalyticsOptIn extends Component {
   constructor(props) {
     super();
     this.state = {
-      optIn: false
-    }
+      optIn: false,
+    };
   }
 
   componentDidMount() {
     this.getSetting('ANALYTICS-OPTIN').then(data => {
-      this.setState( { optIn: data })
+      this.setState({optIn: data});
     });
   }
 
-  getSetting = async (key) => {
+  getSetting = async key => {
     let data = await GetStoreData(key);
     return data === 'true' ? true : false;
   };
-
 
   updateSetting = state => {
     let changeIt = async() => {
       await Crashes.setEnabled(state);
       await Analytics.setEnabled(state);
-      await SetStoreData('ANALYTICS-OPTIN', state)
+      await SetStoreData('ANALYTICS-OPTIN', state);
     };
 
     changeIt().catch(reason => console.log(reason));

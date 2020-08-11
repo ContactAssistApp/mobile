@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
-import {SYMPTOM_MAP} from '../utils/symptoms';
-import { strings } from '../locales/i18n';
+import colors from 'assets/colors';
+import {SYMPTOM_MAP} from 'utils/symptoms';
+import {strings} from 'locales/i18n';
 
 class SymptomsHalfDay extends Component {
   render() {

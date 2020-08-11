@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {SetStoreData} from '../utils/asyncStorage';
-import {strings} from '../locales/i18n';
+import {SetStoreData} from 'utils/asyncStorage';
+import {strings} from 'locales/i18n';
 
 class ContactList extends Component {
   selectContact = contact => {

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Linking, TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import PropTypes from 'prop-types';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 
 class SettingLink extends Component {
   render() {
@@ -13,28 +13,22 @@ class SettingLink extends Component {
         style={styles.row}
         onPress={() => {
           if (url) {
-            Linking.openURL(url)
+            Linking.openURL(url);
           }
         }}>
-        {
-          iconName && (
-            <CustomIcon
-              name={iconName}
-              color={colors.gray_icon}
-              size={24}
-              style={styles.icon}
-            />
-          )
-        }
+        {iconName && (
+          <CustomIcon
+            name={iconName}
+            color={colors.gray_icon}
+            size={24}
+            style={styles.icon}
+          />
+        )}
 
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
         </View>
-        <CustomIcon
-          name={'chevron24'}
-          color={colors.gray_icon}
-          size={24}
-        />
+        <CustomIcon name={'chevron24'} color={colors.gray_icon} size={24} />
       </TouchableOpacity>
     );
   }

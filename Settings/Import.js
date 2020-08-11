@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
-import {strings} from '../locales/i18n';
-import DateConverter from '../utils/date';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import ImportGoogleTimeline from 'GoogleTimeline/ImportGoogleTimeline';
+import {strings} from 'locales/i18n';
+import DateConverter from 'utils/date';
 
 class Import extends Component {
   constructor() {

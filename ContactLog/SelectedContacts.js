@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import ContactList from './ContactList';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GetStoreData} from '../utils/asyncStorage';
-import {strings} from '../locales/i18n';
+import {GetStoreData} from 'utils/asyncStorage';
+import {strings} from 'locales/i18n';
 
 class SelectedContacts extends Component {
   componentDidMount() {

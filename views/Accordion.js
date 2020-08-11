@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Checkbox from './Checkbox';
 
