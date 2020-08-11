@@ -609,13 +609,18 @@
     "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
   },
 
-  "care_tips": {
+  "what_to_do_if_sick": {
     "header": "What To Do If You Get Sick",
     "stay_home_title": "Stay Home Except to Get Medical Care",
     "stay_home_description": "Do not leave your home, except to get medical care. Do not visit public areas. If you need to leave, avoid public transportation.",
     "isolate_title": "Isolate Yourself From Others",
     "isolate_description": "As much as possible, stay home, and in a specific room away from other people and pets in your home.",
-    "monitor_symptom_title": "Monitor Your Symptoms",
-    "monitor_symptom_description": "Add new symptoms as soon as you experience them and keep an eye on concerning symptoms like trouble breathing.",
+    "monitor_title": "Monitor Your Symptoms",
+    "monitor_description": "Add new symptoms as soon as you experience them and keep an eye on concerning symptoms like trouble breathing.",
+  },
+
+  "care_tips_container": {
+    "cdc_link": "CDC guidance",
+    "cdc_info": "Information based on",
   }
 }
