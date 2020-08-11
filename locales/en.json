@@ -410,11 +410,6 @@
     "logged_text": "Not Logged",
     "logged_txt": "Not logged"
   },
-  "prepare": {
-    "for_contact_tracer_interview": "Prepare for your contact tracer interview",
-    "for_interview_btn_text": "Prepare for your interview",
-    "for_contact_tracer_description_text": "During an interview, a public health official will collect a list of critical information to help identify those around you who may have been exposed."
-  },
   "positive": {
     "covid_report": "Positive COVID-19 Diagnosis Reported"
   },
@@ -643,5 +638,11 @@
     "cdc_description": "Learn about symptoms, what to do if you’re sick, healthcare options, and more.",
     "king_county_title": "Public Health - Seattle & King County",
     "king_county_description": "Get the latest guidance, information, and regulations for Seattle & King County."
+  },
+
+  "interview_prep": {
+    "title": "Your public health department will contact you for an interview",
+    "description": "During this interview, a healthcare professional will be collecting a list of information to help identify those around you who may have been exposed.",
+    "prepare_btn": "Prepare for Your Interview",
   }
 }
