@@ -300,7 +300,7 @@ class Home extends Component {
             header={strings('care_tips.header')}
             tips={[
               {
-                icon: 'accessibility24',
+                icon: 'home24_filled',
                 title: strings('care_tips.hygiene_title'),
                 content: strings('care_tips.hygiene_description'),
               },
@@ -310,7 +310,7 @@ class Home extends Component {
                 content: strings('care_tips.mask_description'),
               },
               {
-                icon: 'activity24',
+                icon: 'social_distancing24',
                 title: strings('care_tips.social_distance_title'),
                 content: strings('care_tips.social_distance_description'),
               },
