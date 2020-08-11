@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   header: {
-    fontSize: 20,
-    lineHeight: 26,
+    fontSize: 18,
+    lineHeight: 22,
     textTransform: 'capitalize',
     color: colors.module_title,
   },

@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
     height: 70,
   },
   title: {
-    fontSize: 16,
-    lineHeight: 23,
     textTransform: 'capitalize',
-    color: colors.module_title,
     paddingLeft: 10,
     flex: 1,
+    fontSize: 18,
+    lineHeight: 22,
+    color: colors.module_title,
   },
   description: {
     fontSize: 14,

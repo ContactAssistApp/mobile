@@ -240,9 +240,6 @@ class Home extends Component {
 
   render() {
     const isBroadcasting = this.state.location;
-    const broadcastStatus = isBroadcasting
-      ? strings('broadcasting.on_text')
-      : strings('broadcasting.off_text');
     const broadcastBg = isBroadcasting
       ? styles.broadcast_on
       : styles.broadcast_off;
@@ -266,7 +263,7 @@ class Home extends Component {
               <View style={styles.broadcast}>
                 <View style={styles.broadcast_content}>
                   <Text style={styles.broadcast_title}>
-                    {`${broadcastStatus}`}
+                    {strings('broadcasting.location_logging')}
                   </Text>
                   <Text style={styles.broadcast_description}>
                     {isBroadcasting
@@ -361,11 +358,9 @@ const styles = StyleSheet.create({
   },
   broadcast_title: {
     color: colors.module_title,
-    fontWeight: '600',
-    fontSize: 22,
+    fontSize: 20,
     lineHeight: 26,
-    letterSpacing: 0.35,
-    paddingBottom: 10,
+    paddingBottom: 6,
   },
   broadcast_description: {
     fontSize: 15,

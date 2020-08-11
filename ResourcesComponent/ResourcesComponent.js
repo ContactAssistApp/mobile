@@ -9,16 +9,20 @@ class ResourcesComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>
-          {strings('bottom.sheet_menu_item_resources')}
-        </Text>
+        <View style={styles.header_container}>
+          <Text style={styles.header}>
+            {strings('bottom.sheet_menu_item_resources')}
+          </Text>
+        </View>
         <Resource
-          title={strings('cdc.guidance_text')}
+          title={strings('resources_component.cdc_title')}
+          content={strings('resources_component.cdc_description')}
           logoName={'cdc'}
           url={CDC_URL}
         />
         <Resource
-          title={strings('public.health')}
+          title={strings('resources_component.king_county_title')}
+          content={strings('resources_component.king_county_description')}
           logoName={'kc'}
           url={KC_GUIDANCE_URL}
         />
@@ -33,14 +37,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 20,
     marginTop: 20,
+    paddingHorizontal: 15,
+  },
+  header_container: {
+    paddingVertical: 20,
   },
   header: {
-    fontWeight: '600',
-    fontSize: 22,
-    lineHeight: 26,
-    letterSpacing: 0.35,
-    color: colors.section_title,
-    padding: 24,
+    color: colors.module_title,
+    fontSize: 18,
+    lineHeight: 22,
   },
 });
 
