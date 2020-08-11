@@ -305,12 +305,12 @@ class Home extends Component {
                 content: strings('care_tips.hygiene_description'),
               },
               {
-                icon: 'incognito24',
+                icon: 'mask24',
                 title: strings('care_tips.mask_title'),
                 content: strings('care_tips.mask_description'),
               },
               {
-                icon: 'activity24',
+                icon: 'social_distancing24',
                 title: strings('care_tips.social_distance_title'),
                 content: strings('care_tips.social_distance_description'),
               },
