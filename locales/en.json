@@ -206,7 +206,6 @@
   },
   "public": {
     "key_pkey": "public_key_pkey",
-    "health": "Public Health - Seattle & King County"
   },
   "last": {
     "refresh_date_pkey": "last_refresh_date_pkey",
@@ -217,8 +216,7 @@
   },
   "broadcasting": {
     "enabled_pkey": "broadcasting",
-    "on_text": "Location logging on",
-    "off_text": "Location logging off",
+    "location_logging": "Location logging",
     "description_text": "Location data is being collected and saved locally to your phone."
   },
   "gps": {
@@ -639,4 +637,11 @@
     "social_distance_title": "Practice Social Distancing",
     "social_distance_description": "Keep space between you and others. Stay at least 6 feet (about 2 arms' length) apart, avoid group gatherings and crowded places."
   },
+
+  "resources_component": {
+    "cdc_title": "CDC Guidance",
+    "cdc_description": "Learn about symptoms, what to do if you’re sick, healthcare options, and more.",
+    "king_county_title": "Public Health - Seattle & King County",
+    "king_county_description": "Get the latest guidance, information, and regulations for Seattle & King County."
+  }
 }
