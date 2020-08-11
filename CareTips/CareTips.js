@@ -1,25 +1,29 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {strings} from 'locales/i18n';
 import Tip from './Tip';
-import {strings} from '../locales/i18n';
 
 class CareTips extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>
-          {strings("what.to_do_if_you_are_sick")}
-        </Text>
+        <View style={styles.header_container}>
+          <Text style={styles.header}>{strings('care_tips.header')}</Text>
+        </View>
+        <Tip
+          icon={'home24'}
+          title={strings('care_tips.stay_home_title')}
+          content={strings('care_tips.stay_home_description')}
+        />
         <Tip
           icon={'incognito24'}
-          title={strings('isolation.order')}
-          content={strings('global.isolation1') + strings('global.isolation2')}
+          title={strings('care_tips.isolate_title')}
+          content={strings('care_tips.isolate_description')}
         />
         <Tip
           icon={'activity24'}
-          title={strings('monitor.your_symptoms')}
-          content={strings('global.monitor1') + strings('global.monitor2') + strings('global.monitor3')}
+          title={strings('care_tips.monitor_symptom_title')}
+          content={strings('care_tips.monitor_symptom_description')}
         />
       </View>
     );
@@ -28,17 +32,19 @@ class CareTips extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 16,
-    marginVertical: 8,
+    marginHorizontal: 20,
+    marginTop: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 24,
+    paddingHorizontal: 15,
+  },
+  header_container: {
+    paddingVertical: 20,
   },
   header: {
-    fontWeight: '600',
-    fontSize: 22,
-    lineHeight: 26,
-    letterSpacing: 0.35,
+    fontSize: 18,
+    lineHeight: 22,
+    textTransform: 'capitalize',
   },
 });
 
