@@ -622,5 +622,15 @@
   "care_tips_container": {
     "cdc_link": "CDC guidance",
     "cdc_info": "Information based on",
-  }
+  },
+
+  "care_tips": {
+    "header": "Self-Care Tips",
+    "hygiene_title": "Practice Good Hygiene",
+    "hygiene_description": "Wash your hands regularly for 20 seconds, cover your coughs and sneezes with your elbow, and refrain from touching your face.",
+    "mask_title": "Wear A Mask",
+    "mask_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "social_distance_title": "Practice Social Distancing",
+    "social_distance_description": "Keep space between you and others. Stay at least 6 feet (about 2 arms' length) apart, avoid group gatherings and crowded places."
+  },
 }

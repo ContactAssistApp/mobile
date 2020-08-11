@@ -28,6 +28,7 @@ import {strings} from 'locales/i18n';
 import {addAreas} from 'realm/realmAreaMatchesTasks';
 import {addBackgroundLog} from 'realm/realmLoggingTasks';
 import DateConverter from 'utils/date';
+import CareTips from 'CareTips/CareTips';
 
 class Home extends Component {
   constructor() {
@@ -293,6 +294,27 @@ class Home extends Component {
           <SymptomTracker
             navigate={this.props.navigation.navigate}
             date={new Date()}
+          />
+
+          <CareTips
+            header={strings('care_tips.header')}
+            tips={[
+              {
+                icon: 'accessibility24',
+                title: strings('care_tips.hygiene_title'),
+                content: strings('care_tips.hygiene_description'),
+              },
+              {
+                icon: 'incognito24',
+                title: strings('care_tips.mask_title'),
+                content: strings('care_tips.mask_description'),
+              },
+              {
+                icon: 'activity24',
+                title: strings('care_tips.social_distance_title'),
+                content: strings('care_tips.social_distance_description'),
+              },
+            ]}
           />
 
           <ResourcesComponent />
