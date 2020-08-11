@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import colors from '../assets/colors.js';
-import Home from '../Home/Home';
-import Health from '../Health/Health';
-import Resources from '../Resources/Resources';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import ContactLog from '../ContactLog/ContactLog';
-import { strings } from '../locales/i18n';
+import colors from 'assets/colors.js';
+import Home from 'Home/Home';
+import Health from 'Health/Health';
+import Resources from 'Resources/Resources';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import ContactLog from 'ContactLog/ContactLog';
+import {strings} from 'locales/i18n';
 
 const Tab = createBottomTabNavigator();
 

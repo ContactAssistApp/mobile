@@ -1,10 +1,9 @@
 import {NativeModules} from 'react-native';
 import {getLocations} from '../realm/realmLocationTasks';
-import { appendFile } from 'react-native-fs';
-import { fmt_date } from '../locales/i18n'
+import {fmt_date} from 'locales/i18n';
 
 //minimum accuracy of a location for us to care for
-const MIN_ACCURACY = 100
+const MIN_ACCURACY = 100;
 
 function distance(lat1, lon1, lat2, lon2) {
   if (lat1 === lat2 && lon1 === lon2) {

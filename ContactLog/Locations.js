@@ -6,19 +6,19 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import {updateContactLog} from './actions.js';
 import Import from './Import';
-import Location from '../utils/location';
-import {strings, fmt_date} from '../locales/i18n';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import {deleteLocation} from '../realm/realmLocationTasks';
+import Location from 'utils/location';
+import {strings, fmt_date} from 'locales/i18n';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import {deleteLocation} from 'realm/realmLocationTasks';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
-import Disclaimer from '../Privacy/Disclaimer';
-import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
+import Disclaimer from 'Privacy/Disclaimer';
+import ImportGoogleTimeline from 'GoogleTimeline/ImportGoogleTimeline';
 
 class LocationsComp extends Component {
   constructor() {

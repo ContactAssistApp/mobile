@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import BackgroundFetch from 'react-native-background-fetch';
-import LocationServices from '../services/LocationServices';
+import LocationServices from 'services/LocationServices';
 import Notification from './Notification';
-import Toggle from '../views/Toggle';
-import Header from '../views/Header';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
+import Toggle from 'views/Toggle';
+import Header from 'views/Header';
 import {
   RefreshControl,
   SafeAreaView,
@@ -15,19 +15,19 @@ import {
   ScrollView,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import {getLatestCoarseLocation} from '../utils/coarseLocation';
-import Location from '../utils/location';
-import SymptomTracker from '../SymptomTracker/SymptomTracker';
-import SettingsModal from '../Settings/SettingsModal';
-import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import PrepareInterviewComponent from '../InterviewPrep/PrepareInterviewComponent';
-import Privacy from '../Privacy/Privacy';
+import {GetStoreData, SetStoreData} from 'utils/asyncStorage';
+import {getLatestCoarseLocation} from 'utils/coarseLocation';
+import Location from 'utils/location';
+import SymptomTracker from 'SymptomTracker/SymptomTracker';
+import SettingsModal from 'Settings/SettingsModal';
+import ResourcesComponent from 'ResourcesComponent/ResourcesComponent';
+import PrepareInterviewComponent from 'InterviewPrep/PrepareInterviewComponent';
+import Privacy from 'Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
-import {strings} from '../locales/i18n';
-import {addAreas} from '../realm/realmAreaMatchesTasks';
-import {addBackgroundLog} from '../realm/realmLoggingTasks';
-import DateConverter from '../utils/date';
+import {strings} from 'locales/i18n';
+import {addAreas} from 'realm/realmAreaMatchesTasks';
+import {addBackgroundLog} from 'realm/realmLoggingTasks';
+import DateConverter from 'utils/date';
 
 class Home extends Component {
   constructor() {

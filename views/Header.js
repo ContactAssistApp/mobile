@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import {StyleSheet, Text, View, Image} from 'react-native';
 
 export default function Header(props) {

@@ -1,6 +1,6 @@
 import {GET_MESSAGE_LIST_URL} from './endpoints';
 import {QUERY_SIZE_LIMIT, PRECISION_LIMIT} from './constants';
-import {getLocations} from '../realm/realmLocationTasks';
+import {getLocations} from 'realm/realmLocationTasks';
 
 export async function getLatestCoarseLocation(ts) {
   const location = await getLatestLocation();

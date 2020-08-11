@@ -1,13 +1,13 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import {addLocation} from '../realm/realmLocationTasks';
-import Location from '../utils/location';
-import DateConverter from '../utils/date';
-import {strings} from '../locales/i18n';
-import {getAreas} from '../realm/realmAreaMatchesTasks';
+import {addLocation} from 'realm/realmLocationTasks';
+import Location from 'utils/location';
+import DateConverter from 'utils/date';
+import {strings} from 'locales/i18n';
+import {getAreas} from 'realm/realmAreaMatchesTasks';
 import PushNotification from 'react-native-push-notification';
-import {GetStoreData} from '../utils/asyncStorage';
-import {addBackgroundLog} from '../realm/realmLoggingTasks';
+import {GetStoreData} from 'utils/asyncStorage';
+import {addBackgroundLog} from 'realm/realmLoggingTasks';
 
 let instanceCount = 0;
 

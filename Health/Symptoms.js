@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import SymptomTracker from '../SymptomTracker/SymptomTracker';
-import CareTips from '../CareTips/CareTips';
+import SymptomTracker from 'SymptomTracker/SymptomTracker';
+import CareTips from 'CareTips/CareTips';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getDaysWithLog} from '../realm/realmSymptomsTasks';
+import {getDaysWithLog} from 'realm/realmSymptomsTasks';
 import {updateHealthData} from './actions.js';
 import PropTypes from 'prop-types';
-import {fmt_date} from '../locales/i18n';
+import {fmt_date} from 'locales/i18n';
 
 class Symptoms extends Component {
   componentDidMount() {

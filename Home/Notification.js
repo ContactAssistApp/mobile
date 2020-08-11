@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import DateConverter from '../utils/date';
-import {strings} from '../locales/i18n';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import DateConverter from 'utils/date';
+import {strings} from 'locales/i18n';
 
 class Notification extends Component {
   constructor(props) {
@@ -36,7 +36,6 @@ class Notification extends Component {
         {notifications.map((notification, idx) => {
           if (this.state.index % notifications.length === idx) {
             const {
-              type,
               title,
               street,
               city,

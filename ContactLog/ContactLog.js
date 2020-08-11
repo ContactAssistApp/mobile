@@ -1,26 +1,19 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import colors from '../assets/colors';
+import {SafeAreaView, View, StyleSheet, TouchableOpacity} from 'react-native';
+import colors from 'assets/colors';
 import Locations from './Locations';
 import People from './People';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import Calendar from '../views/Calendar';
-import TabView from '../views/TabView';
-import Header from '../views/Header';
-import DateConverter from '../utils/date';
-import {getDaysWithLocations} from '../realm/realmLocationTasks';
-import {strings} from '../locales/i18n';
+import Calendar from 'views/Calendar';
+import TabView from 'views/TabView';
+import Header from 'views/Header';
+import DateConverter from 'utils/date';
+import {getDaysWithLocations} from 'realm/realmLocationTasks';
+import {strings} from 'locales/i18n';
 
 class ContactLog extends Component {
   constructor() {

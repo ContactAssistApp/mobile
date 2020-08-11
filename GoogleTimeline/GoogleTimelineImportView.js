@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {View, Text} from 'react-native';
 import {WebView} from 'react-native-webview';
 import CookieManager from '@react-native-community/cookies';
-import {strings} from '../locales/i18n';
-import DateConverter from '../utils/date';
+import {strings} from 'locales/i18n';
+import DateConverter from 'utils/date';
 
 const SIGN_IN_URL = 'https://accounts.google.com/signin';
 const SIGNED_IN_HOST = 'https://myaccount.google.com';

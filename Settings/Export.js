@@ -1,15 +1,14 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import {strings} from '../locales/i18n';
-import Share from "react-native-share";
-import RealmObj from '../realm/realm';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import {strings} from 'locales/i18n';
+import Share from 'react-native-share';
+import RealmObj from 'realm/realm';
 import * as RNFS from 'react-native-fs';
 
-const base64js = require('base64-js');
-const Buffer = require("buffer").Buffer;
+const Buffer = require('buffer').Buffer;
 
 class Export extends Component {
   constructor() {
@@ -37,42 +36,42 @@ class Export extends Component {
       'app-log': real.objects('BackgroundTaskLog'),
       'gps-log': logLines,
     };
+    let path;
     try {
       let the_url = null;
-
-      if(Platform.OS == 'android') {
+      if (Platform.OS === 'android') {
         let encodedData = new Buffer(JSON.stringify(dump)).toString("base64");
         the_url = 'data:text/plain;base64,' + encodedData;
       } else {
-        let path = RNFS.DocumentDirectoryPath + "/dump.json";
+        path = RNFS.DocumentDirectoryPath + '/dump.json';
         try {
           await RNFS.unlink(path);
-        } catch(e) {
+        } catch (e) {
           // unlink fails if the file doesn't exist, which is fine
         }
-        
+
         await RNFS.writeFile(path, JSON.stringify(dump), 'utf8');
         the_url = 'file://' + path;
       }
-      console.log('dump created successfully');  
+      console.log('dump created successfully');
 
-      let res = await Share.open( {
+      let res = await Share.open({
         url: the_url,
         filename: 'common-circle-dump',
-          message: strings('export.message'),
-        failOnCancel: false
+        message: strings('export.message'),
+        failOnCancel: false,
       });
-      console.log('sharing ok:' + JSON.stringify(re));
+      console.log('sharing ok:' + JSON.stringify(res));
     } catch (e) {
       console.log('sharing failed due to: ' + JSON.stringify(e));
     }
 
     //delete the file regardless of what happened
-    if(Platform.OS != 'android') {
+    if (Platform.OS !== 'android') {
       try {
         console.log('removing file');
         await RNFS.unlink(path);
-      } catch(e) {
+      } catch (e) {
         // unlink fails if the file doesn't exist, which is fine
       }
     }
@@ -81,9 +80,7 @@ class Export extends Component {
   render() {
     return (
       <>
-        <TouchableOpacity
-          style={styles.row}
-          onPress={this.exportData}>
+        <TouchableOpacity style={styles.row} onPress={this.exportData}>
           <CustomIcon
             name={'export24'}
             color={colors.gray_icon}
@@ -92,7 +89,9 @@ class Export extends Component {
           />
           <View style={styles.content}>
             <Text style={styles.title}>{strings('export.title')}</Text>
-            <Text style={styles.description}>{strings('export.description')}</Text>
+            <Text style={styles.description}>
+              {strings('export.description')}
+            </Text>
           </View>
         </TouchableOpacity>
       </>

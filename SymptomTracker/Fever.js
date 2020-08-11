@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class Fever extends Component {
   handleEdit = (id, value) => {
@@ -16,11 +16,7 @@ class Fever extends Component {
 
   render() {
     const {
-      symptoms: {
-        feverOnsetDate,
-        feverTemperature,
-        feverDays,
-      },
+      symptoms: {feverOnsetDate, feverTemperature, feverDays},
     } = this.props;
 
     return (

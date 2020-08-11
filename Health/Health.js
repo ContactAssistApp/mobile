@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Symptoms from './Symptoms';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import Calendar from '../views/Calendar';
-import Header from '../views/Header';
-import DateConverter from '../utils/date';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import Calendar from 'views/Calendar';
+import Header from 'views/Header';
+import DateConverter from 'utils/date';
 import {updateHealthData} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class Health extends Component {
   constructor() {

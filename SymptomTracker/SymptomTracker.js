@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Record from './Record';
 import PropTypes from 'prop-types';
 import {updateSymptom, resetSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import DateConverter from '../utils/date';
-import {strings, fmt_date} from '../locales/i18n';
-import {getSymptoms} from '../realm/realmSymptomsTasks';
+import DateConverter from 'utils/date';
+import {strings, fmt_date} from 'locales/i18n';
+import {getSymptoms} from 'realm/realmSymptomsTasks';
 
 class SymptomTracker extends Component {
   componentDidMount() {

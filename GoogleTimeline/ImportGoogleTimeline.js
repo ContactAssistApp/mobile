@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {StyleSheet, Alert} from 'react-native';
 import {parseString} from 'react-native-xml2js';
-import Modal from '../views/Modal';
+import Modal from 'views/Modal';
 import GoogleTimelineImportView from './GoogleTimelineImportView';
-import {addGoogleLocations} from '../realm/realmLocationTasks';
-import {strings} from '../locales/i18n';
-import {addBackgroundLog} from '../realm/realmLoggingTasks';
+import {addGoogleLocations} from 'realm/realmLocationTasks';
+import {strings} from 'locales/i18n';
+import {addBackgroundLog} from 'realm/realmLoggingTasks';
 import PropTypes from 'prop-types';
 
 class ImportGoogleTimeline extends Component {

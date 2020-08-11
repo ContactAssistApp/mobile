@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {WeekCalendar, CalendarList} from 'react-native-calendars';
 import {View, StyleSheet, Text} from 'react-native';
-import colors from '../assets/colors';
-import DateConverter from '../utils/date';
+import colors from 'assets/colors';
+import DateConverter from 'utils/date';
 import moment from 'moment';
 
 class Calendar extends Component {
