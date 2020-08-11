@@ -48,7 +48,7 @@ class Home extends Component {
       {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
       async taskId => {
         console.log('[js] Received background-fetch event: ', taskId);
-        addBackgroundLog('Narrowcast background fetch',);
+        addBackgroundLog('Narrowcast background fetch');
         this.processQueries();
         BackgroundFetch.finish(taskId);
       },
