@@ -315,8 +315,14 @@
     "delete": "Are you sure you want to delete?"
   },
   "emergency": {
-    "text": "Stop and call 911 if you are experiencing:\n\n        \u2022 Severe, constant chest pain or pressure\n\n        \u2022 Extreme difficulty breathing\n\n        \u2022 Severe, constant lightheadedness\n\n        \u2022 Serious disorientation or unresponsiveness",
-    "call_text": "Call 911 immediately if you are having a medical emergency."
+    "header": "When to Seek Emergency Medical Attention",
+    "description": "The CDC recommends looking for emergency warning signs* for COVID-19. If someone is showing any of these signs, seek emergency medical care immediately.",
+    "trouble_breathing": "Trouble breathing",
+    "chest_pain": "Persistent pain or pressure in the chest",
+    "new_confusion": "New confusion",
+    "stay_awake": "Inability to wake or stay awake",
+    "bluish_lips": "Bluish lips or face",
+    "note": "*This list does not include all possible symptoms. Please call your local health department about any other symptoms that are severe or concerning."
   },
   "fever": {
     "txt": "Fever",
