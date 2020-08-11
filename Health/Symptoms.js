@@ -9,6 +9,7 @@ import {updateHealthData} from './actions.js';
 import PropTypes from 'prop-types';
 import {fmt_date} from 'locales/i18n';
 import {strings} from 'locales/i18n';
+import Emergency from 'Privacy/Emergency';
 
 class Symptoms extends Component {
   componentDidMount() {
@@ -61,6 +62,7 @@ class Symptoms extends Component {
             },
           ]}
         />
+        <Emergency />
       </ScrollView>
     );
   }
