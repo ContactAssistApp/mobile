@@ -4,19 +4,25 @@ import colors from 'assets/colors';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 import ImportGoogleTimeline from 'GoogleTimeline/ImportGoogleTimeline';
 import {strings} from 'locales/i18n';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {updateLocationData} from './actions.js';
+import PropTypes from 'prop-types';
 
 class Import extends Component {
   render() {
-    const {date} = this.props;
+    const {
+      contactLocationData: {date, openImportModal},
+    } = this.props;
     return (
       <View style={styles.container}>
         <ImportGoogleTimeline
-          visible={this.props.visible}
+          visible={openImportModal}
           handleModalClose={this.props.handleModalClose}
           endDateStr={date}
           dateRange={1}
         />
-        <Image source={require('../assets/health/map.png')} />
+        <Image source={require('assets/health/map.png')} />
         <Text style={styles.title}>{strings('import.long_text')}</Text>
         <Text style={styles.description}>{strings('import.description')}</Text>
         <TouchableOpacity
@@ -75,4 +81,22 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Import;
+Import.propTypes = {
+  handleModalOpen: PropTypes.func.isRequired,
+  updateLocationData: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    contactLocationData: state.contactLocationReducer,
+  };
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateLocationData,
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Import);
