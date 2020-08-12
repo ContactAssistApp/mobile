@@ -2,6 +2,7 @@ const initialState = {
   date: '',
   addresses: [],
   openImportModal: false,
+  openLocationModal: false,
   imported: false,
   isImporting: false,
 };

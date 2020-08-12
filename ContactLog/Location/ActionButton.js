@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import colors from 'assets/colors';
-import {strings} from 'locales/i18n';
-import CustomIcon from 'assets/icons/CustomIcon.js';
-import {deleteLocation} from 'realm/realmLocationTasks';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
-import NewLocation from 'ContactLog/NewLocation/NewLocation';
+import {deleteLocation} from 'realm/realmLocationTasks';
+import {strings} from 'locales/i18n';
+import {updateLocationData} from './actions.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import Modal from 'views/Modal';
+import NewLocation from 'ContactLog/NewLocation/NewLocation';
+import PropTypes from 'prop-types';
+import colors from 'assets/colors';
 
 class Actions extends Component {
   handleAction = () => {
@@ -24,7 +28,7 @@ class Actions extends Component {
       },
       buttonIndex => {
         if (buttonIndex === 1) {
-          // edit
+          this.props.updateLocationData({openLocationModal: true});
         } else if (buttonIndex === 2) {
           if (time) {
             deleteLocation(time);
@@ -36,12 +40,18 @@ class Actions extends Component {
   };
 
   render() {
+    const {
+      contactLocationData: {openLocationModal},
+    } = this.props;
+
     return (
       <>
         <Modal
-          visible={true}
+          visible={openLocationModal}
           handleModalClose={() => {
-
+            this.props.updateLocationData({
+              openLocationModal: false,
+            });
           }}
           useScrollView={false}
           title={strings('locations.edit_location_header')}>
@@ -66,4 +76,21 @@ const styles = StyleSheet.create({
 
 const ActionButton = connectActionSheet(Actions);
 
-export default ActionButton;
+Actions.propTypes = {
+  updateLocationData: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    contactLocationData: state.contactLocationReducer,
+  };
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateLocationData,
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ActionButton);
