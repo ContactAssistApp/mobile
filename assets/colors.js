@@ -19,6 +19,8 @@ const colors = {
   chip_mild: '#DFF6DD',
   chip_moderate: '#FFF4CE',
   chip_severe: '#FED9CC',
+  pref_enabled_background: '#CEF0CD',
+  pref_enabled_checkmark: '#212121',
 };
 
 export default colors;

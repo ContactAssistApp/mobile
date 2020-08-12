@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {GetStoreData} from '../utils/asyncStorage';
 import FTUE from './OnBoarding/FTUE';
-import Preferences from './OnBoarding/Preferences';
+import NotificationsOptIn from './OnBoarding/NotificationsOptIn';
 import ThankYou from './OnBoarding/ThankYou';
 import BottomNav from './BottomNav';
 import SymptomForm from '../SymptomTracker/SymptomForm';
@@ -68,15 +68,15 @@ class AppNav extends Component {
               )}
               {enableFTUE === 'true' && (
                 <Stack.Screen
-                  name={'Preferences'}
-                  component={Preferences}
+                  name={'NotificationsOptIn'}
+                  component={NotificationsOptIn}
                   options={{
                     title: strings('permissions.header_text'),
                     headerTintColor: 'black',
                     // headerBackTitle: ' ',
                     headerBackTitleVisible: false,
                     //headerBackImage: require('../../assets/preference/preference_1.png'),
-                    headerTitleAlign: "left",
+                    headerTitleAlign: 'left',
                     headerStyle: {height: 100},
                   }}
                 />
