@@ -17,23 +17,33 @@ import colors from 'assets/colors';
 class LocationsContainer extends Component {
   componentDidMount() {
     const {date} = this.props;
-    this.props.updateLocationData({
-      date,
+    Promise.resolve(
+      this.props.updateLocationData({
+        date,
+      }),
+    ).then(() => {
+      this.fetchAddresses();
     });
-    this.fetchAddresses(date);
   }
 
   componentDidUpdate(prevProps) {
     const {date} = this.props;
     if (prevProps.date !== date) {
-      this.props.updateLocationData({
-        date,
+      Promise.resolve(
+        this.props.updateLocationData({
+          date,
+        }),
+      ).then(() => {
+        this.fetchAddresses();
       });
-      this.fetchAddresses(date);
     }
   }
 
-  fetchAddresses = async date => {
+  fetchAddresses = async () => {
+    const {
+      contactLocationData: {date},
+    } = this.props;
+
     const addresses = await Location.fetchAddresses(
       new Date(date.replace(/-/g, '/')),
     );
@@ -70,7 +80,7 @@ class LocationsContainer extends Component {
             <Text style={styles.sub_header}>
               {strings('locations.timeline_text')}
             </Text>
-            <List />
+            <List refreshLocations={this.fetchAddresses} />
             <MissingLocation />
             <Disclaimer />
           </>

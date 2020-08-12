@@ -32,7 +32,6 @@ const Location = {
   },
   fetchAddresses: async function(dateObj, dayRange = 0) {
     const locations = await getLocations(dateObj, dayRange);
-
     let final_locs = []
     let appendLoc = function(loc) {
       let cand = final_locs[final_locs.length - 1]
@@ -81,12 +80,13 @@ const Location = {
           locs: [ [loc.address, loc.name, 1] ],
           timespan: loc.timespan,
           source: loc.source,
+          time: loc.time,
         });
       }
     });
 
     return final_locs.map(location => {
-      const {locs, startTime, endTime, timespan, source} = location;
+      const {locs, startTime, endTime, timespan, source, time} = location;
 
       //find address
       let addr = null;
@@ -112,6 +112,7 @@ const Location = {
         address: addr[0],
         name: addr[1],
         timerange: range,
+        time,
       }
     });
   },

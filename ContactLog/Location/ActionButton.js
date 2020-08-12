@@ -7,7 +7,9 @@ import {deleteLocation} from 'realm/realmLocationTasks';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
 
 class Actions extends Component {
-  handleAction = address => {
+  handleAction = () => {
+    const {time} = this.props;
+
     this.props.showActionSheetWithOptions(
       {
         options: [
@@ -22,18 +24,11 @@ class Actions extends Component {
         if (buttonIndex === 1) {
           // edit
         } else if (buttonIndex === 2) {
-          // deleteLocation(address);
-          // const index = this.state.addresses.findIndex(
-          //   item => item.address === address,
-          // );
-          //
-          // if (index > -1) {
-          //   this.state.addresses.splice(index, 1);
-          //   this.setState({
-          //     addresses: this.state.addresses,
-          //   });
-          // }
+          if (time) {
+            deleteLocation(time);
+          }
         }
+        this.props.refreshLocations();
       },
     );
   };

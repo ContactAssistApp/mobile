@@ -78,14 +78,12 @@ export async function getLocationsWithTs(start, end) {
   return locations;
 }
 
-export async function deleteLocation(address) {
+export async function deleteLocation(time) {
   try {
     const realm = await RealmObj.init();
-    const locations = realm
-      .objects('Location')
-      .filtered('address == $0', address);
+    const location = realm.objects('Location').filtered('time == $0', time);
     realm.write(() => {
-      realm.delete(locations);
+      realm.delete(location);
     });
   } catch (err) {
     console.log('delete location error: ', err);

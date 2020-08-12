@@ -13,7 +13,7 @@ class List extends Component {
     return (
       <>
         {addresses.map((item, idx) => {
-          const {name, address, timerange} = item;
+          const {name, address, timerange, time} = item;
           return (
             <View style={styles.address_card} key={idx}>
               <View style={styles.address_content}>
@@ -23,7 +23,10 @@ class List extends Component {
                 )}
                 <Text style={styles.time}>{timerange}</Text>
               </View>
-              <ActionButton />
+              <ActionButton
+                time={time}
+                refreshLocations={this.props.refreshLocations}
+              />
             </View>
           );
         })}
