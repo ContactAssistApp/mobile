@@ -10,10 +10,6 @@ import PropTypes from 'prop-types';
 
 class MissingLocation extends Component {
   render() {
-    const {
-      contactLocationData: {date, addresses, openImportModal},
-    } = this.props;
-
     return (
       <View style={styles.missing_locations_container}>
         <Text style={styles.missing_locations_header}>
@@ -83,17 +79,11 @@ MissingLocation.propTypes = {
   updateLocationData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-  return {
-    contactLocationData: state.contactLocationReducer,
-  };
-};
-
 const mapDispatchToProps = dispatch => bindActionCreators({
   updateLocationData,
 }, dispatch);
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(MissingLocation);

@@ -26,6 +26,9 @@ class LocationsContainer extends Component {
   componentDidUpdate(prevProps) {
     const {date} = this.props;
     if (prevProps.date !== date) {
+      this.props.updateLocationData({
+        date,
+      });
       this.fetchAddresses(date);
     }
   }
@@ -75,11 +78,6 @@ class LocationsContainer extends Component {
           <Import
             date={date}
             visible={openImportModal}
-            handleModalOpen={() => {
-              this.props.updateLocationData({
-                openImportModal: true,
-              });
-            }}
             handleModalClose={() => {
               this.props.updateLocationData({
                 openImportModal: true,
