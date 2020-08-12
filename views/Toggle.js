@@ -1,6 +1,6 @@
 import React from 'react';
 import {Switch} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
 import {Platform} from 'react-native';
 

@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../assets/colors';
-import SelectedContacts from '../ContactLog/SelectedContacts';
+import colors from 'assets/colors';
+import SelectedContacts from 'ContactLog/SelectedContacts';
 import SectionHeader from './SectionHeader';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class People extends Component {
   render() {
@@ -16,13 +16,9 @@ class People extends Component {
               style={styles.icon}
               source={require('../assets/health/people.png')}
             />
-            <Text style={styles.title}>
-              {strings('contact.title_3')}
-            </Text>
+            <Text style={styles.title}>{strings('contact.title_3')}</Text>
           </View>
-          <Text style={styles.description}>
-            {strings('contact.desc_3')}
-          </Text>
+          <Text style={styles.description}>{strings('contact.desc_3')}</Text>
         </View>
         <SectionHeader header={strings('people.text')} />
         <SelectedContacts />

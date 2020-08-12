@@ -5,7 +5,7 @@ const initialState = {
 const navReducer = (state = initialState, action) => {
   const {payload, type} = action;
 
-  switch (action.type) {
+  switch (type) {
     case 'UPDATE_FTUE':
       const {field, value} = payload;
       return {

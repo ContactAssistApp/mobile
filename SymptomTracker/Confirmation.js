@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import {connect} from 'react-redux';
 import SymptomsSummary from './SymptomsSummary';
-import DateConverter from '../utils/date';
-import { strings, fmt_date } from '../locales/i18n';
+import DateConverter from 'utils/date';
+import {strings, fmt_date} from 'locales/i18n';
 
 class Confirmation extends Component {
   render() {

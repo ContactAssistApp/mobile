@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
-import {strings} from '../locales/i18n';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import ImportGoogleTimeline from 'GoogleTimeline/ImportGoogleTimeline';
+import {strings} from 'locales/i18n';
 
 class Import extends Component {
   render() {

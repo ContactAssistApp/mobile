@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Symptoms from './Symptoms';
 import Locations from './Locations';
 import People from './People';
@@ -16,7 +16,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updatePageIndex} from './actions.js';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class InterviewPrepContainer extends Component {
   constructor() {

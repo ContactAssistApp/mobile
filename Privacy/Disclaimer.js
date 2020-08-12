@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
-import {strings} from '../locales/i18n';
+import colors from 'assets/colors';
+import {strings} from 'locales/i18n';
 
 class Disclaimer extends Component {
   render() {

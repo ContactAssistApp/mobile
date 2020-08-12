@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 
 const CheckBox = ({selected, onPress, text = '', ...props}) => (
   <TouchableOpacity style={styles.checkBox} onPress={onPress} {...props}>

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView} from 'react-native';
-import colors from '../assets/colors';
+import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
+import colors from 'assets/colors';
 import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import Modal from '../views/Modal';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import Modal from 'views/Modal';
 import ContactList from './ContactList';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
+import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 
 class People extends Component {
   constructor() {
@@ -22,43 +23,33 @@ class People extends Component {
   }
 
   componentDidMount() {
-    this.checkPermission()
-      .then(permission => {
-        if (permission === Contacts.PERMISSION_UNDEFINED) {
-          this.requestPermission();
-        } else if (permission === Contacts.PERMISSION_AUTHORIZED) {
+    const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
+    check(contactPermission)
+    .then(result => {
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          console.log(
+            'This feature is not available (on this device / in this context)',
+          );
+          break;
+        case RESULTS.DENIED:
+          console.log(
+            'The permission has not been requested / is denied but requestable',
+          );
+          request(contactPermission).then(() => {
+            this.loadContacts();
+          });
+          break;
+        case RESULTS.GRANTED:
+          console.log('The permission is granted');
           this.loadContacts();
-        } else if (permission === Contacts.PERMISSION_DENIED) {
-          return;
-        }
-      })
-      .catch(e => {
-        console.log('error in contacts: ' + e);
-      });
+          break;
+        case RESULTS.BLOCKED:
+          console.log('The permission is denied and not requestable anymore');
+          break;
+      }
+    });
   }
-
-  checkPermission = () => {
-    return new Promise((resolve, reject) => {
-      Contacts.checkPermission((err, permission) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(permission);
-      });
-    });
-  };
-
-  requestPermission = () => {
-    Contacts.requestPermission((err, permission) => {
-      if (err) {
-        console.log('error in contacts: ' + err);
-        return;
-      }
-      if (permission === Contacts.PERMISSION_AUTHORIZED) {
-        this.loadContacts();
-      }
-    });
-  };
 
   loadContacts = () => {
     Contacts.getAllWithoutPhotos((err, contacts) => {

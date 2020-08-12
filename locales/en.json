@@ -43,22 +43,35 @@
     "setting1": "Control your data storage",
     "setting1desc": "You maintain control over how long we store your data. Delete your data at any time.",
     "storyTitle1": "Welcome to CommonCircle Assist",
-    "storyTitle2": "Protect yourself",
+    "storyTitle2": "Stay informed",
     "storyTitle3": "Care for yourself",
     "storyTitle4": "Your Privacy",
     "story1": "CommonCircle Assist helps you protect yourself from risks and stay up to date on what’s happening near you, take care of yourself if you get sick, and record information that can help protect others if you get ill.",
     "story2": "Get notifications about locations near you where there’s a risk of COVID-19 exposure. You’ll also get critical alerts from your local health department, such as closures or cleanings of public spaces nearby.",
-    "story3": "Take care of yourself and others. Get self-care tips, connect with the appropriate public health guidance if you've experienced symptoms, and log locations you recently visited to protect others.",
-    "story4": "Any information you log in CommonCircle Assist is protected. Learn more about our approach on privacy in our FAQ.",
+    "story3": "Get tips on managing your symptoms, connect with a healthcare professional if they worsen, and report locations you visited recently to protect others.",
+    "story4_interpolated": {
+      "part1_normal": "Any information you log in ",
+      "part2_bold": "CommonCircle Assist",
+      "part3_normal": " is protected. Learn more about our approach on privacy in our ",
+      "part4_link": "FAQ",
+      "part5_normal": "."
+    },
     "startText": "Let's slow the spread of COVID-19 together.",
     "severity": "Severity",
     "edit": "Edit",
     "delete": "Delete",
-    "isolation1": "Anyone who has tested positive for COVID-19 should remain in isolation until no longer infectious. For more information, please contact your local healthcare professional.",
-    "isolation2": "Do not leave your home or recovery facility, except to receive medical care.",
-    "monitor1": "If you have symptoms like cough, fever, or other respiratory problems, contact your regular doctor first.",
-    "monitor2": "Do not go to the emergency room.",
-    "monitor3": "Emergency rooms need to be able to serve those with the most critical needs. If you have difficulty breathing, it doesn’t mean you have novel coronavirus, but you should call 911."
+    "language": "Language",
+    "english": "English",
+    "spanish": "Spanish"
+  },
+  "logging": {
+    "now_off": "Logging is now turned off."
+  },
+  "inter": {
+    "prep": "Interview Preparation"
+  },
+  "email": {
+    "subject": "CommonCircle Assist Contact Tracer Interview Information Packet"
   },
   "location": {
     "text": "Location",
@@ -69,11 +82,28 @@
     "unknown": "Unknown"
   },
   "public": {
-    "health": "Public Health - Seattle & King County"
+    "key_pkey": "public_key_pkey",
   },
   "broadcasting": {
-    "on_text": "Location logging on",
-    "off_text": "Location logging off"
+    "enabled_pkey": "broadcasting",
+    "location_logging": "Location logging",
+    "description_text": "Location data is being collected and saved locally to your phone."
+  },
+  "gps": {
+    "enabled_pkey": "gpsEnabled"
+  },
+  "ble": {
+    "enabled_pkey": "bleEnabled"
+  },
+  "onboard": {
+    "enabled_pkey": "prefs_onboard"
+  },
+  "notifs": {
+    "enabled_pkey": "prefs_notifs"
+  },
+  "most": {
+    "recent_seed_pkey": "most_recent_seed_pkey",
+    "recent_seed_timestamp_pkey": "most_recent_seed_timestamp_pkey"
   },
   "diagnosis": {
     "text": "Diagnosis"
@@ -92,7 +122,14 @@
     "text": "Terms and Conditions"
   },
   "emergency": {
-    "call_text": "Call 911 immediately if you are having a medical emergency."
+    "header": "When to Seek Emergency Medical Attention",
+    "description": "The CDC recommends looking for emergency warning signs* for COVID-19. If someone is showing any of these signs, seek emergency medical care immediately.",
+    "trouble_breathing": "Trouble breathing",
+    "chest_pain": "Persistent pain or pressure in the chest",
+    "new_confusion": "New confusion",
+    "stay_awake": "Inability to wake or stay awake",
+    "bluish_lips": "Bluish lips or face",
+    "note": "*This list does not include all possible symptoms. Please call your local health department about any other symptoms that are severe or concerning."
   },
   "fever": {
     "txt": "Fever"
@@ -103,7 +140,7 @@
   "bottom": {
     "sheet_menu_item_home": "Home",
     "sheet_menu_item_contact_log": "Contact Log",
-    "sheet_menu_item_health_report": "Health Report",
+    "sheet_menu_item_health_report": "Health",
     "sheet_menu_item_resources": "Resources"
   },
   "card": {
@@ -135,13 +172,14 @@
   "not": {
     "logged_text": "Not Logged"
   },
-  "prepare": {
-    "for_contact_tracer_interview": "Prepare for your contact tracer interview",
-    "for_interview_btn_text": "Prepare for your interview",
-    "for_contact_tracer_description_text": "During an interview, a public health official will collect a list of critical information to help identify those around you who may have been exposed."
+  "positive": {
+    "covid_report": "Positive COVID-19 Diagnosis Reported"
   },
-  "what": {
-    "to_do_if_you_are_sick": "What to do if you are sick"
+  "reported": {
+    "text": "Reported"
+  },
+  "submit": {
+    "your_report_button_text": "Submit your report"
   },
   "symptoms": {
     "text": "Symptoms",
@@ -226,8 +264,14 @@
     "description": "Export all data stored locally",
     "message": "Local data with all records collected by CommonCircle Assist"
   },
-  "monitor": {
-    "your_symptoms": "Monitor Your Symptoms"
+  "check": {
+    "box": "Please check the box to confirm this information is accurate."
+  },
+  "network": {
+    "down": "Network not available. Please try again."
+  },
+  "demo": {
+    "disabled": "This function is disabled in the demo version of the app."
   },
   "isolation": {
     "order": "Isolation order"
@@ -255,5 +299,48 @@
   },
   "narrowcast": {
     "alerts": "Local alerts"
+  },
+
+  "disclaimer": {
+    "title": "Disclaimer",
+    "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
+  },
+
+  "what_to_do_if_sick": {
+    "header": "What To Do If You Get Sick",
+    "stay_home_title": "Stay Home Except to Get Medical Care",
+    "stay_home_description": "Do not leave your home, except to get medical care. Do not visit public areas. If you need to leave, avoid public transportation.",
+    "isolate_title": "Isolate Yourself From Others",
+    "isolate_description": "As much as possible, stay home, and in a specific room away from other people and pets in your home.",
+    "monitor_title": "Monitor Your Symptoms",
+    "monitor_description": "Add new symptoms as soon as you experience them and keep an eye on concerning symptoms like trouble breathing.",
+  },
+
+  "care_tips_container": {
+    "cdc_link": "CDC guidance",
+    "cdc_info": "Information based on",
+  },
+
+  "care_tips": {
+    "header": "Self-Care Tips",
+    "hygiene_title": "Practice Good Hygiene",
+    "hygiene_description": "Wash your hands regularly for 20 seconds, cover your coughs and sneezes with your elbow, and refrain from touching your face.",
+    "mask_title": "Wear A Mask",
+    "mask_description": "Around others, you should wear a cloth face covering over your nose and mouth if you must be around other people or animals.",
+    "social_distance_title": "Practice Social Distancing",
+    "social_distance_description": "Keep space between you and others. Stay at least 6 feet (about 2 arms' length) apart, avoid group gatherings and crowded places."
+  },
+
+  "resources_component": {
+    "cdc_title": "CDC Guidance",
+    "cdc_description": "Learn about symptoms, what to do if you’re sick, healthcare options, and more.",
+    "king_county_title": "Public Health - Seattle & King County",
+    "king_county_description": "Get the latest guidance, information, and regulations for Seattle & King County."
+  },
+
+  "interview_prep": {
+    "title": "Your public health department will contact you for an interview",
+    "description": "During this interview, a healthcare professional will be collecting a list of information to help identify those around you who may have been exposed.",
+    "prepare_btn": "Prepare for Your Interview",
   }
 }

@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import SectionHeader from './SectionHeader';
-import Location from '../utils/location';
-import {strings} from '../locales/i18n';
+import Location from 'utils/location';
+import {strings} from 'locales/i18n';
 
 class LocationsList extends Component {
   constructor() {

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import TraceTool from './TraceTool';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import NotificationServices from '../services/NotificationServices';
-import {strings} from '../locales/i18n';
+import {GetStoreData, SetStoreData} from 'utils/asyncStorage';
+import NotificationServices from 'services/NotificationServices';
+import {strings} from 'locales/i18n';
 
 class Notification extends Component {
   constructor(props) {
