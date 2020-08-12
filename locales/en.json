@@ -425,7 +425,14 @@
   },
   "locations": {
     "text": "Locations",
-    "timeline_text": "Timeline"
+    "timeline_text": "Timeline",
+    "edit_location_header": "Edit Location",
+    "name": "Name*",
+    "address": "Address",
+    "label": "Label",
+    "start": "Start time",
+    "end": "End time",
+    "notes": "Notes",
   },
   "people": {
     "text": "People",
