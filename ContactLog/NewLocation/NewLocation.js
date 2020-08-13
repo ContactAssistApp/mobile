@@ -27,6 +27,12 @@ class NewLocation extends Component {
     }
   };
 
+  handleCallback = () => {
+    this.props.editLocation({
+      enableSave: true,
+    });
+  };
+
   render() {
     const {
       newLocationData: {name, address},
@@ -38,12 +44,14 @@ class NewLocation extends Component {
           icon={'building24'}
           name={strings('locations.name')}
           value={name}
+          handleCallback={this.handleCallback}
         />
 
         <LocationField
           icon={'location24'}
           name={strings('locations.address')}
           value={address}
+          handleCallback={this.handleCallback}
         />
       </>
     );

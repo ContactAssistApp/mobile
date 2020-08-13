@@ -5,6 +5,9 @@ import {StyleSheet, Text, ScrollView} from 'react-native';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
 import {strings, fmt_date} from 'locales/i18n';
 import {updateLocationData} from './actions.js';
+import Modal from 'views/Modal';
+import NewLocation from 'ContactLog/NewLocation/NewLocation';
+import Save from '../NewLocation/Save';
 import Disclaimer from 'Privacy/Disclaimer';
 import Import from './Import';
 import ImportGoogleTimeline from 'GoogleTimeline/ImportGoogleTimeline';
@@ -54,8 +57,19 @@ class LocationsContainer extends Component {
 
   render() {
     const {
-      contactLocationData: {date, addresses, openImportModal},
+      contactLocationData: {
+        date,
+        addresses,
+        openImportModal,
+        openLocationModal,
+        selectedTime,
+      },
     } = this.props;
+    const saveButton = <Save />;
+
+    if (openImportModal && openLocationModal) {
+      return null;
+    }
 
     return (
       <ScrollView>
@@ -72,6 +86,20 @@ class LocationsContainer extends Component {
             this.fetchAddresses(date);
           }}
         />
+
+        <Modal
+          visible={openLocationModal}
+          handleModalClose={() => {
+            this.props.updateLocationData({
+              openLocationModal: false,
+            });
+          }}
+          useScrollView={false}
+          title={strings('locations.edit_location_header')}
+          actionButton={saveButton}>
+          <NewLocation time={selectedTime} />
+        </Modal>
+
         {addresses && addresses.length > 0 ? (
           <>
             <Text style={styles.date}>

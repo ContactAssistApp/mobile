@@ -7,6 +7,9 @@ const Input = props => {
   const [value, onChangeText] = React.useState(initValue);
   React.useEffect(() => {
     onChangeText(initValue);
+    if (props.handleCallback && initValue !== value) {
+      props.handleCallback();
+    }
   }, [initValue]);
 
   return (

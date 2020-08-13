@@ -5,6 +5,7 @@ const initialState = {
   openLocationModal: false,
   imported: false,
   isImporting: false,
+  selectedTime: 0,
 };
 
 const contactLocationReducer = (state = initialState, action) => {

@@ -433,6 +433,7 @@
     "start": "Start time",
     "end": "End time",
     "notes": "Notes",
+    "save_button": "Save"
   },
   "people": {
     "text": "People",

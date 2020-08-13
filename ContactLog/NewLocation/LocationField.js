@@ -19,7 +19,11 @@ class LocationField extends Component {
         ) : (
           <View style={styles.empty_cell} />
         )}
-        <Input name={name} value={value} />
+        <Input
+          name={name}
+          value={value}
+          handleCallback={this.props.handleCallback}
+        />
       </View>
     );
   }

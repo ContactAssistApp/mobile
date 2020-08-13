@@ -12,10 +12,10 @@ class List extends Component {
 
     return (
       <>
-        {addresses.map((item, idx) => {
+        {addresses.map(item => {
           const {name, address, timerange, time} = item;
           return (
-            <View style={styles.address_card} key={idx}>
+            <View style={styles.address_card} key={time}>
               <View style={styles.address_content}>
                 <Text style={styles.name}>{name}</Text>
                 {address !== '' && (

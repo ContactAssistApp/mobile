@@ -7,8 +7,6 @@ import {deleteLocation} from 'realm/realmLocationTasks';
 import {strings} from 'locales/i18n';
 import {updateLocationData} from './actions.js';
 import CustomIcon from 'assets/icons/CustomIcon.js';
-import Modal from 'views/Modal';
-import NewLocation from 'ContactLog/NewLocation/NewLocation';
 import PropTypes from 'prop-types';
 import colors from 'assets/colors';
 
@@ -28,7 +26,10 @@ class Actions extends Component {
       },
       buttonIndex => {
         if (buttonIndex === 1) {
-          this.props.updateLocationData({openLocationModal: true});
+          this.props.updateLocationData({
+            selectedTime: time,
+            openLocationModal: true,
+          });
         } else if (buttonIndex === 2) {
           if (time) {
             deleteLocation(time);
@@ -40,24 +41,8 @@ class Actions extends Component {
   };
 
   render() {
-    const {
-      contactLocationData: {openLocationModal},
-      time,
-    } = this.props;
-
     return (
       <>
-        <Modal
-          visible={openLocationModal}
-          handleModalClose={() => {
-            this.props.updateLocationData({
-              openLocationModal: false,
-            });
-          }}
-          useScrollView={false}
-          title={strings('locations.edit_location_header')}>
-          <NewLocation time={time} />
-        </Modal>
         <TouchableOpacity
           style={styles.action_button}
           onPress={() => this.handleAction()}>
