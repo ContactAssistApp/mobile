@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {editLocation} from './actions.js';
+import {editLocation, resetLocation} from './actions.js';
 import {getLocationsWithTs} from 'realm/realmLocationTasks';
 import {strings} from 'locales/i18n';
 import LocationField from './LocationField';
@@ -11,6 +11,10 @@ class NewLocation extends Component {
   componentDidMount() {
     const {time} = this.props;
     this.fetchLocation(time);
+  }
+
+  componentWillUnmount() {
+    this.props.resetLocation();
   }
 
   fetchLocation = async time => {
@@ -50,6 +54,7 @@ class NewLocation extends Component {
 
 NewLocation.propTypes = {
   editLocation: PropTypes.func.isRequired,
+  resetLocation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -60,6 +65,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   editLocation,
+  resetLocation,
 }, dispatch);
 
 export default connect(

@@ -19,6 +19,8 @@ const newLocationReducer = (state = initialState, action) => {
       });
       return state;
 
+    case 'RESET_LOCATION_DATA':
+      return initialState;
     default:
       return state;
   }

@@ -4,3 +4,9 @@ export function editLocation(payload) {
     payload,
   };
 }
+
+export function resetLocation() {
+  return {
+    type: 'RESET_LOCATION_DATA',
+  };
+}

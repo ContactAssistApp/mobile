@@ -5,6 +5,9 @@ import colors from 'assets/colors';
 const Input = props => {
   const {name, value: initValue} = props;
   const [value, onChangeText] = React.useState(initValue);
+  React.useEffect(() => {
+    onChangeText(initValue);
+  }, [initValue]);
 
   return (
     <TextInput
