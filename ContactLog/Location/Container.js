@@ -65,7 +65,20 @@ class LocationsContainer extends Component {
         selectedTime,
       },
     } = this.props;
-    const saveButton = <Save />;
+    const saveButton = (
+      <Save
+        selectedTime={selectedTime}
+        handleSaveSuccess={() => {
+          Promise.resolve(
+            this.props.updateLocationData({
+              openLocationModal: false,
+            }),
+          ).then(() => {
+            this.fetchAddresses();
+          });
+        }}
+      />
+    );
 
     if (openImportModal && openLocationModal) {
       return null;

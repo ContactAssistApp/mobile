@@ -6,7 +6,7 @@ import Input from 'views/Input';
 
 class LocationField extends Component {
   render() {
-    const {icon, name, value} = this.props;
+    const {icon, name, field, value} = this.props;
     return (
       <View style={styles.row}>
         {icon ? (
@@ -22,6 +22,7 @@ class LocationField extends Component {
         <Input
           name={name}
           value={value}
+          field={field}
           handleCallback={this.props.handleCallback}
         />
       </View>

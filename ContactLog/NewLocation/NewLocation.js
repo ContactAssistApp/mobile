@@ -27,10 +27,18 @@ class NewLocation extends Component {
     }
   };
 
-  handleCallback = () => {
-    this.props.editLocation({
-      enableSave: true,
-    });
+  handleCallback = (field, initVal, val) => {
+    if (initVal === val) {
+      this.props.editLocation({
+        [field]: val,
+        enableSave: false,
+      });
+    } else {
+      this.props.editLocation({
+        [field]: val,
+        enableSave: true,
+      });
+    }
   };
 
   render() {
@@ -45,6 +53,7 @@ class NewLocation extends Component {
           name={strings('locations.name')}
           value={name}
           handleCallback={this.handleCallback}
+          field={'name'}
         />
 
         <LocationField
@@ -52,6 +61,7 @@ class NewLocation extends Component {
           name={strings('locations.address')}
           value={address}
           handleCallback={this.handleCallback}
+          field={'address'}
         />
       </>
     );

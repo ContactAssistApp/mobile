@@ -433,7 +433,9 @@
     "start": "Start time",
     "end": "End time",
     "notes": "Notes",
-    "save_button": "Save"
+    "save_button": "Save",
+    "required_field_alert": "Please fill in required (*) information to save.",
+    "alert_dismiss_button": "Dismiss",
   },
   "people": {
     "text": "People",

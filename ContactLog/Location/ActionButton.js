@@ -34,8 +34,8 @@ class Actions extends Component {
           if (time) {
             deleteLocation(time);
           }
+          this.props.refreshLocations();
         }
-        this.props.refreshLocations();
       },
     );
   };
