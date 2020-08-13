@@ -66,16 +66,10 @@ export async function getLocations(endDateTime, timeRange) {
   return locations;
 }
 
-export async function getLocationsWithTs(start, end) {
+export async function getLocationsWithTs(time) {
   const realm = await RealmObj.init();
-  const allLocations = realm.objects('Location');
-  let locations = allLocations.filtered(
-    'time >= $0 && time <= $1 SORT(time ASC)',
-    start,
-    end,
-  );
-
-  return locations;
+  const location = realm.objectForPrimaryKey('Location', time);
+  return location;
 }
 
 export async function deleteLocation(time) {

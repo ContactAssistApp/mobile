@@ -42,6 +42,7 @@ class Actions extends Component {
   render() {
     const {
       contactLocationData: {openLocationModal},
+      time,
     } = this.props;
 
     return (
@@ -55,7 +56,7 @@ class Actions extends Component {
           }}
           useScrollView={false}
           title={strings('locations.edit_location_header')}>
-          <NewLocation />
+          <NewLocation time={time} />
         </Modal>
         <TouchableOpacity
           style={styles.action_button}
