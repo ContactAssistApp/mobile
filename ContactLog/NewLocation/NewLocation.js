@@ -45,8 +45,6 @@ class NewLocation extends Component {
           name={strings('locations.address')}
           value={address}
         />
-        <LocationField icon={'clock24'} name={strings('locations.start')} />
-        <LocationField name={strings('locations.end')} />
       </>
     );
   }
