@@ -79,7 +79,6 @@ class ContactList extends Component {
             style={styles.save}
             onPress={() => {
               this.saveSelectedContacts(selectedContacts);
-              // SetStoreData('CONTACTS', selectedContacts);
               this.props.handleModalClose();
             }}>
             <Text style={styles.save_text}>{strings("save.text")}</Text>

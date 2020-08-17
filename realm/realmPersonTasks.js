@@ -6,7 +6,7 @@ export async function addPerson(person) {
     const realm = await RealmObj.init();
     realm.write(() => {
       realm.create('Person',
-        {...person, timespan: ''},
+        {...person},
         true,
       );
     });
@@ -30,12 +30,4 @@ export async function getContactsByDate(endDateTime, timeRange) {
     endDateTime.getTime(),
   );
   return Persons;
-}
-
-export async function getPersonsWithTs(start, end) {
-
-}
-
-export async function deletePerson(address) {
-
 }
