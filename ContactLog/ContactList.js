@@ -10,91 +10,13 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {SetStoreData} from '../utils/asyncStorage';
 import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
-import Person from '../utils/person';
-import Contacts from 'react-native-contacts';
 
 class ContactList extends Component {
-  componentDidMount() {
-    const { date } = this.props;
-    this.fetchSelectedContactsByDate(date);
-    this.fetchAllContacts();
-  }
-
-  fetchSelectedContactsByDate = async (date) => {
-    const persons = await Person.fetchContactsByDate(
-      new Date(date.replace(/-/g, '/')),
-    );
-    this.props.updateContactLog({
-      field: 'selectedContacts',
-      value: persons,
-    });
-  }
-
-  fetchAllContacts = () => {
-    const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
-    check(contactPermission)
-    .then((result) => {
-        switch (result) {
-          case RESULTS.UNAVAILABLE:
-            console.log(
-              'This feature is not available (on this device / in this context)',
-            );
-            break;
-          case RESULTS.DENIED:
-            console.log(
-              'The permission has not been requested / is denied but requestable',
-            );
-            request(contactPermission).then((result) => {
-              this.loadContacts();
-          })
-            break;
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            this.loadContacts();
-            break;
-          case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
-            break;
-        }
-      }
-    )
-  }
-
-  loadContacts = () => {
-    Contacts.getAllWithoutPhotos((err, contacts) => {
-      if (err) {
-        console.log('getting contact error: ', err);
-        return;
-      }
-
-      const contactList = contacts.map(contact => {
-        return {
-          id: contact.recordID,
-          name: `${contact.givenName} ${contact.familyName}`,
-        };
-      })
-      .sort(function(a, b) {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        } else if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-      this.props.updateContactLog({
-        field: 'allContacts',
-        value: contactList,
-      });
-    });
-  };
-
   selectContact = contact => {
     let {
       contactLogData: {selectedContacts},
     } = this.props;
+    selectedContacts = Array.from(selectedContacts);
 
     const index = selectedContacts.findIndex(item => item.id === contact.id);
     if (index !== -1) {
@@ -114,6 +36,10 @@ class ContactList extends Component {
   saveSelectedContacts = (selectedContacts) => {
     const { date } = this.props;
     selectedContacts.forEach((selectContact) => {
+      if (this.props.contactLogData.selectedContacts.includes(selectContact)) {
+        // To avoid saving 2 times
+        return;
+      }
       Person.savePerson({
         time: new Date(date.replace(/-/g, '/')).getTime(),
         ...selectContact

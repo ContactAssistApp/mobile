@@ -5,8 +5,31 @@ import colors from '../assets/colors';
 import SelectedContacts from '../ContactLog/SelectedContacts';
 import SectionHeader from './SectionHeader';
 import {strings} from '../locales/i18n';
+import Person from '../utils/person';
+import Contacts from 'react-native-contacts';
 
 class People extends Component {
+  constructor() {
+    super();
+    this.state = {
+      selectedContacts: []
+    };
+  }
+
+  componentDidMount() {
+    const TIME_RANGE = 14;
+    let today = new Date().toString();
+    this.fetchSelectedContactsByDate(today, TIME_RANGE);
+  }
+
+  fetchSelectedContactsByDate = async (date, timerange) => {
+    const selectedContacts = await Person.fetchContactsByDate(
+      new Date(date.replace(/-/g, '/')),
+      timerange
+    );
+    this.setState({ selectedContacts });
+  }
+
   render() {
     return (
       <>
@@ -25,7 +48,7 @@ class People extends Component {
           </Text>
         </View>
         <SectionHeader header={strings('people.text')} />
-        <SelectedContacts />
+        <SelectedContacts selectedContacts={this.state.selectedContacts}/>
       </>
     );
   }

@@ -12,7 +12,7 @@ import {strings} from '../locales/i18n';
 class SelectedContacts extends Component {
   render() {
     const {
-      contactLogData: {selectedContacts},
+      selectedContacts
     } = this.props;
 
     return (
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 });
 
 ContactList.propTypes = {
+  selectedContacts: PropTypes.array.isRequired,
   updateContactLog: PropTypes.func.isRequired,
 };
 
@@ -68,7 +69,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateContactLog
+  
 }, dispatch);
 
 export default connect(
