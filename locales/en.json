@@ -434,7 +434,6 @@
   "people": {
     "text": "People",
     "you_have_been_in_contact_last_14_days": "People you\u2019ve been in direct contact with over the last 14 days",
-    "txt": "People",
     "contacts_permission": "Enable Contacts Access",
     "contacts_permission_long": "Please go to phone settings to enable contacts permission for this application"
   },

@@ -24,6 +24,19 @@ class People extends Component {
     };
   }
 
+  componentDidMount() {
+    const { date } = this.props;
+    this.fetchSelectedContactsByDate(date);
+    this.fetchAllContacts();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { date } = this.props;
+    if (prevProps.date !== date) {
+      this.fetchSelectedContactsByDate(date);
+    }
+  }
+
   fetchSelectedContactsByDate = async (date) => {
     const persons = await Person.fetchContactsByDate(
       new Date(date.replace(/-/g, '/')),
@@ -63,19 +76,6 @@ class People extends Component {
         }
       }
     )
-  }
-
-  componentDidMount() {
-    const { date } = this.props;
-    this.fetchSelectedContactsByDate(date);
-    this.fetchAllContacts();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { date } = this.props;
-    if (prevProps.date !== date) {
-      this.fetchSelectedContactsByDate(date);
-    }
   }
 
   loadContacts = () => {
@@ -120,22 +120,6 @@ class People extends Component {
     });
   };
 
-  enableContactPermission = () => {
-    Alert.alert(
-      strings('people.contacts_permission'),
-      strings('people.contacts_permission_long'),
-      [
-        {
-          text: "Cancel",
-          onPress: () => {},
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => {} }
-      ],
-      { cancelable: false }
-    );
-  }
-
   render() {
     return (
       <>
@@ -157,14 +141,6 @@ class People extends Component {
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
         </TouchableOpacity>
-        {
-          !this.state.contactAccessIsAllowed && 
-            <TouchableOpacity onPress={this.enableContactPermission} style={styles.enable_permission_button}>
-              <Text>
-                {strings('people.contacts_permission')}
-              </Text>        
-            </TouchableOpacity>
-        }
       </>
     );
   }
