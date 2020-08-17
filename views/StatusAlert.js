@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import {StyleSheet, Text, View} from 'react-native';
 
 class StatusAlert extends Component {

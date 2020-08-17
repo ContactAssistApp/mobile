@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import colors from '../assets/colors';
-import {strings} from '../locales/i18n';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
+import {strings} from 'locales/i18n';
 import DeleteDataModal from './DeleteDataModal';
 
 class DataStorage extends Component {

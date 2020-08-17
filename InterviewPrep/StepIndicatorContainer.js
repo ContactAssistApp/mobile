@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 import colors from '../assets/colors';
 import StepIndicator from './StepIndicator';
-import { strings } from '../locales/i18n';
+import {strings} from '../locales/i18n';
 
 class StepIndicatorContainer extends Component {
   render() {

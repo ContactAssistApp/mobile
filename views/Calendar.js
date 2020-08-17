@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {WeekCalendar, CalendarList} from 'react-native-calendars';
 import {View, StyleSheet, Text} from 'react-native';
-import colors from '../assets/colors';
-import DateConverter from '../utils/date';
+import colors from 'assets/colors';
+import DateConverter from 'utils/date';
 import moment from 'moment';
 
 class Calendar extends Component {
   render() {
     let {markedDates, weekView, current} = this.props;
+    let weekViewClass = this.props.children
+      ? styles.week_view_with_border
+      : styles.week_view_no_border;
     const maxDate = DateConverter.calendarFormat(new Date());
 
     Object.entries(markedDates).forEach(([key, options]) => {
@@ -55,7 +58,7 @@ class Calendar extends Component {
               onDayPress={day => {
                 this.props.handleDayPress(day);
               }}
-              style={styles.week_calendar}
+              style={weekViewClass}
             />
           </>
         ) : (
@@ -95,10 +98,13 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: colors.body_copy,
   },
-  week_calendar: {
-    paddingBottom: 2,
+  week_view_with_border: {
+    paddingBottom: 4,
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
+  },
+  week_view_no_border: {
+    paddingBottom: 2,
   },
 });
 

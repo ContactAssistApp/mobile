@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {GetStoreData} from '../utils/asyncStorage';
+import {GetStoreData} from 'utils/asyncStorage';
 import FTUE from './OnBoarding/FTUE';
 import NotificationsOptIn from './OnBoarding/NotificationsOptIn';
 import LocationOptIn from './OnBoarding/LocationOptIn';
@@ -11,13 +11,13 @@ import LocationHistoryOptIn from './OnBoarding/LocationHistoryOptIn';
 import AnalyticsOptIn from './OnBoarding/AnalyticsOptIn';
 import ThankYou from './OnBoarding/ThankYou';
 import BottomNav from './BottomNav';
-import SymptomForm from '../SymptomTracker/SymptomForm';
-import colors from '../assets/colors';
+import SymptomForm from 'SymptomTracker/SymptomForm';
+import colors from 'assets/colors';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updateFTUE} from './actions.js';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 const Stack = createStackNavigator();
 

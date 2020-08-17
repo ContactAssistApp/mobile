@@ -1,4 +1,4 @@
-import DateConverter from '../utils/date';
+import DateConverter from 'utils/date';
 import RealmObj from './realm';
 
 export async function addLocation(location) {
@@ -66,26 +66,18 @@ export async function getLocations(endDateTime, timeRange) {
   return locations;
 }
 
-export async function getLocationsWithTs(start, end) {
+export async function getLocationsWithTs(time) {
   const realm = await RealmObj.init();
-  const allLocations = realm.objects('Location');
-  let locations = allLocations.filtered(
-    'time >= $0 && time <= $1 SORT(time ASC)',
-    start,
-    end,
-  );
-
-  return locations;
+  const location = realm.objectForPrimaryKey('Location', time);
+  return location;
 }
 
-export async function deleteLocation(address) {
+export async function deleteLocation(time) {
   try {
     const realm = await RealmObj.init();
-    const locations = realm
-      .objects('Location')
-      .filtered('address == $0', address);
+    const location = realm.objects('Location').filtered('time == $0', time);
     realm.write(() => {
-      realm.delete(locations);
+      realm.delete(location);
     });
   } catch (err) {
     console.log('delete location error: ', err);

@@ -9,10 +9,10 @@ import {
   View,
   Linking,
 } from 'react-native';
-import {SetStoreData} from '../../utils/asyncStorage';
-import colors from '../../assets/colors.js';
-import {strings} from '../../locales/i18n';
-import {PRIVACY_FAQ_URL} from '../../utils/constants';
+import {SetStoreData} from 'utils/asyncStorage';
+import colors from 'assets/colors.js';
+import {strings} from 'locales/i18n';
+import {PRIVACY_FAQ_URL} from 'utils/constants';
 
 class FTUE extends Component {
   renderItem = ({item}) => (

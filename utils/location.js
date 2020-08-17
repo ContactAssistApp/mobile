@@ -1,10 +1,9 @@
 import {NativeModules} from 'react-native';
 import {getLocations} from '../realm/realmLocationTasks';
-import { appendFile } from 'react-native-fs';
-import { fmt_date } from '../locales/i18n'
+import {fmt_date} from 'locales/i18n';
 
 //minimum accuracy of a location for us to care for
-const MIN_ACCURACY = 100
+const MIN_ACCURACY = 100;
 
 function distance(lat1, lon1, lat2, lon2) {
   if (lat1 === lat2 && lon1 === lon2) {
@@ -33,7 +32,6 @@ const Location = {
   },
   fetchAddresses: async function(dateObj, dayRange = 0) {
     const locations = await getLocations(dateObj, dayRange);
-
     let final_locs = []
     let appendLoc = function(loc) {
       let cand = final_locs[final_locs.length - 1]
@@ -82,12 +80,13 @@ const Location = {
           locs: [ [loc.address, loc.name, 1] ],
           timespan: loc.timespan,
           source: loc.source,
+          time: loc.time,
         });
       }
     });
 
     return final_locs.map(location => {
-      const {locs, startTime, endTime, timespan, source} = location;
+      const {locs, startTime, endTime, timespan, source, time} = location;
 
       //find address
       let addr = null;
@@ -113,6 +112,7 @@ const Location = {
         address: addr[0],
         name: addr[1],
         timerange: range,
+        time,
       }
     });
   },

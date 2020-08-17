@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
-import {strings} from '../locales/i18n';
+import colors from 'assets/colors';
+import {strings} from 'locales/i18n';
 
 class Privacy extends Component {
   render() {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: colors.fill_off,
     marginHorizontal: 25,
-    marginTop: 8,
+    marginTop: 20,
     marginBottom: 40,
     padding: 15,
   },

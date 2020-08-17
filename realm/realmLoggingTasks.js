@@ -1,5 +1,5 @@
 import RealmObj from './realm';
-import DateConverter from '../utils/date';
+import DateConverter from 'utils/date';
 
 export async function addBackgroundLog(logLine) {
   var time = DateConverter.getUTCUnixTime();

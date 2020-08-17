@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView, Platform } from 'react-native';
-import colors from '../assets/colors';
+import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
+import colors from 'assets/colors';
 import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import Modal from '../views/Modal';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import Modal from 'views/Modal';
 import ContactList from './ContactList';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check, RESULTS } from 'react-native-permissions';
+import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 
 class People extends Component {
   constructor() {
@@ -25,7 +25,7 @@ class People extends Component {
   componentDidMount() {
     const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
     check(contactPermission)
-    .then((result) => {
+    .then(result => {
       switch (result) {
         case RESULTS.UNAVAILABLE:
           console.log(
@@ -36,9 +36,9 @@ class People extends Component {
           console.log(
             'The permission has not been requested / is denied but requestable',
           );
-          request(contactPermission).then((result) => {
+          request(contactPermission).then(() => {
             this.loadContacts();
-        })
+          });
           break;
         case RESULTS.GRANTED:
           console.log('The permission is granted');
@@ -48,7 +48,7 @@ class People extends Component {
           console.log('The permission is denied and not requestable anymore');
           break;
       }
-    })
+    });
   }
 
   loadContacts = () => {

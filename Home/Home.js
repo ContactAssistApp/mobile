@@ -1,33 +1,34 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import BackgroundFetch from 'react-native-background-fetch';
-import LocationServices from '../services/LocationServices';
+import LocationServices from 'services/LocationServices';
 import Notification from './Notification';
-import Toggle from '../views/Toggle';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
+import Toggle from 'views/Toggle';
+import Header from 'views/Header';
 import {
   RefreshControl,
   SafeAreaView,
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
-  Linking,
 } from 'react-native';
 import {GET_MESSAGE_LIST_URL, FETCH_MESSAGE_INFO_URL} from '../utils/endpoints';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import {getLatestCoarseLocation} from '../utils/coarseLocation';
-import Location from '../utils/location';
-import SymptomTracker from '../SymptomTracker/SymptomTracker';
-import SettingsModal from '../Settings/SettingsModal';
-import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import Privacy from '../Privacy/Privacy';
+import {GetStoreData, SetStoreData} from 'utils/asyncStorage';
+import {getLatestCoarseLocation} from 'utils/coarseLocation';
+import Location from 'utils/location';
+import SymptomTracker from 'SymptomTracker/SymptomTracker';
+import SettingsModal from 'Settings/SettingsModal';
+import ResourcesComponent from 'ResourcesComponent/ResourcesComponent';
+import PrepareInterviewComponent from 'InterviewPrep/PrepareInterviewComponent';
+import Privacy from 'Privacy/Privacy';
 import PushNotification from 'react-native-push-notification';
-import {strings} from '../locales/i18n';
-import {addAreas} from '../realm/realmAreaMatchesTasks';
-import {addBackgroundLog} from '../realm/realmLoggingTasks';
-import DateConverter from '../utils/date';
+import {strings} from 'locales/i18n';
+import {addAreas} from 'realm/realmAreaMatchesTasks';
+import {addBackgroundLog} from 'realm/realmLoggingTasks';
+import DateConverter from 'utils/date';
+import CareTips from 'CareTips/CareTips';
 
 class Home extends Component {
   constructor() {
@@ -47,7 +48,7 @@ class Home extends Component {
       {minimumFetchInterval: 15}, // <-- minutes (15 is minimum allowed)
       async taskId => {
         console.log('[js] Received background-fetch event: ', taskId);
-        addBackgroundLog('Narrowcast background fetch',);
+        addBackgroundLog('Narrowcast background fetch');
         this.processQueries();
         BackgroundFetch.finish(taskId);
       },
@@ -239,9 +240,6 @@ class Home extends Component {
 
   render() {
     const isBroadcasting = this.state.location;
-    const broadcastStatus = isBroadcasting
-      ? strings('broadcasting.on_text')
-      : strings('broadcasting.off_text');
     const broadcastBg = isBroadcasting
       ? styles.broadcast_on
       : styles.broadcast_off;
@@ -258,20 +256,14 @@ class Home extends Component {
           }>
           <View style={styles.status_container}>
             <View style={styles.status_header}>
-              <View style={styles.title_container}>
-                <Image
-                  style={styles.logo}
-                  source={require('../assets/home/logo.png')}
-                />
-                <Text style={styles.title}>{strings('app.name_one_line')}</Text>
-              </View>
+              <Header title={strings('app.name_one_line')} />
               <SettingsModal />
             </View>
             <View style={[styles.broadcast_container, broadcastBg]}>
               <View style={styles.broadcast}>
                 <View style={styles.broadcast_content}>
                   <Text style={styles.broadcast_title}>
-                    {`${broadcastStatus}`}
+                    {strings('broadcasting.location_logging')}
                   </Text>
                   <Text style={styles.broadcast_description}>
                     {isBroadcasting
@@ -294,9 +286,32 @@ class Home extends Component {
             <Notification notifications={this.state.notifications} />
           )}
 
+          <PrepareInterviewComponent />
+
           <SymptomTracker
             navigate={this.props.navigation.navigate}
             date={new Date()}
+          />
+
+          <CareTips
+            header={strings('care_tips.header')}
+            tips={[
+              {
+                icon: 'accessibility24',
+                title: strings('care_tips.hygiene_title'),
+                content: strings('care_tips.hygiene_description'),
+              },
+              {
+                icon: 'mask24',
+                title: strings('care_tips.mask_title'),
+                content: strings('care_tips.mask_description'),
+              },
+              {
+                icon: 'social_distancing24',
+                title: strings('care_tips.social_distance_title'),
+                content: strings('care_tips.social_distance_description'),
+              },
+            ]}
           />
 
           <ResourcesComponent />
@@ -313,34 +328,24 @@ const styles = StyleSheet.create({
   },
   status_container: {
     backgroundColor: 'white',
-    padding: 10,
   },
   logo: {
     width: 24,
     height: 24,
-    marginRight: 5,
-  },
-  title: {
-    color: colors.section_title,
-    fontSize: 24,
-    fontWeight: '500',
-  },
-  title_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    marginRight: 10,
   },
   status_header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   broadcast_container: {
     paddingVertical: 20,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginVertical: 16,
-    marginHorizontal: 6,
+    marginBottom: 26,
+    marginHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
@@ -353,59 +358,11 @@ const styles = StyleSheet.create({
   },
   broadcast_title: {
     color: colors.module_title,
-    fontWeight: '600',
-    fontSize: 22,
+    fontSize: 20,
     lineHeight: 26,
-    letterSpacing: 0.35,
-    paddingBottom: 10,
+    paddingBottom: 6,
   },
   broadcast_description: {
-    fontSize: 15,
-    lineHeight: 20,
-    letterSpacing: -0.24,
-    color: colors.secondary_body_copy,
-  },
-  resources_container: {
-    backgroundColor: 'white',
-    height: '100%',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    marginTop: 20,
-    marginHorizontal: 10,
-  },
-  resources_header: {
-    fontWeight: '600',
-    fontSize: 22,
-    lineHeight: 26,
-    letterSpacing: 0.35,
-    color: colors.module_title,
-  },
-  resource: {
-    paddingHorizontal: 15,
-    paddingVertical: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontWeight: '600',
-    fontSize: 17,
-    lineHeight: 22,
-    letterSpacing: -0.408,
-    color: colors.module_title,
-  },
-  resource_logo: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
-  resource_title: {
-    fontSize: 17,
-    lineHeight: 22,
-    fontWeight: '600',
-    letterSpacing: -0.408,
-    color: colors.module_title,
-  },
-  resource_description: {
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,

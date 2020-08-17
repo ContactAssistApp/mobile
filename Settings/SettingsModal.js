@@ -5,13 +5,13 @@ import DataStorage from './DataStorage';
 import Import from './Import';
 import Export from './Export';
 import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import colors from '../assets/colors';
-import Modal from '../views/Modal';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
+import Modal from 'views/Modal';
 import SettingLink from './SettingLink';
 import AnalyticsOptIn from './AnalyticsOptIn';
-import {UW_URL} from '../utils/constants.js';
-import {strings} from '../locales/i18n';
+import {UW_URL} from 'utils/constants.js';
+import {strings} from 'locales/i18n';
 
 class SettingsModal extends Component {
   constructor() {

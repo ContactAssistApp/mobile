@@ -1,25 +1,19 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import colors from '../assets/colors';
-import Locations from './Locations';
+import {SafeAreaView, View, StyleSheet, TouchableOpacity} from 'react-native';
+import colors from 'assets/colors';
+import Locations from './Location/Container';
 import People from './People';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import Calendar from '../views/Calendar';
-import TabView from '../views/TabView';
-import DateConverter from '../utils/date';
-import {getDaysWithLocations} from '../realm/realmLocationTasks';
-import {strings} from '../locales/i18n';
+import Calendar from 'views/Calendar';
+import TabView from 'views/TabView';
+import Header from 'views/Header';
+import DateConverter from 'utils/date';
+import {getDaysWithLocations} from 'realm/realmLocationTasks';
+import {strings} from 'locales/i18n';
 
 class ContactLog extends Component {
   constructor() {
@@ -55,17 +49,12 @@ class ContactLog extends Component {
   };
 
   render() {
+    const {date, weekView, markedDates} = this.state;
     return (
       <>
         <SafeAreaView style={styles.status_bar} />
         <View style={styles.header}>
-          <View style={styles.title_container}>
-            <Image
-              style={styles.logo}
-              source={require('../assets/home/logo.png')}
-            />
-            <Text style={styles.title}>{strings("bottom.sheet_menu_item_contact_log")}</Text>
-          </View>
+          <Header title={strings('bottom.sheet_menu_item_contact_log')} />
           <TouchableOpacity
             style={styles.calendar_button}
             onPress={() => {
@@ -73,28 +62,23 @@ class ContactLog extends Component {
             }}>
             <CustomIcon
               name={'calendar24'}
-              color={
-                !this.state.weekView ? colors.primary_theme : colors.gray_icon
-              }
+              color={!weekView ? colors.primary_theme : colors.gray_icon}
               size={24}
             />
           </TouchableOpacity>
         </View>
         <Calendar
-          current={this.state.date}
-          markedDates={this.state.markedDates}
+          current={date}
+          markedDates={markedDates}
           handleDayPress={day => {
             this.setState({
               date: day.dateString,
               weekView: true,
             });
           }}
-          weekView={this.state.weekView}>
+          weekView={weekView}>
           <TabView>
-            <Locations
-              tabLabel={strings('locations.text')}
-              date={this.state.date}
-            />
+            <Locations tabLabel={strings('locations.text')} date={date} />
             <People tabLabel={strings('people.text')} />
           </TabView>
         </Calendar>
@@ -110,25 +94,11 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
     justifyContent: 'space-between',
-  },
-  title_container: {
-    flexDirection: 'row',
     alignItems: 'center',
-  },
-  logo: {
-    width: 24,
-    height: 24,
-    marginRight: 5,
-  },
-  title: {
-    fontSize: 24,
-    color: colors.section_title,
-    fontWeight: '500',
   },
 });
 

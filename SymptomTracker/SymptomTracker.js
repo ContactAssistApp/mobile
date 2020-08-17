@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Record from './Record';
 import PropTypes from 'prop-types';
 import {updateSymptom, resetSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import DateConverter from '../utils/date';
-import {strings, fmt_date} from '../locales/i18n';
-import {getSymptoms} from '../realm/realmSymptomsTasks';
+import DateConverter from 'utils/date';
+import {strings, fmt_date} from 'locales/i18n';
+import {getSymptoms} from 'realm/realmSymptomsTasks';
 
 class SymptomTracker extends Component {
   componentDidMount() {
@@ -83,15 +83,15 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 15,
     borderRadius: 20,
-    margin: 16,
-    marginBottom: 8,
+    marginHorizontal: 20,
+    marginTop: 20,
   },
   header_container: {
     marginBottom: 20,
   },
   header: {
-    fontSize: 20,
-    lineHeight: 26,
+    fontSize: 18,
+    lineHeight: 22,
     textTransform: 'capitalize',
     color: colors.module_title,
   },
