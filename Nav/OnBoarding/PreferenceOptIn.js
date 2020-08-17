@@ -19,87 +19,73 @@ import CustomIcon from '../../assets/icons/CustomIcon';
 class PreferenceOptIn extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      enabled: false,
-    };
   }
 
-  render = () => (
-    <SafeAreaView style={styles.intro_container}>
-      <View style={styles.content}>
-        <Image style={styles.icon} source={this.props.image} />
-        <Text style={styles.content_title_text}>{this.props.title}</Text>
-        <Text style={styles.content_description_text}>
-          {this.props.description}
-        </Text>
-        <Text style={styles.content_reminder_text}>{this.props.reminder}</Text>
-      </View>
-      <View style={styles.button_container}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            this.state.enabled
-              ? styles.turn_on_button_enabled
-              : styles.turn_on_button,
-          ]}
-          onPress={this._turnOnOption}>
-          <Text
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.content}>
+          <Image style={styles.icon} source={this.props.image} />
+          <Text style={styles.content_title_text}>{this.props.title}</Text>
+          <Text style={styles.content_description_text}>
+            {this.props.description}
+          </Text>
+          <Text style={styles.content_reminder_text}>
+            {this.props.reminder}
+          </Text>
+        </View>
+        <View style={styles.button_container}>
+          <TouchableOpacity
             style={[
-              styles.button_text,
-              this.state.enabled
-                ? styles.turn_on_button_text_enabled
-                : styles.turn_on_button_text,
-            ]}>
-            {this.state.enabled && (
-              <CustomIcon
-                name="checkmark24"
-                style={styles.turn_on_button_checkmark}
-              />
-            )}
-            {'   '}
-            {this.state.enabled ? this.props.turned_on : this.props.turn_on}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.skip_button]}
-          onPress={this._nextPressed}>
-          <Text style={[styles.button_text, styles.skip_button_text]}>
-            {strings('global.preference_skip')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
+              styles.button,
+              this.props.isEnabled
+                ? styles.turn_on_button_enabled
+                : styles.turn_on_button,
+            ]}
+            onPress={this._turnOn}>
+            <Text
+              style={[
+                styles.button_text,
+                this.props.isEnabled
+                  ? styles.turn_on_button_text_enabled
+                  : styles.turn_on_button_text,
+              ]}>
+              {this.props.isEnabled && (
+                <CustomIcon
+                  name="checkmark24"
+                  style={styles.turn_on_button_checkmark}
+                />
+              )}
+              {'   '}
+              {this.props.isEnabled
+                ? this.props.turnedOnButtonText
+                : this.props.turnOnButtonText}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.skip_button]}
+            onPress={this.props.onNextScreen}>
+            <Text style={[styles.button_text, styles.skip_button_text]}>
+              {strings('global.preference_skip')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
-  onDone = () => {
-    this.setState({showRealApp: true});
+  _turnOn = async () => {
+    await this.props.onEnable();
+    this.props.onNextScreen();
   };
 
-  _nextPressed = () => {
-    this.props.navigation.navigate('ThankYou');
-  };
-
-  _turnOnOption = () => {
-    this.setState({enabled: true});
-    // this._nextPressed();
-  };
-
-  completeFTUE = () => {
-    this.props.updateFTUE({
-      field: 'enableFTUE',
-      value: 'false',
-    });
+  _skip = () => {
+    this.props.onNextScreen();
   };
 }
 
 const styles = StyleSheet.create({
-  button_container: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'flex-end',
-    marginBottom: 32,
-  },
-  intro_container: {
+  container: {
     flex: 1,
     alignItems: 'center',
     width: '100%',
@@ -128,6 +114,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignSelf: 'center',
+  },
+  button_container: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'flex-end',
+    marginBottom: 32,
   },
   button: {
     borderRadius: 4,

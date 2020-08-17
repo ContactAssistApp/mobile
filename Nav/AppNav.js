@@ -6,6 +6,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {GetStoreData} from '../utils/asyncStorage';
 import FTUE from './OnBoarding/FTUE';
 import NotificationsOptIn from './OnBoarding/NotificationsOptIn';
+import LocationOptIn from './OnBoarding/LocationOptIn';
+import LocationHistoryOptIn from './OnBoarding/LocationHistoryOptIn';
+import AnalyticsOptIn from './OnBoarding/AnalyticsOptIn';
 import ThankYou from './OnBoarding/ThankYou';
 import BottomNav from './BottomNav';
 import SymptomForm from '../SymptomTracker/SymptomForm';
@@ -53,45 +56,82 @@ class AppNav extends Component {
 
     return (
       <>
-        {statusFetched
-        ? <NavigationContainer>
+        {statusFetched ? (
+          <NavigationContainer>
             <Stack.Navigator>
               {enableFTUE === 'true' && (
-                <Stack.Screen
-                  name={'FTUE'}
-                  component={FTUE}
-                  options={{
-                    title: '',
-                    headerStyle: {height: 0},
-                  }}
-                />
+                <>
+                  <Stack.Screen
+                    name={'FTUE'}
+                    component={FTUE}
+                    options={{
+                      title: '',
+                      headerStyle: {height: 0},
+                    }}
+                  />
+                  <Stack.Screen
+                    name={'NotificationsOptIn'}
+                    component={NotificationsOptIn}
+                    options={{
+                      title: strings('permissions.header_text'),
+                      headerTintColor: 'black',
+                      // headerBackTitle: ' ',
+                      headerBackTitleVisible: false,
+                      //headerBackImage: require('../../assets/preference/preference_1.png'),
+                      headerTitleAlign: 'left',
+                      headerStyle: {height: 100},
+                    }}
+                  />
+                  <Stack.Screen
+                    name={'LocationOptIn'}
+                    component={LocationOptIn}
+                    options={{
+                      title: strings('permissions.header_text'),
+                      headerTintColor: 'black',
+                      // headerBackTitle: ' ',
+                      headerBackTitleVisible: false,
+                      //headerBackImage: require('../../assets/preference/preference_1.png'),
+                      headerTitleAlign: 'left',
+                      headerStyle: {height: 100},
+                    }}
+                  />
+                  <Stack.Screen
+                    name={'LocationHistoryOptIn'}
+                    component={LocationHistoryOptIn}
+                    options={{
+                      title: strings('permissions.header_text'),
+                      headerTintColor: 'black',
+                      // headerBackTitle: ' ',
+                      headerBackTitleVisible: false,
+                      //headerBackImage: require('../../assets/preference/preference_1.png'),
+                      headerTitleAlign: 'left',
+                      headerStyle: {height: 100},
+                    }}
+                  />
+                  <Stack.Screen
+                    name={'AnalyticsOptIn'}
+                    component={AnalyticsOptIn}
+                    options={{
+                      title: strings('permissions.header_text'),
+                      headerTintColor: 'black',
+                      // headerBackTitle: ' ',
+                      headerBackTitleVisible: false,
+                      //headerBackImage: require('../../assets/preference/preference_1.png'),
+                      headerTitleAlign: 'left',
+                      headerStyle: {height: 100},
+                    }}
+                  />
+                  <Stack.Screen
+                    name={'ThankYou'}
+                    component={ThankYou}
+                    options={{
+                      title: strings('permissions.header_text'),
+                      headerStyle: {height: 0},
+                    }}
+                  />
+                </>
               )}
-              {enableFTUE === 'true' && (
-                <Stack.Screen
-                  name={'NotificationsOptIn'}
-                  component={NotificationsOptIn}
-                  options={{
-                    title: strings('permissions.header_text'),
-                    headerTintColor: 'black',
-                    // headerBackTitle: ' ',
-                    headerBackTitleVisible: false,
-                    //headerBackImage: require('../../assets/preference/preference_1.png'),
-                    headerTitleAlign: 'left',
-                    headerStyle: {height: 100},
-                  }}
-                />
-              )}
-              {enableFTUE === 'true' && (
-                <Stack.Screen
-                  name={'ThankYou'}
-                  component={ThankYou}
-                  options={{
-                    title: strings('permissions.header_text'),
-                    headerStyle: {height: 0},
-                  }}
-                />
-              )}
-              
+
               <Stack.Screen
                 name="BottomNav"
                 component={BottomNav}
@@ -112,10 +152,11 @@ class AppNav extends Component {
               />
             </Stack.Navigator>
           </NavigationContainer>
-        : <View style={styles.loading_spinner}>
+        ) : (
+          <View style={styles.loading_spinner}>
             <ActivityIndicator size={'large'} color={colors.primary_theme} />
           </View>
-        }
+        )}
       </>
     );
   }
@@ -140,9 +181,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateFTUE
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateFTUE,
+    },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,

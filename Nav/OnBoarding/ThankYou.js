@@ -10,8 +10,24 @@ import {
 } from 'react-native';
 import colors from '../../assets/colors';
 import {strings} from '../../locales/i18n';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updateFTUE} from '../actions';
 
 class ThankYou extends Component {
+  completeFTUE = () => {
+    this.props.updateFTUE({
+      field: 'enableFTUE',
+      value: 'false',
+    });
+  };
+
+  onFinish = () => {
+    this.completeFTUE();
+    this.props.navigation.navigate('BottomNav');
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -26,10 +42,12 @@ class ThankYou extends Component {
           <Text style={styles.content_description_text}>
             {strings('global.preference5_description')}
           </Text>
+        </View>
+        <View style={styles.button_container}>
           <TouchableOpacity
-            style={styles.turn_on_button}
-            onPress={() => this.props.navigation.navigate('BottomNav')}>
-            <Text style={styles.turn_on_button_text}>Done</Text>
+            style={styles.finish_button}
+            onPress={this.onFinish}>
+            <Text style={styles.finish_button_text}>Done</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -45,74 +63,65 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary_theme,
   },
   content: {
-    marginHorizontal: '6.56%',
-    marginVertical: '0.88%',
-    marginTop: 200,
+    marginTop: 100,
+    marginHorizontal: 40,
   },
   content_reminder_text: {
-    paddingVertical: '3.57%',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
+    marginTop: 16,
     color: 'white',
-    alignSelf: 'center',
-    textAlign: 'center',
   },
   content_description_text: {
-    fontSize: 15,
+    fontSize: 16,
+    marginTop: 16,
     color: 'white',
-    marginHorizontal: 20,
-    alignSelf: 'center',
-    textAlign: 'center',
   },
   content_title_text: {
-    paddingHorizontal: '2.1%',
-    paddingVertical: '5.57%',
-    marginHorizontal: 20,
     alignSelf: 'center',
     textAlign: 'center',
     fontStyle: 'normal',
     fontSize: 25,
     lineHeight: 30,
+    marginTop: 16,
+    marginHorizontal: 16,
     color: 'white',
   },
   icon: {
     alignSelf: 'center',
   },
-  turn_on_button: {
-    borderRadius: 8,
-    backgroundColor: 'white',
-    marginHorizontal: 20,
-    paddingVertical: 17,
-    alignItems: 'center',
-    marginTop: 50,
-    shadowOpacity: 0.2,
-    shadowOffset: {width: 0, height: 2},
+  button_container: {
+    flex: 1,
+    width: '100%',
+    marginBottom: 32,
   },
-  turn_on_button_text: {
-    color: colors.primary_theme,
-    fontSize: 16,
-    lineHeight: 16,
-    fontWeight: '500',
-  },
-
-  skip_button: {
-    borderRadius: 8,
-    backgroundColor: 'white',
+  finish_button: {
+    borderRadius: 4,
     flexDirection: 'column',
-    // marginBottom: 100,
-    width: '80%',
-    paddingVertical: 20,
-    alignItems: 'center',
-    // paddingHorizontal: 120,
+    paddingVertical: 18,
+    marginVertical: 48,
+    marginHorizontal: 24,
     shadowOpacity: 0.2,
     shadowOffset: {width: 0, height: 2},
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
-  skip_button_text: {
-    color: 'black',
+  finish_button_text: {
+    color: colors.primary_theme,
     fontSize: 16,
     lineHeight: 16,
     fontWeight: '500',
   },
 });
 
-export default ThankYou;
+ThankYou.propTypes = {
+  updateFTUE: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({updateFTUE}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ThankYou);
