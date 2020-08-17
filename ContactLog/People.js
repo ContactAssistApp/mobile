@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView, Platform, Alert} from 'react-native';
+import {StyleSheet, Text, ScrollView} from 'react-native';
 import colors from '../assets/colors';
-import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 import Modal from 'views/Modal';
@@ -12,101 +11,14 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
-import Person from '../utils/person';
 
 class People extends Component {
   constructor() {
     super();
     this.state = {
-      modalOn: false,
-      contactAccessIsAllowed: false,
+      modalOn: false
     };
   }
-
-  componentDidMount() {
-    const { date } = this.props;
-    this.fetchSelectedContactsByDate(date);
-    this.fetchAllContacts();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { date } = this.props;
-    if (prevProps.date !== date) {
-      this.fetchSelectedContactsByDate(date);
-    }
-  }
-
-  fetchSelectedContactsByDate = async (date) => {
-    const persons = await Person.fetchContactsByDate(
-      new Date(date.replace(/-/g, '/')),
-    );
-    this.props.updateContactLog({
-      field: 'selectedContacts',
-      value: persons,
-    });
-  }
-
-  fetchAllContacts = () => {
-    const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
-    check(contactPermission)
-    .then((result) => {
-        switch (result) {
-          case RESULTS.UNAVAILABLE:
-            console.log(
-              'This feature is not available (on this device / in this context)',
-            );
-            break;
-          case RESULTS.DENIED:
-            console.log(
-              'The permission has not been requested / is denied but requestable',
-            );
-            request(contactPermission).then((result) => {
-              this.loadContacts();
-          })
-            break;
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            this.setState({ contactAccessIsAllowed: true });
-            this.loadContacts();
-            break;
-          case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
-            break;
-        }
-      }
-    )
-  }
-
-  loadContacts = () => {
-    Contacts.getAllWithoutPhotos((err, contacts) => {
-      if (err) {
-        console.log('getting contact error: ', err);
-        return;
-      }
-
-      const contactList = contacts.map(contact => {
-        return {
-          id: contact.recordID,
-          name: `${contact.givenName} ${contact.familyName}`,
-        };
-      })
-      .sort(function(a, b) {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        } else if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-      this.props.updateContactLog({
-        field: 'allContacts',
-        value: contactList,
-      });
-    });
-  };
 
   openModal = () => {
     this.setState({
