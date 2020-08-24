@@ -23,6 +23,7 @@ class People extends Component {
   }
 
   fetchSelectedContactsByDate = async (date, timerange) => {
+    console.log('Fetching new contacts');
     const selectedContacts = await Person.fetchContactsByDate(
       new Date(date.replace(/-/g, '/')),
       timerange

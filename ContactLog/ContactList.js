@@ -8,8 +8,8 @@ import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {SetStoreData} from '../utils/asyncStorage';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
+import Person from '../utils/person';
 
 class ContactList extends Component {
   selectContact = contact => {
@@ -36,10 +36,6 @@ class ContactList extends Component {
   saveSelectedContacts = (selectedContacts) => {
     const { date } = this.props;
     selectedContacts.forEach((selectContact) => {
-      if (this.props.contactLogData.selectedContacts.includes(selectContact)) {
-        // To avoid saving 2 times
-        return;
-      }
       Person.savePerson({
         time: new Date(date.replace(/-/g, '/')).getTime(),
         ...selectContact
