@@ -14,7 +14,6 @@ import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
 import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 import Person from '../utils/person';
-import Contacts from 'react-native-contacts';
 
 class People extends Component {
   constructor() {

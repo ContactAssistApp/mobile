@@ -6,7 +6,6 @@ import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GetStoreData} from 'utils/asyncStorage';
 import {strings} from 'locales/i18n';
 
 class SelectedContacts extends Component {
