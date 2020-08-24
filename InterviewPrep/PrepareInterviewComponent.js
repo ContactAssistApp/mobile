@@ -8,6 +8,7 @@ import Modal from '../views/Modal';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../locales/i18n';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 
 class PrepareInterviewComponent extends Component {
   constructor() {
@@ -41,16 +42,11 @@ class PrepareInterviewComponent extends Component {
           }
         </Modal>
         <View style={styles.header}>
-          <Image
-            style={styles.clipboard}
-            source={require('../assets/health/clipboard.png')}
-          />
-          <Text style={styles.title}>
-            {strings('prepare.for_contact_tracer_interview')}
-          </Text>
+          <CustomIcon name={'chat24'} color={'#E6BE30'} size={24} />
+          <Text style={styles.title}>{strings('interview_prep.title')}</Text>
         </View>
         <Text style={styles.description}>
-          {strings('prepare.for_contact_tracer_description_text')}
+          {strings('interview_prep.description')}
         </Text>
         <View style={styles.button_group}>
           <TouchableOpacity
@@ -60,7 +56,9 @@ class PrepareInterviewComponent extends Component {
                 modalOn: true,
               });
             }}>
-            <Text style={styles.button_text}>{strings('prepare.for_interview_btn_text')}</Text>
+            <Text style={styles.button_text}>
+              {strings('interview_prep.prepare_btn')}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.learn_more]}
@@ -78,8 +76,9 @@ class PrepareInterviewComponent extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 8,
-    margin: 16,
+    borderRadius: 20,
+    marginTop: 20,
+    marginHorizontal: 20,
     paddingVertical: 20,
     paddingHorizontal: 15,
   },
@@ -87,17 +86,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  clipboard: {
-    width: 60,
-    height: 70,
-  },
   title: {
-    fontSize: 16,
-    lineHeight: 23,
-    textTransform: 'capitalize',
-    color: colors.module_title,
     paddingLeft: 10,
     flex: 1,
+    fontWeight: '500',
+    fontSize: 16,
+    lineHeight: 20,
+    color: '#141414',
   },
   description: {
     fontSize: 14,
@@ -113,18 +108,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button_text: {
+    textTransform: 'capitalize',
     fontWeight: '500',
-    fontSize: 15,
-    lineHeight: 20,
-    letterSpacing: -0.24,
+    fontSize: 14,
+    lineHeight: 18,
     color: 'white',
-    textTransform: 'uppercase',
   },
   learn_more: {
     backgroundColor: colors.card_border,
   },
   learn_more_text: {
-    color: colors.section_title,
+    color: '#212121',
   },
 });
 

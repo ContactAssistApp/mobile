@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
 import {updateSymptom} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class Cough extends Component {
   handleEdit = (id, value) => {

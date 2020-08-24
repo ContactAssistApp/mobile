@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {GetStoreData, SetStoreData} from '../utils/asyncStorage';
-import LocationServices from '../services/LocationServices';
+import {GetStoreData, SetStoreData} from 'utils/asyncStorage';
+import LocationServices from 'services/LocationServices';
 import TraceTool from './TraceTool';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class Location extends Component {
   constructor(props) {

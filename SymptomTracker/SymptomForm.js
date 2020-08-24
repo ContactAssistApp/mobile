@@ -6,21 +6,21 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
-import Accordion from '../views/Accordion';
-import Checkbox from '../views/Checkbox';
+import Accordion from 'views/Accordion';
+import Checkbox from 'views/Checkbox';
 import Fever from './Fever';
 import Cough from './Cough';
 import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Confirmation from './Confirmation';
-import Modal from '../views/Modal';
-import {addSymptoms} from '../realm/realmSymptomsTasks';
-import DateConverter from '../utils/date';
-import {getSymptoms} from '../realm/realmSymptomsTasks';
-import {strings} from '../locales/i18n';
+import Modal from 'views/Modal';
+import {addSymptoms} from 'realm/realmSymptomsTasks';
+import DateConverter from 'utils/date';
+import {getSymptoms} from 'realm/realmSymptomsTasks';
+import {strings} from 'locales/i18n';
 
 class SymptomForm extends Component {
   constructor() {
@@ -218,9 +218,7 @@ class SymptomForm extends Component {
           </View>
         </View>
         <TouchableOpacity style={styles.next_button} onPress={this.submitForm}>
-          <Text style={styles.next_button_text}>
-            {strings('next.btn_text')}
-          </Text>
+          <Text style={styles.next_button_text}>{strings('save.text')}</Text>
         </TouchableOpacity>
       </ScrollView>
     );

@@ -11,12 +11,12 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {updateFTUE} from '../actions';
 import PropTypes from 'prop-types';
-import colors from '../../assets/colors';
-import Notification from '../../Settings/Notification';
-import Location from '../../Settings/Location';
-import Import from '../../Settings/Import';
-import AnalyticsOptIn from '../../Settings/AnalyticsOptIn';
-import {strings} from '../../locales/i18n';
+import colors from 'assets/colors';
+import Notification from 'Settings/Notification';
+import Location from 'Settings/Location';
+import Import from 'Settings/Import';
+import AnalyticsOptIn from 'Settings/AnalyticsOptIn';
+import {strings} from 'locales/i18n';
 
 class Preferences extends Component {
   completeFTUE = () => {

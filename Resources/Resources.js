@@ -5,15 +5,15 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import data from './faq.json';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 import Question from './Question';
-import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
-import {strings} from '../locales/i18n';
+import ResourcesComponent from 'ResourcesComponent/ResourcesComponent';
+import {strings} from 'locales/i18n';
+import Header from 'views/Header';
 
 class Resources extends Component {
   constructor() {
@@ -29,13 +29,7 @@ class Resources extends Component {
         <SafeAreaView style={styles.status_bar} />
         <ScrollView>
           <View style={styles.header}>
-            <Image
-              style={styles.logo}
-              source={require('../assets/home/logo.png')}
-            />
-            <Text style={styles.title}>
-              {strings('bottom.sheet_menu_item_resources')}
-            </Text>
+            <Header title={strings('bottom.sheet_menu_item_resources')} />
           </View>
           <View style={styles.faq_container}>
             <Text style={styles.faq_header}>
@@ -93,21 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: {
-    flexDirection: 'row',
     backgroundColor: 'white',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-  },
-  logo: {
-    width: 24,
-    height: 24,
-    marginRight: 5,
-  },
-  title: {
-    fontSize: 24,
-    color: colors.section_title,
-    fontWeight: '500',
+    paddingHorizontal: 20,
   },
   faq_container: {
     backgroundColor: 'white',

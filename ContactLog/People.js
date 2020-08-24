@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView} from 'react-native';
-import colors from '../assets/colors';
+import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
+import colors from 'assets/colors';
+import Contacts from 'react-native-contacts';
 import {TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import Modal from '../views/Modal';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import Modal from 'views/Modal';
 import ContactList from './ContactList';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
@@ -126,8 +127,8 @@ class People extends Component {
           visible={this.state.modalOn}
           handleModalClose={this.closeModal}
           title={strings('select.contact')}>
-          <ContactList 
-            handleModalClose={this.closeModal} 
+          <ContactList
+            handleModalClose={this.closeModal}
             date={this.props.date}
           />
         </Modal>

@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import Privacy from '../Privacy/Privacy';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import Privacy from 'Privacy/Privacy';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updatePageIndex} from './actions.js';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 
 class InterviewPrepIntro extends Component {
   render() {

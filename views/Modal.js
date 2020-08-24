@@ -7,13 +7,13 @@ import {
   View,
   Modal as NativeModal,
 } from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import colors from '../assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import colors from 'assets/colors';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {
   render() {
-    const {visible, title} = this.props;
+    const {visible, title, actionButton} = this.props;
 
     return (
       <NativeModal
@@ -22,10 +22,13 @@ class Modal extends Component {
         animationType="slide">
         <SafeAreaView style={styles.status_bar} />
         <View style={styles.header}>
-          <TouchableOpacity onPress={this.props.handleModalClose}>
-            <CustomIcon name={'close24'} color={colors.gray_icon} size={24} />
-          </TouchableOpacity>
-          <Text style={styles.title}>{title}</Text>
+          <View style={styles.title_wrapper}>
+            <TouchableOpacity onPress={this.props.handleModalClose}>
+              <CustomIcon name={'close24'} color={colors.gray_icon} size={24} />
+            </TouchableOpacity>
+            <Text style={styles.title}>{title}</Text>
+          </View>
+          {actionButton && this.props.actionButton}
         </View>
         {this.props.children}
       </NativeModal>
@@ -48,6 +51,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  title_wrapper: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
   title: {

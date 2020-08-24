@@ -1,27 +1,27 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import colors from '../assets/colors';
-import CustomIcon from '../assets/icons/CustomIcon.js';
-import ImportGoogleTimeline from '../GoogleTimeline/ImportGoogleTimeline';
-import {strings} from '../locales/i18n';
+import colors from 'assets/colors';
+import CustomIcon from 'assets/icons/CustomIcon.js';
+import {strings} from 'locales/i18n';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {updateLocationData} from './actions.js';
+import PropTypes from 'prop-types';
 
 class Import extends Component {
   render() {
-    const {date} = this.props;
     return (
       <View style={styles.container}>
-        <ImportGoogleTimeline
-          visible={this.props.visible}
-          handleModalClose={this.props.handleModalClose}
-          endDateStr={date}
-          dateRange={1}
-        />
-        <Image source={require('../assets/health/map.png')} />
+        <Image source={require('assets/health/map.png')} />
         <Text style={styles.title}>{strings('import.long_text')}</Text>
         <Text style={styles.description}>{strings('import.description')}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={this.props.handleModalOpen}>
+          onPress={() => {
+            this.props.updateLocationData({
+              openImportModal: true,
+            });
+          }}>
           <CustomIcon
             name={'import24'}
             color={'white'}
@@ -75,4 +75,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Import;
+Import.propTypes = {
+  updateLocationData: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateLocationData,
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Import);

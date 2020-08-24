@@ -1,13 +1,13 @@
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {Alert, Platform, Linking} from 'react-native';
-import {addLocation} from '../realm/realmLocationTasks';
-import Location from '../utils/location';
-import DateConverter from '../utils/date';
-import {strings} from '../locales/i18n';
-import {getAreas} from '../realm/realmAreaMatchesTasks';
+import {addLocation} from 'realm/realmLocationTasks';
+import Location from 'utils/location';
+import DateConverter from 'utils/date';
+import {strings} from 'locales/i18n';
+import {getAreas} from 'realm/realmAreaMatchesTasks';
 import PushNotification from 'react-native-push-notification';
-import {GetStoreData} from '../utils/asyncStorage';
-import {addBackgroundLog} from '../realm/realmLoggingTasks';
+import {GetStoreData} from 'utils/asyncStorage';
+import {addBackgroundLog} from 'realm/realmLoggingTasks';
 
 let instanceCount = 0;
 
@@ -46,7 +46,15 @@ export default class LocationServices {
       }
     };
     const saveLocation = async (location, kind) => {
-      const {latitude, longitude, accuracy, speed, altitude, provider, time} = location;
+      const {
+        latitude,
+        longitude,
+        accuracy,
+        speed,
+        altitude,
+        provider,
+        time,
+      } = location;
       const logTime = DateConverter.getUTCUnixTime();
       addBackgroundLog('Location background log');
 
@@ -71,7 +79,7 @@ export default class LocationServices {
         latitude,
         longitude,
         accuracy,
-        speed,
+        speed: speed ? speed : 0,
         altitude,
         kind,
         time,

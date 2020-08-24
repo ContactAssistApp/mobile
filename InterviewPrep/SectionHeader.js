@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 
 class SectionHeader extends Component {
   render() {

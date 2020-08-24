@@ -8,8 +8,8 @@ import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {SetStoreData} from '../utils/asyncStorage';
-import {strings} from '../locales/i18n';
+import {SetStoreData} from 'utils/asyncStorage';
+import {strings} from 'locales/i18n';
 
 class ContactList extends Component {
   selectContact = contact => {

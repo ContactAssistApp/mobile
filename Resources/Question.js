@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import CustomIcon from '../assets/icons/CustomIcon.js';
+import CustomIcon from 'assets/icons/CustomIcon.js';
 import PropTypes from 'prop-types';
-import colors from '../assets/colors';
+import colors from 'assets/colors';
 
 class Question extends Component {
   render() {

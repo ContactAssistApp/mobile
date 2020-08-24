@@ -24,8 +24,6 @@
 		17CD449CACD84A1DAC117932 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35472C232F804031A439818A /* icomoon.ttf */; };
 		A5CB15BE24632830002A4B20 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5CB15BC24632830002A4B20 /* AppCenter-Config.plist */; };
 		B537F701AA40882F8AA59C69 /* libPods-covidsafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8EF93ABAD24F224FBD3553 /* libPods-covidsafe.a */; };
-		D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */; };
-		D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */; };
 		D2C9FCB6245D9D59002C7EA6 /* LocationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9FCB5245D9D59002C7EA6 /* LocationsTests.swift */; };
 		FA99A7DD6E78E064A6B9F89F /* libPods-covidsafeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699AA3E9F6385F4132621C76 /* libPods-covidsafeTests.a */; };
 /* End PBXBuildFile section */
@@ -98,8 +96,6 @@
 		C265E1F2F323413F897ABDEC /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C7F87A4AC1994270AC1163B9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		C9938D4C0F65454AA656A943 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGoogleTimeline.swift; sourceTree = "<group>"; };
-		D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleTimelineImportViewManager.m; sourceTree = "<group>"; };
 		D2C9FCB1245D9D17002C7EA6 /* covidsafeTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "covidsafeTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D2C9FCB5245D9D59002C7EA6 /* LocationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTests.swift; sourceTree = "<group>"; };
 		E2E049DD21E04D6DAADB789A /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -154,7 +150,6 @@
 			children = (
 				14FC67BA24A3F5660090B1EE /* Launch Screen.storyboard */,
 				14CCE88C2461A9BB00937BF4 /* covidsafe.entitlements */,
-				D26183132457EC45006B4478 /* ImportGoogleTimeline */,
 				14CCE83624606D0E00937BF4 /* Encryption */,
 				14CCE7CB2454B58A00937BF4 /* ContactLog */,
 				1439477D243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m */,
@@ -290,15 +285,6 @@
 				35472C232F804031A439818A /* icomoon.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		D26183132457EC45006B4478 /* ImportGoogleTimeline */ = {
-			isa = PBXGroup;
-			children = (
-				D26183172457ECBA006B4478 /* ImportGoogleTimeline.swift */,
-				D26183192457EE74006B4478 /* GoogleTimelineImportViewManager.m */,
-			);
-			name = ImportGoogleTimeline;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -566,14 +552,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D26183182457ECBA006B4478 /* ImportGoogleTimeline.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				1439477E243641CE009DBB68 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				14CCE87F2460A34F00937BF4 /* EncryptionUtil.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				14CCE83B24606D9400937BF4 /* EncryptionUtil.swift in Sources */,
 				14CCE83F24606DFB00937BF4 /* KeyChain.swift in Sources */,
-				D261831A2457EE74006B4478 /* GoogleTimelineImportViewManager.m in Sources */,
 				14CCE83D24606DD800937BF4 /* HMAC.swift in Sources */,
 				14CCE7D02454B5FE00937BF4 /* Locations.swift in Sources */,
 				14CCE7ED24550F0200937BF4 /* Locations.m in Sources */,
@@ -666,7 +650,7 @@
 				CODE_SIGN_ENTITLEMENTS = covidsafe/covidsafe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				INFOPLIST_FILE = covidsafe/Info.plist;
@@ -695,7 +679,7 @@
 				CODE_SIGN_ENTITLEMENTS = covidsafe/covidsafe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = THEWY9596Q;
 				INFOPLIST_FILE = covidsafe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
