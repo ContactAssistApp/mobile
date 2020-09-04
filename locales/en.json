@@ -1,6 +1,6 @@
 {
   "app": {
-    "name_one_line": "CommonCircle Assist"
+    "name_one_line": "ContactAssist"
   },
   "history": {
     "header_text": "History"
@@ -73,29 +73,29 @@
   "global": {
     "warning": "Warning",
     "q1": "What is the purpose of this app?",
-    "a1": "CommonCircle Assist (formerly UW CovidSafe) is one of a pair of companion apps that seek to reduce the spread of coronavirus in the community, specifically by connecting you to the appropriate public health guidance for more peace of mind as the community reopens, and by enabling effective contact tracing. You can opt-in to recieve alerts from your local public health department and keep track of important information that may protect you and others if you become ill, such as symptoms, locations, and people you've recently come into contact with in the last 14 days. If you are asked to complete a contact tracing interview, CommonCircle Assist provides you with a safe, private, and fast way to communicate this information to the people who need it — public health authorities and their contact tracing teams.",
+    "a1": "ContactAssist (formerly UW CovidSafe) is one of a pair of companion apps that seek to reduce the spread of coronavirus in the community, specifically by connecting you to the appropriate public health guidance for more peace of mind as the community reopens, and by enabling effective contact tracing. You can opt-in to recieve alerts from your local public health department and keep track of important information that may protect you and others if you become ill, such as symptoms, locations, and people you've recently come into contact with in the last 14 days. If you are asked to complete a contact tracing interview, ContactAssist provides you with a safe, private, and fast way to communicate this information to the people who need it — public health authorities and their contact tracing teams.",
     "q2": "How does this app benefit me?",
-    "a2": "CommonCircle Assist allows you to log important information that could protect yourself and others if you become ill or are confirmed positive, including symptoms, locations, and people you've recently come into contact with in the last 14 days. You can have this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.",
-    "q3": "Who can use CommonCircle Assist?",
-    "a3": "CommonCircle Assist is free, and anyone can use it.",
+    "a2": "ContactAssist allows you to log important information that could protect yourself and others if you become ill or are confirmed positive, including symptoms, locations, and people you've recently come into contact with in the last 14 days. You can have this information readily available if you are exposed and called for a contact tracing interview. You can also get reliable, vetted information about SARS-CoV-2, why it's so dangerous, and how it spreads.",
+    "q3": "Who can use ContactAssist?",
+    "a3": "ContactAssist is free, and anyone can use it.",
     "q4": "Who else benefits from my participation with this app?",
-    "a4": "If you test positive for coronavirus, or are asked to complete a contact tracing interview, CommonCircle Assist can help you securely organize and share information of your chosing with your interviewer. Specifically, in the event you may become ill, are exposed, or confirmed positive, location information can be used to better inform community messages sent by public health officials, while keeping your identity and personal information private.",
-    "q5": "How does CommonCircle Assist help public health officials?",
-    "a5": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. CommonCircle Assist helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.",
+    "a4": "If you test positive for coronavirus, or are asked to complete a contact tracing interview, ContactAssist can help you securely organize and share information of your chosing with your interviewer. Specifically, in the event you may become ill, are exposed, or confirmed positive, location information can be used to better inform community messages sent by public health officials, while keeping your identity and personal information private.",
+    "q5": "How does ContactAssist help public health officials?",
+    "a5": "Traditional contact tracing interviews done by public health services are important, laborious, complicated and can sometimes omit important contacts because patients forget to mention them. ContactAssist helps people who have tested positive remember locations they\u2019ve visited recently, by providing an objective log, which they can then share with contact tracing teams. There is also functionality to organize the contact information of known contacts, which streamlines the interview process and enables contact tracers to work faster.",
     "pq6": "What data is stored on my phone?",
-    "pa6": "Your privacy and data security is important to us. You control your data at all times. The only data stored on your phone is information you choose to log, whether it's automatically through GPS location logging or information you add to the app one-by-one. If you turn on location logging, you can easily turn if off from the home screen or Settings menu, while individual log entries such as specific locations, symptoms, or contacts may be edited, added or deleted at any time. You can also choose to delete your data completely from CommonCircle Assist from the Settings menu.",
+    "pa6": "Your privacy and data security is important to us. You control your data at all times. The only data stored on your phone is information you choose to log, whether it's automatically through GPS location logging or information you add to the app one-by-one. If you turn on location logging, you can easily turn if off from the home screen or Settings menu, while individual log entries such as specific locations, symptoms, or contacts may be edited, added or deleted at any time. You can also choose to delete your data completely from ContactAssist from the Settings menu.",
     "pq8": "Will this information be shared with government agencies?",
-    "pa8": "CommonCircle Assist won't alert government agencies about your identity or information stored on your phone. In order to help contain the spread of COVID19, you can elect to share that information during a contact tracing interview with a public health professional. However, this will be the decision of the user how they share this information and with whom.",
+    "pa8": "ContactAssist won't alert government agencies about your identity or information stored on your phone. In order to help contain the spread of COVID19, you can elect to share that information during a contact tracing interview with a public health professional. However, this will be the decision of the user how they share this information and with whom.",
     "aq1": "What is contact tracing?",
-    "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they've been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. If you are asked to complete a contact tracing interview, CommonCircle Assist can help you prepare important information in advance, which can then be referenced during your interview.",
+    "aa1": "Contact tracing is a process that helps identify all the people who may have come into contact with a person who is ill. Traditionally, contact tracing is accomplished by public health workers interviewing the person who is ill to learn about people they've been in contact with and locations they've recently visited within a specific period of time, such as the past two weeks. If you are asked to complete a contact tracing interview, ContactAssist can help you prepare important information in advance, which can then be referenced during your interview.",
     "certError": "Please check the box to certify that all the information in this form is correct.",
     "noneCheckedError": "Please check at least one symptom.",
     "addressError": "The address you have entered is invalid. Please try again.",
     "maxBlacklistSizeError": "Maximum blacklist size reached.",
     "downloading": "Downloading file...",
     "phone": "911",
-    "privacyDisclaimer": "Information collected through CommonCircle Assist is stored securely and locally on your app, and remains private to you. Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
-    "privacyDisclaimer2": "Information collected through CommonCircle Assist is stored securely and locally on your app, and remains private to you. Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
+    "privacyDisclaimer": "Information collected through ContactAssist is stored securely and locally on your app, and remains private to you. Medical information provided throughout ContactAssist is not a substitute for professional medical testing or advice.",
+    "privacyDisclaimer2": "Information collected through ContactAssist is stored securely and locally on your app, and remains private to you. Medical information provided throughout ContactAssist is not a substitute for professional medical testing or advice.",
     "start": "Start logging",
     "stop": "Stop logging",
     "ok": "Ok",
@@ -111,7 +111,7 @@
     "covidSiteFaqLink": "https://commoncircle.us/FAQ.html",
     "privacyLink1": "Learn more.",
     "privacyText": "Learn more",
-    "permissionsHeader": "Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nCovidSafe reveals no information about you without your consent.",
+    "permissionsHeader": "Enable real-time notifications to get alerts about potential exposures and public health messages relevant to you.\n\nContactAssist reveals no information about you without your consent.",
     "cancel": "Cancel",
     "duration": "Duration (days)",
     "perm1": "Notifications",
@@ -122,17 +122,17 @@
     "perm3desc": "Emit and detect random numbers by Bluetooth to later discover exposure risks.",
     "setting1": "Control your data storage",
     "setting1desc": "You maintain control over how long we store your data. Delete your data at any time.",
-    "storyTitle1": "Welcome to CommonCircle Assist",
+    "storyTitle1": "Welcome to ContactAssist",
     "storyTitle2": "Stay informed",
     "storyTitle3": "Care for yourself",
     "storyTitle4": "Your Privacy",
     "exposed": "You may have been exposed",
-    "story1": "CommonCircle Assist helps you protect yourself from risks and stay up to date on what’s happening near you, take care of yourself if you get sick, and record information that can help protect others if you get ill.",
+    "story1": "ContactAssist helps you protect yourself from risks and stay up to date on what’s happening near you, take care of yourself if you get sick, and record information that can help protect others if you get ill.",
     "story2": "Get notifications about locations near you where there’s a risk of COVID-19 exposure. You’ll also get critical alerts from your local health department, such as closures or cleanings of public spaces nearby.",
     "story3": "Get tips on managing your symptoms, connect with a healthcare professional if they worsen, and report locations you visited recently to protect others.",
     "story4_interpolated": {
       "part1_normal": "Any information you log in ",
-      "part2_bold": "CommonCircle Assist",
+      "part2_bold": "ContactAssist",
       "part3_normal": " is protected. Learn more about our approach on privacy in our ",
       "part4_link": "FAQ",
       "part5_normal": "."
@@ -155,14 +155,14 @@
     "prep": "Interview Preparation"
   },
   "email": {
-    "subject": "CommonCircle Assist Contact Tracer Interview Information Packet"
+    "subject": "ContactAssist Contact Tracer Interview Information Packet"
   },
   "location": {
     "logs": "Location logs",
     "text": "Location",
     "visited_in_last_14_days": "Locations you\u2019ve visited in the last 14 days",
     "description": "Use location to filter notifications relevant to you. All location information is stored locally.",
-    "permission_title": "CommonCircle Assist requires access to location information",
+    "permission_title": "ContactAssist requires access to location information",
     "pemission_description": "Would you like to open app settings?",
     "unknown": "Unknown"
   },
@@ -287,7 +287,7 @@
     "loc_on2": "We need location services enabled to check for local announcements. Please enable location services permission."
   },
   "learn": {
-    "about_us": "Download and learn more about the CommonCircle Assist app at",
+    "about_us": "Download and learn more about the ContactAssist app at",
     "more_link_text": "Learn More",
     "how_we_protect_your_privacy": "Learn about how we protect your privacy"
   },
@@ -506,7 +506,7 @@
     "asked_questions": "Frequently Asked Questions"
   },
   "about": {
-    "covidsafe": "About CommonCircle Assist"
+    "covidsafe": "About ContactAssist"
   },
   "tracing": {
     "tools": "Data Preferences"
@@ -525,10 +525,10 @@
     "logs": "Recent logs"
   },
   "welcome": {
-    "to_covidsafe_text": "Welcome to CommonCircle Assist"
+    "to_covidsafe_text": "Welcome to ContactAssist"
   },
   "covidsafe": {
-    "notifies_you": "If you chose to receive notifications, CommonCircle Assist can send you announcements made by your local health department."
+    "notifies_you": "If you chose to receive notifications, ContactAssist can send you announcements made by your local health department."
   },
   "clear": {
     "all_text": "Clear all"
@@ -565,8 +565,8 @@
     "title": "Export",
     "description": "Export all data stored locally",
     "message_title": "Export your local data",
-    "subject": "CommonCircle Assist device dump",
-    "message": "Local data with all records collected by CommonCircle Assist"
+    "subject": "ContactAssist device dump",
+    "message": "Local data with all records collected by ContactAssist"
   },
   "check": {
     "box": "Please check the box to confirm this information is accurate."
@@ -589,7 +589,7 @@
   "data_storage_modal": {
     "title": "Control your data storage",
     "desc_1": "Your privacy is important to us. We encourage you to retain your data so, if you test positive, you can use this information to quickly prepare for a contact tracing interview.",
-    "desc_2": "You can always choose to delete your data completely from CommonCircle Assist. This action cannot be undone.",
+    "desc_2": "You can always choose to delete your data completely from ContactAssist. This action cannot be undone.",
     "delete_button": "Delete All Data",
     "delete_success": "Your locations have been deleted.",
     "delete_failure": "Delete location error.",
@@ -606,7 +606,7 @@
 
   "analytics": {
     "title": "Analytics",
-    "description": "Share analytics and crash data with CommonCircle Assist developers."
+    "description": "Share analytics and crash data with ContactAssist developers."
   },
 
   "narrowcast": {
@@ -615,7 +615,7 @@
 
   "disclaimer": {
     "title": "Disclaimer",
-    "content": "Medical information provided throughout CommonCircle Assist is not a substitute for professional medical testing or advice.",
+    "content": "Medical information provided throughout ContactAssist is not a substitute for professional medical testing or advice.",
   },
 
   "what_to_do_if_sick": {

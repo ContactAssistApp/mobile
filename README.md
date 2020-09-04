@@ -1,4 +1,4 @@
-# CommonCircle Assist
+# ContactAssist
 
 ## To run code:
 Run `pod install` under the `ios` directory

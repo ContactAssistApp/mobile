@@ -155,8 +155,8 @@ const getKey = async () => {
       //this strings won't show up since they are only used if biometric auth is used (which isn't here)
       let credentials = await Keychain.getGenericPassword({
         authenticationPrompt: {
-          title: 'CommonCircle Assist Backend storage',
-          subtitle: 'CommonCircle Assist uses this password to protect your personal data',
+          title: 'ContactAssist Backend storage',
+          subtitle: 'ContactAssist uses this password to protect your personal data',
           description: 'locally stored location data',
         },
       });
