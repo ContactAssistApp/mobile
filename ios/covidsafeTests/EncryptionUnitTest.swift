@@ -1,5 +1,5 @@
 import XCTest
-@testable import CommonCircle_Assist
+@testable import ContactAssist
 
 class EncryptionUnitTest: XCTestCase {
 

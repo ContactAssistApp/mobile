@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import CommonCircle_Assist
+@testable import ContactAssist
 
 class LocationsTests: XCTestCase {
 }

@@ -41,6 +41,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>ContactAssist uses bluetooth to track people that comes close to you.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>ContactAssist uses bluetooth to track people that comes close to you.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>ContactAssist uses contact list to help you prepare contact tracer interview</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -49,10 +53,6 @@
 	<string>App requires background tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>ContactAssist uses location to track people that come close to you.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>ContactAssist uses bluetooth to track people that comes close to you.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>ContactAssist uses bluetooth to track people that comes close to you.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>App requires motion tracking</string>
 	<key>UIAppFonts</key>
