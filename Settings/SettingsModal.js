@@ -51,7 +51,7 @@ class SettingsModal extends Component {
               <Text style={styles.section_title}>{strings('more.text')}</Text>
               <SettingLink iconName={'share24'} title={'Share'} />
               <SettingLink
-                iconName={'logo24'}
+                iconName={'contact_assist_logo'}
                 title={'About ContactAssist'}
                 url={UW_URL}
               />
