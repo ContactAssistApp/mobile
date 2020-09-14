@@ -52,7 +52,7 @@
 		00E356F21AD99517003FC87E /* covidsafeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = covidsafeTests.m; sourceTree = "<group>"; };
 		01ED4399B90141E99089C57B /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		0C4ED3CB69A3833F2FD57841 /* Pods-covidsafe-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-covidsafe-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-covidsafe-tvOS/Pods-covidsafe-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* CommonCircle Assist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CommonCircle Assist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* ContactAssist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactAssist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = covidsafe/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = covidsafe/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = covidsafe/Images.xcassets; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* CommonCircle Assist.app */,
+				13B07F961A680F5B00A75B9A /* ContactAssist.app */,
 				00E356EE1AD99517003FC87E /* covidsafeTests.xctest */,
 			);
 			name = Products;
@@ -327,7 +327,7 @@
 			);
 			name = covidsafe;
 			productName = covidsafe;
-			productReference = 13B07F961A680F5B00A75B9A /* CommonCircle Assist.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* ContactAssist.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -612,7 +612,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "covidsafeTests/covidsafeTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CommonCircle Assist.app/CommonCircle Assist";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContactAssist.app/ContactAssist";
 			};
 			name = Debug;
 		};
@@ -637,7 +637,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "covidsafeTests/covidsafeTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CommonCircle Assist.app/CommonCircle Assist";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContactAssist.app/ContactAssist";
 			};
 			name = Release;
 		};
@@ -661,7 +661,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uw.CovidSafe;
-				PRODUCT_NAME = "CommonCircle Assist";
+				PRODUCT_NAME = ContactAssist;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "covidsafe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -689,7 +689,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uw.CovidSafe;
-				PRODUCT_NAME = "CommonCircle Assist";
+				PRODUCT_NAME = ContactAssist;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "covidsafe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
