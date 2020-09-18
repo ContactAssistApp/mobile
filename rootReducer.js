@@ -6,6 +6,7 @@ import contactLogReducer from './ContactLog/reducer.js';
 import healthReducer from './Health/reducer.js';
 import contactLocationReducer from './ContactLog/Location/reducer.js';
 import newLocationReducer from './ContactLog/NewLocation/reducer.js';
+import newContactReducer from './ContactLog/NewContact/reducer';
 
 export default combineReducers({
   navReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   healthReducer,
   contactLocationReducer,
   newLocationReducer,
+  newContactReducer,
 });

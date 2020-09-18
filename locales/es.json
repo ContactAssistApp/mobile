@@ -3,6 +3,16 @@
     "name": "Covid \nSafe",
     "name_one_line": "CommonCircle Assist"
   },
+  "contacts": {
+    "name": "Name",
+    "phone": "Phone Number",
+    "label": "Label",
+    "notes": "Notes",
+    "save_button": "Save"
+  },
+  "create": {
+    "contact": "Create Contact"
+  },
   "main": {
     "header_text": "Covid \nSafe"
   },

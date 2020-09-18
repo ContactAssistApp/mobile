@@ -14,12 +14,15 @@ import SelectedContacts from './SelectedContacts';
 import {strings} from '../locales/i18n';
 import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 import Person from '../utils/person';
+import NewContact from './NewContact/NewContact';
+import Save from './NewContact/SaveContact';
 
 class People extends Component {
   constructor() {
     super();
     this.state = {
-      modalOn: false
+      importContactModalOn: false,
+      manualContactModalOn: false
     };
   }
 
@@ -108,28 +111,56 @@ class People extends Component {
 
   openModal = () => {
     this.setState({
-      modalOn: true,
+      importContactModalOn: true,
     });
   };
 
   closeModal = () => {
     this.setState({
-      modalOn: false,
+      importContactModalOn: false,
     });
   };
 
+  openManualContactModal = () => {
+    this.setState({
+      manualContactModalOn: true,
+    });
+  }
+
+  closeManualContactModal = () => {
+    this.setState({
+      manualContactModalOn: false,
+    });
+  }
+
   render() {
     const { selectedContacts } = this.props.contactLogData;
+    const saveButton = (
+      <Save
+        date={this.props.date}
+        handleSaveSuccess={() => {
+        }}
+      />
+    );
     return (
       <>
         <Modal
-          visible={this.state.modalOn}
+          visible={this.state.importContactModalOn}
           handleModalClose={this.closeModal}
           title={strings('select.contact')}>
           <ContactList
             handleModalClose={this.closeModal}
             date={this.props.date}
+
           />
+        </Modal>
+        <Modal
+          visible={this.state.manualContactModalOn}
+          handleModalClose={this.closeManualContactModal}
+          title={strings('create.contact')}
+          actionButton={saveButton}
+          >
+            <NewContact/>
         </Modal>
         <ScrollView>
           <Text style={styles.header}>
@@ -137,6 +168,10 @@ class People extends Component {
           </Text>
           <SelectedContacts selectedContacts={selectedContacts}/>
         </ScrollView>
+        <TouchableOpacity onPress={this.openManualContactModal} style={styles.manual_add_button}>
+          <CustomIcon name={'contacts'} color={'white'} size={20} />
+          <Text>Add Manual Contact</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
         </TouchableOpacity>
@@ -170,6 +205,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  manual_add_button: {
+    backgroundColor: colors.primary_theme,
+    width: 150,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 100,
+    right: 100,
   },
   enable_permission_button: {
     backgroundColor: colors.primary_theme,

@@ -4,7 +4,7 @@ import colors from 'assets/colors';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 import Input from 'views/Input';
 
-class LocationField extends Component {
+class ContactField extends Component {
   render() {
     const {icon, name, field, value} = this.props;
     return (
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LocationField;
+export default ContactField;
