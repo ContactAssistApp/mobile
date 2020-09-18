@@ -5,6 +5,13 @@
   "history": {
     "header_text": "History"
   },
+  "contacts": {
+    "name": "Name",
+    "phone": "Phone Number",
+    "label": "Label",
+    "notes": "Notes",
+    "save_button": "Save"
+  },
   "permissions": {
     "header_text": "Select your preferences"
   },
@@ -69,6 +76,9 @@
   "select": {
     "contact": "Select Contacts",
     "share": "Select a sharing option"
+  },
+  "create": {
+    "contact": "Create Contact"
   },
   "global": {
     "warning": "Warning",

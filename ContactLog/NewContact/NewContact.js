@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {editContact, resetContact} from './actions.js';
-import {getContactsWithTs} from 'realm/realmContactTasks';
 import {strings} from 'locales/i18n';
 import ContactField from './ContactField';
 import PropTypes from 'prop-types';
@@ -24,14 +23,13 @@ class NewContact extends Component {
 
   render() {
     const {
-      newContactData: {name, phone},
+      newContactData: { name, phone, label, notes}
     } = this.props;
-
     return (
       <>
         <ContactField
           icon={'building24'}
-          name={strings('Contacts.name')}
+          name={strings('contacts.name')}
           value={name}
           handleCallback={this.handleCallback}
           field={'name'}
@@ -39,11 +37,29 @@ class NewContact extends Component {
 
         <ContactField
           icon={'Contact24'}
-          name={strings('Contacts.phone')}
+          name={strings('contacts.phone')}
           value={phone}
           handleCallback={this.handleCallback}
           field={'phone'}
         />
+
+        {/* TODO: Fix this to be a dropdown */}
+        <ContactField
+          icon={'Contact24'}
+          name={strings('contacts.label')}
+          value={label}
+          handleCallback={this.handleCallback}
+          field={'label'}
+        />
+
+        <ContactField
+          icon={'Contact24'}
+          name={strings('contacts.notes')}
+          value={notes}
+          handleCallback={this.handleCallback}
+          field={'notes'}
+        />
+
       </>
     );
   }
