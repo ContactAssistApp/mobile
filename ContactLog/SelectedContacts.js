@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from 'locales/i18n';
+import ContactItem from './ContactItem';
 
 class SelectedContacts extends Component {
   render() {
@@ -21,7 +22,8 @@ class SelectedContacts extends Component {
             {selectedContacts.map(contact => {
               return (
                 <View style={styles.contact_wrapper} key={contact.id}>
-                  <Text style={styles.contact}>{contact.name}</Text>
+                  <ContactItem contact={contact}/>
+                  {/* <Text style={styles.contact}>{contact.name}, {contact.phone}, {contact.notes}</Text> */}
                 </View>
               )
             })}

@@ -6,7 +6,7 @@ import {strings} from 'locales/i18n';
 import colors from 'assets/colors';
 import {addPerson} from 'realm/realmPersonTasks';
 import Person from '../../utils/person';
-import {updateContactLog} from './actions.js';
+import {updateContactLog} from '../actions.js';
 
 
 class Save extends Component {
@@ -33,7 +33,10 @@ class Save extends Component {
         const savedContact = {
             time: new Date(date.replace(/-/g, '/')).getTime(),
             id: (Math.random()*1e32).toString(36), // TODO: Should properly generate random string here,
-            name: name
+            name: name,
+            phone: phone,
+            label: label,
+            notes: notes
         };
         Person.savePerson(savedContact);
         this.props.updateContactLog({
