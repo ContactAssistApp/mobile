@@ -109,7 +109,10 @@ class Person extends Realm.Object {}
     properties: {
       time: 'int',
       id: 'string',
-      name: 'string'
+      name: 'string',
+      phone: 'string',
+      notes: 'string',
+      label: 'string'
     },
 };
 
