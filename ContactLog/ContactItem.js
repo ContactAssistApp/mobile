@@ -6,11 +6,34 @@ import PropTypes from 'prop-types';
 import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {deleteSymptom} from 'realm/realmSymptomsTasks';
+import Modal from 'views/Modal';
 import {connect} from 'react-redux';
 import {strings} from 'locales/i18n';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
+import Edit from './NewContact/EditContact';
+import Save from './NewContact/SaveContact';
+
 
 class ContactItemComp extends Component {
+    constructor() {
+        super();
+        this.state = {
+            manualContactModalOn: false
+        };
+        }
+
+    openManualContactModal = () => {
+        this.setState({
+            manualContactModalOn: true,
+        });
+    }
+    
+    closeManualContactModal = () => {
+        this.setState({
+            manualContactModalOn: false,
+        });
+    }
+
   handleAdd = () => {
   };
 
@@ -27,6 +50,7 @@ class ContactItemComp extends Component {
         },
         buttonIndex => {
           if (buttonIndex === 1) {
+            this.openManualContactModal();
           } else if (buttonIndex === 2) {
           }
         },
@@ -37,8 +61,24 @@ class ContactItemComp extends Component {
     // const {name, notes} = this.props;
     const { contact: { name, phone, label, notes } } = this.props;
 
+    const saveButton = (
+        <Save
+          date={this.props.date}
+          handleSaveSuccess={() => {
+          }}
+        />
+      );
+
     return (
       <>
+        <Modal
+          visible={this.state.manualContactModalOn}
+          handleModalClose={this.closeManualContactModal}
+          title={strings('create.contact')}
+          actionButton={saveButton}
+          >
+            <Edit newContactData={this.props.contact} />
+        </Modal>
         <View style={styles.ContactItem}>
           <View style={[
             styles.icon_wrapper,
