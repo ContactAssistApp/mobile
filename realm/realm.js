@@ -106,6 +106,7 @@ Location2.schema = {
 class Person extends Realm.Object {}
   Person.schema = {
     name: 'Person',
+    primaryKey: 'id',
     properties: {
       time: 'int',
       id: 'string',

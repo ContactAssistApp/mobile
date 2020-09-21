@@ -11,7 +11,7 @@ import {updateContactLog} from '../actions.js';
 
 class Save extends Component {
   handleSave = async () => {
-    const {
+    let {
         date, 
       newContactData: {name, phone, label, notes},
     } = this.props;
@@ -77,10 +77,6 @@ const styles = StyleSheet.create({
     color: colors.primary_theme,
   }
 });
-
-Save.propTypes = {
-
-};
 
 const mapStateToProps = state => {
   return {

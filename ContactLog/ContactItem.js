@@ -63,8 +63,10 @@ class ContactItemComp extends Component {
 
     const saveButton = (
         <Save
+          editContactData={this.props.contact}
           date={this.props.date}
           handleSaveSuccess={() => {
+              // TODO: Should close the modal here
           }}
         />
       );
