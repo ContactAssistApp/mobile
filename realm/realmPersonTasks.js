@@ -31,3 +31,16 @@ export async function getContactsByDate(endDateTime, timeRange) {
   );
   return Persons;
 }
+
+export async function updateContact(contact) {
+  const realm = await RealmObj.init();
+  realm.write(() => {
+    let { id, name, phone, notes, label } = contact;
+    const person = realm.objects('Person');
+    person[id].time = new Date(date.replace(/-/g, '/')).getTime();
+    person[id].name = name;
+    person[id].phone = phone;
+    person[id].label = label;
+    person[id].notes = notes;
+  })
+}

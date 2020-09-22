@@ -38,7 +38,11 @@ class Save extends Component {
             label: label,
             notes: notes
         };
-        Person.savePerson(savedContact);
+        if (this.props.isEditing) {
+          Person.updateContact(savedContact);
+        } else {
+          Person.savePerson(savedContact);
+        }
         this.props.updateContactLog({
             field: 'selectedContacts',
             value: [...this.props.contactLogData.selectedContacts, savedContact]
