@@ -10,6 +10,44 @@ import {strings} from 'locales/i18n';
 import ContactItem from './ContactItem';
 
 class SelectedContacts extends Component {
+
+  onRemoveContact = (contact) => {
+    const { selectedContacts } = this.props;
+    const index = selectedContacts.findIndex(item => item.id === contact.id);
+    if (index !== -1) {
+      // Remove Existing contact
+      selectedContacts.splice(index, 1);
+      this.props.updateContactLog({
+        field: 'selectedContacts',
+        value: selectedContacts,
+      });
+    } else {
+      this.props.updateContactLog({
+        field: 'selectedContacts',
+        value: [...selectedContacts, contact],
+      });
+    }
+  }
+
+  onEditContactItem = () => {
+    return (updatedContact) => {
+      console.log('lalalal updating contact reducer');
+      const { selectedContacts } = this.props;
+      const index = selectedContacts.findIndex(item => item.id === updatedContact.id);
+      if (index !== -1) {
+        // Remove Existing contact
+        console.log('Replacing itemmmm', updatedContact);
+        let updatedSelectedContacts = [...selectedContacts];
+        updatedSelectedContacts[index] = updatedContact;
+        this.props.updateContactLog({
+          field: 'selectedContacts',
+          value: updatedSelectedContacts,
+        });
+      }
+    }
+  }
+
+
   render() {
     const {
       selectedContacts,
@@ -23,7 +61,13 @@ class SelectedContacts extends Component {
             {selectedContacts.map(contact => {
               return (
                 <View style={styles.contact_wrapper} key={contact.id}>
-                  <ContactItem date={date} contact={contact}/>
+                  <ContactItem 
+                    noEdit={this.props.noEdit}
+                    date={date} 
+                    contact={contact}
+                    onEditContactItem={this.onEditContactItem}
+                    onRemoveContact={() => this.onRemoveContact(contact)}
+                  />
                 </View>
               )
             })}
@@ -70,7 +114,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  
+  updateContactLog
 }, dispatch);
 
 export default connect(

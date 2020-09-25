@@ -33,15 +33,16 @@ export async function getContactsByDate(endDateTime, timeRange) {
 }
 
 export async function updateContact(contact) {
-  console.log('laallala updating contact', contact);
-  const realm = await RealmObj.init();
-  realm.write(() => {
-    let { id, name, phone, notes, label } = contact;
-    const person = realm.objects('Person');
-    person[id].time = new Date(date.replace(/-/g, '/')).getTime();
-    person[id].name = name;
-    person[id].phone = phone;
-    person[id].label = label;
-    person[id].notes = notes;
-  })
+  await addPerson(contact); // Because Realm auto updates if it's the same id
+}
+
+export async function deleteContact(contact) {
+  try {
+    const realm = await RealmObj.init();
+    realm.write(() => {
+      let person = realm.objectForPrimaryKey('Person', contact.id);      
+      realm.delete(person);
+    })
+  } catch (err) {
+  }
 }

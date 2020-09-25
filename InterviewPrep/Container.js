@@ -118,7 +118,7 @@ class InterviewPrepContainer extends Component {
           {
             0: <Symptoms />,
             1: <Locations />,
-            2: <People />,
+            2: <People noEdit={true}/>,
             3: <Summary />,
           }[index]
         }

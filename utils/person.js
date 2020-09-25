@@ -2,7 +2,7 @@ import {NativeModules} from 'react-native';
 import {getLocations} from '../realm/realmLocationTasks';
 import { getContactsByDate } from '../realm/realmPersonTasks';
 
-import { fetchContactsByDate, addPerson, updateContact } from '../realm/realmPersonTasks';
+import { fetchContactsByDate, addPerson, updateContact, deleteContact} from '../realm/realmPersonTasks';
 
 const Person = {
   fetchContactsByDate: async function(dateObj, dayRange = 0) {
@@ -17,6 +17,10 @@ const Person = {
 
   updateContact: async function(contact) {
     updateContact(contact);
+  },
+
+  deleteContact: async function (contact) {
+    deleteContact(contact);
   }
 };
 
