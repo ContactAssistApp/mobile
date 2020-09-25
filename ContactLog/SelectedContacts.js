@@ -12,7 +12,8 @@ import ContactItem from './ContactItem';
 class SelectedContacts extends Component {
   render() {
     const {
-      selectedContacts
+      selectedContacts,
+      date
     } = this.props;
 
     return (
@@ -22,8 +23,7 @@ class SelectedContacts extends Component {
             {selectedContacts.map(contact => {
               return (
                 <View style={styles.contact_wrapper} key={contact.id}>
-                  <ContactItem contact={contact}/>
-                  {/* <Text style={styles.contact}>{contact.name}, {contact.phone}, {contact.notes}</Text> */}
+                  <ContactItem date={date} contact={contact}/>
                 </View>
               )
             })}

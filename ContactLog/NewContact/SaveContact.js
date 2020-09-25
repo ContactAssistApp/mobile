@@ -13,9 +13,9 @@ class Save extends Component {
   handleSave = async () => {
     let {
         date, 
-      newContactData: {name, phone, label, notes},
+      newContactData: {name, phone, label, notes, id},
     } = this.props;
-    const requiredFields = [name];
+    const requiredFields = [name, phone];
     console.log('Saving manual contact', name, phone, label, notes);
 
     requiredFields.find(field => {
@@ -32,13 +32,14 @@ class Save extends Component {
     if (name) {
         const savedContact = {
             time: new Date(date.replace(/-/g, '/')).getTime(),
-            id: (Math.random()*1e32).toString(36), // TODO: Should properly generate random string here,
+            id: id ? id : (Math.random()*1e32).toString(36), // TODO: Should properly generate random string here,
             name: name,
             phone: phone,
             label: label,
             notes: notes
         };
         if (this.props.isEditing) {
+          console.log('Calling', savedContact);
           Person.updateContact(savedContact);
         } else {
           Person.savePerson(savedContact);

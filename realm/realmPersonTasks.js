@@ -33,6 +33,7 @@ export async function getContactsByDate(endDateTime, timeRange) {
 }
 
 export async function updateContact(contact) {
+  console.log('laallala updating contact', contact);
   const realm = await RealmObj.init();
   realm.write(() => {
     let { id, name, phone, notes, label } = contact;
