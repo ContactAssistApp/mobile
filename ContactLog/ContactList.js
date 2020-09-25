@@ -38,6 +38,8 @@ class ContactList extends Component {
     selectedContacts.forEach((selectContact) => {
       Person.savePerson({
         time: new Date(date.replace(/-/g, '/')).getTime(),
+        notes: '', // By default on clicking doesn't have notes,
+        label: '', // By default on clicking doesn't have label
         ...selectContact
       })
     })

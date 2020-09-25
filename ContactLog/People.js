@@ -89,6 +89,7 @@ class People extends Component {
         return {
           id: contact.recordID,
           name: `${contact.givenName} ${contact.familyName}`,
+          phone: (contact.phoneNumbers && contact.phoneNumbers.length > 0) ? contact.phoneNumbers[0].number : ''
         };
       })
       .sort(function(a, b) {
@@ -165,7 +166,7 @@ class People extends Component {
           <Text style={styles.header}>
             {strings("social.interaction_text")}
           </Text>
-          <SelectedContacts selectedContacts={selectedContacts}/>
+          <SelectedContacts date={this.props.date} selectedContacts={selectedContacts}/>
         </ScrollView>
         <TouchableOpacity onPress={this.openManualContactModal} style={styles.manual_add_button}>
           <CustomIcon name={'contacts'} color={'white'} size={20} />

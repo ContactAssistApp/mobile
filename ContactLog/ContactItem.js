@@ -12,7 +12,7 @@ import {strings} from 'locales/i18n';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
 import Edit from './NewContact/EditContact';
 import Save from './NewContact/SaveContact';
-
+import { editContact } from './NewContact/actions.js';
 
 class ContactItemComp extends Component {
     constructor() {
@@ -28,14 +28,11 @@ class ContactItemComp extends Component {
         });
     }
     
-    closeManualContactModal = () => {
+  closeManualContactModal = () => {
         this.setState({
             manualContactModalOn: false,
         });
-    }
-
-  handleAdd = () => {
-  };
+  }
 
   handleAction = () => {
       this.props.showActionSheetWithOptions(
@@ -50,6 +47,12 @@ class ContactItemComp extends Component {
         },
         buttonIndex => {
           if (buttonIndex === 1) {
+            const { contact: { name, phone, label, notes, id } } = this.props;
+
+            this.props.editContact({
+              name, phone, label, notes, id,
+              enableSave: false,
+            });
             this.openManualContactModal();
           } else if (buttonIndex === 2) {
           }
@@ -66,7 +69,7 @@ class ContactItemComp extends Component {
           editContactData={this.props.contact}
           date={this.props.date}
           handleSaveSuccess={() => {
-              // TODO: Should close the modal here
+            this.closeManualContactModal();
           }}
         />
       );
@@ -84,17 +87,13 @@ class ContactItemComp extends Component {
         <View style={styles.ContactItem}>
           <View style={[
             styles.icon_wrapper,
-            notes ? styles.checkmark_wrapper : styles.edit_wrapper,
+            styles.checkmark_wrapper
           ]}>
-            {notes ? (
               <CustomIcon
                 name={'checkmark24'}
                 size={20}
                 color={colors.warning_low}
               />
-            ) : (
-              <CustomIcon name={'edit24'} size={20} color={colors.gray_icon} />
-            )}
           </View>
           <View style={styles.ContactItem_detail}>
             <Text style={styles.title}>{name}</Text>
@@ -104,7 +103,6 @@ class ContactItemComp extends Component {
                 : strings('not.logged_text')}
             </Text>
           </View>
-          {notes ? (
             <TouchableOpacity
               style={styles.action_button}
               onPress={this.handleAction}>
@@ -114,13 +112,6 @@ class ContactItemComp extends Component {
                 color={colors.gray_icon}
               />
             </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={styles.add_button}
-              onPress={this.handleAdd}>
-              <CustomIcon name={'add24'} size={16} color={colors.gray_icon} />
-            </TouchableOpacity>
-          )}
         </View>
       </>
     );
@@ -179,6 +170,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateSymptom,
   clearSymptoms,
+  editContact
 }, dispatch);
 
 const ContactItem = connectActionSheet(ContactItemComp)
