@@ -16,7 +16,7 @@ class Save extends Component {
       newContactData: {name, phone, label, notes, id},
     } = this.props;
     const requiredFields = [name, phone];
-    console.log('Saving manual contact', name, phone, label, notes);
+    console.log('Saving manual contact', date, name, phone, label, notes);
 
     requiredFields.find(field => {
       if (!field) {
@@ -39,15 +39,16 @@ class Save extends Component {
             notes: notes
         };
         if (this.props.isEditing) {
-          console.log('Calling', savedContact);
           Person.updateContact(savedContact);
+          const editContactFn = this.props.onEditContactItem();
+          editContactFn(savedContact);
         } else {
           Person.savePerson(savedContact);
-        }
-        this.props.updateContactLog({
+          this.props.updateContactLog({
             field: 'selectedContacts',
             value: [...this.props.contactLogData.selectedContacts, savedContact]
           });
+        }
       this.props.handleSaveSuccess();
     }
   };

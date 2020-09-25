@@ -13,6 +13,7 @@ import {connectActionSheet} from '@expo/react-native-action-sheet';
 import Edit from './NewContact/EditContact';
 import Save from './NewContact/SaveContact';
 import { editContact } from './NewContact/actions.js';
+import Person from '../utils/person';
 
 class ContactItemComp extends Component {
     constructor() {
@@ -48,13 +49,16 @@ class ContactItemComp extends Component {
         buttonIndex => {
           if (buttonIndex === 1) {
             const { contact: { name, phone, label, notes, id } } = this.props;
-
             this.props.editContact({
               name, phone, label, notes, id,
               enableSave: false,
             });
             this.openManualContactModal();
           } else if (buttonIndex === 2) {
+            Person.deleteContact(
+              this.props.contact
+            );
+            this.props.onRemoveContact();
           }
         },
       );
@@ -68,9 +72,11 @@ class ContactItemComp extends Component {
         <Save
           editContactData={this.props.contact}
           date={this.props.date}
+          isEditing={true}
           handleSaveSuccess={() => {
             this.closeManualContactModal();
           }}
+          onEditContactItem={this.props.onEditContactItem}
         />
       );
 
@@ -100,9 +106,11 @@ class ContactItemComp extends Component {
             <Text style={styles.time}>
               {notes
                 ? `${notes}`
-                : strings('not.logged_text')}
+                : ''}
             </Text>
           </View>
+          {
+          this.props.noEdit && (
             <TouchableOpacity
               style={styles.action_button}
               onPress={this.handleAction}>
@@ -112,6 +120,7 @@ class ContactItemComp extends Component {
                 color={colors.gray_icon}
               />
             </TouchableOpacity>
+          )}
         </View>
       </>
     );

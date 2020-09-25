@@ -45,7 +45,7 @@ class Actions extends Component {
       <>
         <TouchableOpacity
           style={styles.action_button}
-          onPress={() => this.handleAction()}>
+          onPress={() => this. handleAction()}>
           <CustomIcon name={'action24'} size={20} color={colors.gray_icon} />
         </TouchableOpacity>
       </>
