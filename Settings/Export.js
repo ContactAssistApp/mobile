@@ -11,10 +11,6 @@ import * as RNFS from 'react-native-fs';
 const Buffer = require('buffer').Buffer;
 
 class Export extends Component {
-  constructor() {
-    super();
-  }
-
   async exportData() {
     let real = await RealmObj.init();
     let logLines = await new Promise((resolve, reject) => {

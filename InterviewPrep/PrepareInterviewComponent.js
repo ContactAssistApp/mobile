@@ -1,13 +1,14 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../assets/colors';
 import InterviewPrepIntro from './Intro';
+import Complete from './Complete';
 import InterviewPrepContainer from './Container';
-import Modal from '../views/Modal';
+import Modal from 'views/Modal';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {strings} from '../locales/i18n';
+import {strings} from 'locales/i18n';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 
 class PrepareInterviewComponent extends Component {
@@ -38,6 +39,7 @@ class PrepareInterviewComponent extends Component {
               1: <InterviewPrepContainer
                   handleModalClose={this.handleModalClose}
                 />,
+              2: <Complete />,
             }[pageIndex]
           }
         </Modal>
