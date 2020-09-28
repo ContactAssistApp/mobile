@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import colors from 'assets/colors';
-import SymptomsList from './SymptomsList';
-import SelectedContacts from 'ContactLog/SelectedContacts';
-import SectionHeader from './SectionHeader';
-import LocationsList from './LocationsList';
 import {strings} from 'locales/i18n';
+import SummaryList from './SummaryList';
 
 class Summary extends Component {
   render() {
@@ -15,7 +12,7 @@ class Summary extends Component {
           <View style={styles.header}>
             <Image
               style={styles.icon}
-              source={require('../assets/health/summary.png')}
+              source={require('assets/health/summary.png')}
             />
             <Text style={styles.title}>{strings('contact.title_4')}</Text>
           </View>
@@ -24,10 +21,7 @@ class Summary extends Component {
         <View style={styles.section_title_container}>
           <Text style={styles.section_title}>{strings('summary.text')}</Text>
         </View>
-        <SymptomsList />
-        <LocationsList />
-        <SectionHeader header={strings('people.text')} />
-        <SelectedContacts />
+        <SummaryList />
       </ScrollView>
     );
   }

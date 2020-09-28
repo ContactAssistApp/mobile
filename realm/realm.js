@@ -132,6 +132,14 @@ Symptoms.schema = {
   },
 };
 
+class InterviewSummary extends Realm.Object {}
+InterviewSummary.schema = {
+  name: 'InterviewSummary',
+  properties: {
+    time: 'int',
+  },
+};
+
 const REALM_PW_KEY = 'REALM_PW_KEY';
 const REALM_KEY_SIZE = 64;
 
@@ -235,6 +243,7 @@ const schema2 = [
   Area.schema,
   AreaMatches.schema,
   BackgroundTaskLog.schema,
+  InterviewSummary.schema,
 ];
 
 const schemas = [

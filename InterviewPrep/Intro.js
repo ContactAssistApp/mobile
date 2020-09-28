@@ -23,7 +23,7 @@ class InterviewPrepIntro extends Component {
       <ScrollView>
         <Image
           style={styles.hero}
-          source={require('../assets/health/interview_prep_bg.png')}
+          source={require('assets/health/interview_prep_bg.png')}
         />
         <View style={styles.container}>
           <Text style={styles.section_title}>
@@ -79,7 +79,9 @@ class InterviewPrepIntro extends Component {
                 value: pageIndex + 1,
               });
             }}>
-            <Text style={styles.start_button_text}>{strings('get.started_text')}</Text>
+            <Text style={styles.start_button_text}>
+              {strings('get.started_text')}
+            </Text>
           </TouchableOpacity>
         </View>
         <Privacy />

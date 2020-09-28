@@ -654,5 +654,17 @@
     "title": "Your public health department will contact you for an interview",
     "description": "During this interview, a healthcare professional will be collecting a list of information to help identify those around you who may have been exposed.",
     "prepare_btn": "Prepare for Your Interview",
-  }
+  },
+  "interview_prep_save_consent_form": {
+    "title": "Store On Phone?",
+    "description": "When you save a report, this information is encrypted on your phone. Your data always stays on your phone unless you decide to share it, and will not be shared with any other application.",
+    "confirm_label": "Type \"I confirm\" to continue:",
+    "continue_btn": "continue",
+    "no_thanks_btn": "no thanks",
+  },
+  "interview_prep_complete": {
+    "title": "You’re All Set!",
+    "description": "Any information collected on CommonCircle Assist is stored securely on your phone until you decide to share it with your Public Health Department.",
+    "send_btn": "Send",
+  },
 }

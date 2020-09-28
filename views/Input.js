@@ -3,7 +3,8 @@ import {TextInput, StyleSheet} from 'react-native';
 import colors from 'assets/colors';
 
 const Input = props => {
-  const {name, field, value: initValue} = props;
+  const {name, field, value: initValue, customStyle} = props;
+  const styleClasses = customStyle ? [styles.input, customStyle] : styles.input;
   const [value, onChangeText] = React.useState(initValue);
   React.useEffect(() => {
     onChangeText(initValue);
@@ -12,7 +13,7 @@ const Input = props => {
   return (
     <TextInput
       placeholder={name}
-      style={styles.input}
+      style={styleClasses}
       onChangeText={text => {
         onChangeText(text);
         props.handleCallback(field, initValue, text);
