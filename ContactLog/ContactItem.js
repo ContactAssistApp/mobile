@@ -2,83 +2,75 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 import colors from 'assets/colors';
-import PropTypes from 'prop-types';
 import {updateSymptom, clearSymptoms} from './actions.js';
 import {bindActionCreators} from 'redux';
-import {deleteSymptom} from 'realm/realmSymptomsTasks';
 import Modal from 'views/Modal';
 import {connect} from 'react-redux';
 import {strings} from 'locales/i18n';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
 import Edit from './NewContact/EditContact';
 import Save from './NewContact/SaveContact';
-import { editContact } from './NewContact/actions.js';
-import Person from '../utils/person';
+import {editContact} from './NewContact/actions.js';
+import Person from 'utils/person';
 
 class ContactItemComp extends Component {
-    constructor() {
-        super();
-        this.state = {
-            manualContactModalOn: false
-        };
-        }
-
-    openManualContactModal = () => {
-        this.setState({
-            manualContactModalOn: true,
-        });
-    }
-    
-  closeManualContactModal = () => {
-        this.setState({
-            manualContactModalOn: false,
-        });
+  constructor() {
+    super();
+    this.state = {
+      manualContactModalOn: false,
+    };
   }
 
+  openManualContactModal = () => {
+    this.setState({
+      manualContactModalOn: true,
+    });
+  };
+
+  closeManualContactModal = () => {
+    this.setState({
+      manualContactModalOn: false,
+    });
+  };
+
   handleAction = () => {
-      this.props.showActionSheetWithOptions(
-        {
-          options: [
-              'Cancel',
-              'View Detail',
-              'Remove Contact',
-          ],
-          destructiveButtonIndex: 2,
-          cancelButtonIndex: 0,
-        },
-        buttonIndex => {
-          if (buttonIndex === 1) {
-            const { contact: { name, phone, label, notes, id } } = this.props;
-            this.props.editContact({
-              name, phone, label, notes, id,
-              enableSave: false,
-            });
-            this.openManualContactModal();
-          } else if (buttonIndex === 2) {
-            Person.deleteContact(
-              this.props.contact
-            );
-            this.props.onRemoveContact();
-          }
-        },
-      );
+    this.props.showActionSheetWithOptions({
+      options: ['Cancel', 'View Detail', 'Remove Contact'],
+      destructiveButtonIndex: 2,
+      cancelButtonIndex: 0,
+    }, buttonIndex => {
+      if (buttonIndex === 1) {
+        const {contact: {name, phone, label, notes, id}} = this.props;
+        this.props.editContact({
+          name, phone, label, notes, id,
+          enableSave: false,
+        });
+        this.openManualContactModal();
+      } else if (buttonIndex === 2) {
+        Person.deleteContact(
+          this.props.contact
+        );
+        this.props.onRemoveContact();
+      }
+    });
   };
 
   render() {
-    // const {name, notes} = this.props;
-    const { contact: { name, phone, label, notes } } = this.props;
+    const {
+      contact: {name, notes},
+    } = this.props;
 
     const saveButton = (
-        <Save
-          editContactData={this.props.contact}
-          date={this.props.date}
-          isEditing={true}
-          handleSaveSuccess={() => {
-            this.closeManualContactModal();
-          }}
-          onEditContactItem={this.props.onEditContactItem}
-        />
-      );
+      <Save
+        editContactData={this.props.contact}
+        date={this.props.date}
+        isEditing={true}
+        handleSaveSuccess={() => {
+          this.closeManualContactModal();
+        }}
+        onEditContactItem={this.props.onEditContactItem}
+      />
+    );
 
     return (
       <>
@@ -86,31 +78,22 @@ class ContactItemComp extends Component {
           visible={this.state.manualContactModalOn}
           handleModalClose={this.closeManualContactModal}
           title={strings('create.contact')}
-          actionButton={saveButton}
-          >
-            <Edit newContactData={this.props.contact} />
+          actionButton={saveButton}>
+          <Edit newContactData={this.props.contact} />
         </Modal>
         <View style={styles.ContactItem}>
-          <View style={[
-            styles.icon_wrapper,
-            styles.checkmark_wrapper
-          ]}>
-              <CustomIcon
-                name={'checkmark24'}
-                size={20}
-                color={colors.warning_low}
-              />
+          <View style={[styles.icon_wrapper, styles.checkmark_wrapper]}>
+            <CustomIcon
+              name={'checkmark24'}
+              size={20}
+              color={colors.warning_low}
+            />
           </View>
           <View style={styles.ContactItem_detail}>
             <Text style={styles.title}>{name}</Text>
-            <Text style={styles.time}>
-              {notes
-                ? `${notes}`
-                : ''}
-            </Text>
+            <Text style={styles.time}>{notes ? `${notes}` : ''}</Text>
           </View>
-          {
-          this.props.noEdit && (
+          {this.props.noEdit && (
             <TouchableOpacity
               style={styles.action_button}
               onPress={this.handleAction}>
@@ -176,13 +159,17 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateSymptom,
-  clearSymptoms,
-  editContact
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateSymptom,
+      clearSymptoms,
+      editContact,
+    },
+    dispatch,
+  );
 
-const ContactItem = connectActionSheet(ContactItemComp)
+const ContactItem = connectActionSheet(ContactItemComp);
 
 export default connect(
   mapStateToProps,

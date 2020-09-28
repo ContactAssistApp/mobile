@@ -10,9 +10,8 @@ import {strings} from 'locales/i18n';
 import ContactItem from './ContactItem';
 
 class SelectedContacts extends Component {
-
-  onRemoveContact = (contact) => {
-    const { selectedContacts } = this.props;
+  onRemoveContact = contact => {
+    const {selectedContacts} = this.props;
     const index = selectedContacts.findIndex(item => item.id === contact.id);
     if (index !== -1) {
       // Remove Existing contact
@@ -27,13 +26,15 @@ class SelectedContacts extends Component {
         value: [...selectedContacts, contact],
       });
     }
-  }
+  };
 
   onEditContactItem = () => {
-    return (updatedContact) => {
+    return updatedContact => {
       console.log('lalalal updating contact reducer');
-      const { selectedContacts } = this.props;
-      const index = selectedContacts.findIndex(item => item.id === updatedContact.id);
+      const {selectedContacts} = this.props;
+      const index = selectedContacts.findIndex(
+        item => item.id === updatedContact.id,
+      );
       if (index !== -1) {
         // Remove Existing contact
         console.log('Replacing itemmmm', updatedContact);
@@ -44,38 +45,33 @@ class SelectedContacts extends Component {
           value: updatedSelectedContacts,
         });
       }
-    }
-  }
-
+    };
+  };
 
   render() {
-    const {
-      selectedContacts,
-      date
-    } = this.props;
+    const {selectedContacts, date} = this.props;
 
     return (
       <>
-        {selectedContacts && selectedContacts.length > 0
-          ? <View>
+        {selectedContacts && selectedContacts.length > 0 ? (
+          <View>
             {selectedContacts.map(contact => {
               return (
                 <View style={styles.contact_wrapper} key={contact.id}>
-                  <ContactItem 
+                  <ContactItem
                     noEdit={this.props.noEdit}
-                    date={date} 
+                    date={date}
                     contact={contact}
                     onEditContactItem={this.onEditContactItem}
                     onRemoveContact={() => this.onRemoveContact(contact)}
                   />
                 </View>
-              )
+              );
             })}
-            </View>
-          : <Text style={styles.description}>
-            {strings('socialize.text')}
-            </Text>
-        }
+          </View>
+        ) : (
+          <Text style={styles.description}>{strings('socialize.text')}</Text>
+        )}
       </>
     );
   }

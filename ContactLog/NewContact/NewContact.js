@@ -23,7 +23,7 @@ class NewContact extends Component {
 
   render() {
     const {
-      newContactData: { name, phone, label, notes}
+      newContactData: {name, phone, label, notes},
     } = this.props;
     return (
       <>
@@ -43,15 +43,6 @@ class NewContact extends Component {
           field={'phone'}
         />
 
-        {/* TODO: Fix this to be a dropdown */}
-        <ContactField
-          icon={'Contact24'}
-          name={strings('contacts.label')}
-          value={label}
-          handleCallback={this.handleCallback}
-          field={'label'}
-        />
-
         <ContactField
           icon={'Contact24'}
           name={strings('contacts.notes')}
@@ -59,7 +50,6 @@ class NewContact extends Component {
           handleCallback={this.handleCallback}
           field={'notes'}
         />
-
       </>
     );
   }

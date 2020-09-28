@@ -3,7 +3,7 @@ const initialState = {
   name: '',
   phone: '',
   label: '',
-  notes: ''
+  notes: '',
 };
 
 const newContactReducer = (state = initialState, action) => {

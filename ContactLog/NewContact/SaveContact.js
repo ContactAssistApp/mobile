@@ -4,15 +4,13 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {strings} from 'locales/i18n';
 import colors from 'assets/colors';
-import {addPerson} from 'realm/realmPersonTasks';
-import Person from '../../utils/person';
+import Person from 'utils/person';
 import {updateContactLog} from '../actions.js';
-
 
 class Save extends Component {
   handleSave = async () => {
     let {
-        date, 
+      date,
       newContactData: {name, phone, label, notes, id},
     } = this.props;
     const requiredFields = [name, phone];
@@ -30,25 +28,25 @@ class Save extends Component {
     });
 
     if (name) {
-        const savedContact = {
-            time: new Date(date.replace(/-/g, '/')).getTime(),
-            id: id ? id : (Math.random()*1e32).toString(36), // TODO: Should properly generate random string here,
-            name: name,
-            phone: phone,
-            label: label,
-            notes: notes
-        };
-        if (this.props.isEditing) {
-          Person.updateContact(savedContact);
-          const editContactFn = this.props.onEditContactItem();
-          editContactFn(savedContact);
-        } else {
-          Person.savePerson(savedContact);
-          this.props.updateContactLog({
-            field: 'selectedContacts',
-            value: [...this.props.contactLogData.selectedContacts, savedContact]
-          });
-        }
+      const savedContact = {
+        time: new Date(date.replace(/-/g, '/')).getTime(),
+        id: id ? id : (Math.random() * 1e32).toString(36), // TODO: Should properly generate random string here,
+        name: name,
+        phone: phone,
+        label: label,
+        notes: notes,
+      };
+      if (this.props.isEditing) {
+        Person.updateContact(savedContact);
+        const editContactFn = this.props.onEditContactItem();
+        editContactFn(savedContact);
+      } else {
+        Person.savePerson(savedContact);
+        this.props.updateContactLog({
+          field: 'selectedContacts',
+          value: [...this.props.contactLogData.selectedContacts, savedContact],
+        });
+      }
       this.props.handleSaveSuccess();
     }
   };
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
   },
   active: {
     color: colors.primary_theme,
-  }
+  },
 });
 
 const mapStateToProps = state => {
@@ -92,7 +90,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    updateContactLog
+  updateContactLog
 }, dispatch);
 
 export default connect(

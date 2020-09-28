@@ -1,82 +1,85 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView} from 'react-native';
-import colors from '../assets/colors';
-import {TouchableOpacity} from 'react-native';
+import Contacts from 'react-native-contacts';
+import ContactList from './ContactList';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 import Modal from 'views/Modal';
-import ContactList from './ContactList';
-import {updateContactLog} from './actions.js';
+import NewContact from './NewContact/NewContact';
+import Person from 'utils/person';
+import PropTypes from 'prop-types';
+import Save from './NewContact/SaveContact';
+import SelectedContacts from './SelectedContacts';
+import colors from 'assets/colors';
+import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import SelectedContacts from './SelectedContacts';
-import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
-import Person from '../utils/person';
-import NewContact from './NewContact/NewContact';
-import Save from './NewContact/SaveContact';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {strings} from 'locales/i18n';
+import {updateContactLog} from './actions.js';
 
 class People extends Component {
   constructor() {
     super();
     this.state = {
-      importContactModalOn: false,
-      manualContactModalOn: false
+      contactListModalOn: false,
+      addContactModalOn: false,
     };
   }
 
   componentDidMount() {
-    const { date } = this.props;
+    const {date} = this.props;
     this.fetchSelectedContactsByDate(date);
     this.fetchAllContacts();
   }
 
   componentDidUpdate(prevProps) {
-    const { date } = this.props;
+    const {date} = this.props;
     if (prevProps.date !== date) {
       this.fetchSelectedContactsByDate(date);
     }
   }
 
-  fetchSelectedContactsByDate = async (date) => {
+  fetchSelectedContactsByDate = async date => {
     const persons = await Person.fetchContactsByDate(
       new Date(date.replace(/-/g, '/')),
     );
+
     this.props.updateContactLog({
       field: 'selectedContacts',
       value: persons,
     });
-  }
+  };
 
   fetchAllContacts = () => {
-    const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
-    check(contactPermission)
-    .then((result) => {
-        switch (result) {
-          case RESULTS.UNAVAILABLE:
-            console.log(
-              'This feature is not available (on this device / in this context)',
-            );
-            break;
-          case RESULTS.DENIED:
-            console.log(
-              'The permission has not been requested / is denied but requestable',
-            );
-            request(contactPermission).then((result) => {
-              this.loadContacts();
-          })
-            break;
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
+    const contactPermission =
+      Platform.OS === 'android'
+        ? PERMISSIONS.ANDROID.READ_CONTACTS
+        : PERMISSIONS.IOS.CONTACTS;
+    check(contactPermission).then(result => {
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          console.log(
+            'This feature is not available (on this device / in this context)',
+          );
+          break;
+        case RESULTS.DENIED:
+          console.log(
+            'The permission has not been requested / is denied but requestable',
+          );
+          request(contactPermission).then(() => {
             this.loadContacts();
-            break;
-          case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
-            break;
-        }
+          });
+          break;
+        case RESULTS.GRANTED:
+          console.log('The permission is granted');
+          this.loadContacts();
+          break;
+        case RESULTS.BLOCKED:
+          console.log('The permission is denied and not requestable anymore');
+          break;
       }
-    )
-  }
+    });
+  };
 
   loadContacts = () => {
     Contacts.getAllWithoutPhotos((err, contacts) => {
@@ -89,7 +92,8 @@ class People extends Component {
         return {
           id: contact.recordID,
           name: `${contact.givenName} ${contact.familyName}`,
-          phone: (contact.phoneNumbers && contact.phoneNumbers.length > 0) ? contact.phoneNumbers[0].number : ''
+          phone: (contact.phoneNumbers && contact.phoneNumbers.length > 0)
+            ? contact.phoneNumbers[0].number : '',
         };
       })
       .sort(function(a, b) {
@@ -102,6 +106,7 @@ class People extends Component {
         }
         return 0;
       });
+
       this.props.updateContactLog({
         field: 'allContacts',
         value: contactList,
@@ -111,64 +116,64 @@ class People extends Component {
 
   openModal = () => {
     this.setState({
-      importContactModalOn: true,
+      contactListModalOn: true,
     });
   };
 
   closeModal = () => {
     this.setState({
-      importContactModalOn: false,
+      contactListModalOn: false,
     });
   };
 
-  openManualContactModal = () => {
+  openalContactModal = () => {
     this.setState({
-      manualContactModalOn: true,
+      addContactModalOn: true,
     });
-  }
+  };
 
   closeManualContactModal = () => {
     this.setState({
-      manualContactModalOn: false,
+      addContactModalOn: false,
     });
-  }
+  };
 
   render() {
-    const { selectedContacts } = this.props.contactLogData;
+    const {selectedContacts} = this.props.contactLogData;
     const saveButton = (
-      <Save
-        date={this.props.date}
-        handleSaveSuccess={() => {
-        }}
-      />
+      <Save date={this.props.date} handleSaveSuccess={() => {}} />
     );
+
     return (
       <>
         <Modal
-          visible={this.state.importContactModalOn}
+          visible={this.state.contactListModalOn}
           handleModalClose={this.closeModal}
           title={strings('select.contact')}>
           <ContactList
             handleModalClose={this.closeModal}
             date={this.props.date}
-
           />
         </Modal>
         <Modal
-          visible={this.state.manualContactModalOn}
+          visible={this.state.addContactModalOn}
           handleModalClose={this.closeManualContactModal}
           title={strings('create.contact')}
-          actionButton={saveButton}
-          >
-            <NewContact/>
+          actionButton={saveButton}>
+          <NewContact />
         </Modal>
         <ScrollView>
           <Text style={styles.header}>
-            {strings("social.interaction_text")}
+            {strings('social.interaction_text')}
           </Text>
-          <SelectedContacts date={this.props.date} selectedContacts={selectedContacts}/>
+          <SelectedContacts
+            date={this.props.date}
+            selectedContacts={selectedContacts}
+          />
         </ScrollView>
-        <TouchableOpacity onPress={this.openManualContactModal} style={styles.manual_add_button}>
+        <TouchableOpacity
+          onPress={this.openManualContactModal}
+          style={styles.manual_add_button}>
           <CustomIcon name={'contacts'} color={'white'} size={20} />
           <Text>Add Manual Contact</Text>
         </TouchableOpacity>

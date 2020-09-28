@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList,
-  Platform, Alert
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import colors from '../assets/colors';
 import CustomIcon from '../assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
@@ -33,17 +31,17 @@ class ContactList extends Component {
     }
   };
 
-  saveSelectedContacts = (selectedContacts) => {
-    const { date } = this.props;
-    selectedContacts.forEach((selectContact) => {
+  saveSelectedContacts = selectedContacts => {
+    const {date} = this.props;
+    selectedContacts.forEach(selectContact => {
       Person.savePerson({
         time: new Date(date.replace(/-/g, '/')).getTime(),
         notes: '', // By default on clicking doesn't have notes,
         label: '', // By default on clicking doesn't have label
-        ...selectContact
-      })
-    })
-  }
+        ...selectContact,
+      });
+    });
+  };
 
   render() {
     const {
@@ -85,7 +83,7 @@ class ContactList extends Component {
               this.saveSelectedContacts(selectedContacts);
               this.props.handleModalClose();
             }}>
-            <Text style={styles.save_text}>{strings("save.text")}</Text>
+            <Text style={styles.save_text}>{strings('save.text')}</Text>
           </TouchableOpacity>
         </View>
       </>
