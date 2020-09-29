@@ -43,7 +43,6 @@ class People extends Component {
     const persons = await Person.fetchContactsByDate(
       new Date(date.replace(/-/g, '/')),
     );
-
     this.props.updateContactLog({
       field: 'selectedContacts',
       value: persons,
@@ -139,7 +138,12 @@ class People extends Component {
   };
 
   render() {
-    const {selectedContacts} = this.props.contactLogData;
+    const {
+      contactLogData: {selectedContacts},
+      date,
+    } = this.props;
+
+    const {contactListModalOn, addContactModalOn} = this.state;
     const saveButton = (
       <Save date={this.props.date} handleSaveSuccess={() => {}} />
     );
@@ -147,13 +151,10 @@ class People extends Component {
     return (
       <>
         <Modal
-          visible={this.state.contactListModalOn}
+          visible={contactListModalOn}
           handleModalClose={this.closeModal}
           title={strings('select.contact')}>
-          <ContactList
-            handleModalClose={this.closeModal}
-            date={this.props.date}
-          />
+          <ContactList handleModalClose={this.closeModal} date={date} />
         </Modal>
         <Modal
           visible={this.state.addContactModalOn}
@@ -164,7 +165,7 @@ class People extends Component {
         </Modal>
         <ScrollView>
           <Text style={styles.header}>
-            {strings('social.interaction_text')}
+            {strings('people.social_interactions_header')}
           </Text>
           <SelectedContacts
             date={this.props.date}

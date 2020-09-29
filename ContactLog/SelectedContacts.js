@@ -30,14 +30,12 @@ class SelectedContacts extends Component {
 
   onEditContactItem = () => {
     return updatedContact => {
-      console.log('lalalal updating contact reducer');
       const {selectedContacts} = this.props;
       const index = selectedContacts.findIndex(
         item => item.id === updatedContact.id,
       );
       if (index !== -1) {
         // Remove Existing contact
-        console.log('Replacing itemmmm', updatedContact);
         let updatedSelectedContacts = [...selectedContacts];
         updatedSelectedContacts[index] = updatedContact;
         this.props.updateContactLog({
@@ -50,22 +48,19 @@ class SelectedContacts extends Component {
 
   render() {
     const {selectedContacts, date} = this.props;
-
     return (
       <>
         {selectedContacts && selectedContacts.length > 0 ? (
           <View>
             {selectedContacts.map(contact => {
               return (
-                <View style={styles.contact_wrapper} key={contact.id}>
-                  <ContactItem
-                    noEdit={this.props.noEdit}
-                    date={date}
-                    contact={contact}
-                    onEditContactItem={this.onEditContactItem}
-                    onRemoveContact={() => this.onRemoveContact(contact)}
-                  />
-                </View>
+                <ContactItem
+                  key={contact.id}
+                  date={date}
+                  contact={contact}
+                  onEditContactItem={this.onEditContactItem}
+                  onRemoveContact={() => this.onRemoveContact(contact)}
+                />
               );
             })}
           </View>
@@ -84,12 +79,6 @@ const styles = StyleSheet.create({
     color: '#141414',
     padding: 20,
     backgroundColor: 'white',
-  },
-  contact_wrapper: {
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.card_border,
-    padding: 21,
   },
   contact: {
     fontSize: 16,

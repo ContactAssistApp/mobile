@@ -17,39 +17,47 @@ class ContactItemComp extends Component {
   constructor() {
     super();
     this.state = {
-      manualContactModalOn: false,
+      addContactModalOn: false,
     };
   }
 
   openManualContactModal = () => {
     this.setState({
-      manualContactModalOn: true,
+      addContactModalOn: true,
     });
   };
 
   closeManualContactModal = () => {
     this.setState({
-      manualContactModalOn: false,
+      addContactModalOn: false,
     });
   };
 
   handleAction = () => {
     this.props.showActionSheetWithOptions({
-      options: ['Cancel', 'View Detail', 'Remove Contact'],
+      options: [
+        strings('contact_item.cancel'),
+        strings('contact_item.edit'),
+        strings('contact_item.delete')
+      ],
       destructiveButtonIndex: 2,
       cancelButtonIndex: 0,
     }, buttonIndex => {
       if (buttonIndex === 1) {
-        const {contact: {name, phone, label, notes, id}} = this.props;
+        const {
+          contact: {name, phone, label, notes, id},
+        } = this.props;
         this.props.editContact({
-          name, phone, label, notes, id,
+          name,
+          phone,
+          label,
+          notes,
+          id,
           enableSave: false,
         });
         this.openManualContactModal();
       } else if (buttonIndex === 2) {
-        Person.deleteContact(
-          this.props.contact
-        );
+        Person.deleteContact(this.props.contact);
         this.props.onRemoveContact();
       }
     });
@@ -75,35 +83,22 @@ class ContactItemComp extends Component {
     return (
       <>
         <Modal
-          visible={this.state.manualContactModalOn}
+          visible={this.state.addContactModalOn}
           handleModalClose={this.closeManualContactModal}
           title={strings('create.contact')}
           actionButton={saveButton}>
           <Edit newContactData={this.props.contact} />
         </Modal>
-        <View style={styles.ContactItem}>
-          <View style={[styles.icon_wrapper, styles.checkmark_wrapper]}>
-            <CustomIcon
-              name={'checkmark24'}
-              size={20}
-              color={colors.warning_low}
-            />
-          </View>
-          <View style={styles.ContactItem_detail}>
+        <View style={styles.container}>
+          <View style={styles.detail}>
             <Text style={styles.title}>{name}</Text>
-            <Text style={styles.time}>{notes ? `${notes}` : ''}</Text>
+            {notes && <Text style={styles.notes}>{notes}</Text>}
           </View>
-          {this.props.noEdit && (
-            <TouchableOpacity
-              style={styles.action_button}
-              onPress={this.handleAction}>
-              <CustomIcon
-                name={'action24'}
-                size={20}
-                color={colors.gray_icon}
-              />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={styles.action_button}
+            onPress={this.handleAction}>
+            <CustomIcon name={'action24'} size={20} color={colors.gray_icon} />
+          </TouchableOpacity>
         </View>
       </>
     );
@@ -111,26 +106,15 @@ class ContactItemComp extends Component {
 }
 
 const styles = StyleSheet.create({
-  ContactItem: {
+  container: {
     flexDirection: 'row',
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
   },
-  icon_wrapper: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
-  },
-  checkmark_wrapper: {
-    backgroundColor: '#DFF6DD',
-  },
-  edit_wrapper: {
-    backgroundColor: colors.fill_off,
-  },
-  ContactItem_detail: {
+  detail: {
     flex: 1,
   },
   title: {
@@ -138,7 +122,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: colors.module_title,
   },
-  time: {
+  notes: {
     fontSize: 14,
     lineHeight: 16,
     color: colors.secondary_body_copy,
@@ -146,10 +130,6 @@ const styles = StyleSheet.create({
   action_button: {
     paddingLeft: 20,
     paddingRight: 15,
-  },
-  add_button: {
-    paddingLeft: 20,
-    paddingRight: 10,
   },
 });
 
