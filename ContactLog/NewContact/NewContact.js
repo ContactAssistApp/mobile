@@ -28,7 +28,7 @@ class NewContact extends Component {
     return (
       <>
         <ContactField
-          icon={'building24'}
+          icon={'personAdd24'}
           name={strings('contacts.name')}
           value={name}
           handleCallback={this.handleCallback}
@@ -36,7 +36,7 @@ class NewContact extends Component {
         />
 
         <ContactField
-          icon={'Contact24'}
+          icon={'phoneUnfilled24'}
           name={strings('contacts.phone')}
           value={phone}
           handleCallback={this.handleCallback}
@@ -44,7 +44,7 @@ class NewContact extends Component {
         />
 
         <ContactField
-          icon={'Contact24'}
+          icon={'note24'}
           name={strings('contacts.notes')}
           value={notes}
           handleCallback={this.handleCallback}
