@@ -170,6 +170,7 @@ class People extends Component {
           <SelectedContacts
             date={this.props.date}
             selectedContacts={selectedContacts}
+            refreshContacts={this.fetchSelectedContactsByDate}
           />
         </ScrollView>
         <TouchableOpacity

@@ -60,6 +60,7 @@ class SelectedContacts extends Component {
                   contact={contact}
                   onEditContactItem={this.onEditContactItem}
                   onRemoveContact={() => this.onRemoveContact(contact)}
+                  refreshContacts={this.props.refreshContacts}
                 />
               );
             })}

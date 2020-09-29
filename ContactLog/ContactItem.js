@@ -59,7 +59,9 @@ class ContactItemComp extends Component {
           });
           this.openManualContactModal();
         } else if (buttonIndex === 2) {
-          Person.deleteContact(this.props.contact);
+          const {contact, date} = this.props;
+          Person.deleteContact(contact);
+          this.props.refreshContacts(date);
         }
       },
     );
