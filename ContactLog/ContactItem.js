@@ -75,7 +75,6 @@ class ContactItemComp extends Component {
     } = this.props;
 
     const {addContactModalOn} = this.state;
-
     const saveButton = (
       <Save
         editContactData={contact}
@@ -101,6 +100,7 @@ class ContactItemComp extends Component {
           <View style={styles.detail}>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
+              {notes ? <Text style={styles.notes}>{notes}</Text> : <></>}
             </View>
             <TouchableOpacity
               style={styles.action_button}
