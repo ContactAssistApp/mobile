@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     textTransform: 'capitalize',
+    fontWeight: '500',
     color: colors.secondary_body_copy,
   },
   time: {
