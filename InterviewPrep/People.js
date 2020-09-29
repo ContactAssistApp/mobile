@@ -1,36 +1,10 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from 'assets/colors';
-import SelectedContacts from 'ContactLog/SelectedContacts';
-import SectionHeader from './SectionHeader';
-import {strings} from '../locales/i18n';
-import Person from '../utils/person';
-import Contacts from 'react-native-contacts';
+import ContactsList from './ContactsList';
+import {strings} from 'locales/i18n';
 
 class People extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedContacts: []
-    };
-  }
-
-  componentDidMount() {
-    const TIME_RANGE = 14;
-    let today = new Date().toString();
-    this.fetchSelectedContactsByDate(today, TIME_RANGE);
-  }
-
-  fetchSelectedContactsByDate = async (date, timerange) => {
-    console.log('Fetching new contacts');
-    const selectedContacts = await Person.fetchContactsByDate(
-      new Date(date.replace(/-/g, '/')),
-      timerange
-    );
-    this.setState({ selectedContacts });
-  }
-
   render() {
     return (
       <>
@@ -38,14 +12,13 @@ class People extends Component {
           <View style={styles.header}>
             <Image
               style={styles.icon}
-              source={require('../assets/health/people.png')}
+              source={require('assets/health/people.png')}
             />
             <Text style={styles.title}>{strings('contact.title_3')}</Text>
           </View>
           <Text style={styles.description}>{strings('contact.desc_3')}</Text>
         </View>
-        <SectionHeader header={strings('people.text')} />
-        <SelectedContacts selectedContacts={this.state.selectedContacts}/>
+        <ContactsList />
       </>
     );
   }

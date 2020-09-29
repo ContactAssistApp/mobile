@@ -1,65 +1,60 @@
-import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from 'assets/colors';
 import SectionHeader from './SectionHeader';
-import Location from 'utils/location';
+import Person from 'utils/person';
 import {strings} from 'locales/i18n';
 import DateHeader from './DateHeader';
 import DateConverter from 'utils/date';
 
-class LocationsList extends Component {
+class ContactsList extends Component {
   constructor() {
     super();
     this.state = {
-      addresses: {},
+      contacts: {},
     };
   }
 
   componentDidMount() {
-    this.fetchAddresses();
+    this.fetchContacts();
   }
 
-  fetchAddresses = async () => {
-    let today = new Date();
-    const addresses = await Location.fetchAddresses(today, 14);
+  fetchContacts = async () => {
+    const contacts = await Person.fetchContactsByDate(new Date(), 14);
 
-    let addressesMap = {};
-    addresses.map(address => {
-      const {time} = address;
+    let contactsMap = {};
+    contacts.map(contact => {
+      const {time} = contact;
       const date = DateConverter.calendarFormat(new Date(time));
-      if (!Object.keys(addressesMap).includes(date)) {
-        addressesMap[date] = [];
+      if (!Object.keys(contactsMap).includes(date)) {
+        contactsMap[date] = [];
       }
-
-      addressesMap[date].push(address);
+      contactsMap[date].push(contact);
     });
-
     this.setState({
-      addresses: addressesMap,
+      contacts: contactsMap,
     });
   };
 
   render() {
-    const {addresses} = this.state;
+    const {contacts} = this.state;
     return (
       <>
-        <SectionHeader header={strings('general.locations_txt')} />
-        {Object.entries(addresses).map(([key, val]) => {
+        <SectionHeader header={strings('people.text')} />
+        {Object.entries(contacts).map(([key, val]) => {
           return (
             <View key={key}>
               <DateHeader date={key} />
               {val.map((item, idx) => {
-                const {name, address, timerange} = item;
-                console.log(item);
+                const {name, phone, notes} = item;
                 return (
-                  <View style={styles.address_card} key={idx}>
+                  <View style={styles.contact_card} key={idx}>
                     <Text style={styles.name}>{name}</Text>
-                    {address !== '' && (
-                      <Text style={styles.metadata}>{address}</Text>
+                    {phone !== '' && (
+                      <Text style={styles.metadata}>{phone}</Text>
                     )}
-                    {timerange && (
-                      <Text style={styles.metadata}>{timerange}</Text>
+                    {notes !== '' && (
+                      <Text style={styles.metadata}>{notes}</Text>
                     )}
                   </View>
                 );
@@ -73,7 +68,7 @@ class LocationsList extends Component {
 }
 
 const styles = StyleSheet.create({
-  address_card: {
+  contact_card: {
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: colors.card_border,
@@ -94,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LocationsList;
+export default ContactsList;
