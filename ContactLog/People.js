@@ -173,12 +173,6 @@ class People extends Component {
             refreshContacts={this.fetchSelectedContactsByDate}
           />
         </ScrollView>
-        <TouchableOpacity
-          onPress={this.openManualContactModal}
-          style={styles.manual_add_button}>
-          <CustomIcon name={'contacts'} color={'white'} size={20} />
-          <Text>Add Manual Contact</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
         </TouchableOpacity>
