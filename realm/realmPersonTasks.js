@@ -1,14 +1,10 @@
-import DateConverter from '../utils/date';
 import RealmObj from './realm';
 
 export async function addPerson(person) {
   try {
     const realm = await RealmObj.init();
     realm.write(() => {
-      realm.create('Person',
-        {...person},
-        true,
-      );
+      realm.create('Person', {...person}, true);
     });
   } catch (err) {
     console.log('add Person to realm error: ', err);
@@ -40,9 +36,10 @@ export async function deleteContact(contact) {
   try {
     const realm = await RealmObj.init();
     realm.write(() => {
-      let person = realm.objectForPrimaryKey('Person', contact.id);      
+      let person = realm.objectForPrimaryKey('Person', contact.id);
       realm.delete(person);
-    })
+    });
   } catch (err) {
+    console.log('delete person from realm error: ', err);
   }
 }

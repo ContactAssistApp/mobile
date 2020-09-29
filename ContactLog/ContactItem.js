@@ -34,44 +34,50 @@ class ContactItemComp extends Component {
   };
 
   handleAction = () => {
-    this.props.showActionSheetWithOptions({
-      options: [
-        strings('contact_item.cancel'),
-        strings('contact_item.edit'),
-        strings('contact_item.delete')
-      ],
-      destructiveButtonIndex: 2,
-      cancelButtonIndex: 0,
-    }, buttonIndex => {
-      if (buttonIndex === 1) {
-        const {
-          contact: {name, phone, label, notes, id},
-        } = this.props;
-        this.props.editContact({
-          name,
-          phone,
-          label,
-          notes,
-          id,
-          enableSave: false,
-        });
-        this.openManualContactModal();
-      } else if (buttonIndex === 2) {
-        Person.deleteContact(this.props.contact);
-        this.props.onRemoveContact();
-      }
-    });
+    this.props.showActionSheetWithOptions(
+      {
+        options: [
+          strings('contact_item.cancel'),
+          strings('contact_item.edit'),
+          strings('contact_item.delete'),
+        ],
+        destructiveButtonIndex: 2,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) {
+          const {
+            contact: {name, phone, label, notes, id},
+          } = this.props;
+          this.props.editContact({
+            name,
+            phone,
+            label,
+            notes,
+            id,
+            enableSave: false,
+          });
+          this.openManualContactModal();
+        } else if (buttonIndex === 2) {
+          Person.deleteContact(this.props.contact);
+        }
+      },
+    );
   };
 
   render() {
     const {
+      contact,
       contact: {name, notes},
+      date,
     } = this.props;
+
+    const {addContactModalOn} = this.state;
 
     const saveButton = (
       <Save
-        editContactData={this.props.contact}
-        date={this.props.date}
+        editContactData={contact}
+        date={date}
         isEditing={true}
         handleSaveSuccess={() => {
           this.closeManualContactModal();
@@ -83,22 +89,27 @@ class ContactItemComp extends Component {
     return (
       <>
         <Modal
-          visible={this.state.addContactModalOn}
+          visible={addContactModalOn}
           handleModalClose={this.closeManualContactModal}
           title={strings('create.contact')}
           actionButton={saveButton}>
-          <Edit newContactData={this.props.contact} />
+          <Edit newContactData={contact} />
         </Modal>
         <View style={styles.container}>
           <View style={styles.detail}>
-            <Text style={styles.title}>{name}</Text>
-            {notes && <Text style={styles.notes}>{notes}</Text>}
+            <View style={styles.content}>
+              <Text style={styles.title}>{name}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.action_button}
+              onPress={this.handleAction}>
+              <CustomIcon
+                name={'action24'}
+                size={20}
+                color={colors.gray_icon}
+              />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.action_button}
-            onPress={this.handleAction}>
-            <CustomIcon name={'action24'} size={20} color={colors.gray_icon} />
-          </TouchableOpacity>
         </View>
       </>
     );
@@ -108,13 +119,18 @@ class ContactItemComp extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingVertical: 20,
     paddingHorizontal: 16,
     backgroundColor: 'white',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   detail: {
+    paddingVertical: 20,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.card_border,
+  },
+  content: {
     flex: 1,
   },
   title: {
