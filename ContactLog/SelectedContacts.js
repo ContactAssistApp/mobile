@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 
 ContactList.propTypes = {
   selectedContacts: PropTypes.array.isRequired,
-  updateContactLog: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func,
 };
 
 const mapStateToProps = state => {

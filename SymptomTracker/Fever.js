@@ -37,7 +37,7 @@ class Fever extends Component {
           onChangeText={text => {
             this.handleEdit('feverTemperature', parseFloat(text));
           }}
-          value={feverTemperature}
+          value={parseFloat(feverTemperature)}
           maxLength={5}
         />
         <Text style={styles.label}>

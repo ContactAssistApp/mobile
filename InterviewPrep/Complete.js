@@ -37,37 +37,55 @@ class Complete extends Component {
       }).join('\t');
     }).join('\r\n');
 
+    const contacts = real.objects('Person');
+    const contactsCSV = contacts.map(contact => {
+      let contactObj = JSON.parse(JSON.stringify(contact));
+      return Object.values(contactObj).map(val => {
+        return val;
+      }).join('\t');
+    }).join('\r\n');
+
     let locationPath;
     let symptomsPath;
+    let contactsPath;
 
     try {
       let locationURL;
       let symptomsURL;
+      let contactsURL;
+
       if (Platform.OS === 'android') {
         let encodedLocation = new Buffer(JSON.stringify(locationCSV)).toString('base64');
         let encodedSymptoms = new Buffer(JSON.stringify(symptomsCSV)).toString('base64');
+        let encodedContacts = new Buffer(JSON.stringify(contactsCSV)).toString('base64');
 
         locationURL = 'data:text/csv;base64,' + encodedLocation;
         symptomsURL = 'data:text/csv;base64,' + encodedSymptoms;
+        contactsURL = 'data:text/csv;base64,' + encodedContacts;
       } else {
         locationPath = RNFS.DocumentDirectoryPath + '/location.csv';
         symptomsPath = RNFS.DocumentDirectoryPath + '/symptoms.csv';
+        contactsPath = RNFS.DocumentDirectoryPath + '/contacts.csv';
+
         try {
           await RNFS.unlink(locationPath);
           await RNFS.unlink(symptomsPath);
+          await RNFS.unlink(contactsPath);
         } catch (e) {
           // unlink fails if the file doesn't exist, which is fine
         }
 
         await RNFS.writeFile(locationPath, locationCSV, 'utf8');
         await RNFS.writeFile(symptomsPath, symptomsCSV, 'utf8');
+        await RNFS.writeFile(contactsPath, contactsCSV, 'utf8');
         locationURL = 'file://' + locationPath;
         symptomsURL = 'file://' + symptomsPath;
+        contactsURL = 'file://' + contactsPath;
       }
       console.log('dump created successfully');
 
       let res = await Share.open({
-        urls: [locationURL, symptomsURL],
+        urls: [locationURL, symptomsURL, contactsURL],
         filename: 'common-circle-dump',
         message: strings('export.message'),
         failOnCancel: false,
@@ -83,6 +101,7 @@ class Complete extends Component {
         console.log('removing file');
         await RNFS.unlink(locationPath);
         await RNFS.unlink(symptomsPath);
+        await RNFS.unlink(contactsPath);
       } catch (e) {
         // unlink fails if the file doesn't exist, which is fine
       }

@@ -104,17 +104,17 @@ Location2.schema = {
 };
 
 class Person extends Realm.Object {}
-  Person.schema = {
-    name: 'Person',
-    primaryKey: 'id',
-    properties: {
-      time: 'int',
-      id: 'string',
-      name: 'string',
-      phone: 'string',
-      notes: 'string',
-      label: 'string'
-    },
+Person.schema = {
+  name: 'Person',
+  primaryKey: 'id',
+  properties: {
+    time: 'int',
+    id: 'string',
+    name: 'string',
+    phone: 'string',
+    notes: 'string',
+    label: 'string',
+  },
 };
 
 class Symptoms extends Realm.Object {}

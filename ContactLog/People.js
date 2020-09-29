@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
 });
 
 ContactList.propTypes = {
-  updateContactLog: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func,
 };
 
 const mapStateToProps = state => {
