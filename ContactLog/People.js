@@ -1,31 +1,60 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
-import colors from 'assets/colors';
 import Contacts from 'react-native-contacts';
-import {TouchableOpacity} from 'react-native';
+import ContactList from './ContactList';
 import CustomIcon from 'assets/icons/CustomIcon.js';
 import Modal from 'views/Modal';
-import ContactList from './ContactList';
-import {updateContactLog} from './actions.js';
+import NewContact from './NewContact/NewContact';
+import Person from 'utils/person';
+import PropTypes from 'prop-types';
+import Save from './NewContact/SaveContact';
+import SelectedContacts from './SelectedContacts';
+import colors from 'assets/colors';
+import {StyleSheet, Text, ScrollView, Platform} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import SelectedContacts from './SelectedContacts';
-import {strings} from '../locales/i18n';
-import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {strings} from 'locales/i18n';
+import {updateContactLog} from './actions.js';
 
 class People extends Component {
   constructor() {
     super();
     this.state = {
-      modalOn: false,
+      contactListModalOn: false,
+      addContactModalOn: false,
     };
   }
 
   componentDidMount() {
-    const contactPermission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.READ_CONTACTS : PERMISSIONS.IOS.CONTACTS;
-    check(contactPermission)
-    .then(result => {
+    const {date} = this.props;
+    this.fetchSelectedContactsByDate(date);
+    this.fetchAllContacts();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {date} = this.props;
+    if (prevProps.date !== date) {
+      this.fetchSelectedContactsByDate(date);
+    }
+  }
+
+  fetchSelectedContactsByDate = async date => {
+    const persons = await Person.fetchContactsByDate(
+      new Date(date.replace(/-/g, '/')),
+    );
+    this.props.updateContactLog({
+      field: 'selectedContacts',
+      value: persons,
+    });
+  };
+
+  fetchAllContacts = () => {
+    const contactPermission =
+      Platform.OS === 'android'
+        ? PERMISSIONS.ANDROID.READ_CONTACTS
+        : PERMISSIONS.IOS.CONTACTS;
+    check(contactPermission).then(result => {
       switch (result) {
         case RESULTS.UNAVAILABLE:
           console.log(
@@ -49,7 +78,7 @@ class People extends Component {
           break;
       }
     });
-  }
+  };
 
   loadContacts = () => {
     Contacts.getAllWithoutPhotos((err, contacts) => {
@@ -62,6 +91,8 @@ class People extends Component {
         return {
           id: contact.recordID,
           name: `${contact.givenName} ${contact.familyName}`,
+          phone: (contact.phoneNumbers && contact.phoneNumbers.length > 0)
+            ? contact.phoneNumbers[0].number : '',
         };
       })
       .sort(function(a, b) {
@@ -74,6 +105,7 @@ class People extends Component {
         }
         return 0;
       });
+
       this.props.updateContactLog({
         field: 'allContacts',
         value: contactList,
@@ -83,30 +115,63 @@ class People extends Component {
 
   openModal = () => {
     this.setState({
-      modalOn: true,
+      contactListModalOn: true,
     });
   };
 
   closeModal = () => {
     this.setState({
-      modalOn: false,
+      contactListModalOn: false,
+    });
+  };
+
+  openalContactModal = () => {
+    this.setState({
+      addContactModalOn: true,
+    });
+  };
+
+  closeManualContactModal = () => {
+    this.setState({
+      addContactModalOn: false,
     });
   };
 
   render() {
+    const {
+      contactLogData: {selectedContacts},
+      date,
+    } = this.props;
+
+    const {contactListModalOn, addContactModalOn} = this.state;
+    const saveButton = (
+      <Save date={this.props.date} handleSaveSuccess={() => {}} />
+    );
+
     return (
       <>
         <Modal
-          visible={this.state.modalOn}
+          visible={contactListModalOn}
           handleModalClose={this.closeModal}
           title={strings('select.contact')}>
-          <ContactList handleModalClose={this.closeModal} />
+          <ContactList handleModalClose={this.closeModal} date={date} />
+        </Modal>
+        <Modal
+          visible={this.state.addContactModalOn}
+          handleModalClose={this.closeManualContactModal}
+          title={strings('create.contact')}
+          actionButton={saveButton}>
+          <NewContact />
         </Modal>
         <ScrollView>
           <Text style={styles.header}>
-            {strings("social.interaction_text")}
+            {strings('people.social_interactions_header')}
           </Text>
-          <SelectedContacts />
+          <SelectedContacts
+            date={this.props.date}
+            selectedContacts={selectedContacts}
+            refreshContacts={this.fetchSelectedContactsByDate}
+          />
         </ScrollView>
         <TouchableOpacity onPress={this.openModal} style={styles.add_button}>
           <CustomIcon name={'add24'} color={'white'} size={20} />
@@ -142,6 +207,27 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 20,
   },
+  manual_add_button: {
+    backgroundColor: colors.primary_theme,
+    width: 150,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 100,
+    right: 100,
+  },
+  enable_permission_button: {
+    backgroundColor: colors.primary_theme,
+    width: 200,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 130,
+    right: 100,
+  },
   contact_wrapper: {
     backgroundColor: 'white',
     borderBottomWidth: 1,
@@ -156,7 +242,7 @@ const styles = StyleSheet.create({
 });
 
 ContactList.propTypes = {
-  updateContactLog: PropTypes.func.isRequired,
+  updateContactLog: PropTypes.func,
 };
 
 const mapStateToProps = state => {

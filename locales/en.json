@@ -5,6 +5,13 @@
   "history": {
     "header_text": "History"
   },
+  "contacts": {
+    "name": "Name",
+    "phone": "Phone Number",
+    "label": "Label",
+    "notes": "Notes",
+    "save_button": "Save"
+  },
   "permissions": {
     "header_text": "Select your preferences"
   },
@@ -69,6 +76,9 @@
   "select": {
     "contact": "Select Contacts",
     "share": "Select a sharing option"
+  },
+  "create": {
+    "contact": "Create Contact"
   },
   "global": {
     "warning": "Warning",
@@ -440,13 +450,10 @@
   "people": {
     "text": "People",
     "you_have_been_in_contact_last_14_days": "People you\u2019ve been in direct contact with over the last 14 days",
-    "txt": "People"
+    "social_interactions_header": "Social Interactions"
   },
   "socialize": {
     "text": "Safely add people you’ve been in contact with directly from your contacts list, or add them one at a time. "
-  },
-  "social": {
-    "interaction_text": "Social Interactions"
   },
   "summary": {
     "text": "Summary"
@@ -603,21 +610,17 @@
     "noDataFound": "There was a problem loading your location history from Google. Please try importing your locations again.",
     "signin": "Sign-in to Google"
   },
-
   "analytics": {
     "title": "Analytics",
     "description": "Share analytics and crash data with ContactAssist developers."
   },
-
   "narrowcast": {
     "alerts": "Local alerts"
   },
-
   "disclaimer": {
     "title": "Disclaimer",
     "content": "Medical information provided throughout ContactAssist is not a substitute for professional medical testing or advice.",
   },
-
   "what_to_do_if_sick": {
     "header": "What To Do If You Get Sick",
     "stay_home_title": "Stay Home Except to Get Medical Care",
@@ -627,12 +630,10 @@
     "monitor_title": "Monitor Your Symptoms",
     "monitor_description": "Add new symptoms as soon as you experience them and keep an eye on concerning symptoms like trouble breathing.",
   },
-
   "care_tips_container": {
     "cdc_link": "CDC guidance",
     "cdc_info": "Information based on",
   },
-
   "care_tips": {
     "header": "Self-Care Tips",
     "hygiene_title": "Practice Good Hygiene",
@@ -642,14 +643,12 @@
     "social_distance_title": "Practice Social Distancing",
     "social_distance_description": "Keep space between you and others. Stay at least 6 feet (about 2 arms' length) apart, avoid group gatherings and crowded places."
   },
-
   "resources_component": {
     "cdc_title": "CDC Guidance",
     "cdc_description": "Learn about symptoms, what to do if you’re sick, healthcare options, and more.",
     "king_county_title": "Public Health - Seattle & King County",
     "king_county_description": "Get the latest guidance, information, and regulations for Seattle & King County."
   },
-
   "interview_prep": {
     "title": "Your public health department will contact you for an interview",
     "description": "During this interview, a healthcare professional will be collecting a list of information to help identify those around you who may have been exposed.",
@@ -667,4 +666,9 @@
     "description": "Any information collected on CommonCircle Assist is stored securely on your phone until you decide to share it with your Public Health Department.",
     "send_btn": "Send",
   },
+  "contact_item": {
+    "edit": "Edit",
+    "delete": "Remove Contact",
+    "cancel": "Cancel"
+  }
 }

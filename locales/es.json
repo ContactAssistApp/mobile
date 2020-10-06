@@ -3,6 +3,16 @@
     "name": "Covid \nSafe",
     "name_one_line": "ContactAssist"
   },
+  "contacts": {
+    "name": "Name",
+    "phone": "Phone Number",
+    "label": "Label",
+    "notes": "Notes",
+    "save_button": "Save"
+  },
+  "create": {
+    "contact": "Create Contact"
+  },
   "main": {
     "header_text": "Covid \nSafe"
   },
@@ -426,7 +436,8 @@
   "people": {
     "text": "Personas",
     "you_have_been_in_contact_last_14_days": "Personas con las que has estado en contacto directo durante los \u00faltimos 14 d\u00edas",
-    "txt": "Personas"
+    "contacts_permission": "habilitar el acceso a contactos",
+    "contacts_permission_long": "Vaya a la configuración del teléfono para habilitar el permiso de contactos para esta aplicación"
   },
   "socialize": {
     "text": "Agregue de forma segura a las personas con las que ha estado en contacto directamente desde su lista de contactos, o una a la vez."

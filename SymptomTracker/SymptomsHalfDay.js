@@ -85,7 +85,7 @@ class SymptomsHalfDay extends Component {
                   )}
                 </View>
               );
-            } else {
+            } else if (!key.startsWith('cough') && !key.startsWith('fever')) {
               return (
                 <View style={styles.symptom_card} key={key}>
                   <Text style={styles.symptom_name}>{SYMPTOM_MAP[key]}</Text>

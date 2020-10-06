@@ -6,46 +6,68 @@ import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GetStoreData} from 'utils/asyncStorage';
 import {strings} from 'locales/i18n';
+import ContactItem from './ContactItem';
 
 class SelectedContacts extends Component {
-  componentDidMount() {
-    this.fetchSelectedContacts();
-  }
+  onRemoveContact = contact => {
+    const {selectedContacts} = this.props;
+    const index = selectedContacts.findIndex(item => item.id === contact.id);
+    if (index !== -1) {
+      // Remove Existing contact
+      selectedContacts.splice(index, 1);
+      this.props.updateContactLog({
+        field: 'selectedContacts',
+        value: selectedContacts,
+      });
+    } else {
+      this.props.updateContactLog({
+        field: 'selectedContacts',
+        value: [...selectedContacts, contact],
+      });
+    }
+  };
 
-  fetchSelectedContacts = () => {
-    return GetStoreData('CONTACTS').then(selectedContacts => {
-      if (selectedContacts) {
+  onEditContactItem = () => {
+    return updatedContact => {
+      const {selectedContacts} = this.props;
+      const index = selectedContacts.findIndex(
+        item => item.id === updatedContact.id,
+      );
+      if (index !== -1) {
+        // Remove Existing contact
+        let updatedSelectedContacts = [...selectedContacts];
+        updatedSelectedContacts[index] = updatedContact;
         this.props.updateContactLog({
           field: 'selectedContacts',
-          value: JSON.parse(selectedContacts),
+          value: updatedSelectedContacts,
         });
       }
-    });
+    };
   };
 
   render() {
-    const {
-      contactLogData: {selectedContacts},
-    } = this.props;
-
+    const {selectedContacts, date} = this.props;
     return (
       <>
-        {selectedContacts && selectedContacts.length > 0
-          ? <View>
+        {selectedContacts && selectedContacts.length > 0 ? (
+          <View>
             {selectedContacts.map(contact => {
               return (
-                <View style={styles.contact_wrapper} key={contact.id}>
-                  <Text style={styles.contact}>{contact.name}</Text>
-                </View>
-              )
+                <ContactItem
+                  key={contact.id}
+                  date={date}
+                  contact={contact}
+                  onEditContactItem={this.onEditContactItem}
+                  onRemoveContact={() => this.onRemoveContact(contact)}
+                  refreshContacts={this.props.refreshContacts}
+                />
+              );
             })}
-            </View>
-          : <Text style={styles.description}>
-            {strings('socialize.text')}
-            </Text>
-        }
+          </View>
+        ) : (
+          <Text style={styles.description}>{strings('socialize.text')}</Text>
+        )}
       </>
     );
   }
@@ -59,12 +81,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
   },
-  contact_wrapper: {
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.card_border,
-    padding: 21,
-  },
   contact: {
     fontSize: 16,
     lineHeight: 24,
@@ -73,7 +89,8 @@ const styles = StyleSheet.create({
 });
 
 ContactList.propTypes = {
-  updateContactLog: PropTypes.func.isRequired,
+  selectedContacts: PropTypes.array.isRequired,
+  updateContactLog: PropTypes.func,
 };
 
 const mapStateToProps = state => {

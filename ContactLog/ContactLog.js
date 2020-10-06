@@ -79,7 +79,7 @@ class ContactLog extends Component {
           weekView={weekView}>
           <TabView>
             <Locations tabLabel={strings('locations.text')} date={date} />
-            <People tabLabel={strings('people.text')} />
+            <People tabLabel={strings('people.text')} date={date} />
           </TabView>
         </Calendar>
       </>
@@ -106,9 +106,13 @@ ContactLog.propTypes = {
   updateContactLog: PropTypes.func,
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateContactLog
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateContactLog,
+    },
+    dispatch,
+  );
 
 export default connect(
   null,

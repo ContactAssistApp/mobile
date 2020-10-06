@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import colors from 'assets/colors';
-import CustomIcon from 'assets/icons/CustomIcon.js';
+import colors from '../assets/colors';
+import CustomIcon from '../assets/icons/CustomIcon.js';
 import {updateContactLog} from './actions.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {SetStoreData} from 'utils/asyncStorage';
 import {strings} from 'locales/i18n';
+import Person from '../utils/person';
 
 class ContactList extends Component {
   selectContact = contact => {
     let {
       contactLogData: {selectedContacts},
     } = this.props;
+    selectedContacts = Array.from(selectedContacts);
 
     const index = selectedContacts.findIndex(item => item.id === contact.id);
     if (index !== -1) {
@@ -28,6 +29,18 @@ class ContactList extends Component {
         value: [...selectedContacts, contact],
       });
     }
+  };
+
+  saveSelectedContacts = selectedContacts => {
+    const {date} = this.props;
+    selectedContacts.forEach(selectContact => {
+      Person.savePerson({
+        time: new Date(date.replace(/-/g, '/')).getTime(),
+        notes: '', // By default on clicking doesn't have notes,
+        label: '', // By default on clicking doesn't have label
+        ...selectContact,
+      });
+    });
   };
 
   render() {
@@ -67,10 +80,10 @@ class ContactList extends Component {
           <TouchableOpacity
             style={styles.save}
             onPress={() => {
-              SetStoreData('CONTACTS', selectedContacts);
+              this.saveSelectedContacts(selectedContacts);
               this.props.handleModalClose();
             }}>
-            <Text style={styles.save_text}>{strings("save.text")}</Text>
+            <Text style={styles.save_text}>{strings('save.text')}</Text>
           </TouchableOpacity>
         </View>
       </>

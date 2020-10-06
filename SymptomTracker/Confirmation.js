@@ -20,7 +20,7 @@ class Confirmation extends Component {
       <ScrollView>
         <Image
           style={styles.hero}
-          source={require('../assets/health/symptom_confirmation_bg.png')}
+          source={require('assets/health/symptom_confirmation_bg.png')}
         />
         <View style={styles.section_header}>
           <Text style={styles.section_title}>

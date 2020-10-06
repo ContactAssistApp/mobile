@@ -12,7 +12,7 @@ class Locations extends Component {
           <View style={styles.header}>
             <Image
               style={styles.icon}
-              source={require('../assets/health/map.png')}
+              source={require('assets/health/map.png')}
             />
             <Text style={styles.title}>{strings('contact.title_2')}</Text>
           </View>
