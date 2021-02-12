@@ -13,7 +13,7 @@
     "save_button": "Save"
   },
   "permissions": {
-    "header_text": "Select your preferences"
+    "header_text": "Settings"
   },
   "health": {
     "header_text": "Health",
@@ -156,7 +156,30 @@
     "delete": "Delete",
     "language": "Language",
     "english": "English",
-    "spanish": "Spanish"
+    "spanish": "Spanish",
+    "preference_skip": "Skip",
+    "preference1_headline": "Receive local notifications and reminders from CommonCircle Assist",
+    "preference1_description": "Receive push notifications for CommonCircle Assist and public service announcements from your local health department.",
+    "preference1_reminder": "Turn on notification if you want to receive push notifications and local alert.",
+    "preference1_turn_on": "Turn on Notifications",
+    "preference1_turned_on": "Notifications Turned On",
+    "preference2_headline": "Log on your locations to receive notifications that are most relevant to you",
+    "preference2_description": "Your local health department sends public service announcements through CommonCircle Assist. When location logging is turned on, your GPS signal and location history determines which announcements you recieve. If you are asked to complete a contact tracing interview, you can use your location history to prepare.",
+    "preference2_reminder": "Turn on location logging to receive nearby alerts related to COVID-19.",
+    "preference2_turn_on": "Share Locations",
+    "preference2_turned_on": "Location Sharing Turned On",
+    "preference3_headline":"Sync your location history with Google Maps",
+    "preference3_description":"Syncing your location history with Google Maps can help you get the most relevant notifications from CommonCircle Assist. Same as when logging locations, If you are asked to complete a contact tracing interview, you can use your location history from Google Maps to prepare.",
+    "preference3_reminder":"Import locations to improve your location-based services right from the start.",
+    "preference3_turn_on": "Import from Google",
+    "preference3_turned_on": "Location History Imported",
+    "preference4_headline":"Help us improve CommonCircle Assist",
+    "preference4_description":"CommonCircle Assist can gather information about crashes and features that aren't working correctly, so they can be fixed. ",
+    "preference4_reminder":"If you agree to share this data, it will only be used to help developers debug the app. Your personal information is protected.",
+    "preference4_turn_on": "Share Data",
+    "preference4_turned_on": "Analytics Turned On",
+    "preference5_headline":"Thanks for using CommonCircle Assist",
+    "preference5_description":"By using CommonCircle Assist daily, you’re staying informed so you can protect yourself, keeping track of important information that could help your local health department, and helping protect your community.",
   },
   "logging": {
     "now_off": "Logging is now turned off."

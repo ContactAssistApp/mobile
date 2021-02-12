@@ -6,8 +6,9 @@ import DateConverter from 'utils/date';
 import {strings} from 'locales/i18n';
 import {getAreas} from 'realm/realmAreaMatchesTasks';
 import PushNotification from 'react-native-push-notification';
-import {GetStoreData} from 'utils/asyncStorage';
-import {addBackgroundLog} from 'realm/realmLoggingTasks';
+import {GetStoreData} from '../utils/asyncStorage';
+import {addBackgroundLog} from '../realm/realmLoggingTasks';
+import {PERMISSIONS, request, check} from 'react-native-permissions';
 
 let instanceCount = 0;
 
@@ -286,5 +287,25 @@ export default class LocationServices {
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
     instanceCount -= 1;
+  }
+
+  static async isEnabled() {
+    const {status} = await check(
+      Platform.select({
+        android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+        ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+      }),
+    );
+    return status === 'granted';
+  }
+
+  static async enable() {
+    const {status} = await request(
+      Platform.select({
+        android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+        ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+      }),
+    );
+    return status === 'granted';
   }
 }
